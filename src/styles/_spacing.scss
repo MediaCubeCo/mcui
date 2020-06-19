@@ -1,0 +1,46 @@
+/* VUE DESIGN SYSTEM SPACING HELPERS
+--------------------------------------------- */
+
+$spacing-ratio: $line-height-m;
+
+/*
+  INSET-SPACE: For interface containers.
+  INSET-SQUISH-SPACE: For buttons, form elements, cells.
+  STACK-SPACE: For vertically stacked content.
+  INLINE-SPACE: For things displayed inline.
+*/
+
+// Create inset-space
+//
+// @param  {Number} inset-space to set
+@mixin inset-space($value) {
+  padding: $value;
+}
+
+// Create inset-squish-space
+//
+// @param  {Number} inset-squish-space to set
+@mixin inset-squish-space($value) {
+  padding: round($value / $spacing-ratio - 1px) $value round($value / $spacing-ratio);
+}
+
+// Create stack-space
+@mixin child-indent-bottom($space) {
+  > *:not(:last-child) {
+    margin-bottom: $space;
+  }
+}
+
+@mixin child-indent-right($space) {
+  > *:not(:last-child) {
+    margin-right: $space;
+  }
+}
+
+@mixin indent-top($space: $space-xs, $indent-type: "margin") {
+  #{$indent-type}-top: $space;
+}
+
+@mixin indent-bottom($size: "middle", $indent-type: "margin") {
+  #{$indent-type}-bottom: $space;
+}

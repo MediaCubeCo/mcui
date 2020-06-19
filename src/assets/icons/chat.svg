@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_684" data-name="Path 684" d="M0,0H24V24H0Z" fill="#222"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_184" data-name="Mask Group 184">
+    <g id="chat-person">
+      <g id="Group_1552" data-name="Group 1552">
+        <path id="Path_685" data-name="Path 685" d="M4-6300H28v24H4Z" transform="translate(-4 6300)" fill="none"/>
+        <path id="Path_686" data-name="Path 686" d="M17.333-6297.333h8A2.674,2.674,0,0,1,28-6294.667V-6292a2.674,2.674,0,0,1-2.667,2.667H14.667v-5.333A2.674,2.674,0,0,1,17.333-6297.333ZM16-6294.667V-6292h2.667v-2.667Zm4,0V-6292h2.667v-2.667Zm4,0V-6292h2.667v-2.667Zm-13.333,8a2.674,2.674,0,0,0,2.667-2.667A2.674,2.674,0,0,0,10.667-6292,2.674,2.674,0,0,0,8-6289.333,2.674,2.674,0,0,0,10.667-6286.667Zm0,1.333c-2.267,0-6.667,1.2-6.667,3.733v3.066H17.333v-3.066C17.333-6284.134,12.933-6285.333,10.667-6285.333Z" transform="translate(-4 6300)" fill-rule="evenodd"/>
+      </g>
+    </g>
+  </g>
+</svg>

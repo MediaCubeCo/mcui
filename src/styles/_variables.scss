@@ -1,0 +1,52 @@
+@import '../tokens/animations.scss';
+@import '../tokens/border-radius.scss';
+@import '../tokens/box-shadows.scss';
+@import '../tokens/colors.scss';
+@import '../tokens/gradients.scss';
+@import '../tokens/durations.scss';
+@import '../tokens/easings.scss';
+@import '../tokens/font-families.scss';
+@import '../tokens/font-sizes.scss';
+@import '../tokens/font-weights.scss';
+@import '../tokens/gradients.scss';
+@import '../tokens/letter-spacings.scss';
+@import '../tokens/line-heights.scss';
+@import '../tokens/media-queries.scss';
+@import '../tokens/opacities.scss';
+@import '../tokens/sizes.scss';
+@import '../tokens/spacings.scss';
+@import '../tokens/z-indexes.scss';
+
+$token-colors: (
+    "white": $color-white,
+    "gray": $color-gray,
+    "black": $color-black,
+    "blue": $color-blue,
+    "green": $color-green,
+    "orange": $color-orange,
+    "red": $color-red,
+);
+
+$token-sizes: (
+    "xxs": $font-size-xxs,
+    "xs": $font-size-xs,
+    "s": $font-size-s,
+    "m": $font-size-m,
+    "l": $font-size-l,
+    "xl": $font-size-xl,
+    "xxl": $font-size-xxl,
+    "3xl": $font-size-3xl,
+    "4xl": $font-size-4xl,
+    "5xl": $font-size-5xl,
+);
+
+$token-line-heights: (
+    "xs": $line-height-xs,
+    "s": $line-height-s,
+    "m": $line-height-m,
+);
+
+
+
+
+
