@@ -1,6 +1,6 @@
 # MediaCube UI
 
-This design system based on [Storybook](https://storybook.js.org/) and [Storybook Design Token Addon](https://github.com/UX-and-I/storybook-design-token)
+This design system based on [Storybook](https://storybook.js.org/) and [Storybook Design Token Addon](https://github.com/UX-and-I/storybook-design-token).
 **Storybook** is an open source tool for developing UI components in isolation for React, Vue, and Angular. It makes building stunning UIs organized and efficient.
 
 **Storybook** is a user interface development environment and playground for UI components. The tool enables developers to create components independently and showcase components interactively in an isolated development environment.

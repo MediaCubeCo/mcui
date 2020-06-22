@@ -1,8 +1,8 @@
 import { action } from '@storybook/addon-actions'
-import Task from './Task'
+import MyElTask from './MyElTask'
 
 export default {
-  title: 'Task',
+  title: 'Examples/MyElTask',
   // Our exports that end in "Data" are not stories.
   excludeStories: /.*Data$/,
 }
@@ -18,11 +18,11 @@ export const taskData = {
   updated_at: new Date(2019, 0, 1, 9, 0),
 };
 
-const taskTemplate = `<task :task="task" @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`;
+const taskTemplate = `<my-el-task :task="task" @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`;
 
 // default task state
 export const Default = () => ({
-  components: { Task },
+  components: { MyElTask },
   template: taskTemplate,
   props: {
     task: {
@@ -33,7 +33,7 @@ export const Default = () => ({
 });
 // pinned task state
 export const Pinned = () => ({
-  components: { Task },
+  components: { MyElTask },
   template: taskTemplate,
   props: {
     task: {
@@ -47,7 +47,7 @@ export const Pinned = () => ({
 });
 // archived task state
 export const Archived = () => ({
-  components: { Task },
+  components: { MyElTask },
   template: taskTemplate,
   props: {
     task: {

@@ -2,7 +2,9 @@ import '../src/styles/main.scss'
 
 import { addDecorator, addParameters } from '@storybook/vue';
 import { PaddingDecorator } from './decorators';
+import { themes } from '@storybook/theming';
 import { withKnobs } from '@storybook/addon-knobs';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 const cssReq = require.context('!!raw-loader!../src', true, /.\.css$/);
 const cssTokenFiles = cssReq
@@ -37,6 +39,17 @@ addParameters({
     }
   },
   options: {
-    panelPosition: 'right'
-  }
+    panelPosition: 'right',
+    theme: themes.normal,
+  },
+  viewport: {
+    viewports: INITIAL_VIEWPORTS,
+    // defaultViewport: 'someDefault',
+  },
+  backgrounds: [
+    { name: 'white', value: '#ffffff', default: true },
+    { name: 'gray', value: '#cccccc' },
+    { name: 'twitter', value: '#00aced' },
+    { name: 'facebook', value: '#3b5998' },
+  ],
 });

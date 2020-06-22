@@ -29,6 +29,7 @@ export default {
         textDecoration: 'none',
         borderBottom: '1px solid #1474f3',
         paddingBottom: 2,
+        cursor: 'pointer',
       },
 
       code: {
@@ -56,7 +57,7 @@ export default {
       <p>
         We've added some basic stories inside the
         <br />
-        <code :style="code">src/stories</code>
+        <code :style="code">src/examples</code>
         <br />
         directory.
         <br />
@@ -72,7 +73,7 @@ export default {
         <br />
         for a component called
         <br />
-        <code :style="code">Button</code>
+        <code :style="code">MyElButton</code>
         .
       </p>
       <p>
@@ -80,8 +81,8 @@ export default {
         <br />
         You can also edit those components and see changes right away.
         <br />
-        (Try editing the <code :style="code">Button</code> component
-        located at <code :style="code">src/stories/Button.js</code>.)
+        (Try editing the <code :style="code">MyElButton</code> component
+        located at <code :style="code">src/examples/elements/Button.js</code>.)
       </p>
       <p>
         This is just one thing you can do with Storybook.
@@ -97,7 +98,16 @@ export default {
           Storybook
         </a>
         <br />
-        repo for more information.
+        repo for more information, and
+        <br />
+        <a
+          :style="link"
+          href="https://github.com/UX-and-I/storybook-design-token"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Storybook Design Token Addon
+        </a>
       </p>
       <p :style="note">
         <b>NOTE:</b>

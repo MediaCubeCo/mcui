@@ -1,5 +1,5 @@
 export default {
-  name: 'my-button',
+  name: 'my-el-button',
 
   data() {
     return {

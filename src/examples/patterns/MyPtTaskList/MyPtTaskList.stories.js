@@ -1,5 +1,6 @@
-import TaskList from './TaskList';
-import { taskData, actionsData } from '../../elements/Task/Task.stories';
+import MyPtTaskList from './MyPtTaskList';
+import MyElTask from '../../elements/MyElTask/MyElTask';
+import { taskData, actionsData } from '../../elements/MyElTask/MyElTask.stories';
 
 const coloredList = () => {
   return {
@@ -8,7 +9,12 @@ const coloredList = () => {
 }
 
 export default {
-  title: 'TaskList',
+  title: 'Examples/MyPtTaskList',
+  parameters: {
+    componentSubtitle: 'Subtitle for this component',
+  },
+  description: 'Component description',
+  subcomponents: { MyElTask },
   excludeStories: /.*Data$/,
   decorators: [coloredList],
 }
@@ -29,8 +35,8 @@ export const withPinnedTasksData = [
 
 // default TaskList state
 export const Default = () => ({
-  components: { TaskList },
-  template: `<task-list :tasks="tasks" @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`,
+  components: { MyPtTaskList },
+  template: `<my-pt-task-list :tasks="tasks" @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`,
   props: {
     tasks: {
       default: () => defaultTasksData
@@ -40,8 +46,8 @@ export const Default = () => ({
 });
 // tasklist with pinned tasks
 export const WithPinnedTasks = () => ({
-  components: { TaskList },
-  template: `<task-list :tasks="tasks" @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`,
+  components: { MyPtTaskList },
+  template: `<my-pt-task-list :tasks="tasks" @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`,
   props: {
     tasks: {
       default: () => withPinnedTasksData
@@ -51,13 +57,13 @@ export const WithPinnedTasks = () => ({
 });
 // tasklist in loading state
 export const Loading = () => ({
-  components: { TaskList },
-  template: `<task-list loading @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`,
+  components: { MyPtTaskList },
+  template: `<my-pt-task-list loading @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`,
   methods: actionsData
 });
 // tasklist no tasks
 export const Empty = () => ({
-  components: { TaskList },
-  template: `<task-list @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`,
+  components: { MyPtTaskList },
+  template: `<my-pt-task-list @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`,
   methods: actionsData
 });

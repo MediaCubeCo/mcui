@@ -8,7 +8,7 @@
     transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(359deg);
   }
 }
 
@@ -34,6 +34,17 @@
   }
 }
 
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 $animation-slide-up: slide-up 0.3s;
 $animation-slide-up-with-margin: slide-up-with-margin 0.3s;
 $animation-spinner: rotate 1.2s infinite cubic-bezier(0.55, 0, 0.1, 1);
+$animation-glow: glow 1.5s ease-in-out infinite;
