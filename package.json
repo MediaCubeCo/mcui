@@ -15,7 +15,7 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "scss-export": "sass-export src/tokens/*.scss -o src/assets/tokens/tokens.json",
-    "release": "yarn scss-export && standard-version",
+    "release": "yarn build && standard-version",
     "release:patch": "yarn release -- --release-as patch",
     "release:minor": "yarn release -- --release-as minor",
     "release:major": "yarn release -- --release-as major",
