@@ -1,12 +1,12 @@
 import svgIcons from '../../utils/load-icons'
 import { text, select } from '@storybook/addon-knobs'
 
-import MyIcon from './MyIcon'
+import MyElIcon from './MyElIcon'
 import getTokenGroup from "../../utils/getTokenGroup"
 
 export default {
-  title: 'MyIcon',
-  component: MyIcon,
+  title: 'Elements/MyElIcon',
+  component: MyElIcon,
 };
 const names = svgIcons.map(icon => icon.name.slice(2, -4))
 const sizes = {
@@ -23,7 +23,7 @@ tokenColors.forEach(t => {
 })
 
 export const Icon = () => ({
-  components: { MyIcon },
+  components: { MyElIcon },
   props: {
     name: {
       default: select('name', names, 'add')
@@ -38,6 +38,6 @@ export const Icon = () => ({
       default: select('size', sizes, 'm')
     },
   },
-  template: '<my-icon :name="name" :size="size" :fill="fill" :color="color" />',
+  template: '<my-el-icon :name="name" :size="size" :fill="fill" :color="color" />',
 });
 

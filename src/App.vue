@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import HelloWorld from "./elements/HelloWorld.vue";
 
 export default {
   name: "App",
@@ -17,5 +17,14 @@ export default {
 </script>
 
 <style>
-  @import './index.css';
+  body,
+  html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #app {
+    height: 100%;
+  }
 </style>

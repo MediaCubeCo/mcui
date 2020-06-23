@@ -2,9 +2,9 @@ import '../src/styles/main.scss'
 
 import { addDecorator, addParameters } from '@storybook/vue';
 import { PaddingDecorator } from './decorators';
-import { themes } from '@storybook/theming';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import { setConsoleOptions } from '@storybook/addon-console';
 
 const cssReq = require.context('!!raw-loader!../src', true, /.\.css$/);
 const cssTokenFiles = cssReq
@@ -16,11 +16,6 @@ const scssTokenFiles = scssReq
   .keys()
   .map(filename => ({ filename, content: scssReq(filename).default }));
 
-// const lessReq = require.context('!!raw-loader!../src', true, /.\.less$/);
-// const lessTokenFiles = lessReq
-//   .keys()
-//   .map(filename => ({ filename, content: lessReq(filename).default }));
-
 const svgIconsReq = require.context('!!raw-loader!../src', true, /.\.svg$/);
 const svgIconTokenFiles = svgIconsReq
   .keys()
@@ -29,22 +24,24 @@ const svgIconTokenFiles = svgIconsReq
 addDecorator(withKnobs);
 addDecorator(PaddingDecorator);
 
+const panelExclude = setConsoleOptions({}).panelExclude;
+setConsoleOptions({
+  panelExclude: [...panelExclude, /deprecated/],
+});
+
 addParameters({
   designToken: {
     files: {
       css: cssTokenFiles,
       scss: scssTokenFiles,
-      // less: lessTokenFiles,
       svgIcons: svgIconTokenFiles
     }
   },
   options: {
     panelPosition: 'right',
-    theme: themes.normal,
   },
   viewport: {
     viewports: INITIAL_VIEWPORTS,
-    // defaultViewport: 'someDefault',
   },
   backgrounds: [
     { name: 'white', value: '#ffffff', default: true },

@@ -57,7 +57,7 @@
     }
 
     &__title {
-        overflow: hidden;
+        position: relative;
         text-overflow: ellipsis;
         white-space: nowrap;
         flex: 1;

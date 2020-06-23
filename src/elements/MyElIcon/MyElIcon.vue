@@ -1,12 +1,12 @@
 <template>
-  <component :is="type" class="my-icon" :class="classes" v-html="svg" />
+  <component :is="type" class="my-el-icon" :class="classes" v-html="svg" />
 </template>
 
 <script>
   import svgIcons from '../../utils/load-icons'
 
   export default {
-    name: 'MyIcon',
+    name: 'MyElIcon',
     props: {
       name: {
         type: String,
@@ -57,8 +57,8 @@
     computed: {
       classes() {
         return {
-          [`my-icon--size-${this.size}`]: !!this.size,
-          [`my-icon--color-${this.color}`]: !!this.color,
+          [`my-el-icon--size-${this.size}`]: !!this.size,
+          [`my-el-icon--color-${this.color}`]: !!this.color,
         }
       },
       styles() {
@@ -77,7 +77,7 @@
 </script>
 
 <style lang="scss">
-  .my-icon {
+  .my-el-icon {
     @include reset();
     @include reset-text-indents();
 
