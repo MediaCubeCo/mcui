@@ -13,7 +13,6 @@ export default {
   parameters: {
     componentSubtitle: 'Subtitle for this component',
   },
-  description: 'Component description',
   subcomponents: { MyElTask },
   excludeStories: /.*Data$/,
   decorators: [coloredList],
