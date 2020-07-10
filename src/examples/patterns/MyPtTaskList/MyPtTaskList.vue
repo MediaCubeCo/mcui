@@ -70,12 +70,12 @@
         display: flex;
         align-items: center;
         line-height: 1rem;
-        padding-left: 16px;
+        padding-left: $space-200;
     }
 
     &__glow-checkbox {
-        margin-right: $space-m;
-        @include size($tappable-element-3xs);
+        margin-right: $space-200;
+        @include size($space-150);
     }
 
     &__glow-checkbox,
@@ -103,7 +103,7 @@
     &__title-message {
         font-size: $font-size-m;
         line-height: $line-height-m;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semi-bold;
         color: $color-gray;
     }
 

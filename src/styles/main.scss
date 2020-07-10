@@ -198,16 +198,6 @@ pre {
       margin-top: $value;
     }
   }
-
-  .mb-4xl {
-    margin-bottom: $space-4xl;
-    @media #{$media-query-m} {
-      margin-bottom: $space-4xl;
-    }
-    @media #{$media-query-l} {
-      margin-bottom: $space-4xl;
-    }
-  }
 }
 
 

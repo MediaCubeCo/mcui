@@ -11,6 +11,8 @@ module.exports = {
     '@storybook/addon-docs',
     '@storybook/addon-viewport/register',
     '@storybook/addon-backgrounds/register',
+    'storybook-addon-designs',
+    '@storybook/addon-a11y/register',
   ],
   webpackFinal: async (config, { configType }) => {
     config.module.rules.push({

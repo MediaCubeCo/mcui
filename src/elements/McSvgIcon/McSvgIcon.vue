@@ -1,12 +1,12 @@
 <template>
-  <component :is="type" class="mc-el-svg-icon" :class="classes" v-html="svg" />
+  <component :is="type" class="mc-svg-icon" :class="classes" v-html="svg" />
 </template>
 
 <script>
   import svgIcons from '../../utils/load-icons'
 
   export default {
-    name: 'McElIcon',
+    name: 'McSvgIcon',
     props: {
       name: {
         type: String,
@@ -22,7 +22,7 @@
       },
       size: {
         type: String,
-        default: "m",
+        default: "300",
       },
       type: {
         type: String,
@@ -57,8 +57,8 @@
     computed: {
       classes() {
         return {
-          [`mc-el-svg-icon--size-${this.size}`]: !!this.size,
-          [`mc-el-svg-icon--color-${this.color}`]: !!this.color,
+          [`mc-svg-icon--size-${this.size}`]: !!this.size,
+          [`mc-svg-icon--color-${this.color}`]: !!this.color,
         }
       },
       styles() {
@@ -77,7 +77,7 @@
 </script>
 
 <style lang="scss">
-  .mc-el-svg-icon {
+  .mc-svg-icon {
     @include reset();
     @include reset-text-indents();
 
@@ -85,14 +85,12 @@
       @include size(inherit);
     }
 
-    &--size-s {
-      @include size($tappable-element-xxs);
-    }
-    &--size-m {
-      @include size($tappable-element-xs);
-    }
-    &--size-l {
-      @include size($tappable-element-s);
+    &--size {
+      @each $size, $value in $token-icon-sizes {
+        &-#{$size} {
+          @include size($value);
+        }
+      }
     }
 
     &--color {

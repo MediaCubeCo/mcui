@@ -155,3 +155,33 @@
 @function line-height($line-height, $font-size) {
   @return round(($line-height / $font-size) * 100) / 100;
 }
+
+@function sum($numbers...) {
+  $sum: 0;
+  @each $number in $numbers {
+    $sum: $sum + $number;
+  }
+
+  @return $sum;
+}
+
+@function diff($from, $numbers...) {
+  @each $number in $numbers {
+    $from: $from - $number;
+  }
+
+  @return $from;
+}
+
+@function multiplication($from, $numbers...) {
+  @each $number in $numbers {
+    $from: $from * $number;
+  }
+
+  @return $from;
+}
+
+@function swapSign($number) {
+
+  @return -$number;
+}

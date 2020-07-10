@@ -10,3 +10,14 @@ $color-blue: rgb(62, 132, 244);
 $color-green: rgb(113, 193, 116);
 $color-orange: rgb(250, 175, 0);
 $color-red: rgb(244, 62, 62);
+$color-transparent: transparent;
+
+$token-colors: (
+  "white": $color-white,
+  "gray": $color-gray,
+  "black": $color-black,
+  "blue": $color-blue,
+  "green": $color-green,
+  "orange": $color-orange,
+  "red": $color-red,
+);

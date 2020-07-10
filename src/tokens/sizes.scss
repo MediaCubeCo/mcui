@@ -3,41 +3,37 @@
 * @presenter Spacing
 */
 
-$height-footer: 64px;
-$height-header: 65px;
-$height-top-line: 56px;
-$height-table-head: 48px;
-$height-auth: 665px;
+$size-zero: 0;
+$size-50: 4px; /* Additional token */
+$size-100: 8px;
+$size-150: 12px; /* Additional token */
+$size-200: 16px;
+$size-250: 20px; /* Additional token */
+$size-300: 24px;
+$size-400: 32px;
+$size-500: 40px;
+$size-600: 48px;
+$size-700: 56px;
+$size-800: 64px;
+$size-900: 72px;
+$size-1000: 80px;
 
-$tappable-element-xl: 72px;
-$tappable-element-l: 48px;
-$tappable-element-m: 40px;
-$tappable-element-s: 32px;
-$tappable-element-xs: 24px;
-$tappable-element-xxs: 16px;
-$tappable-element-3xs: 12px;
+$token-avatar-sizes: (
+  300: $size-300, /* Description */
+  400: $size-400,
+  500: $size-500,
+  600: $size-600,
+);
 
-$avatar-xs: 24px;
-$avatar-s: 32px;
-$avatar-m: 42px;
-$avatar-l: 56px;
-$avatar-xl: 92px;
+$token-icon-sizes: (
+  200: $size-200,
+  300: $size-300,
+  400: $size-400,
+  500: $size-500,
+  600: $size-600,
+  700: $size-700,
+  800: $size-800,
+  900: $size-900,
+  1000: $size-1000,
+);
 
-$separator-s: 2px;
-
-$separator-xs: 1px;
-
-$panel-xl: 500px;
-$panel-l: 380px;
-$panel-m: 320px;
-$panel-s: 250px;
-
-$container-m: 1064px;
-$container-s: 810px;
-
-$site-width-xs: 375px;
-$site-width-s: 480px;
-$site-width-m: 768px;
-$site-width-l: 1024px;
-$site-width-xl: 1200px;
-$site-width-xxl: 1440px;

@@ -1,6 +1,7 @@
 import '../src/styles/main.scss'
 
 import { addDecorator, addParameters } from '@storybook/vue';
+import { withA11y } from '@storybook/addon-a11y';
 import { PaddingDecorator } from './decorators';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
@@ -22,6 +23,7 @@ const svgIconTokenFiles = svgIconsReq
   .map(filename => ({ filename, content: svgIconsReq(filename).default }));
 
 addDecorator(withKnobs);
+addDecorator(withA11y);
 addDecorator(PaddingDecorator);
 
 const panelExclude = setConsoleOptions({}).panelExclude;

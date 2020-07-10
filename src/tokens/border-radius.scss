@@ -2,8 +2,10 @@
  * @tokens Border Radius
  * @presenter BorderRadius
  */
-$radius-xl: 10px; /* Token Description */
-$radius-l: 8px;
-$radius-m: 4px;
-$radius-s: 2px;
+
+$radius-square: 0px;
+$radius-50: 4px; /* Additional token */
+$radius-100: 8px;
+$radius-150: 12px; /* Additional token */
+$radius-200: 16px;
 $radius-circle: 50%;

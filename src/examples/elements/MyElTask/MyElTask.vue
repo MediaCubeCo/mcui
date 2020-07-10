@@ -53,7 +53,7 @@
     transition: all ease-out 150ms;
 
     &__checkbox {
-        margin: 0 $space-s;
+        margin: 0 $space-150;
     }
 
     &__title {
@@ -73,7 +73,7 @@
 
     &__actions {
         transition: all 200ms ease-in;
-        padding-right: $space-m;
+        padding-right: $space-200;
 
         a {
             display: inline-block;
@@ -93,7 +93,7 @@
             font-size: 16px;
             line-height: $line-height-m;
             text-align: center;
-            margin-left: $space-s;
+            margin-left: $space-200;
             &::before {
                 content: "*";
             }
