@@ -45,7 +45,7 @@
 .my-pt-task {
     $block-name: &;
     font-size: $font-size-s;
-    line-height: $line-height-m;
+    line-height: $line-height-250;
     display: flex;
     flex-wrap: wrap;
     @include size(100%, 3rem);
@@ -91,7 +91,7 @@
 
         &-icon {
             font-size: 16px;
-            line-height: $line-height-m;
+            line-height: $line-height-250;
             text-align: center;
             margin-left: $space-200;
             &::before {

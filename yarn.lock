@@ -13699,10 +13699,10 @@ storybook-addon-designs@^5.4.0:
   dependencies:
     react-pdf "^4.0.5"
 
-storybook-design-token@^0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/storybook-design-token/-/storybook-design-token-0.7.4.tgz#3e08f0d87c155e11d14da3444d64da740a48bf94"
-  integrity sha512-iWDokCXY7aMw/3LSEVArnmu6DKi+pEdeAju+rPSJzgriHVWHhRE5BVbR/SqpOXIHTPOJdwHAKqNf5Ni34LMLkA==
+storybook-design-token@^0.7.7:
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/storybook-design-token/-/storybook-design-token-0.7.7.tgz#e813acaa2a5a2a11580f0c93f7be443ec32f32de"
+  integrity sha512-jvJwSvPTvNWIvhdsaOAxosYuBrw/ftrV0852gLs9LvI8H+qc1lwVEhBAeXvNBWp9/hCHIqOeUfptKeHpvdO5iQ==
   dependencies:
     "@storybook/addons" "5.2.8"
     "@storybook/api" "5.2.8"
