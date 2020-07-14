@@ -1,0 +1,496 @@
+<template>
+  <component
+    v-bind="tagBind"
+    class="mc-button"
+    v-on="$listeners"
+    :is="tag"
+    :class="classes"
+    :exact="exact"
+  >
+    <slot name="icon-prepend" />
+    <btn-loader v-if="loading" name="ball-clip-rotate-multiple" class="mc-button__loader" color="inherit" />
+    <span class="mc-button__text" v-if="$slots.default">
+      <slot />
+    </span>
+    <slot name="icon-append" />
+  </component>
+</template>
+
+<script>
+import "vue-loaders/dist/vue-loaders.css"
+import VueLoaders from "vue-loaders"
+export default {
+  name: "McButton",
+  components: {
+    "btn-loader": VueLoaders.component,
+  },
+  props: {
+    /**
+     *  Если нужна ссылка внутри приложения:
+     * `{name: 'test', params: { id: test.id }}`
+     */
+    to: {
+      default: null,
+    },
+    /**
+     *  Если нужна обычная ссылка:
+     * `https://mediacube.agency/`
+     */
+    href: {
+      default: null,
+    },
+    /**
+     *  По умолчанию ожидается использование в `nuxt.js`
+     *
+     */
+    nuxt: {
+      type: Boolean,
+      default: true,
+    },
+    /**
+     *  Отключенное состояние
+     *
+     */
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     *  Индикация загрузки
+     *
+     */
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     *  Типы:
+     *  `button, submit, reset`
+     */
+    type: {
+      type: String,
+      default: null,
+    },
+    /**
+     *  Дизайн:
+     *  `blue, red, blue-outline, blue-invert, blue-flat и т.д.`
+     */
+    variation: {
+      type: String,
+      default: "blue",
+    },
+    /**
+     *  Размеры:
+     *  `s, s-compact, m, m-compact, l, l-compact, xl, xl-compact`
+     */
+    size: {
+      type: String,
+      default: "m",
+    },
+    /**
+     *  Тень
+     *
+     */
+    shadow: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     *  Круглая
+     *
+     */
+    rounded: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     *  Позиция текста внутри кнопки:
+     *  `left, center, right`
+     */
+    textAlign: {
+      type: String,
+      default: "center",
+    },
+    /**
+     *  На всю ширину
+     *
+     */
+    fullWidth: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     *  Если нужно активное состояние
+     *
+     */
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     *  exact
+     *
+     */
+    exact: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Uppercase
+     */
+    uppercase: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Default tag
+     */
+    defaultTag: {
+      type: String,
+      default: "button",
+    },
+  },
+
+  computed: {
+    classes() {
+      return {
+        [`mc-button--variation-${this.variation}`]: this.variation,
+        [`mc-button--size-${this.size}`]: this.size,
+        [`mc-button--text-align-${this.textAlign}`]: this.textAlign,
+
+        "mc-button--loading": this.loading,
+        "mc-button--is-active": this.isActive,
+        "mc-button--disabled": this.disabled,
+        "mc-button--rounded": this.rounded,
+        "mc-button--full-width": this.fullWidth,
+        "mc-button--uppercase": this.uppercase,
+        "mc-button--shadow": this.shadow,
+      }
+    },
+    tag() {
+      if (this.to) {
+        return this.nuxt ? "nuxt-link" : "router-link"
+      } else if (this.href) {
+        return "a"
+      }
+      return this.defaultTag
+    },
+    tagBind() {
+      const result = {}
+      if (this.to) {
+        result.to = this.to
+      } else if (this.href) {
+        result.href = this.href
+      } else if (this.disabled || this.loading) {
+        result.disabled = true
+      }
+      result.type = this.type
+
+      return result
+    },
+  },
+}
+</script>
+
+<style lang="scss">
+$colors: $token-colors;
+
+.mc-button {
+  $block-name: &;
+
+  @include reset();
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  font-family: $font-family-main;
+  font-weight: $font-weight-semi-bold;
+  border-radius: $radius-50;
+  white-space: nowrap;
+  user-select: none;
+  text-decoration: none;
+  text-transform: none;
+  background-color: transparent;
+  background-image: none;
+  cursor: pointer;
+  outline: 0;
+  border: 1px solid transparent;
+  transition: all $duration-s;
+
+  color: $color-black;
+  -webkit-appearance: none;
+  -webkit-text-fill-color: currentColor;
+
+  &__loader {
+    display: none !important;
+    position: absolute !important;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0) scale(0.6);
+  }
+
+  &__text {
+    @include ellipsis($display: inline-block);
+    @include layout-flex-fix();
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  &--size {
+    &-s {
+      height: $size-400;
+      padding: $space-100 $space-150;
+      letter-spacing: normal;
+      font-size: $font-size-200;
+      line-height: $line-height-200;
+
+      &-compact {
+        @include size($size-400);
+        padding: $space-100;
+      }
+
+      @include child-indent-right($space-50);
+    }
+    &-m {
+      height: $size-500;
+      padding: $space-100 $space-200;
+      letter-spacing: 0.4px;
+      font-size: $font-size-300;
+      line-height: $line-height-300;
+
+      &-compact {
+        @include size($size-500);
+        padding: $space-100;
+      }
+
+      @include child-indent-right($space-50);
+    }
+    &-l {
+      height: $size-600;
+      padding: $space-150 $space-300;
+      letter-spacing: 0.4px;
+      font-size: $font-size-300;
+      line-height: $line-height-300;
+
+      &-compact {
+        @include size($size-600);
+        padding: $space-150;
+      }
+
+      @include child-indent-right($space-100);
+    }
+  }
+
+  @each $color, $value in $colors {
+    &--variation-#{$color} {
+      @if $color == "white" {
+        background-color: $value;
+
+        &:hover,
+        &:focus {
+          background-color: fade-out($value, 1 - $opacity-hover);
+        }
+
+        &:active {
+          background-color: fade-out($value, 1 - $opacity-active);
+        }
+
+        &-flat {
+          color: $value;
+
+          &:hover,
+          &:focus {
+            opacity: $opacity-hover;
+          }
+
+          &:active {
+            opacity: $opacity-active;
+          }
+        }
+      } @else {
+        background-color: $value;
+
+        @if $color == "toxic" {
+          color: $color-black;
+        } @else {
+          color: $color-white;
+        }
+
+        &:hover,
+        &:focus {
+          background-color: darken($value, 10%);
+        }
+
+        &:active {
+          background-color: darken($value, 15%);
+        }
+
+        &#{$block-name} {
+          &--shadow {
+            box-shadow: 0 3px 10px fade-out($value, 0.8);
+          }
+        }
+
+        &-invert {
+          background-color: fade-out($value, 0.9);
+          color: $value;
+
+          &:hover,
+          &:focus {
+            background-color: fade-out($value, 0.8);
+          }
+
+          &:active {
+            background-color: fade-out($value, 0.75);
+          }
+
+          &#{$block-name} {
+            &--shadow {
+              box-shadow: 0 3px 10px fade-out($value, 0.8);
+            }
+          }
+        }
+
+        &-outline {
+          border-color: $value;
+          color: $value;
+
+          &:hover,
+          &:focus {
+            background-color: $value;
+            color: $color-white;
+          }
+
+          &:active {
+            border-color: darken($value, 15%);
+            background-color: darken($value, 15%);
+          }
+
+          &#{$block-name} {
+            &--shadow {
+              box-shadow: 0 3px 10px fade-out($value, 0.8);
+            }
+          }
+        }
+
+        &-flat {
+          color: $value;
+
+          &:hover,
+          &:focus {
+            background-color: fade-out($value, 0.9);
+          }
+
+          &:active {
+            background-color: fade-out($value, 0.85);
+          }
+
+          &#{$block-name} {
+            &--shadow {
+              box-shadow: 0 3px 10px fade-out($value, 0.8);
+            }
+          }
+        }
+
+        &-link {
+          color: $value;
+          padding: 0;
+          @include size(auto);
+          border: none;
+          user-select: text;
+
+          &:hover,
+          &:focus {
+            color: darken($value, 12%);
+          }
+
+          &:active {
+            color: darken($value, 16%);
+          }
+
+          &#{$block-name} {
+            &--disabled {
+              opacity: $opacity-disabled;
+              background-color: transparent !important;
+              color: $value !important;
+              border-color: transparent !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &--uppercase {
+    text-transform: uppercase;
+  }
+
+  &--is-active,
+  &.nuxt-link-active {
+    color: $color-blue;
+    background-color: transparent;
+    border-color: transparent;
+    pointer-events: none;
+  }
+
+  &--rounded {
+    border-radius: $radius-circle;
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+
+  &--text-align {
+    &-left {
+      #{$block-name} {
+        &__text {
+          margin-right: auto;
+        }
+      }
+    }
+    &-center {
+      #{$block-name} {
+        &__text {
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+    &-right {
+      #{$block-name} {
+        &__text {
+          margin-left: auto;
+        }
+      }
+    }
+  }
+
+  &--loading,
+  &--disabled {
+    pointer-events: none;
+  }
+
+  &--loading {
+    #{$block-name} {
+      &__loader {
+        display: inline-block !important;
+      }
+    }
+
+    > *:not(#{$block-name}__loader) {
+      opacity: 0;
+    }
+  }
+
+  &--disabled {
+    background-color: $color-outline-gray !important;
+    color: $color-white !important;
+    border-color: $color-outline-gray !important;
+  }
+}
+</style>

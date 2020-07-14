@@ -3,27 +3,21 @@
   * @presenter FontSize
   */
 
-$font-size-xxs: 8px;
-$font-size-xs: 10px;
-$font-size-s: 13px;
-$font-size-m: 16px;
-$font-size-l: 20px;
-$font-size-xl: 28px;
-$font-size-xxl: 34px;
-$font-size-3xl: 48px;
-$font-size-4xl: 56px;
-$font-size-5xl: 64px;
+$font-size-100: 10px;
+$font-size-200: 13px;
+$font-size-300: 16px;
+$font-size-400: 20px;
+$font-size-500: 28px;
+$font-size-600: 32px;
+$font-size-700: 48px;
 
 $token-font-sizes: (
-  "xxs": $font-size-xxs,
-  "xs": $font-size-xs,
-  "s": $font-size-s,
-  "m": $font-size-m,
-  "l": $font-size-l,
-  "xl": $font-size-xl,
-  "xxl": $font-size-xxl,
-  "3xl": $font-size-3xl,
-  "4xl": $font-size-4xl,
-  "5xl": $font-size-5xl,
+  "100": $font-size-100,
+  "200": $font-size-200,
+  "300": $font-size-300,
+  "400": $font-size-400,
+  "500": $font-size-500,
+  "600": $font-size-600,
+  "700": $font-size-700,
 );
 

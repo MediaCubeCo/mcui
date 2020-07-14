@@ -101,14 +101,14 @@
     }
 
     &__title-message {
-        font-size: $font-size-m;
+        font-size: $font-size-300;
         line-height: $line-height-250;
         font-weight: $font-weight-semi-bold;
         color: $color-gray;
     }
 
     &__subtitle-message {
-        font-size: $font-size-m;
+        font-size: $font-size-300;
         line-height: $line-height-250;
         color: $color-gray;
     }

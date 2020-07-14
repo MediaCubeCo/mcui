@@ -29,6 +29,7 @@
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.11",
+    "vue-loaders": "^4.0.0-alpha.2",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

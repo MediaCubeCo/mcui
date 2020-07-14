@@ -8,12 +8,12 @@ export default {
   title: 'Elements/McAvatar',
   component: McAvatar,
   decorators: [withDesign],
-  parameters: {
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
-    },
-  },
+  // parameters: {
+  //   design: {
+  //     type: 'figma',
+  //     url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
+  //   },
+  // },
 };
 
 const avatarSizes = getTokenGroup('avatar-sizes')

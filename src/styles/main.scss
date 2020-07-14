@@ -10,7 +10,7 @@ html {
   -ms-overflow-style: scrollbar;
   -ms-text-size-adjust: 100%;
   min-height: 100%;
-  font-size: $font-size-m;
+  font-size: $font-size-300;
 }
 
 body {
@@ -37,8 +37,8 @@ body {
   overflow-y: auto;
   word-break: break-word;
 
-  font-family: $font-family-heading;
-  font-size: $font-size-m;
+  font-family: $font-family-main;
+  font-size: $font-size-300;
   line-height: $line-height-250;
   color: $color-black;
 }

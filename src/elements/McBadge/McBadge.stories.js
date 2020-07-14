@@ -1,4 +1,4 @@
-import { select, boolean } from '@storybook/addon-knobs'
+import {select, boolean, text} from "@storybook/addon-knobs"
 
 import McBadge from './McBadge'
 import { getTokensByType } from "../../utils/getTokens"
@@ -26,6 +26,9 @@ export const Badge = () => ({
     },
     translucent: {
       default: boolean('translucent', false)
+    },
+    value: {
+      default: text('slot default', 'badge content'),
     },
   },
   template: '<mc-badge :color="color" :background="background" :translucent="translucent">{{ value }}</mc-badge>',
