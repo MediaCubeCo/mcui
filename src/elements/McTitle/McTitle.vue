@@ -3,42 +3,80 @@ export default {
   functional: true,
   name: "McTitle",
   props: {
+    /**
+     * Уровень: `h1`, `h2`, `h3`, `h4`, `body`, `caption`, `overline`.
+     */
     variation: {
       type: String,
       default: "body",
     },
+    /**
+     * В одну строку с точками в конце, если не вмещается
+     */
     ellipsis: {
       type: Boolean,
       default: true,
     },
+    /**
+     * Если нужен другой тэг
+     */
     tagName: {
       type: String,
       default: "div",
     },
+    /**
+     * Заглавные буквы
+     */
     uppercase: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Цвет
+     */
     color: {
       type: String,
       default: "black",
     },
+    /**
+     *  Позиция текста:
+     *  `left, center, right`
+     */
     textAlign: {
       type: String,
       default: "left",
     },
+    /**
+     * Если нужна иная высота строки: `100`, `200`, `300` и т.д.
+     */
     lineHeight: {
       type: String,
       default: "",
     },
+    /**
+     * Толщина текста
+     */
     weight: {
       type: String,
       default: "medium",
     },
+    /**
+     * Если нужно указать свою
+     * максимальную ширину
+     */
+    maxWidth: {
+      type: String,
+      default: "",
+    },
   },
   render(h, { props, slots, data }) {
+    let contentStyle = {}
+    if (props.maxWidth) {
+      contentStyle = {'max-width': props.maxWidth}
+    }
     const contentOptions = {
       class: "mc-title__text",
+      style: contentStyle,
     }
     if (data.domProps && data.domProps.innerHTML) {
       contentOptions.domProps = {

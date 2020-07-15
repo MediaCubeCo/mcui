@@ -14,7 +14,7 @@
       },
       color: {
         type: String,
-        default: "black",
+        default: "",
       },
       fill: {
         type: String,

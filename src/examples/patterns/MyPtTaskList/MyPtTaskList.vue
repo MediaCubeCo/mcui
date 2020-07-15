@@ -33,6 +33,9 @@
       MyPtTask,
     },
     props: {
+      /**
+       Description for current prop
+       */
       loading: {
         type: Boolean,
         default: false,

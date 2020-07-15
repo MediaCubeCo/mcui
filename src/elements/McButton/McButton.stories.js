@@ -2,12 +2,13 @@ import { text, select, boolean, object } from '@storybook/addon-knobs'
 
 import McButton from './McButton'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
-import { getTokensByType, getTokenGroup } from "../../utils/getTokens"
+import { getTokensByType } from "../../utils/getTokens"
 
 export default {
   title: 'Elements/McButton',
   component: McButton,
   parameters: {
+    componentSubtitle: 'Subtitle for this component',
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
@@ -34,6 +35,22 @@ const positions = {
   'center': 'center',
   'right': 'right',
 }
+const tokenColors = getTokensByType('color')
+let variations = {}
+Object.keys(tokenColors).forEach(c => {
+  const colorVariations = {
+    [c]: c,
+    [`${c}-flat`]: `${c}-flat`,
+    [`${c}-invert`]: `${c}-invert`,
+    [`${c}-outline`]: `${c}-outline`,
+    [`${c}-link`]: `${c}-link`,
+  }
+  variations = {
+    ...variations,
+    ...colorVariations,
+  }
+})
+
 const getUniqueProps = key => {
   return {
     to: {
@@ -55,7 +72,7 @@ const getUniqueProps = key => {
       default: select('type', types, 'default', key)
     },
     variation: {
-      default: text('variation', 'blue', key),
+      default: select('variation', variations, 'blue', key),
     },
     size: {
       default: select('size', sizes, 'm', key)
@@ -84,9 +101,27 @@ const getUniqueProps = key => {
     defaultTag: {
       default: text('defaultTag', 'button', key),
     },
-    value: {
-      default: text('slot default', 'Default button', key),
-    },
+  }
+}
+
+const getCommonTags = ctx => {
+  return {
+    to: ctx.to,
+    href: ctx.href,
+    nuxt: ctx.nuxt,
+    disabled: ctx.disabled,
+    loading: ctx.loading,
+    type: ctx.type,
+    variation: ctx.variation,
+    size: ctx.size,
+    shadow: ctx.shadow,
+    rounded: ctx.rounded,
+    'text-align': ctx.textAlign,
+    'full-width': ctx.fullWidth,
+    'is-active': ctx.isActive,
+    exact: ctx.exact,
+    uppercase: ctx.uppercase,
+    'default-tag': ctx.defaultTag,
   }
 }
 
@@ -94,52 +129,42 @@ export const Default = () => ({
   components: { McButton },
   computed: {
     tagBind() {
-      return {
-        to: this.to,
-        href: this.href,
-        nuxt: this.nuxt,
-        disabled: this.disabled,
-        loading: this.loading,
-        type: this.type,
-        variation: this.variation,
-        size: this.size,
-        shadow: this.shadow,
-        rounded: this.rounded,
-        'text-align': this.textAlign,
-        'full-width': this.fullWidth,
-        'is-active': this.isActive,
-        exact: this.exact,
-        uppercase: this.uppercase,
-        'default-tag': this.defaultTag,
-      }
+      return getCommonTags(this)
     }
   },
-  props: getUniqueProps('default'),
+  props: {
+    ...getUniqueProps('default'),
+    value: {
+      default: text('slot default', 'Default button', 'default'),
+    },
+  },
   template: `<mc-button v-bind="tagBind"> {{ value }} </mc-button>`,
 });
 
-// mc-title with icons
-// export const WithIcons = () => ({
-//   components: { McButton, McSvgIcon },
-//   computed: {
-//     tagBind() {
-//       return {
-//         variation: this.variation,
-//         color: this.color,
-//         ellipsis: this.ellipsis,
-//         'tag-name': this.tagName,
-//         uppercase: this.uppercase,
-//         'text-align': this.textAlign,
-//         'line-height': this.lineHeight,
-//         weight: this.weight,
-//       }
-//     }
-//   },
-//   props: getUniqueProps('WithIcons'),
-//   template: `<mc-title v-bind="tagBind">
-//       <mc-svg-icon slot="icon-prepend" name="info" color="blue" />
-//       {{ value }}
-//       <mc-svg-icon slot="icon-append" name="face" color="red" />
-//   </mc-title>`,
-// });
+// mc-button with icons
+export const WithIcons = () => ({
+  components: { McButton, McSvgIcon },
+  computed: {
+    tagBind() {
+      return getCommonTags(this)
+    }
+  },
+  props: {
+    ...getUniqueProps('withIcons'),
+    value: {
+      default: text('slot default', 'Button with icons', 'withIcons'),
+    },
+    isIconPrepend: {
+      default: boolean('slot icon prepend', true, 'withIcons'),
+    },
+    isIconAppend: {
+      default: boolean('slot icon append', true, 'withIcons'),
+    },
+  },
+  template: `<mc-button v-bind="tagBind">
+      <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" />
+      {{ value }}
+      <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" />
+  </mc-button>`,
+});
 

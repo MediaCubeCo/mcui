@@ -11,6 +11,7 @@ const coloredList = () => {
 export default {
   title: 'Examples/MyPtTaskList',
   parameters: {
+    component: MyPtTaskList,
     componentSubtitle: 'Subtitle for this component',
   },
   subcomponents: { MyElTask },

@@ -41,9 +41,6 @@ const getUniqueProps = key => {
     color: {
       default: select('color', colors, 'black', key),
     },
-    ellipsis: {
-      default: boolean('ellipsis', true, key),
-    },
     tagName: {
       default: text('tagName', 'div', key),
     },
@@ -59,9 +56,26 @@ const getUniqueProps = key => {
     weight: {
       default: select('weight', fontWeights, 'medium', key),
     },
+    maxWidth: {
+      default: text('maxWidth', '', key),
+    },
     value: {
       default: text('slot default', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias autem culpa dignissimos et id minima quae qui sapiente ullam velit?', key),
     },
+  }
+}
+
+const getCommonTags = ctx => {
+  return {
+    variation: ctx.variation,
+    color: ctx.color,
+    ellipsis: ctx.ellipsis,
+    'tag-name': ctx.tagName,
+    uppercase: ctx.uppercase,
+    'text-align': ctx.textAlign,
+    'line-height': ctx.lineHeight,
+    weight: ctx.weight,
+    'max-width': ctx.maxWidth,
   }
 }
 
@@ -69,19 +83,15 @@ export const Default = () => ({
   components: { McTitle },
   computed: {
     tagBind() {
-      return {
-        variation: this.variation,
-        color: this.color,
-        ellipsis: this.ellipsis,
-        'tag-name': this.tagName,
-        uppercase: this.uppercase,
-        'text-align': this.textAlign,
-        'line-height': this.lineHeight,
-        weight: this.weight,
-      }
+      return getCommonTags(this)
     }
   },
-  props: getUniqueProps('default'),
+  props: {
+    ...getUniqueProps('default'),
+    ellipsis: {
+      default: boolean('ellipsis', true, 'default'),
+    },
+  },
   template: `<mc-title v-bind="tagBind"> {{ value }} </mc-title>`,
 });
 
@@ -90,23 +100,25 @@ export const WithIcons = () => ({
   components: { McTitle, McSvgIcon },
   computed: {
     tagBind() {
-      return {
-        variation: this.variation,
-        color: this.color,
-        ellipsis: this.ellipsis,
-        'tag-name': this.tagName,
-        uppercase: this.uppercase,
-        'text-align': this.textAlign,
-        'line-height': this.lineHeight,
-        weight: this.weight,
-      }
+      return getCommonTags(this)
     }
   },
-  props: getUniqueProps('WithIcons'),
+  props: {
+    ...getUniqueProps('withIcons'),
+    ellipsis: {
+      default: boolean('ellipsis', false, 'withIcons'),
+    },
+    isIconPrepend: {
+      default: boolean('slot icon prepend', true, 'withIcons'),
+    },
+    isIconAppend: {
+      default: boolean('slot icon append', true, 'withIcons'),
+    },
+  },
   template: `<mc-title v-bind="tagBind"> 
-      <mc-svg-icon slot="icon-prepend" name="info" color="blue" /> 
+      <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" color="blue" /> 
       {{ value }} 
-      <mc-svg-icon slot="icon-append" name="face" color="red" /> 
+      <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" color="red" /> 
   </mc-title>`,
 });
 

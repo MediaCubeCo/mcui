@@ -1,5 +1,10 @@
 import tokens from "../assets/tokens/tokens.json"
 
+const getTokenValue = name => {
+  const tokenData = tokens.variables.find(v => v.name === name)
+  return tokenData.value
+}
+
 const getTokensByType = type => {
   const filteredTokens = tokens.variables.filter(v => {
     const regExp = new RegExp(`^\\$${type}-`)
@@ -34,4 +39,4 @@ const getTokenGroup = name => {
 }
 
 
-export { getTokensByType, getTokenGroup }
+export { getTokensByType, getTokenGroup, getTokenValue, }

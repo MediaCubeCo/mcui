@@ -1,18 +1,18 @@
 <template>
-  <component
-    v-bind="tagBind"
-    class="mc-button"
-    v-on="$listeners"
-    :is="tag"
-    :class="classes"
-    :exact="exact"
-  >
-    <slot name="icon-prepend" />
+  <component v-bind="tagBind" v-on="$listeners" class="mc-button" :is="tag" :class="classes" :exact="exact">
+    <span class="mc-button__prepend" v-if="$slots['icon-prepend']">
+      <!-- @slot Слот для вставки в начало -->
+      <slot class="mc-button__prepend" name="icon-prepend" />
+    </span>
     <btn-loader v-if="loading" name="ball-clip-rotate-multiple" class="mc-button__loader" color="inherit" />
     <span class="mc-button__text" v-if="$slots.default">
+      <!-- @slot Слот по умолчанию -->
       <slot />
     </span>
-    <slot name="icon-append" />
+    <span class="mc-button__append" v-if="$slots['icon-append']">
+      <!-- @slot Слот для вставки в конец -->
+      <slot name="icon-append" />
+    </span>
   </component>
 </template>
 
@@ -136,14 +136,14 @@ export default {
       default: false,
     },
     /**
-     * Uppercase
+     * Заглавные буквы
      */
     uppercase: {
       type: Boolean,
       default: false,
     },
     /**
-     * Default tag
+     * Тег по умолчанию
      */
     defaultTag: {
       type: String,
@@ -157,18 +157,17 @@ export default {
         [`mc-button--variation-${this.variation}`]: this.variation,
         [`mc-button--size-${this.size}`]: this.size,
         [`mc-button--text-align-${this.textAlign}`]: this.textAlign,
-
         "mc-button--loading": this.loading,
         "mc-button--is-active": this.isActive,
         "mc-button--disabled": this.disabled,
-        "mc-button--rounded": this.rounded,
+        "mc-button--rounded": this.rounded && /-compact$/.test(this.size),
         "mc-button--full-width": this.fullWidth,
         "mc-button--uppercase": this.uppercase,
         "mc-button--shadow": this.shadow,
       }
     },
     tag() {
-      if (this.to) {
+      if (this.to && this.$router) {
         return this.nuxt ? "nuxt-link" : "router-link"
       } else if (this.href) {
         return "a"
@@ -231,6 +230,12 @@ $colors: $token-colors;
     transform: translate3d(-50%, -50%, 0) scale(0.6);
   }
 
+  &__prepend,
+  &__append {
+    display: inline-flex;
+    align-items: center;
+  }
+
   &__text {
     @include ellipsis($display: inline-block);
     @include layout-flex-fix();
@@ -251,9 +256,22 @@ $colors: $token-colors;
       &-compact {
         @include size($size-400);
         padding: $space-100;
+        .mc-svg-icon {
+          @include size($size-200);
+        }
+      }
+      .mc-svg-icon {
+        @include size($size-200);
       }
 
-      @include child-indent-right($space-50);
+      #{$block-name} {
+        &__prepend {
+          margin-right: $space-50;
+        }
+        &__append {
+          margin-left: $space-50;
+        }
+      }
     }
     &-m {
       height: $size-500;
@@ -267,7 +285,14 @@ $colors: $token-colors;
         padding: $space-100;
       }
 
-      @include child-indent-right($space-50);
+      #{$block-name} {
+        &__prepend {
+          margin-right: $space-50;
+        }
+        &__append {
+          margin-left: $space-50;
+        }
+      }
     }
     &-l {
       height: $size-600;
@@ -281,7 +306,14 @@ $colors: $token-colors;
         padding: $space-150;
       }
 
-      @include child-indent-right($space-100);
+      #{$block-name} {
+        &__prepend {
+          margin-right: $space-100;
+        }
+        &__append {
+          margin-left: $space-100;
+        }
+      }
     }
   }
 
