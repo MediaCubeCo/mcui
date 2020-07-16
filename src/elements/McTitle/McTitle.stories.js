@@ -8,6 +8,7 @@ export default {
   title: 'Elements/McTitle',
   component: McTitle,
   parameters: {
+    componentSubtitle: 'Готов',
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A4',

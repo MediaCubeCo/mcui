@@ -7,6 +7,13 @@ import { getTokensByType, getTokenGroup } from "../../utils/getTokens"
 export default {
   title: 'Elements/McSvgIcon',
   component: McSvgIcon,
+  parameters: {
+    componentSubtitle: 'Готов',
+    // design: {
+    //   type: 'figma',
+    //   url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
+    // },
+  },
 };
 
 const names = svgIcons.map(icon => icon.name.slice(2, -4))

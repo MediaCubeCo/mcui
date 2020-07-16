@@ -28,8 +28,10 @@
     "core-js": "^3.6.5",
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",
+    "v-tooltip": "^2.0.3",
     "vue": "^2.6.11",
     "vue-loaders": "^4.0.0-alpha.2",
+    "vue-multiselect": "^2.1.6",
     "vue-textarea-autosize": "^1.1.1",
     "vuex": "^3.4.0"
   },

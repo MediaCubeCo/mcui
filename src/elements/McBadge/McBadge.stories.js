@@ -6,6 +6,13 @@ import { getTokensByType } from "../../utils/getTokens"
 export default {
   title: 'Elements/McBadge',
   component: McBadge,
+  parameters: {
+    componentSubtitle: 'В работе',
+    // design: {
+    //   type: 'figma',
+    //   url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
+    // },
+  },
 };
 
 const colors = getTokensByType('color')

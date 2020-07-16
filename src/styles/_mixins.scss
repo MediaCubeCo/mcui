@@ -194,17 +194,17 @@
 
 @mixin custom-scroll() {
   ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    @include size(5px);
     transition: background 0.3s;
   }
   ::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
     border: 1px solid #dcdcdc;
+    border-radius: $radius-50;
   }
   ::-webkit-scrollbar-thumb {
     background: hsl(240, 4%, 91%);
-    border-radius: 2px;
+    border-radius: $radius-50;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #c1c1c1;

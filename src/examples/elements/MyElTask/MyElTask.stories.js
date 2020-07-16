@@ -18,7 +18,7 @@ export const taskData = {
   updated_at: new Date(2019, 0, 1, 9, 0),
 };
 
-const taskTemplate = `<my-el-task :task="task" @archiveTask="onArchiveTask" @pinTask="onPinTask"/>`;
+const taskTemplate = `<my-el-task :task="task" @archiveTask="onArchiveTask" @pinTask="onPinTask" />`;
 
 // default task state
 export const Default = () => ({

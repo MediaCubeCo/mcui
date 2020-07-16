@@ -33,7 +33,7 @@
           <input
             v-else
             v-bind="inputAttrs"
-            :type="type"
+            :type="prettyType"
             ref="input"
             v-on="listeners"
             @input="$event => handleInput($event.target.value)"
@@ -41,18 +41,35 @@
             :maxlength="maxLength"
           />
         </label>
-        <div class="mc-field-text__append" v-if="$slots.append || copy">
+        <div class="mc-field-text__append" v-if="$slots.append || copy || isPassword">
           <!-- @slot Слот в конце инпута -->
           <slot name="append" />
           <mc-button
             v-if="copy"
-            variation="gray-dark-flat"
-            size="s-compact"
+            variation="blue-link"
+            size="m-compact"
             @click.prevent="handlerCopy(value)"
           >
-            <mc-svg-icon slot="icon-append" name="file_copy" fill="rgb(62, 132, 244)" />
+            <mc-svg-icon slot="icon-append" name="file_copy" />
+          </mc-button>
+          <mc-button
+            v-if="isPassword"
+            variation="blue-link"
+            size="m-compact"
+            @click.prevent="togglePasswordVisibility"
+          >
+            <mc-svg-icon slot="icon-append" :name="passwordIcon" />
           </mc-button>
         </div>
+        <mc-title
+          v-if="maxLength && (isTextarea || isTextareaAutosize)"
+          class="mc-field-text__char-counter"
+          variation="overline"
+          text-align="right"
+          :color="charCounterColor"
+        >
+          {{ charCounterTitle }}
+        </mc-title>
       </div>
       <div class="mc-field-text__right" v-if="$slots.right">
         <!-- @slot Слот справа инпута -->
@@ -76,12 +93,12 @@
 
 <script>
 import _omit from "lodash/omit"
-import { getTokenValue } from "../../utils/getTokens"
+import { getTokenValue } from "../../../utils/getTokens"
 
 import TextareaAutosize from "vue-textarea-autosize/src/components/TextareaAutosize"
-import McTitle from "../McTitle/McTitle"
-import McButton from "../McButton/McButton"
-import McSvgIcon from "../McSvgIcon/McSvgIcon"
+import McTitle from "../../McTitle/McTitle"
+import McButton from "../../McButton/McButton"
+import McSvgIcon from "../../McSvgIcon/McSvgIcon"
 
 
 export default {
@@ -224,6 +241,7 @@ export default {
     return {
       prependWidth: 0,
       appendWidth: 0,
+      prettyType:  this.type,
     }
   },
 
@@ -250,6 +268,10 @@ export default {
       return this.type === "textarea-autosize"
     },
 
+    isPassword() {
+      return this.type === "password"
+    },
+
     inputAttrs() {
       return {
         class: "mc-field-text__input",
@@ -263,6 +285,22 @@ export default {
       }
     },
 
+    passwordIcon() {
+      return this.prettyType === 'password' ? 'visibility' : 'visibility_off'
+    },
+
+    charCounter() {
+      return this.value ? this.value.length : 0
+    },
+
+    charCounterTitle() {
+      return `${this.charCounter}/${this.maxLength}`
+    },
+
+    charCounterColor() {
+      return this.maxLength < this.charCounter ? 'red' : 'dark-gray'
+    },
+
     errorText() {
       if (this.errors === null || !this.errors.length) return null
       return this.errors.join(", ")
@@ -270,9 +308,15 @@ export default {
 
     inputStyles() {
       const space = parseInt(getTokenValue('$space-150'))
+      let bottomStyle = {}
+      if (this.isTextarea || this.isTextareaAutosize) {
+        const spaceBottom = parseInt(getTokenValue('$space-400'))
+        bottomStyle = { paddingBottom: `${spaceBottom}px` }
+      }
       return {
         paddingLeft: this.prependWidth && `${this.prependWidth + space}px`,
         paddingRight: this.appendWidth && `${this.appendWidth + space}px`,
+        ...bottomStyle,
       }
     },
 
@@ -311,8 +355,11 @@ export default {
        * Событие по кнопке копирования
        * @property {string}
        */
-      this.$emit("handleCopy", value)
+      this.$emit("copy", value)
     },
+    togglePasswordVisibility() {
+      this.prettyType = this.prettyType === "password" ? "text" : "password"
+    }
   },
 }
 </script>
@@ -345,6 +392,7 @@ export default {
   &__main {
     position: relative;
     width: 100%;
+    @include custom-scroll();
   }
 
   &__prepend,
@@ -370,8 +418,15 @@ export default {
   }
 
   &__append {
-    right: 0;
-    padding: $space-100 $space-100 $space-100 $space-50;
+    right: $space-100;
+    padding: $space-100 0 $space-100 $space-50;
+  }
+
+  &__char-counter {
+    width: auto;
+    position: absolute;
+    right: $space-150;
+    bottom: $space-150;
   }
 
   &__input-wrapper {

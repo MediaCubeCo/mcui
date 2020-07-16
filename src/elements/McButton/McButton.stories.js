@@ -1,14 +1,16 @@
 import { text, select, boolean, object } from '@storybook/addon-knobs'
+import { action } from "@storybook/addon-actions"
+import { getTokensByType } from "../../utils/getTokens"
 
 import McButton from './McButton'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
-import { getTokensByType } from "../../utils/getTokens"
+
 
 export default {
   title: 'Elements/McButton',
   component: McButton,
   parameters: {
-    componentSubtitle: 'Subtitle for this component',
+    componentSubtitle: 'Готов',
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
@@ -125,6 +127,10 @@ const getCommonTags = ctx => {
   }
 }
 
+const actionsData = {
+  handleClick: action('clicked'),
+}
+
 export const Default = () => ({
   components: { McButton },
   computed: {
@@ -138,7 +144,8 @@ export const Default = () => ({
       default: text('slot default', 'Default button', 'default'),
     },
   },
-  template: `<mc-button v-bind="tagBind"> {{ value }} </mc-button>`,
+  methods: actionsData,
+  template: `<mc-button v-bind="tagBind" @click="handleClick"> {{ value }} </mc-button>`,
 });
 
 // mc-button with icons
@@ -161,7 +168,8 @@ export const WithIcons = () => ({
       default: boolean('slot icon append', true, 'withIcons'),
     },
   },
-  template: `<mc-button v-bind="tagBind">
+  methods: actionsData,
+  template: `<mc-button v-bind="tagBind" @click="handleClick">
       <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" />
       {{ value }}
       <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" />
