@@ -3,15 +3,19 @@ export default {
     name: 'McBadge',
     functional: true,
     props: {
-        color: {
+        /**
+         *  Дизайн:
+         *  `blue, blue-outline т.д.`
+        */
+        variation: {
             type: String,
-            default: 'white',
+            default: "transparent",
         },
-        background: {
-            type: String,
-            default: 'red',
-        },
-        translucent: {
+        /**
+         *  Вертикальная черта (в таблице, к примеру)
+         *
+        */
+        verticalLine: {
             type: Boolean,
             default: false,
         },
@@ -19,9 +23,8 @@ export default {
     render(h, { props, slots, data }) {
         const classes = {
             'mc-badge': true,
-            [`mc-badge--color-${props.color}`]: props.color,
-            [`mc-badge--bg-${props.background}`]: props.background,
-            [`mc-badge--translucent-${props.background}`]: props.translucent,
+            [`mc-badge--variation-${props.variation}`]: props.variation,
+            ['mc-badge--vertical-line']: props.verticalLine,
             ...(data.class || {}),
         }
 
@@ -41,31 +44,65 @@ export default {
                 class: classes,
                 style,
             },
-            slots()['default'],
+          [
+            h(
+              "div",
+              {
+                class: "mc-badge__text",
+              },
+              slots()["default"]
+            ),
+          ]
         )
     },
 }
 </script>
 
 <style lang="scss">
+$light-scale: "outline-gray", "hover-gray", "white", "light-blue", "lighter-blue", "toxic", "orange", "transparent";
 .mc-badge {
     $block-name: &;
-    display: inline-flex;
-    align-items: center;
+
+    @include ellipsis(100%, inline-flex);
+    color: $color-white;
+    font-family: $font-family-main;
+    font-size: $font-size-100;
+    line-height: $line-height-150;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-m;
+    vertical-align: middle;
+    max-width: 100%;
     border-radius: $radius-50;
-    padding: sum($space-100, 2px) $space-100;
+    padding: 1px $space-100;
+    border: 1px solid transparent;
+
     @each $color, $value in $token-colors {
-        &--color-#{$color} {
-            color: $value;
-            * {
-                color: $value;
+        &--variation-#{$color} {
+            background-color: $value;
+
+            @each $col-l in $light-scale {
+                @if $color == $col-l {
+                    color: $color-black;
+                }
+            }
+
+            &-outline {
+                background-color: $color-white;
+                color: $color-black;
+                border-color: $value;
             }
         }
-        &--bg-#{$color} {
-            background-color: $value;
-        }
-        &--translucent-#{$color} {
-            background-color: #{$value}70;
+    }
+
+    &--vertical-line {
+        padding: 0;
+        border-radius: 0;
+        width: 5px;
+        #{$block-name} {
+            &__text {
+                display: none;
+            }
         }
     }
 }

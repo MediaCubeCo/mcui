@@ -16,6 +16,7 @@ $color-lighter-blue: #E2EFFF; /* Выбранные элементы */
 $color-dark-green: #3B873E; /* Цифры и положительные действия */
 $color-light-green: #72C276; /* Зелёные кнопки */
 
+$color-toxic: #E8F443; /* Кнопки, статус данных */
 $color-orange: #FCB100; /* Кнопки, статус данных */
 $color-red: #F44242; /* Красные кнопки отмены */
 $color-ultraviolet: #C821FC; /* Статус данных */
@@ -43,4 +44,5 @@ $token-colors: (
   "purple": $color-purple,
   "pinkish": $color-pinkish,
   "azure": $color-azure,
+  "transparent": $color-transparent,
 );

@@ -93,10 +93,9 @@ export default {
       border-radius: $radius-50;
       font-family: $font-family-main;
       font-weight: $font-weight-medium;
-      letter-spacing: 0.4px;
       line-height: $line-height-250;
       font-size: $font-size-300;
-      box-shadow: $shadow-l;
+      box-shadow: $shadow-s;
       padding: $space-100 $space-150;
     }
 

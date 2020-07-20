@@ -3,15 +3,15 @@
     <div :for="name" class="mc-field-select__header">
       <!-- @slot Слот заголовка -->
       <slot name="header">
-        <mc-title :ellipsis="false" v-if="title" :level="4">{{ title }}</mc-title>
+        <mc-title v-if="title" :ellipsis="false">{{ title }}</mc-title>
       </slot>
     </div>
     <div class="mc-field-select__main">
       <multi-select
-        :value="_value"
-        :options="options"
         label="name"
         track-by="value"
+        :value="_value"
+        :options="options"
         :searchable="searchable"
         :show-labels="showLabels"
         :multiple="multiple"
@@ -28,26 +28,24 @@
         @search-change="handleSearchChange"
       >
         <template slot="singleLabel" slot-scope="{ option }">
-          <div v-if="avatar" class="mc-field-select__avatar-wrap">
-            <div class="mc-field-select__avatar">
-              <mc-avatar size="xs" :src="avatar" />
+          <div class="mc-field-select__single-label">
+            <div v-if="hasPrepend" class="mc-field-select__prepend">
+                <mc-avatar v-if="avatar" :src="avatar" />
+                <mc-svg-icon v-else :name="icon" />
             </div>
-            <div class="mc-field-select__avatar-text">
+            <div
+              class="mc-field-select__label-text"
+              :class="hasPrepend ? 'mc-field-select__label-text--indent-left' : ''"
+            >
               {{ option ? option.name : this.placeholder }}
             </div>
           </div>
-          <template v-else>
-            <div class="mc-field-select__avatar-wrap">
-              <div class="mc-field-select__avatar-text mc-field-select__avatar-text--no-img">
-                {{ option ? option.name : this.placeholder }}
-              </div>
-            </div>
-          </template>
         </template>
+
         <template v-if="optionsTooltip" slot="option" slot-scope="{ option }">
           <mc-tooltip
+            class="mc-field-select__options-tooltip-target"
             max-width="m"
-            class="options-tooltip-target"
             color="black"
             placement="top"
             :content="option.name"
@@ -62,15 +60,15 @@
       </multi-select>
     </div>
     <div class="mc-field-select__footer" v-if="errorText || helpText || $slots.footer">
-      <mc-title tag-name="div" :ellipsis="false" color="red" size="s" v-if="errorText">
+      <mc-title v-if="errorText" tag-name="div" color="red" variation="overline" max-width="100%" :ellipsis="false">
         {{ errorText }}
       </mc-title>
       <br v-if="errorText" />
       <!-- @slot Слот доп. текста под инпутом -->
       <slot name="footer">
-        <mc-title tag-name="div" :ellipsis="false" size="s" v-if="helpText">{{
-          helpText
-        }}</mc-title>
+        <mc-title v-if="helpText" tag-name="div" variation="overline" max-width="100%" :ellipsis="false">
+          {{ helpText }}
+        </mc-title>
       </slot>
     </div>
   </div>
@@ -80,11 +78,12 @@
 import MultiSelect from "vue-multiselect"
 import "vue-multiselect/dist/vue-multiselect.min.css"
 import McTitle from "../../McTitle/McTitle"
-import McTooltip from "../McTooltip"
+import McTooltip from "../../McTooltip/McTooltip"
 import McAvatar from "../../McAvatar/McAvatar"
+import McSvgIcon from "../../McSvgIcon/McSvgIcon"
 export default {
   name: "McFieldSelect",
-  components: { McAvatar, McTitle, McTooltip, MultiSelect },
+  components: { McSvgIcon, McAvatar, McTitle, McTooltip, MultiSelect },
   data() {
     return {
       searchValue: null,
@@ -108,47 +107,78 @@ export default {
       type: String,
       default: null,
     },
-
+    /**
+     *  Массив элементов
+     *  выпадающего списка
+     */
     options: {
       type: Array,
       required: true,
     },
-
+    /**
+     *  Выполняется ли поиск из списка
+     *  при вводе в инпут
+     */
     searchable: {
       type: Boolean,
       default: true,
     },
-
+    /**
+     *  Множественный выбор
+     */
     multiple: {
       type: Boolean,
       default: false,
     },
-
+    /**
+     *  Скрывать из списка
+     *  выбранные элементы
+     */
     hideSelected: {
       type: Boolean,
       default: false,
     },
-
+    /**
+     *  Допустимо ли
+     *  пустое значение
+     */
     allowEmpty: {
       type: Boolean,
       default: false,
     },
-
+    /**
+     *  Отключенное состояние
+     */
     disabled: {
       type: Boolean,
       default: false,
     },
-
+    /**
+     *  Ссылка на аватар/картинку
+     *  в начале label
+     */
     avatar: {
       type: String,
       default: null,
     },
-
+    /**
+     *  Имя иконки
+     *  в начале label
+     */
+    icon: {
+      type: String,
+      default: null,
+    },
+    /**
+     *  Цвет фона
+     */
     backgroundColor: {
       type: String,
       default: null,
     },
-
+    /**
+     *  placeholder
+     */
     placeholder: {
       type: String,
       default: "",
@@ -166,7 +196,10 @@ export default {
       type: Boolean,
       default: false,
     },
-
+    /**
+     *  Помечать в списке выбранные
+     *  элементы
+     */
     showLabels: {
       type: Boolean,
       default: false,
@@ -176,21 +209,30 @@ export default {
       type: Boolean,
       default: true,
     },
-
+    /**
+     *  Значение
+     */
     value: {
       default: null,
     },
-
+    /**
+     *  Ошибки
+     */
     errors: {
       type: Array,
       default: null,
     },
-
+    /**
+     *  Name
+     */
     name: {
       type: String,
       default: null,
     },
-
+    /**
+     *  Если нужен тултип
+     *  над элементами списка
+     */
     optionsTooltip: {
       type: Boolean,
       default: false,
@@ -207,7 +249,7 @@ export default {
     },
     _value() {
       if (this.multiple) {
-        if (this.value == null) return []
+        if (this.value === null) return []
         let result = []
         for (let value of this.value) {
           let option = this.options.find(o => {
@@ -236,6 +278,9 @@ export default {
         }
       }
       return false
+    },
+    hasPrepend() {
+      return this.avatar || this.icon
     },
   },
   methods: {
@@ -285,7 +330,7 @@ export default {
 
 <style lang="scss">
 $colors: $token-colors;
-$gray-scale: "light-gray", "gray-darkest", "black";
+$gray-scale: "gray", "dark-gray", "black";
 $text-black: scale-color($color-black, $alpha: -10%);
 $text-white: scale-color($color-white, $alpha: -10%);
 
@@ -293,12 +338,12 @@ $text-white: scale-color($color-white, $alpha: -10%);
   $block-name: &;
 
   @include custom-scroll();
-  font-family: $font-heading;
+  font-family: $font-family-main;
 
   &__header {
     @include reset-text-indents();
     display: block;
-    margin-bottom: $space-xs;
+    margin-bottom:$space-100;
 
     &:empty {
       display: none;
@@ -306,72 +351,74 @@ $text-white: scale-color($color-white, $alpha: -10%);
   }
 
   &__footer {
-    margin-top: $space-xxxs;
+    margin-top: $space-50;
 
     &:empty {
       display: none;
     }
   }
 
-  &__avatar-wrap {
+  &__single-label {
     @include reset-text-indents();
     position: relative;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    @include child-indent-right($space-50);
   }
 
-  &__avatar {
+  &__prepend {
     position: absolute;
-    left: -$space-xs;
-    top: -$space-xxxs;
   }
 
-  &__avatar-text {
+  &__label-text {
     @include ellipsis();
-    font-size: $size-m;
-    line-height: $line-height-s;
-    padding-left: $space-m;
+    font-size: $font-size-200;
+    line-height: $line-height-200;
+    padding-left: $space-50;
     color: $color-black;
-
-    &--no-img {
-      padding-left: 0;
+    &--indent-left {
+      margin-left: $space-300;
     }
   }
 
   .multiselect {
     &__placeholder {
       @include ellipsis();
-      color: $color-gray-dark;
-      font-size: $size-m;
-      line-height: $line-height-s;
-      margin-bottom: $space-xs;
-      padding-top: $space-xs + 1;
+      color: $color-black;
+      font-size: $font-size-200;
+      line-height: $line-height-200;
+      margin-bottom: $space-150 - 1px;
+      padding-top: $space-150 - 1px;
     }
 
     &__single {
       padding-left: 0;
-      margin-bottom: $space-xs;
-      padding-top: $space-xs + 1;
+      margin-bottom: $space-150 - 1px;
+      margin-top: $space-150 - 1px;
       background-color: transparent;
+      min-height: auto;
 
       @include input-placeholder() {
-        color: $color-gray-dark;
+        color: $color-black;
       }
     }
 
     &__input {
       padding-left: 0;
-      margin-bottom: $space-xs;
-      padding-top: $space-xs + 1;
+      margin-bottom: $space-150 - 2px;
+      padding-top: $space-150 - 1px;
+      font-size: $font-size-200;
+      line-height: $line-height-200;
+      min-height: auto;
 
       @include input-placeholder() {
-        color: $color-gray-dark;
+        color: $color-black;
       }
     }
 
     &__select {
-      height: $tappable-element-m - 2px;
+      height: $size-500 - 2px;
       &::before {
         border-color: $text-black transparent transparent;
       }
@@ -380,34 +427,35 @@ $text-white: scale-color($color-white, $alpha: -10%);
     &__tags {
       @include reset-text-indents();
       border: 1px solid $color-outline-gray;
-      border-radius: $radius-m !important;
-      padding: $space-xxxs - 1 $tappable-element-m 0 $space-s;
+      border-radius: $radius-50 !important;
+      padding: 0 $space-500 0 $space-100;
     }
 
     &__tags-wrap {
-      padding-bottom: $space-xxxs;
       position: relative;
-      top: $space-xxxs - 1;
+      padding-top: 4px;
+      padding-bottom: 3px;
+      top: 0;
       display: flex;
       flex-wrap: wrap;
-      margin-top: -$space-xxxs + 1;
-      min-height: $tappable-element-m - 4px;
-      margin-left: -$space-xs;
+      margin-top: -1px;
+      min-height: $size-500 - 2px;
+      @include child-indent-right($space-100);
     }
 
     &__tag {
-      font-family: $font-heading;
-      margin-top: $space-xxxs;
-      background-color: fade-out($color-blue, 0.9);
-      color: $color-black;
       display: inline-flex;
       align-items: center;
-      padding: $space-xxxs $space-xs $space-xxxs $space-m / 2;
-      border-radius: $radius-xxxxl;
-      font-size: $size-m - 1;
-      height: $tappable-element-s;
-      margin-bottom: $space-xxxs;
-      margin-right: $space-xxs - 1;
+      height: $size-300;
+      font-family: $font-family-main;
+      margin-top: $space-50;
+      margin-bottom: $space-50;
+      background-color: $color-lighter-blue;
+      color: $color-black;
+      padding: $size-50 $size-50 $size-50 $size-100;
+      border-radius: 100px;
+      font-size: $font-size-200;
+      line-height: $line-height-200;
 
       span {
         @include ellipsis();
@@ -417,7 +465,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
     }
 
     &__tag-icon {
-      @include size($tappable_element_xxs + 2);
+      @include size($size-200);
       position: relative;
       background-color: $color-blue;
       border-radius: $radius-circle;
@@ -428,41 +476,38 @@ $text-white: scale-color($color-white, $alpha: -10%);
       }
 
       &::after {
-        @include size($space-xs);
-        position: absolute;
-        color: #e0eeff;
-        left: $space-xxs + 1;
-        top: -$space-xxxs;
+        @include align(true, true, absolute);
+        color: $color-white;
       }
     }
 
     &__content {
-      padding: $space-xs;
+      padding: $size-100;
       max-width: 100%;
     }
 
     &__content-wrapper {
-      top: calc(100% + #{$space-xs});
+      top: calc(100% + #{$size-100});
       border: none;
-      border-radius: $radius-l;
-      box-shadow: $shadow-l;
+      border-radius: $radius-100;
+      box-shadow: $shadow-s;
       overflow-y: auto;
       overflow-x: hidden;
     }
 
     &--above {
       .multiselect__content-wrapper {
-        bottom: calc(100% + #{$space-xs});
+        bottom: calc(100% + #{$size-100});
         top: auto;
       }
     }
 
     &__option {
-      min-height: $tappable-element-l;
+      min-height: $size-500;
       display: flex;
       align-items: center;
-      border-radius: $radius-m;
-      padding: $space-xs;
+      border-radius: $radius-50;
+      padding: $space-150;
 
       span {
         @include ellipsis();
@@ -525,25 +570,25 @@ $text-white: scale-color($color-white, $alpha: -10%);
             &__tags {
               background-color: fade-out($value, 0.6);
               @if $color != "white" {
-                border-color: transparent !important;
+                border-color: $color-outline-gray !important;
               }
             }
 
             &__select {
               &::before {
-                border-color: $color-gray transparent transparent;
+                border-color: $color-outline-gray transparent transparent;
               }
             }
           }
         }
-        & #{$block-name}__avatar-text {
-          color: $color-gray-dark;
+        & #{$block-name}__label-text {
+          color: $color-gray;
         }
       }
 
       @each $col-g in $gray-scale {
         @if $color == $col-g {
-          #{$block-name}__avatar-text {
+          #{$block-name}__label-text {
             color: $text-white;
           }
 
@@ -613,17 +658,17 @@ $text-white: scale-color($color-white, $alpha: -10%);
       background: transparent;
       .multiselect {
         &__tags {
-          border-color: $color-hover-gray;
+          border-color: $color-outline-gray;
           background-color: $color-hover-gray;
         }
 
         &__placeholder {
-          color: $color-gray-dark;
+          color: $color-gray;
         }
 
         &__single {
-          & #{$block-name}__avatar-text {
-            color: $color-gray-dark;
+          & #{$block-name}__label-text {
+            color: $color-gray;
           }
         }
 
@@ -638,64 +683,10 @@ $text-white: scale-color($color-white, $alpha: -10%);
     }
   }
 
-  .options-tooltip-target {
+  &__options-tooltip-target {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 }
 </style>
-
-<docs>
-  ```jsx
-  let categories = require('../../mocks/categories').default
-  let categoriesModel = []
-  let categoriesModel2 = []
-  let categoriesModel3 = []
-  let categoriesModel4 = 4
-  <div style="max-width: 400px">
-    <mc-field-select
-            title="Multiple"
-            allow-empty
-            multiple
-            taggable
-            hide-selected
-            searchable
-            v-model="categoriesModel"
-            :options="categories.map(c => ({ name: c.title, value: c.id }))"
-            placeholder="Multiple"
-            :errors="['Имя пользователя и пароль не совпадают', 'Поле обязательно для заполнения.']"
-            open-direction="auto"
-    />
-
-    <br>
-    <mc-field-select
-            help-text="Используйте электронный адрес, указанный при регистрации аккаунта MediaCube."
-            title="Single"
-            allow-empty
-            :multiple="false"
-            v-model="categoriesModel2"
-            :options="categories.map(c => ({ name: c.title, value: c.id }))"
-            placeholder="One"/>
-
-    <br>
-    <mc-field-select
-            disabled
-            title="Disabled"
-            allow-empty
-            :multiple="false"
-            v-model="categoriesModel3"
-            :options="categories.map(c => ({ name: c.title, value: c.id }))"
-            placeholder="One"/>
-    <br>
-    <mc-field-select
-            background-color="azure"
-            title="Цветной"
-            avatar="https://yt3.ggpht.com/a/AGF-l79FVckie4j9WT-4cEW6iu3gPd4GivQf_XNSWg=s800-mo-c-c0xffffffff-rj-k-no"
-            v-model="categoriesModel4"
-            :options="categories.map(c => ({ name: c.title, value: c.id }))"
-            :searchable="false"
-    />
-  </div>
-  ```
-</docs>

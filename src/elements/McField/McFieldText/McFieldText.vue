@@ -3,7 +3,7 @@
     <label :for="name" class="mc-field-text__header">
       <!-- @slot Слот заголовка -->
       <slot name="header">
-        <mc-title :ellipsis="false" v-if="title">{{ title }}</mc-title>
+        <mc-title v-if="title" :ellipsis="false">{{ title }}</mc-title>
       </slot>
     </label>
     <div class="mc-field-text__inner">
@@ -447,7 +447,6 @@ export default {
     font-size: $font-size-200;
     background-color: $color-white;
     -moz-appearance: textfield;
-    // appearance: textfield;
     transition: background-color $duration-s ease, border-color $duration-s ease;
     color: $color-black;
 

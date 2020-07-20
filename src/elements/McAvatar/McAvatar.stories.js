@@ -10,10 +10,10 @@ export default {
   decorators: [withDesign],
   parameters: {
     componentSubtitle: 'В работе',
-    // design: {
-    //   type: 'figma',
-    //   url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
-    // },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=127%3A1390',
+    },
   },
 };
 
@@ -34,7 +34,10 @@ export const Default = () => ({
     rounded: {
       default: boolean('rounded', true)
     },
+    lazy: {
+      default: boolean('lazy', true)
+    },
   },
-  template: '<mc-avatar :src="src" :alt="alt" :size="size" :rounded="rounded" />',
+  template: '<div><div style="height: 2000px"></div><mc-avatar :src="src" :alt="alt" :size="size" :rounded="rounded" :lazy="lazy" /> </div>',
 });
 

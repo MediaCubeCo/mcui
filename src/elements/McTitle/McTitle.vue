@@ -219,6 +219,7 @@ export default {
 
   &--uppercase {
     text-transform: uppercase;
+    letter-spacing: $letter-spacing-m;
   }
 
   &--color {

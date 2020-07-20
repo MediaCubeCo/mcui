@@ -276,7 +276,6 @@ $colors: $token-colors;
     &-m {
       height: $size-500;
       padding: $space-100 $space-200;
-      letter-spacing: 0.4px;
       font-size: $font-size-300;
       line-height: $line-height-300;
 
@@ -297,7 +296,6 @@ $colors: $token-colors;
     &-l {
       height: $size-600;
       padding: $space-150 $space-300;
-      letter-spacing: 0.4px;
       font-size: $font-size-300;
       line-height: $line-height-300;
 
@@ -459,6 +457,7 @@ $colors: $token-colors;
 
   &--uppercase {
     text-transform: uppercase;
+    letter-spacing: $letter-spacing-m;
   }
 
   &--is-active,

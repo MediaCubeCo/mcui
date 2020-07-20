@@ -9,7 +9,7 @@ export default {
 export const actionsData = {
   onPinTask: action('onPinTask'),
   onArchiveTask: action('onArchiveTask'),
-};
+}
 
 export const taskData = {
   id: '1',
