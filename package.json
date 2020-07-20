@@ -8,7 +8,7 @@
   "license": "MIT",
   "main": "dist/mcui.common.js",
   "scripts": {
-    "start": "yarn scss-export && start-storybook -p 6006 -s public -c .storybook watch-css -s ./src",
+    "start": "yarn scss-export && start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook",
     "serve": "yarn scss-export && vue-cli-service serve",
     "build": "yarn scss-export && vue-cli-service build --target lib --inline-vue",
