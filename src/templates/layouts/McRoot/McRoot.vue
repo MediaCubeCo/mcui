@@ -1,21 +1,22 @@
 <template>
-    <div class="mc-tm-root">
+    <div class="mc-root">
         <slot />
     </div>
 </template>
 
 <script>
+  import "normalize.css/normalize.css"
   /**
-   * Это обязательный компонент (это не точно), с него начинается любой layout,
+   * Это обязательный компонент, с него начинается любой layout,
    * т.к. здесь находятся глобальные стили.
    */
   export default {
-    name: "McTmRoot",
+    name: "McRoot",
   }
 </script>
 
 <style lang="scss">
-.mc-tm-root {
+.mc-root {
     $block-name: &;
 }
 </style>

@@ -1,5 +1,6 @@
 import WebFontLoader from "../src/utils/webFontLoader"
 import '../src/styles/main.scss'
+import "normalize.css/normalize.css"
 
 import Vue from "vue";
 import VueLazyload from 'vue-lazyload'
