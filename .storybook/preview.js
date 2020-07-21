@@ -1,10 +1,8 @@
 import WebFontLoader from "../src/utils/webFontLoader"
-import '../src/styles/main.scss'
 import "normalize.css/normalize.css"
-
-import Vue from "vue";
-import VueLazyload from 'vue-lazyload'
-Vue.use(VueLazyload)
+import '../src/styles/main.scss'
+import '../src/styles/global.scss'
+import "./plugins"
 
 import { addDecorator, addParameters } from '@storybook/vue';
 import { withA11y } from '@storybook/addon-a11y';
