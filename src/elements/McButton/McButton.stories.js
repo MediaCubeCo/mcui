@@ -16,7 +16,7 @@ export default {
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
     },
   },
-};
+}
 
 const types = {
   'button': 'button',
@@ -146,7 +146,7 @@ export const Default = () => ({
   },
   methods: actionsData,
   template: `<mc-button v-bind="tagBind" @click="handleClick"> {{ value }} </mc-button>`,
-});
+})
 
 // mc-button with icons
 export const WithIcons = () => ({
@@ -174,5 +174,5 @@ export const WithIcons = () => ({
       {{ value }}
       <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" />
   </mc-button>`,
-});
+})
 

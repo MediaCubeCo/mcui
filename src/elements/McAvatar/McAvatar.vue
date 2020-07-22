@@ -236,6 +236,14 @@
                         left: 0;
                     }
                 }
+                @if $size == 1000 {
+                    &::after {
+                        @include size($size-200);
+                        border-width: 2px;
+                        bottom: 1px;
+                        left: 2px;
+                    }
+                }
             }
         }
     }

@@ -9,7 +9,7 @@ export default {
   component: McAvatar,
   decorators: [withDesign],
   parameters: {
-    componentSubtitle: 'В работе',
+    componentSubtitle: 'Готов',
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=127%3A1390',
@@ -61,7 +61,7 @@ export const Default = () => ({
       default: boolean('lazy', false, 'default')
     },
   },
-  template: '<mc-avatar :src="src" :alt="alt" :size="size" :rounded="rounded" :lazy="lazy" />',
+  template: '<mc-avatar v-bind="tagBind" />',
 })
 
 export const Lazy = () => ({
@@ -82,7 +82,7 @@ export const Lazy = () => ({
   },
   template: `<div>
       <div style="height: 2000px">&#11015; &#11015; &#11015; Scroll to bottom &#11015; &#11015; &#11015;</div>
-      <mc-avatar :src="src" :alt="alt" :size="size" :rounded="rounded" :lazy="lazy" /> 
+      <mc-avatar v-bind="tagBind" /> 
   </div>`,
 })
 
