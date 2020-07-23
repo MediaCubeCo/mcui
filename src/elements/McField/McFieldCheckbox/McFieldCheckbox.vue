@@ -96,15 +96,6 @@ export default {
     },
 
     /**
-     *  Плейсхолдерplaceholder: {
-    //   type: String,
-    //   default: null,
-    // },
-     *
-     */
-    //
-
-    /**
      *  Вспомогательный текст под инпутом:
      *
      */
@@ -198,6 +189,7 @@ export default {
   &__icon {
     @include size($size-200);
     @include position(absolute, 0 null null 0);
+    z-index: 1;
     &:hover {
       color: $color-blue;
     }
@@ -211,7 +203,6 @@ export default {
       @include size($size-200);
       @include position(absolute, 0 null null 0);
       background-size: 100%;
-      display: none;
     }
 
     .mc-button {
@@ -242,14 +233,16 @@ export default {
   &--disabled {
     #{$block-name} {
       &__icon {
-        display: none;
+        color: $color-outline-gray;
+        &:hover {
+          color: $color-outline-gray;
+        }
       }
       &__name-text {
         &:before {
           display: block;
-          /*background-image: none;*/
           border-radius: 2px;
-          background-color: $color-outline-gray;
+          background-color: $color-hover-gray;
         }
       }
     }

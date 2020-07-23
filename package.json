@@ -38,7 +38,8 @@
     "vue-multiselect": "^2.1.6",
     "vue-textarea-autosize": "^1.1.1",
     "vuex": "^3.4.0",
-    "webfontloader": "^1.6.28"
+    "webfontloader": "^1.6.28",
+    "xe-utils": "^2.6.6"
   },
   "devDependencies": {
     "@babel/core": "^7.10.1",

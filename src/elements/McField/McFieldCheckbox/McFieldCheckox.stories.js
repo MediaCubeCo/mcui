@@ -36,7 +36,7 @@ const getCommonTags = ctx => {
 }
 
 const actionsData = {
-  handleInput: action('clicked'),
+  handleInput: action('toggle'),
 }
 
 // mc-field-checkbox default
