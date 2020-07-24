@@ -1,8 +1,9 @@
 <template>
-    <div class="mc-field-radio-group">
+    <div class="mc-field-radio-group" :class="classes">
        <mc-field-radio-button
            v-for="radio in computedOptions"
            v-bind="radio"
+           :key="radio.id"
            :name="name"
            @input="handleInput"
        />
@@ -27,14 +28,14 @@
        */
       options: {
         type: Array,
-        default: [],
+        default: () => [],
       },
       /**
        *  Выбранное значение по умолчанию
        */
       defaultValue: {
         type: [String, Number],
-        default: 0
+        default: ''
       },
       /**
        *  Name
@@ -51,6 +52,22 @@
         type: Boolean,
         default: false,
       },
+      /**
+       *  Добавление пользовательского
+       *  класса к radio
+       */
+      radioClassName: {
+        type: String,
+        default: '',
+      },
+      /**
+       *  Направление списка
+       *  `column`, `row`
+       */
+      direction: {
+        type: String,
+        default: 'column',
+      }
     },
     computed: {
       computedOptions() {
@@ -58,22 +75,49 @@
         return this.options.map(o => {
           const optionData = typeof o === 'object' ? o : { label: o, value: o }
           return {
-            key: _XEUtils.uniqueId(),
+            id: _XEUtils.uniqueId(),
             ...optionData,
             disabled: this.disabled || optionData.disabled,
             'checked-default': optionData.value === this.defaultValue,
+            class: this.radioClassName,
           }
         })
+      },
+      classes() {
+        return {
+            [`mc-field-radio-group--direction-${this.direction}`]: this.direction,
+        }
       }
     },
     methods: {
       handleInput(e) {
         this.$emit('input', e.target.value)
-      }
+        /**
+         * Событие по смене выбора
+         * @property {event}
+         */
+        this.$emit('change', e)
+      },
     },
   }
 </script>
 
 <style lang="scss">
+.mc-field-radio-group {
+    $block-name: &;
 
+
+    &--direction {
+        &-column {
+            @include child-indent-bottom($space-100);
+            .mc-field-radio-button {
+                display: block;
+            }
+        }
+        &-row {
+            @include child-indent-right($space-100);
+        }
+    }
+
+}
 </style>

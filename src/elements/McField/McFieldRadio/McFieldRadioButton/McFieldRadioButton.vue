@@ -4,6 +4,7 @@
           :disabled="disabled"
           class="mc-field-radio-button__input"
           type="radio"
+          :value="value"
           :name="name"
           :checked="checkedDefault"
           @change="handleChange"
