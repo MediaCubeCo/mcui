@@ -66,27 +66,15 @@ export default {
       type: Boolean,
       default: false,
     },
-    /**
-     *  Массив номеров табов (с конца)
-     *  для добавления ссылочной иконки
-     */
-    lastTabLink: {
-      type: Array,
-      default: () => [],
-    },
   },
   computed: {
     classes() {
-      const result = {
+      return  {
         [`mc-tabs--color-${this.color}`]: this.color,
         [`mc-tabs--accent-color-${this.accentColor}`]: this.accentColor,
         [`mc-tabs--tab-variation-${this.tabVariation}`]: this.tabVariation,
         [`mc-tabs--uppercase`]: this.uppercase,
       }
-      this.lastTabLink.forEach(num => {
-        result[`mc-tabs--last-tab-link-${num}`] = num
-      })
-      return result
     },
   },
   methods: {
@@ -95,7 +83,7 @@ export default {
        * Событие при смене таба
        * @property {Object}
        */
-      this.$emit("changed", e)
+      this.$emit("tab-changed", e)
     },
     getActiveTab() {
       return this.$refs.tabs.getActiveTab()
@@ -105,13 +93,6 @@ export default {
 </script>
 
 <style lang="scss">
-$last-childs: (
-  "1": 1,
-  "2": 2,
-  "3": 3,
-  "4": 4,
-  "5": 5,
-);
 
 .mc-tabs {
   $block-name: &;
@@ -163,6 +144,15 @@ $last-childs: (
           &::after {
             background-color: $value;
           }
+          &:hover {
+            color: $value;
+          }
+        }
+        .tabs-component-tab.is-active {
+          .tabs-component-tab-a {
+            color: $value;
+            font-weight: $font-weight-semi-bold;
+          }
         }
       }
     }
@@ -190,6 +180,16 @@ $last-childs: (
   .tabs-component-tab {
     position: relative;
     flex: 0 0 auto;
+    &:first-child {
+      .tabs-component-tab-a {
+        margin-left: 0;
+      }
+    }
+    &:last-child {
+      .tabs-component-tab-a {
+        margin-right: 0;
+      }
+    }
 
     &.is-active {
       .tabs-component-tab-a {
@@ -200,22 +200,45 @@ $last-childs: (
         }
       }
     }
-      &.is-disabled {
-          .tabs-component-tab-a {
-              cursor: auto;
-          }
+    &.is-disabled {
+        .tabs-component-tab-a {
+            cursor: not-allowed;
+            color: $color-outline-gray;
+        }
+    }
+
+    &__tab-name {
+      &::after {
+        display: block;
+        content: attr(data-name);
+        font-weight: $font-weight-semi-bold;
+        height: 0;
+        overflow: hidden;
+        visibility: hidden;
       }
+    }
+    &__icon {
+      &-prepend,
+      &-append {
+        @each $color, $value in $token-colors {
+          &--color-#{$color} {
+            color: $value;
+          }
+        }
+      }
+    }
   }
 
   .tabs-component-tab-a {
+    position: relative;
     display: inline-flex;
     font-family: $font-family-main;
-    //line-height: $line-height-200;
-    //font-size: $font-size-200;
     font-weight: $font-weight-medium;
     text-decoration: none;
-    padding: 0 $space-100 $space-150;
+    padding-bottom: $space-150;
+    margin: 0 $space-150;
 
+    @include child-indent-right($space-50);
     @include border();
 
     &::after {
@@ -228,28 +251,5 @@ $last-childs: (
     }
   }
 
-  @each $title, $value in $last-childs {
-    &--last-tab-link-#{$title} {
-      & .tabs-component-tab {
-        position: relative;
-        &:nth-last-child(#{$value}) {
-          &:after {
-            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z'/%3E%3C/svg%3E");
-            display: block;
-            @include position(absolute, 0 1px null null);
-            //transform: translateY(-50%);
-            @include size($size-150);
-            z-index: 2;
-          }
-
-          & .tabs-component-tab-a {
-            padding-right: $space-250;
-            z-index: 3;
-            position: relative;
-          }
-        }
-      }
-    }
-  }
 }
 </style>

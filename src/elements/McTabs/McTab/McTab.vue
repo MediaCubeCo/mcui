@@ -9,26 +9,26 @@
     <!-- @slot контента -->
     <slot />
   </section>
-<!--  <tab class="mc-tab" :id="id" :name="name" :prefix="prefix" :suffix="suffix" :is-disabled="isDisabled">-->
-<!--        &lt;!&ndash; @slot контента &ndash;&gt;-->
-<!--        <slot />-->
-<!--  </tab>-->
 </template>
 
 <script>
 import Tab from "vue-tabs-component/src/components/Tab"
+import McSvgIcon from "../../McSvgIcon/McSvgIcon"
 
 export default {
   name: "McTab",
-  // components: { Tab },
   extends: Tab,
+  components: {
+    McSvgIcon,
+  },
   props: {
     /**
      *  Если нужен иной фрагмент в url после #
      *  (по умолчанию берётся из 'name')
      */
     id: {
-      default: null
+      type: String,
+      default: '',
     },
     /**
      *  Имя таба
@@ -41,6 +41,7 @@ export default {
      *  (не влияет на значение вставленное в url)
      */
     prefix: {
+      type: String,
       default: ""
     },
     /**
@@ -48,13 +49,60 @@ export default {
      *  (не влияет на значение вставленное в url)
      */
     suffix: {
+      type: String,
       default: ""
     },
     /**
      *  Отключенное состояние
      */
     isDisabled: {
+      type: Boolean,
       default: false
+    },
+    /**
+     *  Классы иконки в начале
+     */
+    iconPrependClasses: {
+      type: String,
+      default: "",
+    },
+    /**
+     *  Классы иконки в конце
+     */
+    iconAppendClasses: {
+      type: String,
+      default: "",
+    },
+    /**
+     *  Цвет иконки в начале
+     */
+    iconPrependColor: {
+      type: String,
+      default: "gray",
+    },
+    /**
+     *  Цвет иконки в конце
+     */
+    iconAppendColor: {
+      type: String,
+      default: "gray",
+    },
+  },
+  computed: {
+    computedPrefix() {
+      const colorClass = this.iconPrependColor ? ` tabs-component-tab__icon-prepend--color-${this.iconPrependColor}` : ''
+      const classes = `${this.iconPrependClasses}${colorClass}`
+      return this.iconPrependClasses ? `<span class="${classes}"></span>` : this.prefix
+    },
+    computedSuffix() {
+      const colorClass = this.iconAppendColor ? ` tabs-component-tab__icon-append--color-${this.iconAppendColor}` : ''
+      const classes = `${this.iconAppendClasses}${colorClass}`
+      return this.iconAppendClasses ? `<span class="${classes}"></span>` : this.suffix
+    },
+    header() {
+      return `${this.computedPrefix}` +
+              `<span class="tabs-component-tab__tab-name" data-name="${this.name}">${this.name}</span>` +
+              `${this.computedSuffix}`
     },
   },
 }

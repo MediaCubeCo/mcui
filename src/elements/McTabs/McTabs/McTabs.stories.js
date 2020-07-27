@@ -11,7 +11,7 @@ export default {
   component: McTabs,
   subcomponents: { McTab },
   parameters: {
-    componentSubtitle: 'In progress',
+    componentSubtitle: 'Готов',
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=127%3A1199',
@@ -52,7 +52,6 @@ const getCommonTags = ctx => {
     color: ctx.color,
     'accent-color': ctx.accentColor,
     uppercase: ctx.uppercase,
-    'last-tab-link': ctx.lastTabLink,
   }
 }
 
@@ -81,24 +80,19 @@ export const Default = () => ({
     accentColor: {
       default: select('accentColor', colors, 'blue', 'default'),
     },
-    lastTabLink: {
-      default: array('lastTabLink', ['1', '2'], ',', 'default'),
-    },
-    //
-    // prefix: {
-    //   default: text('prefix', '', 'default'),
-    // },
-    // suffix: {
-    //   default: text('suffix', '', 'default'),
-    // },
-    // slotContent: {
-    //   default: text('slotContent', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, soluta?', 'default'),
-    // },
   },
   methods: actionsData,
   template: `<mc-tabs v-bind="tagBind" @changed="handleChange">
       <mc-tab id="custom" name="Custom fragment">Custom fragment content</mc-tab>
-      <mc-tab prefix="<< " suffix=" >>" name="With prefix and suffix">
+      <mc-tab 
+          name="With icons" 
+          icon-prepend-classes="fa fa-check-circle" 
+          icon-append-classes="fa fa-external-link-alt"
+          icon-prepend-color="red"
+      >
+          Lorem ipsum dolor sit amet.
+      </mc-tab>
+      <mc-tab prefix="<<< " suffix=" >>>" name="With prefix and suffix">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, voluptatibus.
       </mc-tab>
       <mc-tab name="Disabled" :is-disabled="true">Disabled content</mc-tab>
