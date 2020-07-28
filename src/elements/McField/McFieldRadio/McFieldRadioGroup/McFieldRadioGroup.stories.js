@@ -37,17 +37,23 @@ const getUniqueProps = key => {
     disabled: {
       default: boolean('disabled', false, key),
     },
+    helpText: {
+      default: text('helpText', 'Default help text', key),
+    },
   }
 }
 
 const getCommonTags = ctx => {
   return {
+    title: ctx.title,
+    'help-text': ctx.helpText,
     name: ctx.name,
     options: ctx.options,
     'default-value': ctx.defaultValue,
     disabled: ctx.disabled,
     'radio-class-name': ctx.radioClassName,
     direction: ctx.direction,
+    errors: ctx.errors,
   }
 }
 
@@ -72,13 +78,16 @@ export const Default = () => ({
   },
   props: {
     ...getUniqueProps('default'),
+    title: {
+      default: text('title', 'Default title', 'default'),
+    },
     name: {
       default: text('name', 'default_radio', 'default'),
     },
     options: {
       default: array(
         'options',
-        optionsArr,
+        [],
         ',',
         'default'
       ),
@@ -91,6 +100,14 @@ export const Default = () => ({
     },
     direction: {
       default: select('direction', directions, 'column', 'default'),
+    },
+    errors: {
+      default: array(
+        'errors',
+        [],
+        ',',
+        'default'
+      ),
     },
   },
   methods: actionsData,
@@ -115,6 +132,9 @@ export const WithCustomClass = () => ({
   },
   props: {
     ...getUniqueProps('withCustomClass'),
+    title: {
+      default: text('title', 'With Custom Class', 'withCustomClass'),
+    },
     name: {
       default: text('name', 'custom_radio', 'withCustomClass'),
     },
@@ -126,6 +146,14 @@ export const WithCustomClass = () => ({
     },
     direction: {
       default: select('direction', directions, 'row', 'withCustomClass'),
+    },
+    errors: {
+      default: array(
+        'errors',
+        ['Рандомная ошибка!'],
+        ',',
+        'withCustomClass'
+      ),
     },
   },
   methods: actionsData,

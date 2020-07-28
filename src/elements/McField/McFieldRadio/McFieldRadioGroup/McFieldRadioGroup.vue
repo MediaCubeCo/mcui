@@ -1,21 +1,40 @@
 <template>
     <div class="mc-field-radio-group" :class="classes">
-       <mc-field-radio-button
+        <div class="mc-field-radio-group__header">
+            <!-- @slot Слот заголовка -->
+            <slot name="header">
+                <mc-title v-if="title" :ellipsis="false">{{ title }}</mc-title>
+            </slot>
+        </div>
+        <mc-field-radio-button
            v-for="radio in computedOptions"
            v-bind="radio"
            :key="radio.id"
            :name="name"
            @input="handleInput"
-       />
+        />
+        <div class="mc-field-radio-group__footer" v-if="errorText || helpText || $slots.footer">
+            <mc-title v-if="errorText" tag-name="div" color="red" variation="overline" max-width="100%" :ellipsis="false">
+                {{ errorText }}
+            </mc-title>
+            <br v-if="errorText" />
+            <!-- @slot Слот доп. текста под инпутом -->
+            <slot name="footer">
+                <mc-title v-if="helpText" tag-name="div" variation="overline" max-width="100%" :ellipsis="false">
+                    {{ helpText }}
+                </mc-title>
+            </slot>
+        </div>
     </div>
 </template>
 
 <script>
   import _XEUtils from 'xe-utils'
   import McFieldRadioButton from "../McFieldRadioButton/McFieldRadioButton"
+  import McTitle from "../../../McTitle/McTitle"
   export default {
     name: "McFieldRadioGroup",
-    components: { McFieldRadioButton },
+    components: { McFieldRadioButton, McTitle },
     props: {
       /**
        *  Значение
@@ -27,6 +46,30 @@
        *  Объект или массив данных
        */
       options: {
+        type: Array,
+        default: () => [],
+      },
+      /**
+       *  Заголовок:
+       *
+       */
+      title: {
+        type: String,
+        default: "",
+      },
+      /**
+       *  Вспомогательный текст под инпутом:
+       *
+       */
+      helpText: {
+        type: String,
+        default: "",
+      },
+      /**
+       *  Ошибки
+       *
+       */
+      errors: {
         type: Array,
         default: () => [],
       },
@@ -87,7 +130,11 @@
         return {
             [`mc-field-radio-group--direction-${this.direction}`]: this.direction,
         }
-      }
+      },
+      errorText() {
+        if (this.errors === null || !this.errors.length) return null
+        return this.errors.join(", ")
+      },
     },
     methods: {
       handleInput(e) {
@@ -105,6 +152,24 @@
 <style lang="scss">
 .mc-field-radio-group {
     $block-name: &;
+
+    &__header {
+        @include reset-text-indents();
+        display: block;
+        margin-bottom: $space-100;
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    &__footer {
+        margin-top: $space-50;
+
+        &:empty {
+            display: none;
+        }
+    }
 
 
     &--direction {
