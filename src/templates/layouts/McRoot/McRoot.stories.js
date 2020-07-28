@@ -3,7 +3,7 @@ import McRoot from "./McRoot"
 export default {
   title: 'Templates/McRoot',
   parameters: {
-    componentSubtitle: 'Это обязательный компонент, с него начинается любой layout, т.к. здесь находятся глобальные стили.',
+    componentSubtitle: 'Status: Ready. Это обязательный компонент, с него начинается любой layout, т.к. здесь находятся глобальные стили.',
   },
 }
 

@@ -10,21 +10,21 @@ const wrapper = () => {
     template: `<div style="display: flex; align-items: center; justify-content: center; height: 200px;">
         <story />
     </div>`,
-  };
+  }
 }
 
 export default {
   title: 'Elements/McTooltip',
   component: McTooltip,
   parameters: {
-    componentSubtitle: 'В работе',
+    componentSubtitle: 'Status: Ready',
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=108%3A322',
     },
   },
   decorators: [wrapper],
-};
+}
 
 const colors = getTokensByType('color')
 

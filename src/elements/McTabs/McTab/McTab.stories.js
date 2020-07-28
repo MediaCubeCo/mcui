@@ -7,7 +7,7 @@ export default {
   component: McTab,
   // subcomponents: { McTabs },
   parameters: {
-    componentSubtitle: 'Готов, Смотреть McTabs',
+    componentSubtitle: 'Status: Ready, Смотреть McTabs',
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=127%3A1199',
