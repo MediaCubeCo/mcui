@@ -97,14 +97,15 @@
       }
       const directives = props.lazy ? [lazyOptions] : []
 
-      const avatar = h('figure',
-        {
+      const createAvatar = () => {
+        return h('figure',
+          {
             class: avatarClasses,
             style: {
-                ...(!hasStatus ? style : {}),
+              ...(!hasStatus ? style : {}),
             },
-        },
-        [
+          },
+          [
             h("img",
               {
                 class: "mc-avatar__img",
@@ -116,20 +117,23 @@
                 key: props.src,
               }
             ),
-        ]
-      )
+          ]
+        )
+      }
 
 
-      const wrapper = h('section',
-        {
-          class: wrapperClasses,
-          style: {
-            ...style,
+      const createWrapper = () => {
+        return h('section',
+          {
+            class: wrapperClasses,
+            style: {
+              ...style,
+            },
           },
-        },
-        [avatar]
-      )
-      return hasStatus ? wrapper : avatar
+          [createAvatar()]
+        )
+      }
+      return hasStatus ? createWrapper() : createAvatar()
     },
   }
 </script>

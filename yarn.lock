@@ -10694,6 +10694,11 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
+numeral@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/numeral/-/numeral-2.0.6.tgz#4ad080936d443c2561aed9f2197efffe25f4e506"
+  integrity sha1-StCAk21EPCVhrtnyGX7//iX05QY=
+
 nwsapi@^2.0.7, nwsapi@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.0.tgz#204879a9e3d068ff2a55139c2c772780681a38b7"
@@ -15124,6 +15129,11 @@ vuex@^3.4.0:
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.4.0.tgz#20cc086062d750769fce1febb34e7fceeaebde45"
   integrity sha512-ajtqwEW/QhnrBZQsZxCLHThZZaa+Db45c92Asf46ZDXu6uHXgbfVuBaJ4gzD2r4UX0oMJHstFwd2r2HM4l8umg==
 
+vxe-table@^2.9.15:
+  version "2.9.15"
+  resolved "https://registry.yarnpkg.com/vxe-table/-/vxe-table-2.9.15.tgz#8533cf57be343b2172b9dcb24eb29ddb81695215"
+  integrity sha512-le+zGlB68fhxmfPfKuQ1XJdJsxp679U/6xOoLafO9poyU94X7WoUf+uYZzHbmRtlJyYZ3KcKnMRypMsEeULmaw==
+
 w3c-hr-time@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.2.tgz#0a89cdf5cc15822df9c360543676963e0cc308cd"
@@ -15548,10 +15558,15 @@ ws@^7.0.0:
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.3.0.tgz#4b2f7f219b3d3737bc1a2fbf145d825b94d38ffd"
   integrity sha512-iFtXzngZVXPGgpTlP1rBqsUK82p9tKqsWRPg5L56egiljujJT3vGAYnHANvFxBieXrTFavhzhxW52jnaWV+w2w==
 
-xe-utils@^2.6.6:
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/xe-utils/-/xe-utils-2.6.6.tgz#8e0f00b7a99330ac6dbd47e454b83f0b13afa10a"
-  integrity sha512-lAexwFPh/tL6p/9JyslhpsnOSKQyumSTxXtKMvh2WKjWmuCoCqU0Qr00UPxQ75NosKv/oCvCpK4G+CRlyteZBw==
+xe-clipboard@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/xe-clipboard/-/xe-clipboard-1.9.0.tgz#1c7312e209950d4953f0326b527d820ce018197c"
+  integrity sha512-uIDCzkJmEk9FxBsd0lX1ShOQbdG0A0RYoGefUDqnE2FeBsyrbCLVaIlx7lrJNezUODswUnvs/3E5PzgNRkynaA==
+
+xe-utils@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/xe-utils/-/xe-utils-2.7.1.tgz#44ea30ce635e4324b7995afdd52211afeac338b8"
+  integrity sha512-ql/SGkpBFIymalGlWJrDF0Q+qsltnd9Qg0WU/sXHD7IBD95iTVU1HvxJwJkC3AV8syUItBXDsF9HDAdgDfjTlg==
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
