@@ -1,11 +1,8 @@
-import {text, boolean} from "@storybook/addon-knobs"
-
 import McTab from './McTab'
 
 export default {
   title: 'Elements/McTab',
   component: McTab,
-  // subcomponents: { McTabs },
   parameters: {
     componentSubtitle: 'Status: Ready, Смотреть McTabs',
     design: {

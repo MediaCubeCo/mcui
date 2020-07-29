@@ -76,5 +76,5 @@ export const VerticalLine = () => ({
     },
   },
   template: '<div style="display: flex; width: 50px; height: 100px;"><mc-badge v-bind="tagBind" /></div>',
-});
+})
 
