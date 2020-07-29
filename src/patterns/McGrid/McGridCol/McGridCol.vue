@@ -17,58 +17,8 @@ values.forEach(value => {
   })
 })
 
-// const getClasses = (props, data) => {
-//   let classes = {
-//     'mc-grid-col': true,
-//     ...(data.class || {}),
-//   }
-//   values.forEach(value => {
-//     classes[`mc-grid-col--${value}-${props[value]}`] = props[value]
-//     sizes.forEach(size => {
-//       const sizeValue = props[`${value}${_upperFirst(size)}`]
-//       classes[`mc-grid-col--${value}-${size}-${sizeValue}`] = sizeValue
-//     })
-//   })
-//
-//   if (data.staticClass) {
-//     const staticClasses = data.staticClass.split(" ")
-//     staticClasses.forEach(c => c && (classes[c] = true))
-//   }
-//   return classes
-// }
-//
-// const getStyles = (props, data) => {
-//   let colStyle = {}
-//   if (data.staticStyle) {
-//     colStyle = data.staticStyle
-//   }
-//
-//   if (gutterX !== 0) {
-//     colStyle["padding-left"] = `${gutterX / 2}px`
-//     colStyle["padding-right"] = `${gutterX / 2}px`
-//   }
-//
-//   if (gutterY !== 0) {
-//     colStyle["padding-top"] = `${gutterY / 2}px`
-//     colStyle["padding-bottom"] = `${gutterY / 2}px`
-//   }
-//
-//   if (props.stretchSelf) {
-//     colStyle["flex"] = `1 0 ${props.basis}`
-//   } else if (props.basis !== "auto") {
-//     colStyle["flex"] = `0 0 ${props.basis}`
-//   }
-//   return props.order ? { ...colStyle, order: props.order } : colStyle
-// }
-
 export default {
   name: "McGridCol",
-  // inject: { provideData: {
-  //     default: () => ({
-  //       gutterX: 0,
-  //       gutterY: 0,
-  //     })
-  //   }},
   inject: ["provideData"],
   props: {
     /**
@@ -117,34 +67,6 @@ export default {
     },
   },
 
-
-  // render(h, { props, slots, data, injections }) {
-  //   console.log(injections)
-  //   gutterX = injections.provideData.gutterX
-  //   gutterY = injections.provideData.gutterY
-  //
-  //   let classes = getClasses(props, data)
-  //   let styles = getStyles(props, data)
-  //
-  //   return h(
-  //     'div',
-  //     {
-  //       class: classes,
-  //       style: styles,
-  //     },
-  //     [
-  //       slots()["default"]
-  //     ]
-  //   )
-  // },
-
-  // data() {
-  //   return {
-  //     gutterX: 0,
-  //     gutterY: 0,
-  //   }
-  // },
-
   computed: {
     classes() {
       const list = {}
@@ -180,10 +102,6 @@ export default {
       return this.order ? { ...colStyle, order: this.order } : colStyle
     },
   },
-
-  // mounted() {
-  //   this.$parent.updateGutter()
-  // },
 }
 </script>
 

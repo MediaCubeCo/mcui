@@ -14,7 +14,9 @@
 <script>
 import Tab from "vue-tabs-component/src/components/Tab"
 import McSvgIcon from "../../McSvgIcon/McSvgIcon"
-
+/**
+ * Смотреть McTabs
+ */
 export default {
   name: "McTab",
   extends: Tab,
