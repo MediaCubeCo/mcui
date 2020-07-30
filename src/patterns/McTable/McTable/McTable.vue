@@ -35,9 +35,6 @@
 </template>
 
 <script>
-// import "vxe-table/styles/variable.scss"
-// import "vxe-table/styles/modules.scss"
-
 import _debounce from "lodash/debounce"
 import _XEClipboard from "xe-clipboard"
 import McTitle from "../../../elements/McTitle/McTitle"
@@ -139,8 +136,8 @@ export default {
     },
     /**
      *  Параметры виртуального скролла:
-     *  `gt: 0 - всегда включён; -1 - всегда выключен;
-     *  число (строк), сверх которого включается виртуальный скролл`
+     *  `gt: 0 - всегда включён`; `-1 - всегда выключен`;
+     *  число (строк), сверх которого включается виртуальный скролл
      */
     scrollY: {
       type: Object,
@@ -344,8 +341,7 @@ export default {
 @import "~vxe-table/styles/variable.scss"; //??
 
 //override variables:
-$vxe-table-border-color: $color-outline-gray;
-$vxe-table-header-background-color: $color-white;
+@import "../../../styles/table.scss";
 
 @import "~vxe-table/styles/modules.scss"; //??
 

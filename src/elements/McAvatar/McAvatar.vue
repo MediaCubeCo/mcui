@@ -1,5 +1,5 @@
 <script>
-  import defaultImage from '../../assets/img/no-user.png'
+  import defaultImage from '../../assets/img/no_user.png'
   export default {
     name: 'McAvatar',
     functional: true,
@@ -20,9 +20,12 @@
         type: Boolean,
         default: false,
       },
+      /**
+       *  Атрибут alt
+       */
       alt: {
         type: String,
-        default: 'Avatar',
+        default: '',
       },
       /**
        *  Размеры
@@ -55,6 +58,14 @@
         type: String,
         default: "",
       },
+      /**
+       *  Цвет точки
+       *
+       */
+      shadow: {
+        type: Boolean,
+        default: false,
+      },
     },
     render(h, { props, data }) {
       const hasStatus = props.borderColor || props.dotColor
@@ -62,13 +73,13 @@
       const avatarClasses = {
         'mc-avatar': true,
         'mc-avatar--rounded': props.rounded,
+        'mc-avatar--shadow': props.shadow && !hasStatus,
         [`mc-avatar--size-${props.size}`]: props.size,
-        [`mc-avatar--border-color-${props.borderColor}`]: props.borderColor,
-        [`mc-avatar--dot-color-${props.dotColor}`]: props.dotColor,
         ...(!hasStatus && data.class ? data.class : {}),
       }
       const wrapperClasses = {
         'mc-avatar-status': true,
+        'mc-avatar-status--shadow': props.shadow,
         [`mc-avatar-status--size-${props.size}`]: props.size,
         [`mc-avatar-status--border-color-${props.borderColor}`]: props.borderColor,
         [`mc-avatar-status--dot-color-${props.dotColor}`]: props.dotColor,
@@ -111,7 +122,7 @@
                 class: "mc-avatar__img",
                 attrs: {
                   alt: props.alt,
-                  ...(!props.lazy ? { src: props.src } : {}),
+                  ...(!props.lazy ? { src: props.src || defaultImage } : {}),
                 },
                 directives,
                 key: props.src,
@@ -148,7 +159,11 @@
         border: 2px solid transparent;
         padding: 1px;
         position: relative;
-        border-radius: 50%;
+        border-radius: $radius-circle;
+
+        .mc-avatar {
+            border-radius: $radius-circle;
+        }
 
         &::after {
             @include size($size-100);
@@ -164,15 +179,20 @@
                 border-color: $value;
                 transition: box-shadow $duration-s;
 
-                    &:hover,
-                    &:focus {
-                        .mc-avatar {
-                            box-shadow: none;
-                        }
-                        background-color: $color-hover-gray;
-                        box-shadow: 0 0 0 $space-50 $color-hover-gray;
+                &:hover,
+                &:focus {
+                    .mc-avatar {
+                        box-shadow: none;
                     }
+                }
+            }
+        }
 
+        &--shadow {
+            &:hover,
+            &:focus {
+                background-color: $color-hover-gray;
+                box-shadow: 0 0 0 $space-50 $color-hover-gray;
             }
         }
 
@@ -281,9 +301,11 @@
             border-radius: $radius-circle;
         }
 
-        &:hover,
-        &:focus {
-            box-shadow: 0 0 0 $space-100 $color-hover-gray;
+        &--shadow {
+            &:hover,
+            &:focus {
+                box-shadow: 0 0 0 $space-100 $color-hover-gray;
+            }
         }
     }
 </style>

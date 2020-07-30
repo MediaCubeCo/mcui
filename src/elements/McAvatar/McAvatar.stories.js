@@ -31,6 +31,9 @@ const getUniqueProps = key => {
     size: {
       default: select('size', avatarSizes, '600', key)
     },
+    shadow: {
+      default: boolean('shadow', true, key)
+    },
   }
 }
 
@@ -41,6 +44,7 @@ const getCommonTags = ctx => {
     size: ctx.size,
     rounded: ctx.rounded,
     lazy: ctx.lazy,
+    shadow: ctx.shadow,
   }
 }
 
@@ -104,7 +108,7 @@ export const Status = () => ({
       default: boolean('lazy', true, 'status'),
     },
     borderColor: {
-      default: select('borderColor', colors, 'blue', 'status')
+      default: select('borderColor', colors, 'light-green', 'status')
     },
     dotColor: {
       default: select('dotColor', colors, 'orange', 'status')

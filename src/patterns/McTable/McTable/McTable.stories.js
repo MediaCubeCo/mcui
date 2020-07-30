@@ -14,12 +14,12 @@ import McGridCol from '../../../patterns/McGrid/McGridCol/McGridCol'
 import McButton from '../../../elements/McButton/McButton'
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
+import McStack from '../../../patterns/McStack/McStack'
 
 import _minBy from 'lodash/minBy'
-import _sortBy from 'lodash/sortBy'
 import { number as num } from "../../../utils/filters"
 
-let body = require('../../../mocks/tableInfusersBody').default
+import body from '../../../mocks/tableInfusersBody'
 const borders = {
   default: 'default',
   full: 'full',
@@ -49,7 +49,7 @@ export default {
 const getUniqueProps = key => {
   return {
     height: {
-      default: text('height', '500', key),
+      default: text('height', '700', key),
     },
     scrollable: {
       default: boolean('scrollable', true, key),
@@ -70,7 +70,7 @@ const getUniqueProps = key => {
       default: boolean('loading', false, key),
     },
     checkboxConfig: {
-      default: object('checkboxConfig', {labelField: 'user'}, key),
+      default: object('checkboxConfig', {labelField: 'user', showHeader: false, highlight: true}, key),
     },
     nativeSort: {
       default: boolean('nativeSort', true, key),
@@ -99,7 +99,11 @@ const actionsData = {
   handleLoad: action('loaded'),
   handleSorted: action('sorted'),
   cellClickEvent: action('onCellClick'),
-  selectChangeEvent: action('onSelectChangeEvent'),
+  handleCheckboxChange: (row, e) => {
+    row.$event.stopPropagation()
+    action('checkboxChanged')(row, e)
+  },
+  handleBtnClick: action('buttonClicked'),
 }
 
 export const Default = () => ({
@@ -117,6 +121,7 @@ export const Default = () => ({
     McBadge,
     McGridCol,
     McGridRow,
+    McStack,
   },
   data() {
     return {
@@ -136,7 +141,7 @@ export const Default = () => ({
       return getCommonTags(this)
     },
     items() {
-      return body.map((item, index) => {
+      return body.map(item => {
         return {
           ...item,
           avatar: item.image_small,
@@ -151,14 +156,14 @@ export const Default = () => ({
             null,
         }
       }).slice(0, 50)
-    }
+    },
   },
   props: {
     ...getUniqueProps('default'),
   },
   methods: {
     ...actionsData,
-    handleCellClassName({rowIndex}) {
+    handleCellClassName() {
       return "mc-table-col--border-bottom"
     },
     sortNameMethod(a, b) {
@@ -168,7 +173,7 @@ export const Default = () => ({
   template: `<mc-table
         ref="table"
         v-bind="tagBind"
-        @checkbox-change="selectChangeEvent"
+        @checkbox-change="handleCheckboxChange"
         @load="handleLoad"
         @sort-change="handleSorted"
         @cell-click="cellClickEvent"
@@ -176,33 +181,21 @@ export const Default = () => ({
         <mc-table-col type="seq" min-width="60" fixed="left" align="right" has-border />
         <mc-table-col :show-overflow="false" type="checkbox" fixed="left" width="25" />
         <mc-table-col field="title" title="Канал" width="248" fixed="left">
-<!--            <template v-slot="{ row }">-->
-<!--                <mc-preview>-->
-<!--                    <mc-avatar slot="left" border-color="blue" dot-color="orange" lazy :src="row.avatar" size="s"/>-->
-<!--                    <mc-grid-row style="height: 100%" slot="cell-right" :wrap="false" align="middle" :gutter-x="5">-->
-<!--                        <mc-grid-col>-->
-<!--                            <mc-tooltip size="s" placement="top" content="Редактировать">-->
-<!--                                <mc-button variation="blue-link" size="s-compact">-->
-<!--                                    <mc-svg-icon slot="icon-append" name="create" size="200"/>-->
-<!--                                </mc-button>-->
-<!--                            </mc-tooltip>-->
-<!--                        </mc-grid-col>-->
-<!--                        <mc-grid-col>-->
-<!--                            <mc-tooltip size="s" placement="top" content="Копировать">-->
-<!--                                <mc-button variation="blue-link" size="s-compact">-->
-<!--                                    <mc-svg-icon slot="icon-append" name="delete" size="200"/>-->
-<!--                                </mc-button>-->
-<!--                            </mc-tooltip>-->
-<!--                        </mc-grid-col>-->
-<!--                    </mc-grid-row>-->
-<!--                    <mc-title slot="top"> {{ row.title }} </mc-title>-->
-<!--                </mc-preview>-->
-<!--            </template>-->
+            <template v-slot="{ row }">
+                <mc-grid-row align="middle" :gutter-x="10" :wrap="false">
+                    <mc-grid-col style="line-height: 0">
+                        <mc-avatar border-color="blue" dot-color="orange" lazy size="400" :src="row.avatar" />
+                    </mc-grid-col>
+                    <mc-grid-col style="min-width: 0; line-height: 0">
+                        <mc-title> {{ row.title }} </mc-title>
+                    </mc-grid-col>
+                </mc-grid-row>
+            </template>
             <template v-slot:right="{ row }">
-                <mc-button style="margin-right: 4px;" variation="blue-link" size="s-compact">
+                <mc-button style="margin-right: 4px;" variation="blue-link" size="s-compact" @click.stop="handleBtnClick">
                     <mc-svg-icon slot="icon-append" name="create" size="200"/>
                 </mc-button>
-                <mc-button variation="blue-link" size="s-compact">
+                <mc-button variation="blue-link" size="s-compact" @click.stop="handleBtnClick">
                     <mc-svg-icon slot="icon-append" name="delete" size="200"/>
                 </mc-button>
             </template>
@@ -232,13 +225,23 @@ export const Default = () => ({
 
         <mc-table-col field="roles" title="Роль" width="190">
             <template v-slot="{ row }">
-                    <mc-chip variation="gray-dark-invert">Администратор</mc-chip>
+                <mc-stack :limit="1">
+                    <mc-chip variation="gray-invert">Администратор</mc-chip>
+                    <mc-chip variation="gray-invert">Петух</mc-chip>
+                    <mc-chip variation="gray-invert">Лопух</mc-chip>
+                </mc-stack>
             </template>
         </mc-table-col>
 
         <mc-table-col field="channels" title="Канал" width="120">
             <template v-slot="{ row }">
-                    <mc-avatar rounded lazy size="300" />
+                <mc-stack :limit="3" collapsed>
+                    <mc-avatar rounded lazy size="400" />
+                    <mc-avatar rounded lazy size="400" />
+                    <mc-avatar rounded lazy size="400" />
+                    <mc-avatar v-if="row.id%3" rounded lazy size="400" />
+                    <mc-avatar v-if="row.id%2" rounded lazy size="400" />
+                </mc-stack>
             </template>
         </mc-table-col>
 
@@ -260,10 +263,10 @@ export const Default = () => ({
             <template v-slot="{ row }">
                 <mc-grid-row justify="right" :wrap="false" align="middle" :gutter-x="5">
                     <mc-grid-col>
-                        <mc-button size="s">Выплатить</mc-button>
+                        <mc-button size="s" @click.stop="handleBtnClick">Выплатить</mc-button>
                     </mc-grid-col>
                     <mc-grid-col>
-                        <mc-button variation="red" size="s">Отменить</mc-button>
+                        <mc-button variation="red" size="s" @click.stop="handleBtnClick">Отменить</mc-button>
                     </mc-grid-col>
                 </mc-grid-row>
             </template>

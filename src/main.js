@@ -5,6 +5,9 @@ import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload)
 
 Vue.config.productionTip = false;
+Vue.prototype.toJSON = function () {
+  return this;
+};
 
 new Vue({
   render: h => h(App)

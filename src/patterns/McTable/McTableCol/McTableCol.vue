@@ -124,6 +124,18 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~vxe-table/styles/variable.scss"; //??
+//override variables:
+@import "../../../styles/table.scss";
+
+@mixin col-right-color($color) {
+  .mc-table-col__right {
+    background-color: $color;
+    &::before {
+      background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, $color);
+    }
+  }
+}
 .mc-table-col {
   &--border-right {
     border-right: 1px solid $color-outline-gray;
@@ -169,28 +181,23 @@ export default {
 }
 .vxe-body--row {
   transition: background-color 0s;
+  &.row--stripe {
+    @include col-right-color($vxe-table-row-striped-background-color);
+  }
   &.row--hover {
-    .mc-table-col__right {
-      background-color: #f5f7fa;
-      &::before {
-        background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, #f5f7fa);
-      }
-    }
+    @include col-right-color($vxe-table-row-hover-background-color);
     &.row--current {
-      .mc-table-col__right {
-        background-color: #d7effb;
-        &::before {
-          background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, #d7effb);
-        }
-      }
+      @include col-right-color($vxe-table-row-hover-current-background-color);
     }
   }
   &.row--current {
-    .mc-table-col__right {
-      background-color: #e6f7ff;
-      &::before {
-        background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, #e6f7ff);
-      }
+    @include col-right-color($vxe-table-row-current-background-color);
+  }
+  // описка названия в библиотеке таблицы
+  &.row--cheched {
+    @include col-right-color($vxe-table-row-cheched-background-color);
+    &.row--hover {
+      @include col-right-color($vxe-table-row-hover-cheched-background-color);
     }
   }
 }
