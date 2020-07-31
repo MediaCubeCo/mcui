@@ -338,12 +338,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~vxe-table/styles/variable.scss"; //??
+@import "~vxe-table/styles/variable.scss";
 
 //override variables:
 @import "../../../styles/table.scss";
 
-@import "~vxe-table/styles/modules.scss"; //??
+@import "~vxe-table/styles/modules.scss";
 
 .vxe-table--tooltip-wrapper {
   .vxe-table--tooltip-content {

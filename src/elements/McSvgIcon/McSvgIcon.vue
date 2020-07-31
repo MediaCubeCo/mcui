@@ -53,6 +53,12 @@
         },
         immediate: true,
       },
+      size: {
+        handler() {
+          this.updateIcon()
+        },
+        immediate: true,
+      },
     },
     computed: {
       classes() {
@@ -61,14 +67,29 @@
           [`mc-svg-icon--color-${this.color}`]: !!this.color,
         }
       },
-      styles() {
-        return`fill: ${this.fill}`
-      },
+      computedWeight() {
+        switch (parseInt(this.size)) {
+          case 200:
+          case 300:
+            return 1
+          case 400:
+          case 500:
+          case 600:
+            return 1.5
+          default:
+            return 2
+        }
+      }
     },
     methods: {
       updateIcon() {
         const icon = svgIcons.find(i => i.name.slice(2, -4) === this.name)
         if (icon && icon.content) {
+          if (icon.content.indexOf("stroke") !== -1) {
+            let filledSvg = icon.content.replace(/stroke=\S+/g, `fill="none" stroke="${this.fill}" `)
+            this.svg = filledSvg.replace(/stroke-width=\S+/g, `stroke-width="${this.computedWeight}" `)
+            return
+          }
           this.svg = icon.content.replace(/^<svg /, `<svg style="fill: ${this.fill}"`)
         }
       }

@@ -18,6 +18,6 @@
 <style lang="scss">
 .mc-root {
     $block-name: &;
-    @import "src/styles/global";
+    @import "../../../styles/global";
 }
 </style>

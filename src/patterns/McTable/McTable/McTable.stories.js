@@ -1,14 +1,12 @@
-import { text, select, boolean, number, object } from '@storybook/addon-knobs'
+import { text, select, boolean, object } from '@storybook/addon-knobs'
 import { action } from "@storybook/addon-actions"
 
 import McTable from './McTable'
 import McTableCol from '../McTableCol/McTableCol'
 import McFieldText from '../../../elements/McField/McFieldText/McFieldText'
-import McFieldSelect from '../../../elements/McField/McFieldSelect/McFieldSelect'
 import McAvatar from '../../../elements/McAvatar/McAvatar'
 import McChip from '../../../elements/McChip/McChip'
 import McBadge from '../../../elements/McBadge/McBadge'
-import McTooltip from '../../../elements/McTooltip/McTooltip'
 import McGridRow from '../../../patterns/McGrid/McGridRow/McGridRow'
 import McGridCol from '../../../patterns/McGrid/McGridCol/McGridCol'
 import McButton from '../../../elements/McButton/McButton'
@@ -37,7 +35,7 @@ export default {
   component: McTable,
   subcomponents: { McTableCol },
   parameters: {
-    componentSubtitle: 'Status: In progress',
+    componentSubtitle: 'Status: Ready',
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=346%3A1828',
@@ -111,13 +109,11 @@ export const Default = () => ({
     McTable,
     McTableCol,
     McFieldText,
-    McFieldSelect,
     McAvatar,
     McChip,
     McButton,
     McSvgIcon,
     McTitle,
-    McTooltip,
     McBadge,
     McGridCol,
     McGridRow,
