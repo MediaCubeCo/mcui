@@ -2,27 +2,30 @@
  * @tokens Colors
  * @presenter Color
  */
-
-$color-black: #222222; /* Цвет основного текста */
-$color-dark-gray: #666666; /* Иконки, доп.текст, менее активные эл-ты */
-$color-gray: #929292; /* Для плашек, хорошо держит форму */
-$color-outline-gray: #CCCCCC; /* Для обводок */
-$color-hover-gray: #EDEDED; /* Ховеры и неактивные эл-ты */
+//neutral colors
+$color-black: #202427; /* Цвет основного текста */
+$color-dark-gray: #5C6670; /* Иконки, доп.текст, менее активные эл-ты */
+$color-gray: #8F99A3; /* Для плашек, хорошо держит форму */
+$color-outline-gray: #C7CCD1; /* Для обводок */
+$color-hover-gray: #EDF0F3; /* Ховеры и неактивные эл-ты */
 $color-white: #FFFFFF; /* Основной фон */
-
-$color-blue: #4285F4; /* Кнопки, ссылки, выделение активных элементов и иконки */
-$color-light-blue: #ABC8F5; /* Текст на accent blue */
-$color-lighter-blue: #E2EFFF; /* Выбранные элементы */
-$color-dark-green: #3B873E; /* Цифры и положительные действия */
-$color-light-green: #72C276; /* Зелёные кнопки */
-
-$color-toxic: #E8F443; /* Кнопки, статус данных */
+//main colors
+$color-hover-blue: #0A54C2; /* Кнопки, ссылки, выделение активных элементов */
+$color-blue: #2578F4; /* Кнопки, ссылки, выделение активных элементов и иконки */
+$color-light-blue: #92BBFA; /* Текст на accent blue */
+$color-lighter-blue: #E1EDFF; /* Выбранные элементы */
+//additional colors
+$color-dark-orange: #BD8400; /* Кнопки, статус данных */
 $color-orange: #FCB100; /* Кнопки, статус данных */
-$color-red: #F44242; /* Красные кнопки отмены */
-$color-ultraviolet: #C821FC; /* Статус данных */
-$color-purple: #8535FF; /* Статус данных */
-$color-pinkish: #F271AA; /* Статус данных */
-$color-azure: #106FB8; /* Статус данных */
+$color-dark-red: #D5260B; /* Красные кнопки отмены */
+$color-red: #F5563D; /* Красные кнопки отмены */
+$color-dark-green: #218321; /* Цифры и положительные действия */
+$color-green: #4DCB4D; /* Зелёные кнопки */
+$color-toxic: #E8F443; /* Кнопки, статус данных */
+$color-purple: #7835FF; /* Статус данных */
+$color-ultraviolet: #C41CFD; /* Статус данных */
+$color-pinkish: #F073B1; /* Статус данных */
+$color-azure: #0A85C2; /* Статус данных */
 
 $color-transparent: transparent; /* Прозрачный фон */
 
@@ -33,16 +36,19 @@ $token-colors: (
   "outline-gray": $color-outline-gray,
   "hover-gray": $color-hover-gray,
   "white": $color-white,
+  "hover-blue": $color-hover-blue,
   "blue": $color-blue,
   "light-blue": $color-light-blue,
   "lighter-blue": $color-lighter-blue,
-  "dark-green": $color-dark-green,
-  "light-green": $color-light-green,
-  "toxic": $color-toxic,
+  "dark-orange": $color-dark-orange,
   "orange": $color-orange,
+  "dark-red": $color-dark-red,
   "red": $color-red,
-  "ultraviolet": $color-ultraviolet,
+  "dark-green": $color-dark-green,
+  "green": $color-green,
+  "toxic": $color-toxic,
   "purple": $color-purple,
+  "ultraviolet": $color-ultraviolet,
   "pinkish": $color-pinkish,
   "azure": $color-azure,
   "transparent": $color-transparent,

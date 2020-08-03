@@ -87,7 +87,7 @@ export const Default = () => ({
     options: {
       default: array(
         'options',
-        [],
+        optionsArr,
         ',',
         'default'
       ),

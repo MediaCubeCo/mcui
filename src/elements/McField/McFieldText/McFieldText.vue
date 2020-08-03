@@ -441,7 +441,7 @@ export default {
     height: $size-500;
     margin: 0;
     border: 1px solid $color-outline-gray;
-    border-radius: $radius-50;
+    border-radius: $radius-100;
     padding: $space-150;
     line-height: $line-height-200;
     font-size: $font-size-200;

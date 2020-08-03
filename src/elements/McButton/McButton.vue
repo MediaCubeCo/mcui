@@ -206,7 +206,7 @@ $colors: $token-colors;
   max-width: 100%;
   font-family: $font-family-main;
   font-weight: $font-weight-semi-bold;
-  border-radius: $radius-50;
+  border-radius: $radius-100;
   white-space: nowrap;
   user-select: none;
   text-decoration: none;

@@ -3,6 +3,7 @@ import { text, select, boolean, number } from '@storybook/addon-knobs'
 import McPreview from './McPreview'
 import McAvatar from '../../elements/McAvatar/McAvatar'
 import McTitle from '../../elements/McTitle/McTitle'
+import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
 
 
 export default {
@@ -17,27 +18,6 @@ export default {
   },
 }
 
-// const getUniqueProps = key => {
-//   return {
-//     closable: {
-//       default: boolean('closable', true, key),
-//     },
-//   }
-// }
-
-// const getCommonTags = ctx => {
-//   return {
-//     title: ctx.title,
-//     closable: ctx.closable,
-//     variation: ctx.variation,
-//     counter: ctx.counter,
-//   }
-// }
-
-// const actionsData = {
-//   handleClick: action('clicked'),
-// }
-
 const sizes = {
   s: "s",
   m: "m",
@@ -46,17 +26,8 @@ const sizes = {
 
 // mc-preview default
 export const Default = () => ({
-  components: { McPreview, McAvatar, McTitle },
-  // computed: {
-  //   tagBind() {
-  //     return getCommonTags(this)
-  //   }
-  // },
+  components: { McPreview, McAvatar, McTitle, McSvgIcon },
   props: {
-    // ...getUniqueProps('default'),
-    // title: {
-    //   default: text('title', 'Default', 'default'),
-    // },
     size: {
       default: select('size', sizes, 'm', 'default'),
     },
@@ -67,12 +38,14 @@ export const Default = () => ({
       default: text('slot bottom', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias autem culpa dignissimos et id minima quae qui sapiente ullam velit?', 'default'),
     },
   },
-  // methods: actionsData,
   template: `<mc-preview :size="size">
-    <mc-avatar src="https://avatars3.githubusercontent.com/u/43079603?s=460&v=4" slot="left" lazy size="400" rounded />
+    <mc-avatar slot="left" lazy size="400" rounded />
     <mc-title slot="top">{{slotTop}}</mc-title>
-    <mc-title slot="bottom" variation="caption" color="gray">{{slotBottom}}</mc-title>
-    <mc-avatar slot="right" lazy size="300" />
+    <mc-title slot="bottom" variation="caption" color="gray">
+      <mc-svg-icon slot="icon-prepend" name="ready" color="dark-green"/>
+      {{slotBottom}}
+    </mc-title>
+    <mc-avatar src="https://avatars3.githubusercontent.com/u/43079603?s=460&v=4" slot="right" lazy size="300" />
   </mc-preview>`,
 })
 

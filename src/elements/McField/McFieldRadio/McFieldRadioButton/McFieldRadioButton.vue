@@ -97,7 +97,7 @@ export default {
   min-height: $size-250;
   @include reset();
   position: relative;
-  padding-left: $space-350;
+  padding-left: $space-300;
   line-height: $line-height-200;
   font-size: $font-size-200;
   cursor: pointer;

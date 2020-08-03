@@ -337,7 +337,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
 .mc-field-select {
   $block-name: &;
 
-  @include custom-scroll();
+  @include custom-scroll($space-50);
   font-family: $font-family-main;
 
   &__header {
@@ -390,6 +390,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
       line-height: $line-height-200;
       margin-bottom: $space-150 - 1px;
       padding-top: $space-150 - 1px;
+      padding-left: $space-50;
     }
 
     &__single {
@@ -405,7 +406,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
     }
 
     &__input {
-      padding-left: 0;
+      padding-left: $space-50;
       margin-bottom: $space-150 - 2px;
       padding-top: $space-150 - 1px;
       font-size: $font-size-200;
@@ -427,7 +428,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
     &__tags {
       @include reset-text-indents();
       border: 1px solid $color-outline-gray;
-      border-radius: $radius-50 !important;
+      border-radius: $radius-100 !important;
       padding: 0 $space-500 0 $space-100;
     }
 
@@ -506,7 +507,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
       min-height: $size-500;
       display: flex;
       align-items: center;
-      border-radius: $radius-50;
+      border-radius: $radius-100;
       padding: $space-150;
 
       span {
@@ -516,6 +517,11 @@ $text-white: scale-color($color-white, $alpha: -10%);
       &--highlight {
         background-color: $color-hover-gray;
         color: $color-black;
+      }
+      &--selected {
+        background-color: $color-lighter-blue;
+        color: $color-black;
+        font-weight: $font-weight-medium;
       }
     }
 

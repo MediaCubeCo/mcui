@@ -70,12 +70,12 @@
       computedWeight() {
         switch (parseInt(this.size)) {
           case 200:
-          case 300:
             return 1
+          case 300:
           case 400:
           case 500:
-          case 600:
             return 1.5
+          case 600:
           default:
             return 2
         }

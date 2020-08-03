@@ -181,7 +181,7 @@ export default {
     display: inline-block;
     @include reset();
     position: relative;
-    padding-left: $space-300;
+    padding-left: $space-250;
     line-height: $line-height-200;
     font-size: $font-size-200;
   }
@@ -223,7 +223,7 @@ export default {
   }
 
   &__footer {
-    padding-left: $space-300;
+    padding-left: $space-250;
     margin-top: $space-50;
     &:empty {
       display: none;

@@ -90,7 +90,7 @@ export default {
       @include inset-squish-space($space-300);
       background: $color-black;
       color: $color-white;
-      border-radius: $radius-50;
+      border-radius: $radius-100;
       font-family: $font-family-main;
       font-weight: $font-weight-medium;
       line-height: $line-height-250;
