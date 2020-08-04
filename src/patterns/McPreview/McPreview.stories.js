@@ -41,7 +41,7 @@ export const Default = () => ({
   template: `<mc-preview :size="size">
     <mc-avatar slot="left" lazy size="400" rounded />
     <mc-title slot="top">{{slotTop}}</mc-title>
-    <mc-title slot="bottom" variation="caption" color="gray">
+    <mc-title slot="bottom" color="gray">
       <mc-svg-icon slot="icon-prepend" name="ready" color="dark-green"/>
       {{slotBottom}}
     </mc-title>

@@ -122,7 +122,7 @@ export const CustomButton = () => ({
   },
   methods: actionsData,
   template: `<mc-chip v-bind="tagBind" @click="handleClick">
-      <mc-svg-icon slot="button" size="200" name="create" color="white" />
+      <mc-svg-icon slot="button" size="200" name="edit_solid" color="white" />
       with custom button icon
   </mc-chip>`,
 })

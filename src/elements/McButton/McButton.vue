@@ -341,6 +341,7 @@ $colors: $token-colors;
             opacity: $opacity-active;
           }
         }
+
       } @else {
         background-color: $value;
 

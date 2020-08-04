@@ -50,7 +50,7 @@
             size="m-compact"
             @click.prevent="handlerCopy(value)"
           >
-            <mc-svg-icon slot="icon-append" name="file_copy" />
+            <mc-svg-icon slot="icon-append" name="copy" />
           </mc-button>
           <mc-button
             v-if="isPassword"
@@ -469,6 +469,7 @@ export default {
 
   &__footer {
     margin-top: $space-50;
+    line-height: $line-height-150;
 
     &:empty {
       display: none;

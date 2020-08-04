@@ -22,8 +22,8 @@ const variations = {
   'h2': 'h2',
   'h3': 'h3',
   'h4': 'h4',
+  'subtitle': 'subtitle',
   'body': 'body',
-  'caption': 'caption',
   'overline': 'overline',
 }
 const positions = {

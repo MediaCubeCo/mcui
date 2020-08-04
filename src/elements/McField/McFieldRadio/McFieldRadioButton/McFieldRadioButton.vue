@@ -13,7 +13,7 @@
         <span v-if="label || $slots.default" class="mc-field-radio-button__text">
           <!-- @slot Слот для пользовательской подписи радио -->
           <slot>
-            <mc-title tag-name="div" variation="caption" :ellipsis="false">
+            <mc-title tag-name="div" :ellipsis="false">
               {{ label }}
             </mc-title>
           </slot>

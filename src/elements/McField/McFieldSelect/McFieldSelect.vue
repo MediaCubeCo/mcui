@@ -352,6 +352,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
 
   &__footer {
     margin-top: $space-50;
+    line-height: $line-height-150;
 
     &:empty {
       display: none;
@@ -430,6 +431,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
       border: 1px solid $color-outline-gray;
       border-radius: $radius-100 !important;
       padding: 0 $space-500 0 $space-100;
+      overflow: hidden;
     }
 
     &__tags-wrap {
@@ -485,6 +487,8 @@ $text-white: scale-color($color-white, $alpha: -10%);
     &__content {
       padding: $size-100;
       max-width: 100%;
+      font-size: $font-size-200;
+      line-height: $line-height-200;
     }
 
     &__content-wrapper {

@@ -24,7 +24,7 @@
         <span v-if="mainText || $slots.default" class="mc-field-checkbox__name-text">
           <!-- @slot Слот для пользовательской подписи чекбокса -->
           <slot>
-            <mc-title tag-name="div" variation="caption" :ellipsis="false">
+            <mc-title tag-name="div" :ellipsis="false">
               {{ mainText }}
             </mc-title>
           </slot>

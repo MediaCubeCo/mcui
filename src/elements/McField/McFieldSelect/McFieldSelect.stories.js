@@ -128,6 +128,9 @@ export const Multiple = () => ({
         'multiple',
       ),
     },
+    header: {
+      default: text('header', 'Multiple with header slot', 'multiple'),
+    },
   },
   methods: actionsData,
   template: `<mc-field-select 
@@ -138,8 +141,8 @@ export const Multiple = () => ({
       @tag="handleTag"
       @search-change="handleSearchChange"
   >
-      <mc-title slot="header">
-          Multiple
+      <mc-title variation="subtitle" slot="header">
+          {{header}}
           <mc-tooltip slot="icon-append" content="Lorem ipsum dolor sit amet" placement="top" size="s">
               <mc-svg-icon name="help" color="dark-gray" />
           </mc-tooltip>

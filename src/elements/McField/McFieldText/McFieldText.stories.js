@@ -119,11 +119,14 @@ export const Default = () => ({
     isAppend: {
       default: boolean('slot append', true, 'default'),
     },
+    header: {
+      default: text('header', 'With header slot', 'default'),
+    },
   },
   methods: actionsData,
   template: `<mc-field-text v-bind="tagBind" @input="handleInput">
-      <mc-title slot="header">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, exercitationem.
+      <mc-title variation="subtitle" slot="header">
+          {{header}}
           <mc-tooltip slot="icon-append" content="Lorem ipsum dolor sit amet" placement="top" size="s">
               <mc-svg-icon name="help" color="dark-gray" />
           </mc-tooltip>

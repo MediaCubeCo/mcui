@@ -189,10 +189,10 @@ export const Default = () => ({
             </template>
             <template v-slot:right="{ row }">
                 <mc-button style="margin-right: 4px;" variation="blue-link" size="s-compact" @click.stop="handleBtnClick">
-                    <mc-svg-icon slot="icon-append" name="create" size="200"/>
+                    <mc-svg-icon slot="icon-append" name="edit"/>
                 </mc-button>
                 <mc-button variation="blue-link" size="s-compact" @click.stop="handleBtnClick">
-                    <mc-svg-icon slot="icon-append" name="delete" size="200"/>
+                    <mc-svg-icon slot="icon-append" name="delete"/>
                 </mc-button>
             </template>
         </mc-table-col>

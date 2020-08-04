@@ -4,7 +4,7 @@ export default {
   name: "McTitle",
   props: {
     /**
-     * Уровень: `h1`, `h2`, `h3`, `h4`, `body`, `caption`, `overline`.
+     * Уровень: `h1`, `h2`, `h3`, `h4`, `subtitle`, `body`, `overline`.
      */
     variation: {
       type: String,
@@ -177,14 +177,14 @@ export default {
         max-width: 700px;
       }
     }
-    &-body {
+    &-subtitle {
       font-size: $font-size-300;
       line-height: $line-height-250;
       #{$block-name}__text {
         max-width: 640px;
       }
     }
-    &-caption {
+    &-body {
       font-size: $font-size-200;
       line-height: $line-height-200;
       #{$block-name}__text {

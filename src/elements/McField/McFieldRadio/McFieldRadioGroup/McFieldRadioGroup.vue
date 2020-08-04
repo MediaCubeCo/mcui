@@ -165,6 +165,7 @@
 
     &__footer {
         margin-top: $space-50;
+        line-height: $line-height-150;
 
         &:empty {
             display: none;
