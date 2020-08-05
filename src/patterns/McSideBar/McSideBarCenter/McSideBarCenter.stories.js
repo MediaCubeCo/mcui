@@ -1,17 +1,13 @@
 import { text, object, boolean } from '@storybook/addon-knobs'
-import { action } from "@storybook/addon-actions"
 import menuMain from '../../../mocks/menuMain'
 import authUser from '../../../mocks/authUser'
 
-import McSideBar from './McSideBar'
-import McSideBarTop from "../McSideBarTop/McSideBarTop"
-import McSideBarCenter from "../McSideBarCenter/McSideBarCenter"
-import McSideBarBottom from "../McSideBarBottom/McSideBarBottom"
+import McSideBarCenter from './McSideBarCenter'
 import McSideBarButton from "../McSideBarButton/McSideBarButton"
 
 const wrapper = () => {
   return {
-    template: `<div style="display: flex; align-items: center; height: 900px;">
+    template: `<div style="background-color: #202427; width: 216px;">
         <story />
     </div>`,
   }
@@ -19,9 +15,9 @@ const wrapper = () => {
 
 
 export default {
-  title: 'Patterns/McSideBar',
-  component: McSideBar,
-  subcomponents: { McSideBarTop, McSideBarCenter, McSideBarBottom, McSideBarButton, },
+  title: 'Patterns/McSideBarCenter',
+  component: McSideBarCenter,
+  subcomponents: { McSideBarButton, },
   parameters: {
     componentSubtitle: 'Status: In progress',
     design: {
@@ -34,20 +30,11 @@ export default {
 
 const getUniqueProps = key => {
   return {
-    logoTitle: {
-      default: text('logoTitle', 'Dashboard', key),
-    },
-    logoSrc: {
-      default: text('logoSrc', '/img/mc_dashboard.svg', key),
-    },
-    menuMainTitle: {
-      default: text('menuMainTitle', 'Sections', key),
+    title: {
+      default: text('title', 'Sections', key),
     },
     chatraConfig: {
       default: object('chatraConfig', {id: 'dzDw7eBbL2ramxx25', title: 'Have questions?'}, key),
-    },
-    hideText: {
-      default: text('hideText', 'Hide', key),
     },
     compact: {
       default: boolean('compact', false, key),
@@ -57,24 +44,17 @@ const getUniqueProps = key => {
 
 const getCommonTags = ctx => {
   return {
-    logoTitle: ctx.logoTitle,
-    logoSrc: ctx.logoSrc,
-    menuMainTitle: ctx.menuMainTitle,
+    title: ctx.title,
     menuMain: ctx.menuMain,
     chatraConfig: ctx.chatraConfig,
     userbackConfig: ctx.userbackConfig,
     user: ctx.user,
-    hideText: ctx.hideText,
     compact: ctx.compact,
   }
 }
 
-const actionsData = {
-  handleCompact: action('compact'),
-}
-
 export const Default = () => ({
-  components: { McSideBar },
+  components: { McSideBarCenter },
   computed: {
     tagBind() {
       return getCommonTags(this)
@@ -105,7 +85,6 @@ export const Default = () => ({
   props: {
     ...getUniqueProps('default'),
   },
-  methods: actionsData,
-  template: `<mc-side-bar v-bind="tagBind" @compact="handleCompact" />`,
+  template: `<mc-side-bar-center v-bind="tagBind" />`,
 })
 

@@ -2,15 +2,15 @@
   <mc-button
     v-on="$listeners"
     class="mc-side-bar-button"
-    full-width
     text-align="left"
     variation="white-flat"
+    full-width
     :size="compact ? 's-compact' : 's'"
     :href="href"
     :to="to"
     :exact="exact"
   >
-    <mc-svg-icon slot="icon-prepend" :name="icon" />
+    <mc-svg-icon v-if="icon" slot="icon-prepend" class="mc-side-bar-button__icon" :name="icon" />
     <template v-if="!compact">
       {{ title }}
       <mc-chip v-if="info" slot="icon-append" variation="blue">{{info}}</mc-chip>
@@ -66,14 +66,14 @@ export default {
       default: false,
     },
     /**
-     *  additional info
+     *  Additional info
      */
     info: {
       type: String,
       default: "",
     },
     /**
-     *  exact
+     *  Exact
      *
      */
     exact: {
@@ -93,11 +93,11 @@ export default {
     opacity: 1;
     height: auto;
     border-radius: $space-50;
+    justify-content: flex-start;
     .mc-svg-icon {
       @include size($size-300);
     }
-    &:hover,
-    &:focus {
+    &:hover {
       color: $color-white;
     }
 

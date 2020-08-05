@@ -313,6 +313,19 @@ $colors: $token-colors;
         }
       }
     }
+
+    &-s,
+    &-m,
+    &-l {
+      &-compact {
+        #{$block-name} {
+          &__prepend,
+          &__append {
+            margin: 0 !important;
+          }
+        }
+      }
+    }
   }
 
   @each $color, $value in $colors {
