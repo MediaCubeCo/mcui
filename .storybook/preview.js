@@ -4,6 +4,7 @@ import '../src/styles/main.scss'
 import '../src/styles/global.scss'
 
 import "./plugins"
+import "./components"
 
 import { addDecorator, addParameters } from '@storybook/vue';
 import { withA11y } from '@storybook/addon-a11y';

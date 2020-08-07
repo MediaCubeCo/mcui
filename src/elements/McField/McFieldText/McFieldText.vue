@@ -41,7 +41,11 @@
             :maxlength="maxLength"
           />
         </label>
-        <div class="mc-field-text__append" v-if="$slots.append || copy || isPassword">
+        <div
+            v-if="$slots.append || copy || isPassword"
+            class="mc-field-text__append"
+            :class="{'mc-field-text__append--indent-bottom': this.hasCharCounter}"
+        >
           <!-- @slot Слот в конце инпута -->
           <slot name="append" />
           <mc-button
@@ -62,7 +66,7 @@
           </mc-button>
         </div>
         <mc-title
-          v-if="maxLength && (isTextarea || isTextareaAutosize)"
+          v-if="hasCharCounter"
           class="mc-field-text__char-counter"
           variation="overline"
           text-align="right"
@@ -272,6 +276,10 @@ export default {
       return this.type === "password"
     },
 
+    hasCharCounter() {
+      return this.maxLength && (this.isTextarea || this.isTextareaAutosize)
+    },
+
     inputAttrs() {
       return {
         class: "mc-field-text__input",
@@ -420,6 +428,9 @@ export default {
   &__append {
     right: $space-100;
     padding: $space-100 0 $space-100 $space-50;
+    &--indent-bottom {
+      padding-bottom: $space-400;
+    }
   }
 
   &__char-counter {

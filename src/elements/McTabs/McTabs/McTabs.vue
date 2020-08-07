@@ -240,6 +240,11 @@ export default {
 
     @include child-indent-right($space-50);
     @include border();
+    .las,
+    .la {
+      display: flex;
+      align-items: center;
+    }
 
     &::after {
       @include pseudo();

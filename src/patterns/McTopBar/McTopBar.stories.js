@@ -1,5 +1,4 @@
-import { text, object, boolean } from '@storybook/addon-knobs'
-import { action } from "@storybook/addon-actions"
+import { boolean } from '@storybook/addon-knobs'
 import authUser from '../../mocks/authUser'
 import menuLangs from '../../mocks/menuLangs'
 
@@ -8,19 +7,10 @@ import McTitle from "../../elements/McTitle/McTitle"
 import McButton from "../../elements/McButton/McButton"
 import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon"
 
-// const wrapper = () => {
-//   return {
-//     template: `<div style="display: flex; align-items: center; height: 900px;">
-//         <story />
-//     </div>`,
-//   }
-// }
-
 
 export default {
   title: 'Patterns/McTopBar',
   component: McTopBar,
-  // subcomponents: { McSideBarTop, McSideBarCenter, McSideBarBottom, McSideBarButton, },
   parameters: {
     componentSubtitle: 'Status: In progress',
     design: {
@@ -28,18 +18,6 @@ export default {
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=350%3A0',
     },
   },
-  // decorators: [wrapper],
-}
-
-const getUniqueProps = key => {
-  return {
-    // hasSlotLeft: {
-    //   default: boolean('hasSlotLeft', true, key),
-    // },
-    // hasSlotRight: {
-    //   default: boolean('hasSlotRight', true, key),
-    // },
-  }
 }
 
 const getCommonTags = ctx => {
@@ -48,10 +26,6 @@ const getCommonTags = ctx => {
     menuLangs: ctx.menuLangs,
   }
 }
-
-// const actionsData = {
-//   handleCompact: action('compact'),
-// }
 
 export const Default = () => ({
   components: { McTopBar, McTitle, McButton, McSvgIcon },
@@ -70,7 +44,6 @@ export const Default = () => ({
     }
   },
   props: {
-    ...getUniqueProps('default'),
     hasSlotLeft: {
       default: boolean('hasSlotLeft', true, 'default'),
     },
@@ -78,7 +51,6 @@ export const Default = () => ({
       default: boolean('hasSlotRight', true, 'default'),
     },
   },
-  // methods: actionsData,
   template: `<mc-top-bar v-bind="tagBind">
     <mc-title v-if="hasSlotLeft" slot="left" variation="subtitle" max-width="auto">Left Section Title</mc-title>
     <mc-button v-if="hasSlotLeft" slot="left" size="s-compact" rounded variation="black-flat">

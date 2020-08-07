@@ -85,10 +85,10 @@ export const Default = () => ({
   template: `<mc-tabs v-bind="tagBind" @changed="handleChange">
       <mc-tab id="custom" name="Custom fragment">Custom fragment content</mc-tab>
       <mc-tab 
-          name="With icons" 
-          icon-prepend-classes="fa fa-check-circle" 
-          icon-append-classes="fa fa-external-link-alt"
+          name="With icons"
+          icon-prepend-classes="las la-check-circle"
           icon-prepend-color="red"
+          icon-append-classes="las la-external-link-alt"
       >
           Lorem ipsum dolor sit amet.
       </mc-tab>

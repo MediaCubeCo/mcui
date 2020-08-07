@@ -10,6 +10,6 @@ WebFont.load({
   },
   custom: {
     families: ['Font Awesome\ 5 Icons:400,900', 'Font Awesome\ 5 Brands:400'],
-    urls: ['//use.fontawesome.com/releases/v5.0.8/css/all.css']
+    urls: ['https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css']
   },
 })

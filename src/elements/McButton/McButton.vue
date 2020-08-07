@@ -533,9 +533,9 @@ $colors: $token-colors;
   }
 
   &--disabled {
-    background-color: $color-outline-gray !important;
-    color: $color-white !important;
-    border-color: $color-outline-gray !important;
+    background-color: $color-hover-gray !important;
+    color: $color-outline-gray !important;
+    border-color: $color-hover-gray !important;
   }
 }
 </style>

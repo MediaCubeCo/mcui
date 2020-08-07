@@ -1,6 +1,7 @@
 <template>
     <div class="mc-root">
-        <slot />
+      <slot />
+      <slideout-panel></slideout-panel>
     </div>
 </template>
 

@@ -53,6 +53,9 @@ const getUniqueProps = key => {
     minHeight: {
       default: number('minHeight', 0, {}, key),
     },
+    maxHeight: {
+      default: number('maxHeight', 0, {}, key),
+    },
     maxLength: {
       default: number('maxLength', 120, {}, key),
     },
@@ -154,7 +157,7 @@ export const Textarea = () => ({
       default: select('type', types, 'textarea', 'textarea')
     },
     errors: {
-      default: array('errors', null, ',', 'textarea'),
+      default: array('errors', [], ',', 'textarea'),
     },
     copy: {
       default: boolean('copy', false, 'textarea'),

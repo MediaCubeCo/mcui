@@ -173,15 +173,26 @@
   }
 }
 
-@mixin interplay-link($color: $color-red) {
+@mixin default-link($main-color: $color-black, $second-color: $color-blue) {
+  color: $main-color;
   &:hover,
   &:focus {
-    color: $color;
+    color: $second-color;
   }
 
   &:active {
-    color: darken($color, 8%);
+    color: darken($second-color, 8%);
   }
+}
+
+@mixin delete-link() {
+  @include default-link($color-black, $color-red);
+}
+@mixin text-link() {
+  @include default-link($color-blue, $color-hover-blue);
+}
+@mixin close-link() {
+  @include default-link($color-gray, $color-black);
 }
 
 @mixin field-error() {
@@ -207,7 +218,7 @@
     border-radius: $radius-50;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #c1c1c1;
+    background: $color-gray;
   }
   ::-webkit-scrollbar-thumb:active {
   }

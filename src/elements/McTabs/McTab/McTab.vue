@@ -80,14 +80,14 @@ export default {
      */
     iconPrependColor: {
       type: String,
-      default: "gray",
+      default: "",
     },
     /**
      *  Цвет иконки в конце
      */
     iconAppendColor: {
       type: String,
-      default: "gray",
+      default: "",
     },
   },
   computed: {
