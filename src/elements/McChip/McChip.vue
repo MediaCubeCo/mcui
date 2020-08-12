@@ -68,12 +68,21 @@ export default {
       type: Number,
       default: null,
     },
+    /**
+     *  Размер: m, s
+     *
+     */
+    size: {
+      type: String,
+      default: "m",
+    },
   },
 
   computed: {
     classes() {
       return {
         [`mc-chip--variation-${this.variation}`]: this.variation,
+        [`mc-chip--size-${this.size}`]: this.size,
       }
     },
   },
@@ -90,11 +99,9 @@ export default {
   font-family: $font-family-main;
   font-size: $font-size-200;
   line-height: $line-height-200;
-  font-weight: $font-weight-medium;
   max-width: 100%;
-  height: $size-400;
-  padding-left: $space-100;
-  padding-right: $space-100;
+
+
   border-radius: 100px;
   vertical-align: middle;
   outline: none;
@@ -103,6 +110,19 @@ export default {
   }
   > *:first-child {
     margin-left: $space-50;
+  }
+
+  &--size {
+    &-m {
+      height: $size-400;
+      padding-left: $space-100;
+      padding-right: $space-100;
+    }
+    &-s {
+      height: $size-300;
+      padding-left: $space-50;
+      padding-right: $space-50;
+    }
   }
 
   &__icon {

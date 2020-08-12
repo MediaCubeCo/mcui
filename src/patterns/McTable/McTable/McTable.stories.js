@@ -13,6 +13,7 @@ import McButton from '../../../elements/McButton/McButton'
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
 import McStack from '../../../patterns/McStack/McStack'
+import McPreview from "../../McPreview/McPreview"
 
 import _minBy from 'lodash/minBy'
 import { number as num } from "../../../utils/filters"
@@ -47,13 +48,13 @@ export default {
 const getUniqueProps = key => {
   return {
     height: {
-      default: text('height', '700', key),
+      default: text('height', '650', key),
     },
     scrollable: {
       default: boolean('scrollable', true, key),
     },
     stripe: {
-      default: boolean('stripe', true, key),
+      default: boolean('stripe', false, key),
     },
     border: {
       default: select('border', borders, 'outer', key),
@@ -118,11 +119,14 @@ export const Default = () => ({
     McGridCol,
     McGridRow,
     McStack,
+    McPreview,
   },
   data() {
     return {
+      total: 424,
       placeholders: {
         no_data: 'Данных вообще нет!',
+        loading: "Секундочку...",
         all_loaded: 'Всё уже загружено',
         menu: {
           copy: "Скопировать данные ячейки",
@@ -147,6 +151,7 @@ export const Default = () => ({
           categories: item.categories.map(c => c.title).join(', '),
           language: item.language.name,
           country: item.country.name,
+          roles: ['Одмен', 'Петух', 'Лопух'],
           price: item.agency_channels.filter( item => item.type === 2 ).length ?
             num(_minBy(item.agency_channels.filter( item => item.type === 2 ), 'total').total, 0) + ' $' :
             null,
@@ -160,7 +165,7 @@ export const Default = () => ({
   methods: {
     ...actionsData,
     handleCellClassName() {
-      return "mc-table-col--border-bottom"
+      return ""//"mc-table-col--border-bottom"
     },
     sortNameMethod(a, b) {
       return a - b
@@ -177,15 +182,17 @@ export const Default = () => ({
         <mc-table-col type="seq" min-width="60" fixed="left" align="right" has-border />
         <mc-table-col :show-overflow="false" type="checkbox" fixed="left" width="25" />
         <mc-table-col field="title" title="Канал" width="248" fixed="left">
+          <template v-slot:header-right="{ column }">
+            <mc-chip variation="gray-invert" style="margin-left: auto; color: #8F99A3;" size="s">
+              {{ total }}
+            </mc-chip>
+          </template>
             <template v-slot="{ row }">
-                <mc-grid-row align="middle" :gutter-x="10" :wrap="false">
-                    <mc-grid-col style="line-height: 0">
-                        <mc-avatar border-color="blue" dot-color="orange" lazy size="400" :src="row.avatar" />
-                    </mc-grid-col>
-                    <mc-grid-col style="min-width: 0; line-height: 0">
-                        <mc-title> {{ row.title }} </mc-title>
-                    </mc-grid-col>
-                </mc-grid-row>
+              <mc-preview>
+                <mc-avatar slot="left" border-color="blue" dot-color="orange" lazy :src="row.avatar" />
+                <mc-title slot="top"> {{ row.title }} </mc-title>
+                <mc-title slot="bottom" color="gray" variation="overline"> {{ row.youtube_id }} </mc-title>
+              </mc-preview>
             </template>
             <template v-slot:right="{ row }">
                 <mc-button style="margin-right: 4px;" variation="blue-link" size="s-compact" @click.stop="handleBtnClick">
@@ -219,24 +226,22 @@ export const Default = () => ({
             :sortMethod="sortNameMethod"
         />
 
-        <mc-table-col field="roles" title="Роль" width="190">
+        <mc-table-col field="roles" title="Роль" width="120">
             <template v-slot="{ row }">
-                <mc-stack :limit="1">
-                    <mc-chip variation="gray-invert">Администратор</mc-chip>
-                    <mc-chip variation="gray-invert">Петух</mc-chip>
-                    <mc-chip variation="gray-invert">Лопух</mc-chip>
-                </mc-stack>
+                <mc-chip variation="gray-invert" size="s" :counter="'+'+(row.roles.length - 1)">
+                    {{ row.roles[0] }}
+                </mc-chip>
             </template>
         </mc-table-col>
 
-        <mc-table-col field="channels" title="Канал" width="120">
+        <mc-table-col field="channels" title="Канал" width="120" sortable>
             <template v-slot="{ row }">
                 <mc-stack :limit="3" collapsed>
-                    <mc-avatar rounded lazy size="400" />
-                    <mc-avatar rounded lazy size="400" />
-                    <mc-avatar rounded lazy size="400" />
-                    <mc-avatar v-if="row.id%3" rounded lazy size="400" />
-                    <mc-avatar v-if="row.id%2" rounded lazy size="400" />
+                    <mc-avatar rounded lazy size="300" />
+                    <mc-avatar rounded lazy size="300" />
+                    <mc-avatar rounded lazy size="300" />
+                    <mc-avatar v-if="row.id%3" rounded lazy size="300" />
+                    <mc-avatar v-if="row.id%2" rounded lazy size="300" />
                 </mc-stack>
             </template>
         </mc-table-col>
@@ -247,7 +252,7 @@ export const Default = () => ({
             </template>
         </mc-table-col>
 
-        <mc-table-col field="owner" title="Владелец" width="200">
+        <mc-table-col field="owner" title="Владелец" width="150">
             <template v-slot="{ row }">
                 <div style="display: flex; align-items: center; height: 100%;">
                     <mc-field-text :name="row.id + ''" placeholder="Владелец" />
@@ -255,14 +260,14 @@ export const Default = () => ({
             </template>
         </mc-table-col>
 
-        <mc-table-col field="action" title="Действие" width="243" fixed="right">
+        <mc-table-col field="action" title="Действие" width="143" fixed="right">
             <template v-slot="{ row }">
                 <mc-grid-row justify="right" :wrap="false" align="middle" :gutter-x="5">
                     <mc-grid-col>
-                        <mc-button size="s" @click.stop="handleBtnClick">Выплатить</mc-button>
+                        <mc-button size="s" @click.stop="handleBtnClick">Да</mc-button>
                     </mc-grid-col>
                     <mc-grid-col>
-                        <mc-button variation="red" size="s" @click.stop="handleBtnClick">Отменить</mc-button>
+                        <mc-button variation="red" size="s" @click.stop="handleBtnClick">Нет</mc-button>
                     </mc-grid-col>
                 </mc-grid-row>
             </template>

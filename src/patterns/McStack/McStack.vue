@@ -96,38 +96,22 @@ export default {
     flex-wrap: nowrap;
     flex-direction: row-reverse;
 
-    //@include child-indent-right(-$space-200);
     > * {
         &:not(:first-child) {
             margin-right: $space-150;
         }
         justify-content: center;
     }
-    .mc-avatar {
-      //border: 2px solid $color-white;
-
-      &:not(:first-child) {
-        //margin-right: -$space-200;
-      }
-    }
-
-    .mc-chip {
-      //justify-content: center;
-
-      &:not(:first-child) {
-        //margin-right: $space-150;
-      }
-    }
   }
 
   &__counter {
-    margin-left: $space-100;
+    margin-left: $space-50;
     flex: 0 0 auto;
 
-    color: $color-black;
+    color: $color-gray;
     font-family: $font-family-main;
-    font-size: $font-size-300;
-    line-height: $line-height-250;
+    font-size: $font-size-200;
+    line-height: $line-height-200;
     font-weight: $font-weight-medium;
   }
 }

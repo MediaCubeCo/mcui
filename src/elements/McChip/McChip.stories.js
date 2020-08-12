@@ -31,10 +31,18 @@ Object.keys(tokenColors).forEach(c => {
   }
 })
 
+const sizes = {
+  s: 's',
+  m: 'm',
+}
+
 const getUniqueProps = key => {
   return {
     closable: {
       default: boolean('closable', true, key),
+    },
+    size: {
+      default: select('size', sizes, 'm', key),
     },
   }
 }
@@ -45,6 +53,7 @@ const getCommonTags = ctx => {
     closable: ctx.closable,
     variation: ctx.variation,
     counter: ctx.counter,
+    size: ctx.size,
   }
 }
 

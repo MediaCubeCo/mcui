@@ -54,7 +54,8 @@ export default {
       default: "",
     },
     /**
-     * Толщина текста
+     * Толщина текста:
+     * medium, semi-bold
      */
     weight: {
       type: String,

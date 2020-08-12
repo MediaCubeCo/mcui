@@ -1,5 +1,5 @@
 <template>
-  <vxe-table-column v-bind="attrs" v-on="$listeners" class="mc-table-col" >
+  <vxe-table-column v-bind="attrs" v-on="$listeners" class="mc-table-col">
     <template v-slot="{ row, rowIndex }">
       <!-- @slot Слот для mc-table-col -->
       <slot :row="row">
@@ -15,14 +15,18 @@
     <template v-slot:header="{ column }">
       <!-- @slot Слот заголовка столбца -->
       <slot name="header" :column="column">
-        <mc-title class="mc-table-col__title" :text-align="textAlign">
-          <mc-svg-icon v-if="isSortable" slot="icon-prepend" :name="getSortIcon(column)" />
+        <mc-title class="mc-table-col__title" weight="semi-bold" :text-align="textAlign">
+          <mc-svg-icon v-if="isSortable" slot="icon-prepend" :name="getSortIcon(column)" :color="getSortColor(column)" />
           {{ $attrs.type === "seq" ? "#" : column.title }}
           <div slot="icon-append">
-            <!-- @slot Слот для вставки в начало перед заголовком столбца -->
+            <!-- @slot Слот для вставки в конец после заголовка столбца -->
             <slot name="header-append" />
           </div>
         </mc-title>
+        <div v-if="$scopedSlots['header-right']" class="mc-table-col__header-right">
+          <!-- @slot Слот справа в ячейке хедера (абсолютно спозиционированный, с бэкграундом) -->
+          <slot name="header-right" :column="column" />
+        </div>
       </slot>
     </template>
     <template v-slot:footer="{ columnIndex, items }">
@@ -99,10 +103,19 @@ export default {
         if (this.provideData.sortedBy && column.property === this.provideData.sortedBy) {
           return this.provideData.sortedDescending ? "arrow_downward" : "arrow_upward"
         }
-        return "unfold_more"
+        return "arrow_up_down"
       }
-      if (!column.order) return "unfold_more"
+      if (!column.order) return "arrow_up_down"
       return column.order === "desc" ? "arrow_downward" : "arrow_upward"
+    },
+    getSortColor(column) {
+      if (!this.provideData.nativeSort) {
+        if (this.provideData.sortedBy && column.property === this.provideData.sortedBy) {
+          return 'black'
+        }
+        return "outline-gray"
+      }
+      return column.order ? 'black' : 'outline-gray'
     },
     handleClassName() {
       const classes = []
@@ -124,7 +137,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~vxe-table/styles/variable.scss"; //??
+@import "~vxe-table/styles/variable.scss";
 //override variables:
 @import "../../../styles/table.scss";
 
@@ -137,14 +150,16 @@ export default {
   }
 }
 .mc-table-col {
+  $block-name: &;
+
   &--border-right {
-    border-right: 1px solid $color-outline-gray;
+    border-right: 1px solid $color-hover-gray;
   }
   &--border-top {
-    border-top: 1px solid $color-outline-gray;
+    border-top: 1px solid $color-hover-gray;
   }
   &--border-bottom {
-    border-bottom: 1px solid $color-outline-gray;
+    border-bottom: 1px solid $color-hover-gray;
   }
   &--overflow-visible {
     .vxe-cell {
@@ -157,7 +172,7 @@ export default {
     max-width: 101%;
   }
   &__right {
-    display: flex;
+    display: none;
     align-items: center;
     flex-wrap: nowrap;
     @include position(absolute, 0 $space-100 0 null);
@@ -170,9 +185,16 @@ export default {
       background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, $color-white);
     }
   }
+  &__header-right {
+    @extend .mc-table-col__right;
+    display: flex;
+  }
 }
 
 .vxe-cell {
+  &--title {
+    font-weight: $font-weight-semi-bold;
+  }
   &.c--tooltip,
   &.c--title {
     text-overflow: clip !important;
@@ -185,6 +207,9 @@ export default {
     @include col-right-color($vxe-table-row-striped-background-color);
   }
   &.row--hover {
+    .mc-table-col__right {
+      display: flex;
+    }
     @include col-right-color($vxe-table-row-hover-background-color);
     &.row--current {
       @include col-right-color($vxe-table-row-hover-current-background-color);

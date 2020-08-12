@@ -1,10 +1,10 @@
 <template>
-  <div :style="wrapperStyles">
+  <div class="mc-table-wrapper" :style="wrapperStyles">
     <component
       class="mc-table"
       ref="xTable"
       :is="tag"
-      v-bind="$attrs"
+      v-bind="attrs"
       v-on="$listeners"
       row-id="id"
       highlight-hover-row
@@ -31,6 +31,13 @@
         </mc-title>
       </template>
     </component>
+    <div v-if="hasMore || $attrs.loading" class="mc-table-wrapper__footer">
+      <div class="mc-table-wrapper__tint"></div>
+      <div v-if="$attrs.loading" class="mc-table-wrapper__loading">
+        <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader"/>
+        <mc-title color="outline-gray">{{ placeholders.loading }}</mc-title>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -38,6 +45,7 @@
 import _debounce from "lodash/debounce"
 import _XEClipboard from "xe-clipboard"
 import McTitle from "../../../elements/McTitle/McTitle"
+import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
 
 /**
  *  More info: https://xuliangzhan.com/vxe-table, https://xuliangzhan.github.io/vxe-table
@@ -46,6 +54,7 @@ export default {
   name: "McTable",
   components: {
     McTitle,
+    McSvgIcon,
   },
   provide() {
     const provideData = {}
@@ -108,6 +117,7 @@ export default {
       default() {
         return {
           no_data: "No data",
+          loading: "Loading...",
           all_loaded: "All loaded",
           menu: {
             copy: "Copy cell value",
@@ -180,6 +190,13 @@ export default {
   computed: {
     api() {
       return this.$refs.xTable
+    },
+    attrs() {
+      const attrs = {...this.$attrs}
+      if ('loading' in attrs) {
+        delete attrs.loading
+      }
+      return attrs
     },
     canShowLoader() {
       return !this.scrollable && this.hasMore
@@ -345,9 +362,38 @@ export default {
 
 @import "~vxe-table/styles/modules.scss";
 
-.vxe-table--tooltip-wrapper {
-  .vxe-table--tooltip-content {
-    white-space: normal;
+.vxe-table {
+  font-family: $font-family-main;
+  &--tooltip-wrapper {
+    .vxe-table--tooltip-content {
+      white-space: normal;
+    }
+  }
+}
+.mc-table-wrapper {
+  position: relative;
+  &__footer {
+    @include position(absolute, null 5px 5px 0);
+    z-index: 1;
+  }
+  &__tint {
+    height: $size-900;
+    background: linear-gradient(0deg, $color-white 0%, rgba(255, 255, 255, 0) 100%);
+  }
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: $size-700;
+    background-color: $color-white;
+    color: $color-outline-gray;
+    @include child-indent-right($space-100);
+    .mc-title {
+      width: auto;
+    }
+  }
+  &__load-icon {
+    animation: $animation-spinner;
   }
 }
 
