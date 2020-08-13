@@ -30,8 +30,7 @@ const positions = {
 
 const getCommonTags = ctx => {
   return {
-    // user: ctx.user,
-    // menuLangs: ctx.menuLangs,
+
   }
 }
 

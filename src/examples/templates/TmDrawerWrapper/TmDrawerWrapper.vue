@@ -60,8 +60,8 @@ export default {
        * Событие закрытия панели
        * @property {Object}
        */
-      this.$emit("closePanel", { userAge: this.prettyUserAge });
-    }
+      this.$emit("closePanel", { userAge: this.prettyUserAge })
+    },
   },
 }
 </script>

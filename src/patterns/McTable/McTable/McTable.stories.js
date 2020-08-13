@@ -195,10 +195,10 @@ export const Default = () => ({
               </mc-preview>
             </template>
             <template v-slot:right="{ row }">
-                <mc-button style="margin-right: 4px;" variation="blue-link" size="s-compact" @click.stop="handleBtnClick">
+                <mc-button style="margin-right: 4px;" variation="blue-link" size="xs-compact" @click.stop="handleBtnClick">
                     <mc-svg-icon slot="icon-append" name="edit"/>
                 </mc-button>
-                <mc-button variation="blue-link" size="s-compact" @click.stop="handleBtnClick">
+                <mc-button variation="blue-link" size="xs-compact" @click.stop="handleBtnClick">
                     <mc-svg-icon slot="icon-append" name="delete"/>
                 </mc-button>
             </template>
@@ -264,10 +264,10 @@ export const Default = () => ({
             <template v-slot="{ row }">
                 <mc-grid-row justify="right" :wrap="false" align="middle" :gutter-x="5">
                     <mc-grid-col>
-                        <mc-button size="s" @click.stop="handleBtnClick">Да</mc-button>
+                        <mc-button size="xs" @click.stop="handleBtnClick">Да</mc-button>
                     </mc-grid-col>
                     <mc-grid-col>
-                        <mc-button variation="red" size="s" @click.stop="handleBtnClick">Нет</mc-button>
+                        <mc-button variation="red" size="xs" @click.stop="handleBtnClick">Нет</mc-button>
                     </mc-grid-col>
                 </mc-grid-row>
             </template>

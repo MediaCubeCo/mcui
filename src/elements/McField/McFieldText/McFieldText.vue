@@ -318,8 +318,9 @@ export default {
       const space = parseInt(getTokenValue('$space-150'))
       let bottomStyle = {}
       if (this.isTextarea || this.isTextareaAutosize) {
-        const spaceBottom = parseInt(getTokenValue('$space-400'))
-        bottomStyle = { paddingBottom: `${spaceBottom}px` }
+        const spaceBottomToken = this.hasCharCounter ? '$space-400' : '$space-150'
+        const spaceBottomValue = parseInt(getTokenValue(spaceBottomToken))
+        bottomStyle = { paddingBottom: `${spaceBottomValue - 1}px` }
       }
       return {
         paddingLeft: this.prependWidth && `${this.prependWidth + space}px`,
@@ -400,7 +401,7 @@ export default {
   &__main {
     position: relative;
     width: 100%;
-    @include custom-scroll();
+    @include custom-scroll($space-50);
   }
 
   &__prepend,
@@ -453,7 +454,7 @@ export default {
     margin: 0;
     border: 1px solid $color-outline-gray;
     border-radius: $radius-100;
-    padding: $space-150;
+    padding: $space-150 - 1px $space-150;
     line-height: $line-height-200;
     font-size: $font-size-200;
     background-color: $color-white;

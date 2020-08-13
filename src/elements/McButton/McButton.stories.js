@@ -24,14 +24,13 @@ const types = {
   'submit': 'submit',
   'default': null,
 }
-const sizes = {
-  's': 's',
-  's-compact': 's-compact',
-  'm': 'm',
-  'm-compact': 'm-compact',
-  'l': 'l',
-  'l-compact': 'l-compact',
-}
+const sizesArr = ['xs', 's', 'm', 'l']
+const sizes = {}
+sizesArr.forEach(s => {
+  sizes[s] = s
+  sizes[`${s}-compact`] = `${s}-compact`
+})
+
 const positions = {
   'left': 'left',
   'center': 'center',

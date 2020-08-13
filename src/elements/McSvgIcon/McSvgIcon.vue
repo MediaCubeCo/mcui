@@ -8,25 +8,50 @@
   export default {
     name: 'McSvgIcon',
     props: {
+      /**
+       * Имя иконки
+       * из assets
+       */
       name: {
         type: String,
         required: true,
       },
+      /**
+       * Цвет иконки
+       * (по токенам)
+       */
       color: {
         type: String,
         default: "",
       },
+      /**
+       * Заливка иконки
+       */
       fill: {
         type: String,
         default: "currentColor",
       },
+      /**
+       * Размер
+       */
       size: {
         type: String,
         default: "300",
       },
+      /**
+       * Тип тега
+       */
       type: {
         type: String,
         default: "span",
+      },
+      /**
+       * Толщина линий
+       * stroke-width
+       */
+      weight: {
+        type: Number,
+        default: 0,
       },
     },
     data() {
@@ -68,14 +93,15 @@
         }
       },
       computedWeight() {
+        if (this.weight) {
+          return this.weight
+        }
         switch (parseInt(this.size)) {
           case 200:
-            return 1
+            return 1.2
           case 300:
           case 400:
-          case 500:
             return 1.5
-          case 600:
           default:
             return 2
         }

@@ -117,7 +117,7 @@ export const Default = () => ({
   template: `<mc-main>
     <mc-top-bar slot="top-bar" :user="user" :menu-langs="menuLangs">
       <mc-title slot="left" variation="subtitle" max-width="auto">Left Section Title</mc-title>
-      <mc-button slot="left" size="s-compact" rounded variation="black-flat">
+      <mc-button slot="left" size="xs-compact" rounded variation="black-flat">
         <mc-svg-icon slot="icon-prepend" name="add" />
       </mc-button>
       <mc-svg-icon slot="right" name="search" />

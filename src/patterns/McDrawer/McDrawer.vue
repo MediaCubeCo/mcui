@@ -3,7 +3,7 @@
   <div class="mc-drawer__header" v-if="$slots.title || title">
     <!-- @slot Слот заголовка -->
     <slot name="title">
-      <mc-title variation="subtitle" :ellipsis="false">{{ title }}</mc-title>
+      <mc-title variation="subtitle" :ellipsis="false" weight="semi-bold">{{ title }}</mc-title>
     </slot>
   </div>
   <mc-separator v-if="$slots.title || title" color="hover-gray" />
@@ -100,6 +100,7 @@ export default {
     min-height: 0;
     &-inner {
       max-height: 100%;
+      height: 100%;
       overflow-y: auto;
       padding: $space-400 $space-200;
     }

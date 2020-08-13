@@ -53,7 +53,7 @@ export const Default = () => ({
   },
   template: `<mc-top-bar v-bind="tagBind">
     <mc-title v-if="hasSlotLeft" slot="left" variation="subtitle" max-width="auto">Left Section Title</mc-title>
-    <mc-button v-if="hasSlotLeft" slot="left" size="s-compact" rounded variation="black-flat">
+    <mc-button v-if="hasSlotLeft" slot="left" size="xs-compact" rounded variation="black-flat">
       <mc-svg-icon slot="icon-prepend" name="add" />
     </mc-button>
     <mc-svg-icon v-if="hasSlotRight" slot="right" name="search" />

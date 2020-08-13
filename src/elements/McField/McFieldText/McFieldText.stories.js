@@ -136,7 +136,7 @@ export const Default = () => ({
       </mc-title>
       <mc-svg-icon v-if="isPrepend" slot="prepend" name="access_time" />
       <mc-svg-icon v-if="isPrepend" slot="prepend" name="face_alt" />
-      <mc-button v-if="isAppend" slot="append" uppercase variation="dark-gray-link" size="s-compact" @click="handleClick">
+      <mc-button v-if="isAppend" slot="append" uppercase variation="dark-gray-link" size="xs-compact" @click="handleClick">
           <mc-svg-icon v-if="isAppend" slot="icon-prepend" name="cancel" size="400" />
       </mc-button>
       <mc-svg-icon v-if="isAppend" slot="append" name="dollar" />

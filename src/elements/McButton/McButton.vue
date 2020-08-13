@@ -81,7 +81,7 @@ export default {
     },
     /**
      *  Размеры:
-     *  `s, s-compact, m, m-compact, l, l-compact, xl, xl-compact`
+     *  `xs, xs-compact, s, s-compact, m, m-compact, l, l-compact`
      */
     size: {
       type: String,
@@ -246,7 +246,7 @@ $colors: $token-colors;
   }
 
   &--size {
-    &-s {
+    &-xs {
       height: $size-400;
       padding: $space-100 $space-150;
       letter-spacing: normal;
@@ -273,15 +273,48 @@ $colors: $token-colors;
         }
       }
     }
+    &-s {
+      height: $size-500;
+      padding: $space-150 $space-200;
+      letter-spacing: normal;
+      font-size: $font-size-200;
+      line-height: $line-height-200;
+
+      &-compact {
+        @include size($size-500);
+        padding: $space-150;
+        .mc-svg-icon {
+          @include size($size-200);
+        }
+      }
+      .mc-svg-icon {
+        @include size($size-200);
+      }
+
+      #{$block-name} {
+        &__prepend {
+          margin-right: $space-50;
+        }
+        &__append {
+          margin-left: $space-50;
+        }
+      }
+    }
     &-m {
       height: $size-500;
       padding: $space-100 $space-200;
-      font-size: $font-size-300;
-      line-height: $line-height-300;
+      font-size: $font-size-200;
+      line-height: $line-height-200;
 
       &-compact {
         @include size($size-500);
         padding: $space-100;
+        .mc-svg-icon {
+          @include size($size-300);
+        }
+      }
+      .mc-svg-icon {
+        @include size($size-300);
       }
 
       #{$block-name} {
@@ -302,6 +335,12 @@ $colors: $token-colors;
       &-compact {
         @include size($size-600);
         padding: $space-150;
+        .mc-svg-icon {
+          @include size($size-300);
+        }
+      }
+      .mc-svg-icon {
+        @include size($size-300);
       }
 
       #{$block-name} {

@@ -18,7 +18,10 @@
 
 <style lang="scss">
 .mc-root {
-    $block-name: &;
-    @import "../../../styles/global";
+  $block-name: &;
+  @import "../../../styles/global";
+  .slideout {
+    box-shadow: $shadow-s;
+  }
 }
 </style>
