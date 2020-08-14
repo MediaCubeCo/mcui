@@ -11,6 +11,7 @@
     </div>
     <mc-chat-form
       v-if="showInput"
+      ref="form"
       slot="footer"
       :value="value"
       :loading="loading"
@@ -45,6 +46,13 @@ export default {
     McSvgIcon,
     McSeparator,
     McTitle,
+  },
+  data() {
+    return {
+      scrollElement: null,
+      formElement: null,
+      formElementOldHeight: null,
+    }
   },
   props: {
     /**
@@ -106,6 +114,20 @@ export default {
       default: true,
     },
   },
+  mounted() {
+    this.formElement = this.$refs.form.$el
+    this.formElementOldHeight = this.$refs.form.$el.offsetHeight
+    this.setScrollElement()
+    this.scrollContentToBottom()
+  },
+  watch: {
+    comments: {
+      handler(newVal) {
+        newVal.length && this.scrollContentToBottom()
+      },
+      deep: true,
+    },
+  },
   computed: {
     computedComments() {
       return this.comments.map(comment => {
@@ -117,12 +139,23 @@ export default {
     }
   },
   methods: {
+    setScrollElement() {
+      const collection = document.getElementsByClassName('mc-drawer__body-inner')
+      if (collection.length) {
+        this.scrollElement = collection[0]
+      }
+    },
+    scrollContentToBottom() {
+      this.$nextTick(() => {
+        this.scrollElement && this.scrollElement.scrollTo(0, this.scrollElement.offsetHeight)
+      })
+    },
     handleClose() {
       /**
        * Событие закрытия панели
        * @property {Object}
        */
-      this.$emit("closePanel", { userAge: this.prettyUserAge })
+      this.$emit("closePanel", {})
     },
     handleInput(value) {
       /**
@@ -131,6 +164,11 @@ export default {
        */
       this.$emit("input", value)
       this.$bus.emit('chat-input', value)
+
+      if (this.formElement.offsetHeight !== this.formElementOldHeight) {
+        this.formElementOldHeight = this.formElement.offsetHeight
+        this.scrollContentToBottom()
+      }
     },
     handleSubmit() {
       /**
@@ -148,7 +186,15 @@ export default {
   $block-name: &;
   height: 100%;
 
+  .mc-drawer__body-inner {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
   &__comments {
+    > *:first-child {
+      margin-top: $space-400;
+    }
     @include child-indent-bottom($space-200);
   }
 
@@ -159,7 +205,6 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-
 
 }
 </style>

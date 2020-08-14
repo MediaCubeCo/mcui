@@ -103,7 +103,7 @@ export const Default = () => ({
         hideBg: true,
         removeBg: this.removeBg,
         disableBgClick: false,
-        keepAlive: true,
+        keepAlive: false,
         props: {
           title: this.title,
           emptyMessage: this.emptyMessage,
