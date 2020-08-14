@@ -3,7 +3,13 @@
   <mc-drawer icon-close="arrow_forward" @close-panel="handleClose">
     <mc-title slot="title" :ellipsis="false" weight="semi-bold">{{ title }}</mc-title>
     <div v-if="comments.length" class="mc-chat__comments">
-      <mc-chat-comment v-for="comment in computedComments" :key="comment.id" :comment="comment" />
+      <mc-chat-comment
+          v-for="comment in comments"
+          :key="comment.id"
+          :comment="comment"
+          :editable="editable"
+          @delete="handleDelete"
+      />
     </div>
     <div v-else class="mc-chat__empty-notice">
       <mc-svg-icon name="chat_forum" color="outline-gray" size="1000" :weight="1" />
@@ -84,6 +90,14 @@ export default {
       default: false,
     },
     /**
+     * Можно липроизводить
+     * действия с комментариями
+     */
+    editable: {
+      type: Boolean,
+      default: false,
+    },
+    /**
      * Аватар пользователя
      */
     avatar: {
@@ -128,16 +142,6 @@ export default {
       deep: true,
     },
   },
-  computed: {
-    computedComments() {
-      return this.comments.map(comment => {
-        return {
-          id: _XEUtils.uniqueId(),
-          ...comment,
-        }
-      })
-    }
-  },
   methods: {
     setScrollElement() {
       const collection = document.getElementsByClassName('mc-drawer__body-inner')
@@ -177,6 +181,13 @@ export default {
       this.$emit("submit")
       this.$bus.emit('chat-submit')
     },
+    handleDelete(id) {
+      /**
+       * Событие по удалению
+       */
+      this.$emit('delete', id)
+      this.$bus.emit('chat-delete', id)
+    }
   },
 }
 </script>
@@ -189,13 +200,15 @@ export default {
   .mc-drawer__body-inner {
     display: flex;
     flex-direction: column-reverse;
+    padding-left: $space-150;
+    padding-right: $space-150;
   }
 
   &__comments {
     > *:first-child {
       margin-top: $space-400;
     }
-    @include child-indent-bottom($space-200);
+    @include child-indent-bottom($space-100);
   }
 
   &__empty-notice {

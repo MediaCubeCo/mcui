@@ -1,8 +1,8 @@
 import { boolean, text } from '@storybook/addon-knobs'
-import { action } from "@storybook/addon-actions"
 
 import McChat from './McChat'
 import McChatForm from "./McChatForm/McChatForm"
+import McChatComment from "./McChatComment/McChatComment"
 import McDrawer from "../McDrawer/McDrawer"
 import McRoot from "../../templates/layouts/McRoot/McRoot"
 import McButton from "../../elements/McButton/McButton"
@@ -14,7 +14,7 @@ import chatComments from "../../mocks/chatComments"
 export default {
   title: 'Patterns/McChat',
   component: McChat,
-  subcomponents: { McDrawer, McChatForm },
+  subcomponents: { McDrawer, McChatForm, McChatComment },
   parameters: {
     componentSubtitle: 'Status: In progress',
     design: {
@@ -26,10 +26,6 @@ export default {
 
 const getCommonTags = ctx => {
   return {}
-}
-
-const actionsData = {
-  // onChatSubmit: action('onSubmit'),
 }
 
 export const Default = () => ({
@@ -63,6 +59,9 @@ export const Default = () => ({
     loading: {
       default: boolean('loading', false, 'default'),
     },
+    editable: {
+      default: boolean('editable', false, 'default'),
+    },
     avatar: {
       default: text('avatar', 'https://avatars3.githubusercontent.com/u/43079603?s=460&v=4', 'default'),
     },
@@ -70,21 +69,16 @@ export const Default = () => ({
       default: text('placeholder', 'Message...', 'default'),
     },
   },
-  watch: {
-    // panelResult(newValue) {
-    //   newValue.promise.then(res => {
-    //     this.userAge = res.userAge
-    //   })
-    // }
-  },
   created() {
     this.$bus.on('chat-input', this.updateChatInput)
     this.$bus.on('chat-submit', this.onChatSubmit)
+    this.$bus.on('chat-delete', this.onCommentDelete)
   },
 
   beforeDestroy() {
     this.$bus.off('chat-input', this.updateChatInput)
     this.$bus.off('chat-submit', this.onChatSubmit)
+    this.$bus.off('chat-delete', this.onCommentDelete)
   },
   computed: {
     tagBind() {
@@ -92,7 +86,6 @@ export const Default = () => ({
     },
   },
   methods: {
-    ...actionsData,
     showChat() {
       // для вызова чата в проекте предпочтительно
       // использование миксина с коллбэком
@@ -110,6 +103,7 @@ export const Default = () => ({
           showInput: this.showInput,
           value: this.value,
           loading: this.loading,
+          editable: this.editable,
           avatar: this.avatar,
           placeholder: this.placeholder,
           comments: this.comments,
@@ -131,6 +125,9 @@ export const Default = () => ({
       this.comments.push(comment)
       this.value = ''
     },
+    onCommentDelete(id) {
+      console.log('onCommentDelete', id)
+    }
   },
   template: `<mc-root>
     <mc-button @click.prevent="showChat">Show Chat</mc-button>

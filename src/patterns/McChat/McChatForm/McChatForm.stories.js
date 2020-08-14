@@ -1,7 +1,6 @@
 import { boolean, text } from '@storybook/addon-knobs'
 
 import McChatForm from "./McChatForm"
-import McRoot from "../../../templates/layouts/McRoot/McRoot"
 
 export default {
   title: 'Patterns/McChatForm',
@@ -28,7 +27,7 @@ const getCommonTags = ctx => {
 const actionsData = {}
 
 export const Default = () => ({
-  components: { McChatForm, McRoot },
+  components: { McChatForm },
   data() {
     return {
       value: '',

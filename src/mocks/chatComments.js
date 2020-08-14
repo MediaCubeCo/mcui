@@ -1,5 +1,6 @@
 export default [
   {
+    id: 1,
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
     date: '2018-10-19 20:30',
     user: {
@@ -8,6 +9,7 @@ export default [
     },
   },
   {
+    id: 2,
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias amet doloremque eos error fugiat neque placeat quidem quos ullam voluptatum.',
     date: '2014-12-19 10:22',
     user: {
@@ -16,31 +18,32 @@ export default [
     },
   },
   {
-    content: 'Lorem ipsum dolor sit amet',
+    id: 3,
+    content: 'нужно переходить по этим ссылочкам и нещадно донатить: https://google.com; ya.ru vk.com, ме.бел. gov.by',
     date: '2020-02-03T11:32:08+03:00',
     user: {
       name: 'Kek Cheburek',
     },
   },
   {
-    content: 'Lorem ipsum dolor sit amet',
+    id: 4,
+    content: 'Lorem ipsum dolor sit amet http:/broken.link',
     date: '2020-02-03T11:32:08+03:00',
     user: {
       name: 'Имя пользователя',
     },
   },
   {
+    id: 5,
     content: 'Статус (recruiting): Присвоено',
     date: '2020-01-04T21:30:08+03:00',
     user: {
       name: 'Kirill Sushko',
       avatar: 'https://avatars3.githubusercontent.com/u/43079603?s=460&v=4'
     },
-    by_user: {
-      name: 'Имя изменившего пользователя'
-    },
   },
   {
+    id: 6,
     content: 'Статус (recruiting): Отмена',
     date: '2020-01-04T20:00:08+03:00',
     user: {
@@ -49,6 +52,7 @@ export default [
     },
   },
   {
+    id: 7,
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias amet doloremque eos error fugiat neque placeat quidem quos ullam voluptatum.',
     date: '2019-06-04T20:20:08+03:00',
     user: {
@@ -57,6 +61,7 @@ export default [
     },
   },
   {
+    id: 8,
     content: 'Статус (recruiting): Присвоено',
     date: '2017-09-27T14:52:00+03:00',
     user: {
@@ -65,6 +70,7 @@ export default [
     },
   },
   {
+    id: 9,
     content: 'Статус (recruiting): Отмена',
     date: '2016-01-01T23:35:01',
     user: {
@@ -73,6 +79,7 @@ export default [
     },
   },
   {
+    id: 10,
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
     date: '2019-06-11T16:33:20+03:00',
     user: {

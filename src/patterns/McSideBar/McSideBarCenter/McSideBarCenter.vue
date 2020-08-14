@@ -126,7 +126,7 @@ export default {
       })
     },
     isExact() {
-      if (!_has(this, "$route.name")) return false
+      if (!this.$route || !this.$route.name) return false
       const hasIndex = this.$route.name.includes("index")
       return hasIndex && !this.$route.name.includes("id")
     },
