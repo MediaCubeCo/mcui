@@ -10330,6 +10330,11 @@ modify-values@^1.0.0:
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
   integrity sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==
 
+moment@^2.19.2:
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
+  integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -15056,6 +15061,13 @@ vue-loaders@^4.0.0-alpha.2:
   version "4.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/vue-loaders/-/vue-loaders-4.0.0-alpha.2.tgz#fabfca4b07e2094aa6454024049afb47d72876f3"
   integrity sha512-AFHQJhc7atR8oZf8HJzpTgPvomT0YkHmNW8/Sa7UICGJHDlETRFg96uquM0tObywjm65jN91zx/1lfYVv1deoQ==
+
+vue-moment@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/vue-moment/-/vue-moment-4.1.0.tgz#092a8ff723a96c6f85a0a8e23ad30f0bf320f3b0"
+  integrity sha512-Gzisqpg82ItlrUyiD9d0Kfru+JorW2o4mQOH06lEDZNgxci0tv/fua1Hl0bo4DozDV2JK1r52Atn/8QVCu8qQw==
+  dependencies:
+    moment "^2.19.2"
 
 vue-multiselect@^2.1.6:
   version "2.1.6"

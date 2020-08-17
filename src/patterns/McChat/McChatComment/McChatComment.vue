@@ -3,7 +3,7 @@
     <a ref="a" href="javascript:void(0);" class="mc-chat-comment__back"></a>
     <mc-preview>
       <mc-avatar slot="left" size="400" rounded lazy :src="comment.user ? comment.user.avatar : null"/>
-      <mc-title slot="top" variation="overline" color="dark-gray">{{ comment.date }}</mc-title>
+      <mc-date slot="top" size="overline" color="dark-gray" format="YYYY-MM-DD HH:mm" :value="comment.date" />
       <mc-title slot="top" weight="semi-bold">{{ computedName }}</mc-title>
       <mc-title slot="bottom" v-html="filteredComment" class="mc-chat-comment__content" :ellipsis="false" />
       <mc-button
@@ -24,6 +24,7 @@
 import _has from "lodash/has"
 import McPreview from "../../McPreview/McPreview"
 import McTitle from "../../../elements/McTitle/McTitle"
+import McDate from "../../../elements/McDate/McDate"
 import McAvatar from "../../../elements/McAvatar/McAvatar"
 import McBadge from "../../../elements/McBadge/McBadge"
 import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
@@ -36,6 +37,7 @@ export default {
   components: {
     McPreview,
     McTitle,
+    McDate,
     McAvatar,
     McBadge,
     McSvgIcon,
