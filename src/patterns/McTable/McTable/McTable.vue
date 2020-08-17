@@ -417,13 +417,8 @@ export default {
       width: 100%;
     }
   }
-  .vxe-header--row {
-    min-height: $size-600 + 1;
-  }
   .vxe-header--column {
-    min-height: $size-600 + 1;
     .vxe-cell {
-      min-height: $size-600 + 1;
       &--title {
         display: flex;
         align-items: center;

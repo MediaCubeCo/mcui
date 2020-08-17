@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import _XEUtils from 'xe-utils'
 import McDrawer from "../McDrawer/McDrawer"
 import McChatForm from "./McChatForm/McChatForm"
 import McChatComment from "./McChatComment/McChatComment"
@@ -127,12 +126,22 @@ export default {
       type: Boolean,
       default: true,
     },
+    indentTop: {
+      type: Number,
+      default: 0,
+    },
   },
   mounted() {
+    this.setPosition('slideout')
+    this.setPosition('slideout-panel-bg')
     this.formElement = this.$refs.form.$el
     this.formElementOldHeight = this.$refs.form.$el.offsetHeight
     this.setScrollElement()
     this.scrollContentToBottom()
+  },
+  beforeDestroy() {
+    this.setPosition('slideout', true)
+    this.setPosition('slideout-panel-bg', true)
   },
   watch: {
     comments: {
@@ -143,6 +152,12 @@ export default {
     },
   },
   methods: {
+    setPosition(className, reset) {
+      const els = document.getElementsByClassName(className)
+      if (els.length) {
+        els[0].style.top = reset ? 0 : `${this.indentTop}px`
+      }
+    },
     setScrollElement() {
       const collection = document.getElementsByClassName('mc-drawer__body-inner')
       if (collection.length) {
@@ -193,15 +208,35 @@ export default {
 </script>
 
 <style lang="scss">
+.slideout-panel
+.slideout-wrapper
+.slideout {
+  height: auto;
+  //top: 3rem;
+}
 .mc-chat {
   $block-name: &;
   height: 100%;
+
+  .mc-drawer__header {
+    border-top: 1px solid $color-hover-gray;
+    padding-top: $space-150 - 1px;
+    padding-bottom: $space-150;
+  }
+
+  .mc-drawer__btn-close {
+    @include position(absolute, 0 0 null null);
+  }
 
   .mc-drawer__body-inner {
     display: flex;
     flex-direction: column-reverse;
     padding-left: $space-150;
     padding-right: $space-150;
+  }
+
+  .mc-drawer__footer {
+    border-bottom: 1px solid $color-hover-gray;
   }
 
   &__comments {

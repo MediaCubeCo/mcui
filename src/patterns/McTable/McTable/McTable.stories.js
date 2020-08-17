@@ -30,6 +30,12 @@ const tags = {
   grid: 'grid',
   table: 'table',
 }
+const sizes = {
+  default: 'default',
+  medium: 'medium',
+  small: 'small',
+  mini: 'mini',
+}
 
 export default {
   title: 'Patterns/McTable',
@@ -74,12 +80,16 @@ const getUniqueProps = key => {
     nativeSort: {
       default: boolean('nativeSort', true, key),
     },
+    size: {
+      default: select('size', sizes, 'small', key),
+    },
   }
 }
 
 const getCommonTags = ctx => {
   return {
     height: ctx.height,
+    size: ctx.size,
     scrollable: ctx.scrollable,
     stripe: ctx.stripe,
     border: ctx.border,
@@ -181,7 +191,7 @@ export const Default = () => ({
     >
         <mc-table-col type="seq" min-width="60" fixed="left" align="right" has-border />
         <mc-table-col :show-overflow="false" type="checkbox" fixed="left" width="25" />
-        <mc-table-col field="title" title="Канал" width="248" fixed="left">
+        <mc-table-col field="title" title="Канал" width="248" fixed="left" has-border>
           <template v-slot:header-right="{ column }">
             <mc-chip variation="gray-invert" style="margin-left: auto; color: #8F99A3;" size="s">
               {{ total }}
@@ -201,12 +211,6 @@ export const Default = () => ({
                 <mc-button variation="blue-link" size="xs-compact" @click.stop="handleBtnClick">
                     <mc-svg-icon slot="icon-append" name="delete"/>
                 </mc-button>
-            </template>
-        </mc-table-col>
-
-        <mc-table-col type="seq" fixed="left" min-width="5" has-border>
-            <template v-slot="{ row }">
-                <mc-badge vertical-line variation="light-green" style="position: absolute; top: 0; left: 0; bottom: 0" />
             </template>
         </mc-table-col>
 

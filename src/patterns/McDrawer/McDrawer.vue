@@ -91,7 +91,8 @@ export default {
   @include custom-scroll();
 
   &__header {
-    padding: $space-200 $space-600 $space-200 $space-200;
+    @include reset-text-indents();
+    padding: 18px $space-600 18px $space-200;
   }
 
   &__body {

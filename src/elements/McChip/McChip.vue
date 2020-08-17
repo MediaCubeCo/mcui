@@ -65,7 +65,7 @@ export default {
      *
      */
     counter: {
-      type: Number,
+      type: [Number, String],
       default: null,
     },
     /**
