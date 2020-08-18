@@ -1,6 +1,5 @@
 <template>
 <div class="mc-side-bar-bottom" :class="classes">
-<!--  :icon="compact ? 'arrow_forward' : 'arrow_backward'"-->
   <mc-side-bar-button
     class="mc-side-bar-bottom__hide-button"
     icon="arrow_backward"
@@ -54,6 +53,7 @@ export default {
   },
   methods: {
     handleClick() {
+      if (this.hasCompactClass !== this.compact) return
       this.$emit('toggle-size', !this.compact)
       this.hasCompactClass = !this.hasCompactClass
     }

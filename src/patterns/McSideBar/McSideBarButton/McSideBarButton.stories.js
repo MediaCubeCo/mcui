@@ -47,6 +47,9 @@ const getUniqueProps = key => {
     exact: {
       default: boolean('exact', false, key),
     },
+    disabled: {
+      default: boolean('disabled', false, key),
+    },
   }
 }
 
@@ -59,6 +62,7 @@ const getCommonTags = ctx => {
     compact: ctx.compact,
     info: ctx.info,
     exact: ctx.exact,
+    disabled: ctx.disabled,
   }
 }
 

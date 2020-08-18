@@ -1,6 +1,12 @@
 <template>
-  <div class="mc-side-bar" :class="classes">
-    <mc-side-bar-top :logo-title="logoTitle" :logo-src="logoSrc" :compact="hasCompactClass" :menu-apps="menuApps" />
+  <div class="mc-side-bar" :class="classes" :style="styles">
+    <mc-side-bar-top
+        :logo-title="logoTitle"
+        :logo-src="logoSrc"
+        :logo-icon="logoIcon"
+        :compact="prettyCompact"
+        :menu-apps="menuApps"
+    />
     <mc-side-bar-center
         :title="menuMainTitle"
         :menu-main="menuMain"
@@ -8,7 +14,7 @@
         :chatra-config="chatraConfig"
         :userback-config="userbackConfig"
         :user="user"
-        :compact="hasCompactClass"
+        :compact="prettyCompact"
     />
     <mc-side-bar-bottom :hide-text="hideText" :compact="prettyCompact" @toggle-size="handleToggleSize"/>
   </div>
@@ -39,6 +45,14 @@ export default {
      *
      */
     logoSrc: {
+      type: String,
+      default: "",
+    },
+    /**
+     *  Имя иконки
+     *  заголовка
+     */
+    logoIcon: {
       type: String,
       default: "",
     },
@@ -116,6 +130,7 @@ export default {
   },
   data() {
     return {
+      isHidden: false,
       prettyCompact: this.compact,
       hasCompactClass: this.compact,
     }
@@ -129,6 +144,10 @@ export default {
       } else {
         this.prettyCompact = newValue
       }
+      this.isHidden = true
+      setTimeout(()=> {
+        this.isHidden = false
+      }, 280)
     },
     compact(newValue) {
       this.hasCompactClass = newValue
@@ -139,6 +158,9 @@ export default {
       return {
         "mc-side-bar--compact": this.hasCompactClass,
       }
+    },
+    styles() {
+      return { overflow: `${this.isHidden ? 'hidden' : 'visible'}` }
     },
   },
   methods: {
@@ -160,11 +182,9 @@ export default {
   background-color: $color-black;
   padding: $space-150 $space-100 $space-400;
   transition: width 300ms ease;
-  overflow: hidden;
   @include child-indent-bottom($space-400);
 
   &--compact {
-    overflow: visible;
     width: $space-700;
   }
 }

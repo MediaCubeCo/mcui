@@ -9,6 +9,7 @@
     :href="href"
     :to="to"
     :exact="exact"
+    :disabled="disabled"
   >
     <mc-svg-icon v-if="icon" slot="icon-prepend" class="mc-side-bar-button__icon" :name="icon" />
     <template v-if="!compact">
@@ -77,6 +78,14 @@ export default {
      *
      */
     exact: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     *  Отключенное состояние
+     *
+     */
+    disabled: {
       type: Boolean,
       default: false,
     },

@@ -12,7 +12,7 @@ import McSideBarButton from "../McSideBarButton/McSideBarButton"
 
 const wrapper = () => {
   return {
-    template: `<div style="display: flex; align-items: center; height: 900px;">
+    template: `<div style="display: flex; height: 600px;">
         <story />
     </div>`,
   }
@@ -41,6 +41,9 @@ const getUniqueProps = key => {
     logoSrc: {
       default: text('logoSrc', '/img/mc_dashboard.svg', key),
     },
+    logoIcon: {
+      default: text('logoIcon', 'mc_dashboard', key),
+    },
     menuMainTitle: {
       default: text('menuMainTitle', 'Sections', key),
     },
@@ -60,6 +63,7 @@ const getCommonTags = ctx => {
   return {
     logoTitle: ctx.logoTitle,
     logoSrc: ctx.logoSrc,
+    logoIcon: ctx.logoIcon,
     menuMainTitle: ctx.menuMainTitle,
     menuMain: ctx.menuMain,
     menuApps: ctx.menuApps,

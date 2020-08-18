@@ -11,11 +11,11 @@
             height="24"
             :alt="logoTitle"
         />
-<!--        <mc-svg-icon slot="left" class="rotate" name="mc_dashboard" />-->
-        <mc-button slot="top" variation="gray-link" :size="compact ? 'l-compact' : 'l'">
-          <mc-title v-if="!compact" variation="subtitle" color="white" weight="semi-bold">
+        <mc-svg-icon v-else-if="logoIcon" slot="left" class="rotate" name="mc_dashboard" />
+        <mc-button slot="top" variation="white-link" :size="compact ? 'l-compact' : 'l'">
+          <template v-if="!compact">
             {{ logoTitle }}
-          </mc-title>
+          </template>
           <mc-svg-icon slot="icon-append" class="rotate" name="arrow_drop_down" color="gray" />
         </mc-button>
       </mc-preview>
@@ -44,7 +44,6 @@ import _XEUtils from 'xe-utils'
 import McDropdown from "../../McDropdown/McDropdown"
 import McDropdownPanel from "../../McDropdown/McDropdownPanel/McDropdownPanel"
 import McButton from "../../../elements/McButton/McButton"
-import McTitle from "../../../elements/McTitle/McTitle"
 import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
 import McPreview from "../../McPreview/McPreview"
 
@@ -55,7 +54,6 @@ export default {
     McDropdownPanel,
     McButton,
     McPreview,
-    McTitle,
     McSvgIcon,
   },
   data() {
@@ -84,6 +82,14 @@ export default {
      *  Путь до изображения
      */
     logoSrc: {
+      type: String,
+      default: "",
+    },
+    /**
+     *  Имя иконки
+     *  заголовка
+     */
+    logoIcon: {
       type: String,
       default: "",
     },
@@ -126,7 +132,7 @@ export default {
     }
     .mc-button {
       line-height: $line-height-250;
-      .mc-title {
+      &__text {
         margin-left: $space-100;
       }
       &__append {
