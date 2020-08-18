@@ -148,7 +148,7 @@ export default {
 
   display: flex;
   flex-direction: column;
-  @include size(216px, 100%);
+  width: 216px;
   background-color: $color-black;
   padding: $space-150 $space-100 $space-400;
   transition: width 300ms ease;

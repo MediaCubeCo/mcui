@@ -20,7 +20,7 @@ export default {
   component: McTableCard,
   subcomponents: { McTableCardHeader },
   parameters: {
-    componentSubtitle: 'Status: In Progress',
+    componentSubtitle: 'Status: Ready',
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/3gG13Y8ShNTZBxA0GBU40U/Dashboard-Panel?node-id=268%3A66',

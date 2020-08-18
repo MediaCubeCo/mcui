@@ -1,10 +1,16 @@
 <template>
 <div class="mc-main">
   <div v-if="$slots['left-bar']" class="mc-main__left">
+    <!-- @slot Слот сайдбара -->
     <slot name="left-bar"/>
   </div>
-  <div v-if="$slots['top-bar']" class="mc-main__right">
+  <div class="mc-main__right">
+    <!-- @slot Слот хедера -->
     <slot name="top-bar" />
+    <div class="mc-main__content">
+      <!-- @slot Слот контента -->
+      <slot />
+    </div>
   </div>
 </div>
 </template>
@@ -24,12 +30,21 @@ name: "McMain"
   $block-name: &;
 
   display: flex;
-  min-height: 100%;
+  height: 100%;
+  @include position(absolute, 0);
+  @include custom-scroll();
+
+  &__left {
+    display: flex;
+  }
 
   &__right {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
+  }
+  &__content {
+    overflow-y: auto;
   }
 }
 </style>

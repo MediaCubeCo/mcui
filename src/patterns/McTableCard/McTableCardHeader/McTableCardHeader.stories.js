@@ -8,7 +8,7 @@ export default {
   title: 'Patterns/McTableCardHeader',
   component: McTableCardHeader,
   parameters: {
-    componentSubtitle: 'Status: In progress',
+    componentSubtitle: 'Status: Ready',
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/3gG13Y8ShNTZBxA0GBU40U/Dashboard-Panel?node-id=268%3A66',
