@@ -1,5 +1,6 @@
 import { text, boolean } from '@storybook/addon-knobs'
 import McSideBarTop from "../McSideBarTop/McSideBarTop"
+import menuApps from "../../../mocks/menuApps"
 
 const wrapper = () => {
   return {
@@ -41,6 +42,7 @@ const getCommonTags = ctx => {
     logoTitle: ctx.logoTitle,
     logoSrc: ctx.logoSrc,
     compact: ctx.compact,
+    menuApps: ctx.menuApps,
   }
 }
 
@@ -49,6 +51,9 @@ export const Default = () => ({
   computed: {
     tagBind() {
       return getCommonTags(this)
+    },
+    menuApps() {
+      return menuApps
     },
   },
   props: {

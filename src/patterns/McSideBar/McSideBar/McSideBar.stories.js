@@ -2,6 +2,7 @@ import { text, object, boolean } from '@storybook/addon-knobs'
 import { action } from "@storybook/addon-actions"
 import menuMain from '../../../mocks/menuMain'
 import authUser from '../../../mocks/authUser'
+import menuApps from "../../../mocks/menuApps"
 
 import McSideBar from './McSideBar'
 import McSideBarTop from "../McSideBarTop/McSideBarTop"
@@ -61,6 +62,7 @@ const getCommonTags = ctx => {
     logoSrc: ctx.logoSrc,
     menuMainTitle: ctx.menuMainTitle,
     menuMain: ctx.menuMain,
+    menuApps: ctx.menuApps,
     chatraConfig: ctx.chatraConfig,
     userbackConfig: ctx.userbackConfig,
     user: ctx.user,
@@ -81,6 +83,9 @@ export const Default = () => ({
     },
     menuMain() {
       return menuMain
+    },
+    menuApps() {
+      return menuApps
     },
     userbackConfig() {
       return {

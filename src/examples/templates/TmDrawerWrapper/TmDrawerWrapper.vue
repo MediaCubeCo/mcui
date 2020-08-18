@@ -4,7 +4,7 @@
       <mc-field-text name="age" title="How old are you?" placeholder="Enter" type="number" v-model="prettyUserAge" />
       <mc-title
           v-for="num in 5"
-          key="num"
+          :key="num"
           class="mt-300"
           :ellipsis="false"
       >

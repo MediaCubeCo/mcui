@@ -31,7 +31,6 @@ name: "McMain"
 
   display: flex;
   height: 100vh;
-  //@include position(absolute, 0);
   @include custom-scroll();
 
   &__left {

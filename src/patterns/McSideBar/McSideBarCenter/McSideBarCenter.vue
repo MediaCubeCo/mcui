@@ -204,6 +204,7 @@ export default {
 <style lang="scss">
 .mc-side-bar-center {
   $block-name: &;
+  //overflow: hidden;
 
   &__title {
     margin: $space-100;

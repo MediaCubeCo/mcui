@@ -394,6 +394,32 @@ $colors: $token-colors;
           }
         }
 
+        &-link {
+          color: $value;
+          padding: 0;
+          @include size(auto);
+          border: none;
+          user-select: text;
+
+          &:hover,
+          &:focus {
+            color: darken($value, 12%);
+          }
+
+          &:active {
+            color: darken($value, 16%);
+          }
+
+          &#{$block-name} {
+            &--disabled {
+              opacity: $opacity-disabled;
+              background-color: transparent !important;
+              color: $value !important;
+              border-color: transparent !important;
+            }
+          }
+        }
+
       } @else {
         background-color: $value;
 

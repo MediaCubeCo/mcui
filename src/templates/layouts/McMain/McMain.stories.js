@@ -2,6 +2,7 @@ import { text, object, boolean } from '@storybook/addon-knobs'
 import { action } from "@storybook/addon-actions"
 import authUser from '../../../mocks/authUser'
 import menuLangs from '../../../mocks/menuLangs'
+import menuApps from "../../../mocks/menuApps"
 
 import McMain from "./McMain"
 import McSideBar from "../../../patterns/McSideBar/McSideBar/McSideBar"
@@ -77,6 +78,7 @@ export const Default = () => ({
         logoSrc: this.logoSrc,
         menuMainTitle: this.menuMainTitle,
         menuMain: this.menuMain,
+        menuApps: this.menuApps,
         chatraConfig: this.chatraConfig,
         userbackConfig: this.userbackConfig,
         user: this.user,
@@ -102,6 +104,9 @@ export const Default = () => ({
     },
     menuLangs() {
       return menuLangs
+    },
+    menuApps() {
+      return menuApps
     },
     user() {
       return {

@@ -1,6 +1,6 @@
 <template>
   <section class="mc-preview" :class="classes">
-    <div class="mc-preview__left">
+    <div v-if="$slots.left" class="mc-preview__left">
       <!-- @slot Слот слева -->
       <slot name="left" />
     </div>
@@ -14,7 +14,7 @@
         <slot name="bottom" />
       </div>
     </div>
-    <div class="mc-preview__right">
+    <div v-if="$slots.right" class="mc-preview__right">
       <!-- @slot Слот справа -->
       <slot name="right" />
     </div>

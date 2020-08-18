@@ -14,7 +14,7 @@ export default {
       url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A4',
     },
   },
-};
+}
 
 const colors = getTokensByType('color')
 const variations = {
@@ -94,7 +94,7 @@ export const Default = () => ({
     },
   },
   template: `<mc-title v-bind="tagBind"> {{ value }} </mc-title>`,
-});
+})
 
 // mc-title with icons
 export const WithIcons = () => ({
@@ -121,5 +121,4 @@ export const WithIcons = () => ({
       {{ value }} 
       <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" color="red" /> 
   </mc-title>`,
-});
-
+})

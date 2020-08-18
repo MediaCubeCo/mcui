@@ -212,7 +212,6 @@ export default {
 .slideout-wrapper
 .slideout {
   height: auto;
-  //top: 3rem;
 }
 .mc-chat {
   $block-name: &;

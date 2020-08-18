@@ -1,6 +1,6 @@
 <template>
   <div class="mc-side-bar" :class="classes">
-    <mc-side-bar-top :logo-title="logoTitle" :logo-src="logoSrc" :compact="prettyCompact" />
+    <mc-side-bar-top :logo-title="logoTitle" :logo-src="logoSrc" :compact="hasCompactClass" :menu-apps="menuApps" />
     <mc-side-bar-center
         :title="menuMainTitle"
         :menu-main="menuMain"
@@ -8,7 +8,7 @@
         :chatra-config="chatraConfig"
         :userback-config="userbackConfig"
         :user="user"
-        :compact="prettyCompact"
+        :compact="hasCompactClass"
     />
     <mc-side-bar-bottom :hide-text="hideText" :compact="prettyCompact" @toggle-size="handleToggleSize"/>
   </div>
@@ -63,6 +63,14 @@ export default {
      *
      */
     menuAdditional: {
+      type: Array,
+      default: () => [],
+    },
+    /**
+     *  Меню приложений
+     *
+     */
+    menuApps: {
       type: Array,
       default: () => [],
     },
@@ -156,6 +164,7 @@ export default {
   @include child-indent-bottom($space-400);
 
   &--compact {
+    overflow: visible;
     width: $space-700;
   }
 }
