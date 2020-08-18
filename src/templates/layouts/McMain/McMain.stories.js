@@ -13,7 +13,7 @@ import menuMain from "../../../mocks/menuMain"
 
 const wrapper = () => {
   return {
-    template: `<div style="width: 100%; height: calc(100vh - 6rem);">
+    template: `<div style="width: 100%; height: 100vh; margin: -3rem 0;">
         <story />
     </div>`,
   }

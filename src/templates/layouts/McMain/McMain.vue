@@ -30,8 +30,8 @@ name: "McMain"
   $block-name: &;
 
   display: flex;
-  height: 100%;
-  @include position(absolute, 0);
+  height: 100vh;
+  //@include position(absolute, 0);
   @include custom-scroll();
 
   &__left {
