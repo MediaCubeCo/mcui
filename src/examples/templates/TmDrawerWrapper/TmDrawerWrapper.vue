@@ -25,8 +25,7 @@ import McFieldText from "../../../elements/McField/McFieldText/McFieldText"
 import McTitle from "../../../elements/McTitle/McTitle"
 import McButton from "../../../elements/McButton/McButton"
 /**
- * Служебный компонент,
- * пример пользовательской
+ * Пример пользовательской
  * боковой панели на проекте
  * (подключается глобально!)
  */

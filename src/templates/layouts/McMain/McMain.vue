@@ -7,9 +7,11 @@
   <div class="mc-main__right">
     <!-- @slot Слот хедера -->
     <slot name="top-bar" />
-    <div class="mc-main__content">
-      <!-- @slot Слот контента -->
-      <slot />
+    <div class="mc-main__content-wrapper">
+      <div class="mc-main__content">
+        <!-- @slot Слот контента -->
+        <slot />
+      </div>
     </div>
   </div>
 </div>
@@ -43,7 +45,12 @@ name: "McMain"
     flex-direction: column;
   }
   &__content {
+    @include position(absolute, 0);
     overflow-y: auto;
+    &-wrapper {
+      flex: 1 1 auto;
+      position: relative;
+    }
   }
 }
 </style>

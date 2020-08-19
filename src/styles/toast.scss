@@ -1,0 +1,14 @@
+.toasted-container {
+  .toasted {
+    &.mc-toast {
+      &--primary {
+        border-radius: $radius-100;
+        background-color: $color-black;
+        color: $color-white;
+      }
+      .action {
+
+      }
+    }
+  }
+}
