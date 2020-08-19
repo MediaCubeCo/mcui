@@ -1,13 +1,33 @@
 .toasted-container {
   .toasted {
     &.mc-toast {
+      padding: $space-100 $space-100 $space-100 $space-150;
       &--primary {
         border-radius: $radius-100;
         background-color: $color-black;
         color: $color-white;
-      }
-      .action {
 
+        .action {
+          text-decoration: none;
+          text-transform: none;
+          margin: 0;
+          &.mc-toast__action {
+            color: fade-out($color-white, 0.5);
+
+            &--outline {
+              color: $color-white;
+              padding: $space-100 $space-150;
+              border: 1px solid $color-outline-gray;
+              border-radius: $radius-50;
+            }
+          }
+          &:not(:last-child) {
+            margin-right: $space-50;
+          }
+          &:first-child {
+            margin-left: $space-600;
+          }
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-import { text, select, boolean, number } from '@storybook/addon-knobs'
+import { text, select, boolean, number, array } from '@storybook/addon-knobs'
 
 import MyElToast from "./MyElToast"
 import McRoot from "../../../templates/layouts/McRoot/McRoot"
@@ -48,11 +48,14 @@ const getUniqueProps = key => {
       default: boolean('fullWidth', false, key),
     },
     className: {
-      default: text('className', 'mc-toast--primary', key),
+      default: array('className', ['mc-toast', 'mc-toast--primary'], ',', key),
     },
     keepOnHover: {
       default: boolean('keepOnHover', false, key),
     },
+    // icon: {
+    //   default: text('text', 'las la-info-circle', key),
+    // },
   }
 }
 
@@ -80,12 +83,14 @@ export const Default = () => ({
       return [
         {
           text : 'Close',
+          class: 'mc-toast__action',
           onClick : (e, toastObject) => {
             toastObject.goAway(0);
           },
         },
         {
           text : 'Cancel',
+          class: 'mc-toast__action--outline',
           onClick : (e, toastObject) => {
             console.log('cancelled')
             toastObject.goAway(0);
@@ -105,11 +110,13 @@ export const Default = () => ({
       let toast = this.$toasted.show(this.text, {
         theme: this.theme,
         position: this.position,
+        // duration : 3000,
         duration : Infinity,
         fullWidth : this.fullWidth,
         className : this.className,
         keepOnHover : this.keepOnHover,
         action: this.actions,
+        // icon: this.icon,
       })
     },
   },

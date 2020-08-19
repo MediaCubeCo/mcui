@@ -149,6 +149,28 @@ export default {
       type: String,
       default: "button",
     },
+    /**
+     * Если нужен другой цвет при взаимодействии
+     */
+    secondaryColor: {
+      type: String,
+      default: "",
+    },
+    /**
+     * Если нужна подчёркнутая ссылка
+     */
+    underlineLink: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Если нужен постоянный
+     * фон у типа 'flat'
+     */
+    bgFlat: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
@@ -164,6 +186,9 @@ export default {
         "mc-button--full-width": this.fullWidth,
         "mc-button--uppercase": this.uppercase,
         "mc-button--shadow": this.shadow,
+        [`mc-button--secondary-color-${this.secondaryColor}`]: this.secondaryColor,
+        "mc-button--underline-link": this.underlineLink,
+        "mc-button--bg-flat": this.bgFlat,
       }
     },
     tag() {
@@ -532,6 +557,36 @@ $colors: $token-colors;
         }
       }
     }
+
+    &--secondary-color-#{$color} {
+      &:hover,
+      &:focus {
+        color: $value;
+      }
+
+      &:active {
+        color: $value;
+      }
+    }
+
+    &--underline-link {
+      &#{$block-name}--variation-#{$color} {
+        &-link {
+          #{$block-name}__text {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    &--bg-flat {
+      &#{$block-name}--variation-#{$color} {
+        &-flat {
+          background-color: fade-out($value, 0.9);
+        }
+      }
+    }
+
   }
 
   &--uppercase {
