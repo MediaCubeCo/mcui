@@ -1,4 +1,4 @@
-import { text, select } from '@storybook/addon-knobs'
+import { text, select, boolean } from '@storybook/addon-knobs'
 
 import McCell from './McCell'
 import McTitle from '../../../elements/McTitle/McTitle'
@@ -36,8 +36,11 @@ export const Default = () => ({
     slotDefault: {
       default: text('slot default', 'Lorem ipsum dolor sit amet', 'default'),
     },
+    uppercase: {
+      default: boolean('uppercase', true, 'default'),
+    },
   },
-  template: `<mc-cell :title="title" :size="size">
+  template: `<mc-cell :title="title" :size="size" :uppercase="uppercase">
     <mc-title>{{slotDefault}}</mc-title>
   </mc-cell>`,
 })

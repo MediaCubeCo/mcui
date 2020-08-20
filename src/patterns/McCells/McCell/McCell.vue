@@ -3,7 +3,7 @@
     <div class="mc-cell__title">
       <!-- @slot Слот заголовка -->
       <slot name="title">
-        <mc-title variation="overline" uppercase>{{ title }}</mc-title>
+        <mc-title variation="overline" :uppercase="uppercase">{{ title }}</mc-title>
       </slot>
     </div>
     <div class="mc-cell__content">
@@ -33,6 +33,14 @@ export default {
     size: {
       type: String,
       default: "m",
+    },
+    /**
+     * Заглавные буквы
+     * заголовка
+     */
+    uppercase: {
+      type: Boolean,
+      default: true,
     },
   },
   computed: {
@@ -76,18 +84,10 @@ export default {
     }
   }
 
-  &__title {
-    //margin-bottom: $space-50;
-  }
-
   &__content {
     display: inline-flex;
     flex-direction: column;
     width: 100%;
-
-    > * {
-      //margin-top: $space-50;
-    }
   }
 }
 </style>
