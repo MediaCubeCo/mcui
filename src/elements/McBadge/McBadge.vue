@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss">
-$light-scale: "outline-gray", "hover-gray", "white", "light-blue", "lighter-blue", "toxic", "orange", "transparent";
+$light-scale: "outline-gray", "hover-gray", "white", "light-blue", "lighter-blue", "toxic", "transparent";
 .mc-badge {
     $block-name: &;
 
@@ -74,7 +74,7 @@ $light-scale: "outline-gray", "hover-gray", "white", "light-blue", "lighter-blue
     vertical-align: middle;
     max-width: 100%;
     border-radius: $radius-50;
-    padding: 1px $space-100;
+    padding: 1px $space-100 - 1px;
     border: 1px solid transparent;
 
     @each $color, $value in $token-colors {
