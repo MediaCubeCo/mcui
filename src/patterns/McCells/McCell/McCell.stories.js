@@ -20,6 +20,7 @@ export default {
 const sizes = {
   s: "s",
   m: "m",
+  l: "l",
 }
 
 // mc-cell default

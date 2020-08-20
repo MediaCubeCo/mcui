@@ -19,10 +19,17 @@ export default {
   name: "McCell",
   components: { McTitle },
   props: {
+    /**
+     * Заголовок
+     */
     title: {
       type: String,
       default: "",
     },
+    /**
+     * Размеры отступов:
+     * 's, m, l'
+     */
     size: {
       type: String,
       default: "m",
@@ -56,6 +63,14 @@ export default {
       #{$block-name}__content {
         > * {
           margin-top: $space-50;
+        }
+      }
+    }
+
+    &-l {
+      #{$block-name}__content {
+        > * {
+          margin-top: $space-100;
         }
       }
     }
