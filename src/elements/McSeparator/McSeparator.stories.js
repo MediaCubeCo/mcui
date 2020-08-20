@@ -28,6 +28,10 @@ const weights = {
   m: 'm',
 }
 const spaces = getTokenGroup('spaces')
+const computedSpaces = {
+  ...spaces,
+  none: '',
+}
 
 const getCommonTags = ctx => {
   return {
@@ -37,6 +41,8 @@ const getCommonTags = ctx => {
     indentBottom: ctx.indentBottom,
     indentLeft: ctx.indentLeft,
     indentRight: ctx.indentRight,
+    indentX: ctx.indentX,
+    indentY: ctx.indentY,
   }
 }
 
@@ -55,16 +61,22 @@ export const Default = () => ({
       default: select('color', tokenColors, 'outline-gray', 'default')
     },
     indentTop: {
-      default: select('indentTop', spaces, '100', 'default')
+      default: select('indentTop', computedSpaces, '100', 'default')
     },
     indentBottom: {
-      default: select('indentBottom', spaces, '100', 'default')
+      default: select('indentBottom', computedSpaces, '100', 'default')
     },
     indentLeft: {
-      default: select('indentLeft', spaces, '100', 'default')
+      default: select('indentLeft', computedSpaces, '100', 'default')
     },
     indentRight: {
-      default: select('indentRight', spaces, '100', 'default')
+      default: select('indentRight', computedSpaces, '100', 'default')
+    },
+    indentX: {
+      default: select('indentX', computedSpaces, '', 'default')
+    },
+    indentY: {
+      default: select('indentY', computedSpaces, '', 'default')
     },
   },
   template: '<mc-separator v-bind="tagBind" />',

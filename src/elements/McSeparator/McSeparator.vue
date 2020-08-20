@@ -1,12 +1,3 @@
-<!--<template>-->
-<!--  <div class="mc-separator" :class="classes">-->
-<!--    <div class="mc-separator__wrapper">-->
-<!--      &lt;!&ndash; @slot Слот для данных &ndash;&gt;-->
-<!--      <slot />-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</template>-->
-
 <script>
 export default {
   functional: true,
@@ -25,6 +16,20 @@ export default {
     color: {
       type: String,
       default: "outline-gray",
+    },
+    /**
+     * Отступ слева и справа: 50, 200... ...1000
+     */
+    indentX: {
+      type: String,
+      default: "",
+    },
+    /**
+     * Отступ сверху и снизу: 50, 200... ...1000
+     */
+    indentY: {
+      type: String,
+      default: "",
     },
     /**
      * Отступ сверху: 50, 200... ...1000
@@ -57,14 +62,20 @@ export default {
   },
 
   render(h, { props, slots, data }) {
+    const indents = {
+      top: props.indentTop || props.indentY,
+      bottom: props.indentBottom || props.indentY,
+      left: props.indentLeft || props.indentX,
+      right: props.indentRight || props.indentX,
+    }
     const classes = {
       'mc-separator': true,
       [`mc-separator--weight-${props.weight}`]: props.weight,
       [`mc-separator--color-${props.color}`]: props.color,
-      [`mc-separator--indent-top-${props.indentTop}`]: props.indentTop,
-      [`mc-separator--indent-bottom-${props.indentBottom}`]: props.indentBottom,
-      [`mc-separator--indent-left-${props.indentLeft}`]: props.indentLeft,
-      [`mc-separator--indent-right-${props.indentRight}`]: props.indentRight,
+      [`mc-separator--indent-top-${indents.top}`]: indents.top,
+      [`mc-separator--indent-bottom-${indents.bottom}`]: indents.bottom,
+      [`mc-separator--indent-left-${indents.left}`]: indents.left,
+      [`mc-separator--indent-right-${indents.right}`]: indents.right,
       ...(data.class || {}),
     }
 
