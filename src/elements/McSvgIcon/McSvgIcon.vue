@@ -98,6 +98,7 @@
         }
         switch (parseInt(this.size)) {
           case 200:
+          case 250:
             return 1.2
           case 300:
           case 400:

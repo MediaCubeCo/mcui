@@ -191,12 +191,7 @@ export const Default = () => ({
     >
         <mc-table-col type="seq" min-width="60" fixed="left" align="right" has-border />
         <mc-table-col :show-overflow="false" type="checkbox" fixed="left" width="25" />
-        <mc-table-col field="title" title="Канал" width="248" fixed="left" has-border>
-          <template v-slot:header-right="{ column }">
-            <mc-chip variation="gray-invert" style="margin-left: auto; color: #8F99A3;" size="s">
-              {{ total }}
-            </mc-chip>
-          </template>
+        <mc-table-col field="title" title="Канал" width="248" fixed="left" has-border :headerRight="total">
             <template v-slot="{ row }">
               <mc-preview>
                 <mc-avatar slot="left" border-color="blue" dot-color="orange" lazy :src="row.avatar" />
@@ -206,10 +201,10 @@ export const Default = () => ({
             </template>
             <template v-slot:right="{ row }">
                 <mc-button style="margin-right: 4px;" variation="blue-link" size="xs-compact" @click.stop="handleBtnClick">
-                    <mc-svg-icon slot="icon-append" name="edit"/>
+                    <mc-svg-icon slot="icon-append" name="edit" />
                 </mc-button>
                 <mc-button variation="blue-link" size="xs-compact" @click.stop="handleBtnClick">
-                    <mc-svg-icon slot="icon-append" name="delete"/>
+                    <mc-svg-icon slot="icon-append" name="delete" />
                 </mc-button>
             </template>
         </mc-table-col>

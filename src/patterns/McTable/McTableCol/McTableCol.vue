@@ -23,9 +23,13 @@
             <slot name="header-append" />
           </div>
         </mc-title>
-        <div v-if="$scopedSlots['header-right']" class="mc-table-col__header-right">
+        <div v-if="$scopedSlots['header-right'] || headerRight" class="mc-table-col__header-right">
           <!-- @slot Слот справа в ячейке хедера (абсолютно спозиционированный, с бэкграундом) -->
-          <slot name="header-right" :column="column" />
+          <slot name="header-right" :column="column">
+            <mc-chip class="mc-table-col__total" variation="gray-invert" size="s">
+              {{ headerRight }}
+            </mc-chip>
+          </slot>
         </div>
       </slot>
     </template>
@@ -50,6 +54,7 @@
 <script>
 import McTitle from "../../../elements/McTitle/McTitle"
 import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
+import McChip from "../../../elements/McChip/McChip"
 
 /**
  * Смотреть mc-table
@@ -59,12 +64,25 @@ export default {
   components: {
     McTitle,
     McSvgIcon,
+    McChip,
   },
   inject: ["provideData"],
   props: {
+    /**
+     *  Если нужен бордер
+     *  справа от столбца
+     */
     hasBorder: {
       type: Boolean,
       default: false,
+    },
+    /**
+     *  Если нужна доп инфа
+     *  в ячейке заголовка справа
+     */
+    headerRight: {
+      type: Number,
+      default: null,
     },
   },
   computed: {
@@ -165,6 +183,11 @@ export default {
     .vxe-cell {
       overflow: visible !important;
     }
+  }
+
+  &__total {
+    margin-left: auto;
+    color: $color-gray;
   }
 
   &__title {

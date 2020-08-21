@@ -6,7 +6,7 @@ html {
   -ms-overflow-style: scrollbar;
   -ms-text-size-adjust: 100%;
   min-height: 100%;
-  font-size: $font-size-300;
+  font-size: $font-size-200;
 }
 
 body {
@@ -34,8 +34,8 @@ body {
   word-break: break-word;
 
   font-family: $font-family-main;
-  font-size: $font-size-300;
-  line-height: $line-height-250;
+  font-size: $font-size-200;
+  line-height: $line-height-200;
   color: $color-black;
 }
 

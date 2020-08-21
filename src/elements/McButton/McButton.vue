@@ -282,11 +282,11 @@ $colors: $token-colors;
         @include size($size-400);
         padding: $space-100;
         .mc-svg-icon {
-          @include size($size-200);
+          @include size($size-250);
         }
       }
       .mc-svg-icon {
-        @include size($size-200);
+        @include size($size-250);
       }
 
       #{$block-name} {
