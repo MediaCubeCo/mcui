@@ -134,17 +134,15 @@ export default {
   max-width: 100%;
   width: 100%;
   text-decoration: none;
-  @include child-indent-right(0.3em);
+  @include child-indent-right($space-50);
 
   &__text {
     padding-bottom: 1px; // fix overflow
     margin-bottom: -1px; // fix overflow
   }
 
-  .mc-svg-icon {
-    font-size: inherit;
-    width: 1em;
-    height: 1em;
+  .mc-svg-icon, .mc-button {
+    @include reset-text-indents();
   }
 
   &--variation {
