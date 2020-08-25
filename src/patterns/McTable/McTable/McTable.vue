@@ -31,7 +31,7 @@
         </mc-title>
       </template>
     </component>
-    <div v-if="hasMore || $attrs.loading" class="mc-table-wrapper__footer">
+    <div v-if="hasMore || $attrs.loading" class="mc-table-wrapper__footer" :class="footerClasses">
       <div class="mc-table-wrapper__tint"></div>
       <div v-if="$attrs.loading" class="mc-table-wrapper__loading">
         <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader"/>
@@ -185,7 +185,11 @@ export default {
     },
     cardIsOpen(newVal) {
       this.toggleColumns(newVal)
+      this.checkHorizontalScroll()
     },
+    '$attrs.loading'() {
+      this.checkHorizontalScroll()
+    }
   },
   computed: {
     api() {
@@ -223,6 +227,11 @@ export default {
         "max-height": this.$attrs["max-height"]
           ? this.getFixedHeight(this.$attrs["max-height"])
           : "none",
+      }
+    },
+    footerClasses() {
+      return {
+        "mc-table-wrapper__footer--indent-bottom": this.hasHorisintalScroll,
       }
     },
     tableMenu() {
@@ -350,6 +359,17 @@ export default {
       }
       return `${window.location.origin}${pathName}${row.id}${window.location.search}`
     },
+    checkHorizontalScroll() {
+      const wrapper = this.getElement('vxe-table--body-wrapper')
+      const body = this.getElement('vxe-table--body')
+      if (wrapper && body) {
+        this.hasHorisintalScroll = wrapper.clientWidth < body.clientWidth
+      }
+    },
+    getElement(className) {
+      const collection = document.getElementsByClassName(className)
+      return collection && collection.length ? collection[0] : null
+    }
   },
 }
 </script>
@@ -373,8 +393,11 @@ export default {
 .mc-table-wrapper {
   position: relative;
   &__footer {
-    @include position(absolute, null 5px 5px 0);
-    z-index: 1;
+    @include position(absolute, null 5px 0 0);
+    z-index: 2;
+    &--indent-bottom {
+      bottom: 5px;
+    }
   }
   &__tint {
     height: $size-900;
