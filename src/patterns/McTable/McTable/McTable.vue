@@ -26,7 +26,7 @@
       <!-- @slot Слот очерних mc-table-col -->
       <slot />
       <template v-slot:empty>
-        <mc-title text-align="center">
+        <mc-title v-if="!$attrs.loading" text-align="center">
           {{ placeholders.no_data }}
         </mc-title>
       </template>
