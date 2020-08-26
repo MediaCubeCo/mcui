@@ -132,16 +132,16 @@ export default {
     },
   },
   mounted() {
-    this.setPosition('slideout')
-    this.setPosition('slideout-panel-bg')
+    this.setPosition('slideout', { height: 'auto', top: this.indentTop })
+    this.setPosition('slideout-panel-bg', { top: this.indentTop })
     this.formElement = this.$refs.form.$el
     this.formElementOldHeight = this.$refs.form.$el.offsetHeight
     this.setScrollElement()
     this.scrollContentToBottom()
   },
   beforeDestroy() {
-    this.setPosition('slideout', true)
-    this.setPosition('slideout-panel-bg', true)
+    this.setPosition('slideout')
+    this.setPosition('slideout-panel-bg')
   },
   watch: {
     comments: {
@@ -152,10 +152,11 @@ export default {
     },
   },
   methods: {
-    setPosition(className, reset) {
+    setPosition(className, { height = '100%', top = 0 } = {}) {
       const els = document.getElementsByClassName(className)
       if (els.length) {
-        els[0].style.top = reset ? 0 : `${this.indentTop}px`
+        els[0].style.top = `${top}px`
+        els[0].style.height = height
       }
     },
     setScrollElement() {
