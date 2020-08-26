@@ -54,6 +54,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       scrollElement: null,
       formElement: null,
       formElementOldHeight: null,
@@ -84,10 +85,10 @@ export default {
      * Состояние загрузки/отправки
      * данных
      */
-    loading: {
-      type: Boolean,
-      default: false,
-    },
+    // loading: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     /**
      * Можно липроизводить
      * действия с комментариями
@@ -138,10 +139,12 @@ export default {
     this.formElementOldHeight = this.$refs.form.$el.offsetHeight
     this.setScrollElement()
     this.scrollContentToBottom()
+    this.$bus.off('chat-update', this.handleChatUpdate)
   },
   beforeDestroy() {
     this.setPosition('slideout')
     this.setPosition('slideout-panel-bg')
+    this.$bus.off('chat-update', this.handleChatUpdate)
   },
   watch: {
     comments: {
@@ -170,6 +173,12 @@ export default {
         this.scrollElement && this.scrollElement.scrollTo(0, this.scrollElement.offsetHeight)
       })
     },
+    handleChatUpdate(comments) {
+      if (comments) {
+        this.comments = comments
+      }
+      this.loading = false
+    },
     handleClose() {
       /**
        * Событие закрытия панели
@@ -191,6 +200,7 @@ export default {
       }
     },
     handleSubmit() {
+      this.loading = true
       /**
        * Событие по отправке
        */

@@ -16,7 +16,13 @@
       <!-- @slot Слот заголовка столбца -->
       <slot name="header" :column="column">
         <mc-title class="mc-table-col__title" weight="semi-bold" :text-align="textAlign">
-          <mc-svg-icon v-if="isSortable" slot="icon-prepend" :name="getSortIcon(column)" :color="getSortColor(column)" />
+          <mc-svg-icon
+              v-if="isSortable"
+              slot="icon-prepend"
+              size="200"
+              :name="getSortIcon(column)"
+              :color="getSortColor(column)"
+          />
           {{ $attrs.type === "seq" ? "#" : column.title }}
           <div slot="icon-append">
             <!-- @slot Слот для вставки в конец после заголовка столбца -->

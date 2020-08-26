@@ -59,7 +59,7 @@ export const Default = () => ({
           emptyMessage: 'History is clear',
           showInput: true,
           value: '',
-          loading: this.loading,
+          // loading: this.loading,
           editable: true,
           avatar: 'https://avatars3.githubusercontent.com/u/43079603?s=460&v=4',
           comments: [],
