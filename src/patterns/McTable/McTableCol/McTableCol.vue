@@ -26,7 +26,7 @@
         <div v-if="$scopedSlots['header-right'] || headerRight" class="mc-table-col__header-right">
           <!-- @slot Слот справа в ячейке хедера (абсолютно спозиционированный, с бэкграундом) -->
           <slot name="header-right" :column="column">
-            <mc-chip class="mc-table-col__total" variation="gray-invert" size="s">
+            <mc-chip v-if="headerRight" class="mc-table-col__total" variation="gray-invert" size="s">
               {{ headerRight }}
             </mc-chip>
           </slot>
