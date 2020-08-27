@@ -45,7 +45,7 @@
       </mc-title>
       <template v-else-if="getVisibilityCommonInfo(columnIndex, items)">
         <mc-title v-if="!provideData.canShowLoader" class="mc-table-col__title">
-          {{ provideData.placeholders.all_loaded }}
+          {{ provideData.totalFooter ? provideData.placeholders.total : provideData.placeholders.all_loaded }}
         </mc-title>
         <span
           v-if="provideData.canShowLoader"
@@ -119,8 +119,8 @@ export default {
   },
   methods: {
     getVisibilityCommonInfo(columnIndex, items) {
-      const index = items.indexOf(null)
-      return columnIndex === index
+        const index = items.indexOf(null)
+        return columnIndex === index
     },
     getSortIcon(column) {
       if (!this.provideData.nativeSort) {

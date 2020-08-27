@@ -83,6 +83,9 @@ const getUniqueProps = key => {
     size: {
       default: select('size', sizes, 'small', key),
     },
+    totalFooter: {
+      default: boolean('totalFooter', true, key),
+    },
   }
 }
 
@@ -101,6 +104,7 @@ const getCommonTags = ctx => {
     'cell-class-name': ctx.handleCellClassName,
     'checkbox-config': ctx.checkboxConfig,
     'native-sort': ctx.nativeSort,
+    totalFooter: ctx.totalFooter,
   }
 }
 
@@ -138,6 +142,7 @@ export const Default = () => ({
         no_data: 'Данных вообще нет!',
         loading: "Секундочку...",
         all_loaded: 'Всё уже загружено',
+        total: "Итого",
         menu: {
           copy: "Скопировать данные ячейки",
           open_in_new_tab: "Открыть в новой вкладке",

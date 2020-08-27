@@ -44,6 +44,7 @@
 <script>
 import _debounce from "lodash/debounce"
 import _XEClipboard from "xe-clipboard"
+import { number as num } from "../../../utils/filters"
 import McTitle from "../../../elements/McTitle/McTitle"
 import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
 
@@ -65,6 +66,7 @@ export default {
       "nativeSort",
       "sortedBy",
       "sortedDescending",
+      "totalFooter",
     ]
     properties.forEach(property => {
       Object.defineProperty(provideData, property, {
@@ -119,6 +121,7 @@ export default {
           no_data: "No data",
           loading: "Loading...",
           all_loaded: "All loaded",
+          total: "Total",
           menu: {
             copy: "Copy cell value",
             open_in_new_tab: "Open in new tab",
@@ -156,6 +159,13 @@ export default {
           gt: 0,
         }
       },
+    },/**
+     *  Если нужно отразить
+     *  сумму значенй в футере
+     */
+    totalFooter: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -264,6 +274,14 @@ export default {
         columns.map(column => {
           if (column.type === "seq") return data.length
           if (column.type === "checkbox") return " "
+          if (this.totalFooter && column.property) {
+            const sum = data.reduce((sum, curr) => {
+              if (typeof curr[column.property] === 'number' || typeof curr[column.property] === 'string') {
+                return sum + Number(curr[column.property].replace(/ /g, ''))
+              }
+            }, 0)
+            return sum ? num(sum, 0) : null
+          }
           return null
         }),
       ]

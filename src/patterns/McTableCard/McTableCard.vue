@@ -35,7 +35,7 @@ export default {
   @include position(absolute, 0);
   z-index: 10;
   background-color: $color-white;
-  border: 1px solid $color-hover-gray;
+  border-left: 1px solid $color-hover-gray;
   display: flex;
   flex-direction: column;
   @include custom-scroll();
