@@ -4,7 +4,7 @@
     <mc-title slot="title" :ellipsis="false" weight="semi-bold">{{ title }}</mc-title>
     <div v-if="comments.length" class="mc-chat__comments">
       <mc-chat-comment
-          v-for="comment in comments"
+          v-for="comment in computedComments"
           :key="comment.id"
           :comment="comment"
           :editable="editable"
@@ -54,6 +54,7 @@ export default {
   },
   data() {
     return {
+      prettyValue: '',
       loading: false,
       scrollElement: null,
       formElement: null,
@@ -81,14 +82,6 @@ export default {
     value: {
       type: String,
     },
-    /**
-     * Состояние загрузки/отправки
-     * данных
-     */
-    // loading: {
-    //   type: Boolean,
-    //   default: false,
-    // },
     /**
      * Можно липроизводить
      * действия с комментариями
@@ -127,6 +120,9 @@ export default {
       type: Boolean,
       default: true,
     },
+    /**
+     * Отступ сверху
+     */
     indentTop: {
       type: Number,
       default: 0,
@@ -139,7 +135,7 @@ export default {
     this.formElementOldHeight = this.$refs.form.$el.offsetHeight
     this.setScrollElement()
     this.scrollContentToBottom()
-    this.$bus.off('chat-update', this.handleChatUpdate)
+    this.$bus.on('chat-update', this.handleChatUpdate)
   },
   beforeDestroy() {
     this.setPosition('slideout')
@@ -150,9 +146,15 @@ export default {
     comments: {
       handler(newVal) {
         newVal.length && this.scrollContentToBottom()
+        this.loading = false
       },
       deep: true,
     },
+  },
+  computed: {
+    computedComments() {
+      return this.comments.reverse()
+    }
   },
   methods: {
     setPosition(className, { height = '100%', top = 0 } = {}) {
@@ -174,7 +176,7 @@ export default {
       })
     },
     handleChatUpdate(comments) {
-      if (comments) {
+      if (comments && comments.length) {
         this.comments = comments
       }
       this.loading = false
@@ -187,12 +189,15 @@ export default {
       this.$emit("closePanel", {})
     },
     handleInput(value) {
+      this.prettyValue = value
       /**
        * Событие ввода
        * @property {string}
        */
-      this.$emit("input", value)
-      this.$bus.emit('chat-input', value)
+      if (value) {
+        this.$emit("input", value)
+        this.$bus.emit('chat-input', value)
+      }
 
       if (this.formElement.offsetHeight !== this.formElementOldHeight) {
         this.formElementOldHeight = this.formElement.offsetHeight
@@ -204,8 +209,10 @@ export default {
       /**
        * Событие по отправке
        */
-      this.$emit("submit")
-      this.$bus.emit('chat-submit')
+      if (this.prettyValue) {
+        this.$emit("submit", this.prettyValue)
+        this.$bus.emit('chat-submit', this.prettyValue)
+      }
     },
     handleDelete(id) {
       /**

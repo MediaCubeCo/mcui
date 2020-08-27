@@ -462,7 +462,8 @@ export default {
     transition: background-color $duration-s ease, border-color $duration-s ease;
     color: $color-black;
 
-    &:focus {
+    &:focus,
+    &:hover {
       outline: 0;
       border-color: $color-blue;
     }

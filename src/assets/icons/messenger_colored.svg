@@ -1,0 +1,10 @@
+<svg data-token-name="messenger_colored" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="#00C6FF"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M6.94679 20V17.1505C5.14843 15.7923 4 13.7239 4 11.4074C4 7.31639 7.58171 4 12 4C16.4186 4 20 7.31639 20 11.4074C20 15.4981 16.4186 18.8148 12 18.8148C11.1757 18.8148 10.3801 18.6993 9.63171 18.4852L6.94679 20ZM6.83105 13.9118L11.1454 9.37856L13.2161 11.479L17.099 9.37856L12.809 13.9118L10.7575 11.7739L6.83105 13.9118Z" fill="white"/>
+<defs>
+<linearGradient id="paint0_linear" x1="12" y1="1.6224" x2="12" y2="22.944" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00C6FF"/>
+<stop offset="1" stop-color="#0068FF"/>
+</linearGradient>
+</defs>
+</svg>

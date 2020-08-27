@@ -432,6 +432,9 @@ $text-white: scale-color($color-white, $alpha: -10%);
       border-radius: $radius-100 !important;
       padding: 0 $space-500 0 $space-100;
       overflow: hidden;
+      &:hover {
+        border-color: $color-blue;
+      }
     }
 
     &__tags-wrap {

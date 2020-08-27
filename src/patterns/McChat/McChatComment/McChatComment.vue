@@ -2,8 +2,8 @@
   <div class="mc-chat-comment" :class="classes" @click="handleClick">
     <a ref="a" href="javascript:void(0);" class="mc-chat-comment__back"></a>
     <mc-preview>
-      <mc-avatar slot="left" size="400" rounded lazy :src="comment.user ? comment.user.avatar : null"/>
-      <mc-date slot="top" size="overline" color="dark-gray" format="YYYY-MM-DD HH:mm" :value="comment.date" />
+      <mc-avatar slot="left" size="400" rounded lazy :src="computedAvatar"/>
+      <mc-date slot="top" size="overline" color="dark-gray" format="YYYY-MM-DD HH:mm" :value="comment.created_at" />
       <mc-title slot="top" weight="semi-bold">{{ computedName }}</mc-title>
       <mc-title slot="bottom" v-html="filteredComment" class="mc-chat-comment__content" :ellipsis="false" />
       <mc-button
@@ -75,9 +75,12 @@ export default {
         'mc-chat-comment--editable': this.editable,
       }
     },
+    computedAvatar() {
+      return _has(this.comment, ["user", "profile", "avatar"]) ? this.comment.user.profile.avatar : null
+    },
     computedName() {
-      return _has(this.comment, ["user", "name"]) && this.comment.user.name ?
-          this.comment.user.name :
+      return _has(this.comment, ["user", "full_name"]) && this.comment.user.full_name ?
+          this.comment.user.full_name :
           this.defaultUserName
     },
     filteredComment() {

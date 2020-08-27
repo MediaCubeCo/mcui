@@ -56,9 +56,6 @@ export const Default = () => ({
     showInput: {
       default: boolean('showInput', true, 'default'),
     },
-    loading: {
-      default: boolean('loading', false, 'default'),
-    },
     editable: {
       default: boolean('editable', false, 'default'),
     },
@@ -102,7 +99,6 @@ export const Default = () => ({
           emptyMessage: this.emptyMessage,
           showInput: this.showInput,
           value: this.value,
-          loading: this.loading,
           editable: this.editable,
           avatar: this.avatar,
           placeholder: this.placeholder,
