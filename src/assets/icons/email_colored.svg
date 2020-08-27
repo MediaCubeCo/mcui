@@ -1,0 +1,6 @@
+<svg data-token-name="email_colored" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="#8B55F6"/>
+<rect x="5" y="7" width="14" height="10" rx="2" fill="white"/>
+<path d="M5 8L11.0769 11.6984C11.6174 12.0999 12.3439 12.1007 12.8852 11.7L19 8" fill="white"/>
+<path d="M5 8L11.0769 11.6984C11.6174 12.0999 12.3439 12.1007 12.8852 11.7L19 8" stroke="#8B55F6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
