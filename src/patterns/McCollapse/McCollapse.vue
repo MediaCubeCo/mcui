@@ -81,6 +81,7 @@ export default {
         "mc-collapse--is-open": this.isCollapsed,
         "mc-collapse--is-disabled": this.isDisabled,
         "mc-collapse--is-empty": this.isEmpty,
+        "mc-collapse--has-icon": this.icon,
         "mc-collapse--border": this.border,
       }
     },
@@ -169,7 +170,6 @@ export default {
 
     #{$block-name} {
       &__header {
-        position: relative;
         display: flex;
         padding: $space-100 $space-200;
       }
@@ -187,10 +187,12 @@ export default {
     align-items: center;
     outline: none;
     cursor: pointer;
+    position: relative;
   }
 
   &__icon {
     transition: all $duration-s;
+    margin-right: $space-50;
   }
 
   &__body {
@@ -259,6 +261,17 @@ export default {
       }
       &__link {
         cursor: not-allowed;
+      }
+    }
+  }
+
+  &--has-icon {
+    #{$block-name}__body {
+      padding-left: $space-350;
+    }
+    &#{$block-name}--is-empty {
+      #{$block-name}__header {
+        padding-left: $space-350;
       }
     }
   }
