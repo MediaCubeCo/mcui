@@ -16,7 +16,7 @@ export default {
   $block-name: &;
 
   box-shadow: $shadow-s;
-  border-radius: $radius-100;
+  border-radius: $radius-150;
   background-color: $color-white;
   padding: $space-100;
   max-width: 320px;

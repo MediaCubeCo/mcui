@@ -337,7 +337,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
 .mc-field-select {
   $block-name: &;
 
-  @include custom-scroll($space-50);
+  @include custom-scroll($space-100);
   font-family: $font-family-main;
 
   &__header {
@@ -497,7 +497,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
     &__content-wrapper {
       top: calc(100% + #{$size-100});
       border: none;
-      border-radius: $radius-100;
+      border-radius: $radius-150;
       box-shadow: $shadow-s;
       overflow-y: auto;
       overflow-x: hidden;
