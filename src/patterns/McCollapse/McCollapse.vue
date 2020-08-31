@@ -4,7 +4,6 @@
       <mc-svg-icon
         v-if="icon && !isEmpty"
         class="mc-collapse__icon"
-        size="400"
         name="arrow_drop_down"
         :color="isDisabled ? 'outline-gray': 'black'"
       />
