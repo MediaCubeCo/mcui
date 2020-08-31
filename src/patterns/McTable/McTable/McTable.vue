@@ -112,6 +112,14 @@ export default {
       default: "table",
     },
     /**
+     *  Кастомное контекстное
+     *  меню
+     */
+    contextMenu: {
+      type: Boolean,
+      default: false,
+    },
+    /**
      *  Переводы локализаций
      */
     placeholders: {
@@ -217,7 +225,7 @@ export default {
     },
     canShowFooter() {
       if (this.scrollable) {
-        return !this.hasMore && !this.$attrs.loading && !!this.items.length
+        return this.totalFooter || (!this.hasMore && !this.$attrs.loading && !!this.items.length)
       }
       return !!this.items.length
     },
@@ -255,7 +263,7 @@ export default {
           ],
         },
       }
-      return this.$listeners["cell-click"] ? menu : false
+      return this.$listeners["cell-click"] && this.contextMenu ? menu : false
     },
   },
   methods: {

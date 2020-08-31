@@ -86,6 +86,9 @@ const getUniqueProps = key => {
     totalFooter: {
       default: boolean('totalFooter', true, key),
     },
+    contextMenu: {
+      default: boolean('contextMenu', false, key),
+    },
   }
 }
 
@@ -100,6 +103,7 @@ const getCommonTags = ctx => {
     items: ctx.items,
     hasMore: ctx.hasMore,
     loading: ctx.loading,
+    contextMenu: ctx.contextMenu,
     placeholders: ctx.placeholders,
     'cell-class-name': ctx.handleCellClassName,
     'checkbox-config': ctx.checkboxConfig,
