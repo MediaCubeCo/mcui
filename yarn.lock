@@ -15062,11 +15062,6 @@ vue-loader@^15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-loaders@^4.0.0-alpha.2:
-  version "4.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/vue-loaders/-/vue-loaders-4.0.0-alpha.2.tgz#fabfca4b07e2094aa6454024049afb47d72876f3"
-  integrity sha512-AFHQJhc7atR8oZf8HJzpTgPvomT0YkHmNW8/Sa7UICGJHDlETRFg96uquM0tObywjm65jN91zx/1lfYVv1deoQ==
-
 vue-moment@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/vue-moment/-/vue-moment-4.1.0.tgz#092a8ff723a96c6f85a0a8e23ad30f0bf320f3b0"

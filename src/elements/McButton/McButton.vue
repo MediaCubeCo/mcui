@@ -4,7 +4,9 @@
       <!-- @slot Слот для вставки в начало -->
       <slot class="mc-button__prepend" name="icon-prepend" />
     </span>
-    <btn-loader v-if="loading" name="ball-clip-rotate-multiple" class="mc-button__loader" color="inherit" />
+    <span v-if="loading" class="mc-button__loader">
+      <mc-svg-icon class="mc-button__loader-icon" type="div" name="loader"/>
+    </span>
     <span class="mc-button__text" v-if="$slots.default">
       <!-- @slot Слот по умолчанию -->
       <slot />
@@ -17,12 +19,11 @@
 </template>
 
 <script>
-import "vue-loaders/dist/vue-loaders.css"
-import VueLoaders from "vue-loaders"
+import McSvgIcon from "../McSvgIcon/McSvgIcon"
 export default {
   name: "McButton",
   components: {
-    "btn-loader": VueLoaders.component,
+    McSvgIcon,
   },
   props: {
     /**
@@ -248,11 +249,11 @@ $colors: $token-colors;
   -webkit-text-fill-color: currentColor;
 
   &__loader {
-    display: none !important;
-    position: absolute !important;
-    left: 50%;
-    top: 50%;
-    transform: translate3d(-50%, -50%, 0) scale(0.6);
+    display: none;
+    @include align(true, true, absolute);
+    &-icon {
+      animation: $animation-spinner;
+    }
   }
 
   &__prepend,
@@ -643,7 +644,7 @@ $colors: $token-colors;
   &--loading {
     #{$block-name} {
       &__loader {
-        display: inline-block !important;
+        display: inline-block;
       }
     }
 
