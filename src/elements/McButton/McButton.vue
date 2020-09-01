@@ -490,7 +490,7 @@ $colors: $token-colors;
         }
 
         &-outline {
-          border-color: $value;
+          border-color: fade-out($value, 0.6);
           color: $value;
 
           &:hover,

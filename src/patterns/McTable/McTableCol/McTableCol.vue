@@ -45,7 +45,7 @@
       </mc-title>
       <template v-else-if="getVisibilityCommonInfo(columnIndex, items)">
         <mc-title v-if="!provideData.canShowLoader" class="mc-table-col__title">
-          {{ provideData.totalFooter ? provideData.placeholders.total : provideData.placeholders.all_loaded }}
+          {{ firstColFooter }}
         </mc-title>
         <span
           v-if="provideData.canShowLoader"
@@ -116,6 +116,16 @@ export default {
       if (!this.$attrs.hasOwnProperty("show-overflow")) return true
       return this.$attrs["show-overflow"] !== false
     },
+    firstColFooter() {
+      switch (this.provideData.footerInfo) {
+        case 'total':
+          return this.provideData.placeholders.total
+        case 'loaded':
+          return this.provideData.placeholders.all_loaded
+        default:
+          return ''
+      }
+    }
   },
   methods: {
     getVisibilityCommonInfo(columnIndex, items) {

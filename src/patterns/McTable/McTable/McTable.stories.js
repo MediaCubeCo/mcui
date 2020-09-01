@@ -37,6 +37,12 @@ const sizes = {
   mini: 'mini',
 }
 
+const footerInfo = {
+  default: '',
+  total: 'total',
+  loaded: 'loaded',
+}
+
 export default {
   title: 'Patterns/McTable',
   component: McTable,
@@ -83,11 +89,14 @@ const getUniqueProps = key => {
     size: {
       default: select('size', sizes, 'small', key),
     },
-    totalFooter: {
-      default: boolean('totalFooter', true, key),
-    },
     contextMenu: {
       default: boolean('contextMenu', false, key),
+    },
+    footerInfo: {
+      default: select('footerInfo', footerInfo, 'total', key),
+    },
+    totalFooter: {
+      default: object('totalFooter', { views_count: 12345, roles: 'privet' }, key),
     },
   }
 }
@@ -108,6 +117,7 @@ const getCommonTags = ctx => {
     'cell-class-name': ctx.handleCellClassName,
     'checkbox-config': ctx.checkboxConfig,
     'native-sort': ctx.nativeSort,
+    footerInfo: ctx.footerInfo,
     totalFooter: ctx.totalFooter,
   }
 }
