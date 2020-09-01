@@ -187,7 +187,7 @@ export default {
      */
     totalFooter: {
       type: Object,
-      default: {},
+      default: () => {},
     },
   },
   data() {
