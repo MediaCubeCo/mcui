@@ -10,7 +10,7 @@
       <!-- @slot Слот для элемента по которому будет меняться состояние компонента -->
       <slot name="activator" />
       <a
-        v-if="border && $slots['body']"
+        v-if="$slots['body']"
         class="mc-collapse__link"
         href="#"
         @click.prevent="toggle"
@@ -193,6 +193,7 @@ export default {
   &__icon {
     transition: all $duration-s;
     margin-right: $space-50;
+    margin-left: $space-50;
   }
 
   &__body {
@@ -266,12 +267,9 @@ export default {
   }
 
   &--has-icon {
-    #{$block-name}__body {
-      padding-left: $space-350;
-    }
     &#{$block-name}--is-empty {
       #{$block-name}__header {
-        padding-left: $space-350;
+        padding-left: $space-400;
       }
     }
   }
