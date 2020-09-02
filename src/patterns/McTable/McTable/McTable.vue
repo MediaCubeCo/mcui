@@ -140,10 +140,18 @@ export default {
         }
       },
     },
+    /**
+     *  По какому столбцу
+     *  выполнена сортировка
+     */
     sortedBy: {
       type: String,
       required: false,
     },
+    /**
+     *  По убыванию ли
+     *  отсортировано
+     */
     sortedDescending: {
       type: Boolean,
       default: false,
@@ -188,6 +196,14 @@ export default {
     totalFooter: {
       type: Object,
       default: () => {},
+    },
+    /**
+     *  Если нужно переносить
+     *  слова в хедере
+     */
+    headerBreakWord: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -257,6 +273,7 @@ export default {
       return {
         "mc-table--open-card": this.cardIsOpen,
         "mc-table--clickable": this.$listeners["cell-click"],
+        "mc-table--header-break-word": this.headerBreakWord,
       }
     },
     wrapperStyles() {
@@ -474,6 +491,16 @@ export default {
     .vxe-table--body {
       .vxe-body--row {
         cursor: pointer;
+      }
+    }
+  }
+  &--header-break-word {
+    .vxe-header--column {
+      .vxe-cell--title {
+        .mc-title__text {
+          white-space: normal;
+          word-break: break-word;
+        }
       }
     }
   }

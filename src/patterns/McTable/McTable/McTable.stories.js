@@ -98,6 +98,9 @@ const getUniqueProps = key => {
     totalFooter: {
       default: object('totalFooter', { views_count: 12345, roles: 'privet' }, key),
     },
+    headerBreakWord: {
+      default: boolean('headerBreakWord', false, key),
+    },
   }
 }
 
@@ -119,6 +122,7 @@ const getCommonTags = ctx => {
     'native-sort': ctx.nativeSort,
     footerInfo: ctx.footerInfo,
     totalFooter: ctx.totalFooter,
+    headerBreakWord: ctx.headerBreakWord,
   }
 }
 
@@ -244,7 +248,7 @@ export const Default = () => ({
             :sortMethod="sortNameMethod"
         />
 
-        <mc-table-col field="roles" title="Роль" width="120">
+        <mc-table-col field="roles" title="Роль (здесь уточнение)" width="120">
             <template v-slot="{ row }">
                 <mc-chip variation="gray-invert" size="s" :counter="'+'+(row.roles.length - 1)">
                     {{ row.roles[0] }}
