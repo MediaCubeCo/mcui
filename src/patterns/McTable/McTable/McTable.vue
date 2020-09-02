@@ -46,7 +46,6 @@ import _debounce from "lodash/debounce"
 import _XEClipboard from "xe-clipboard"
 import _isEmpty from 'lodash/isEmpty'
 
-import { number as num } from "../../../utils/filters"
 import McTitle from "../../../elements/McTitle/McTitle"
 import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
 
@@ -211,6 +210,7 @@ export default {
       observer: null,
       cardIsOpen: false,
       firstColsWidth: 253,
+      hasHorizontalScroll: false,
     }
   },
   async mounted() {
@@ -287,7 +287,7 @@ export default {
     },
     footerClasses() {
       return {
-        "mc-table-wrapper__footer--indent-bottom": this.hasHorisintalScroll,
+        "mc-table-wrapper__footer--indent-bottom": this.hasHorizontalScroll,
       }
     },
     tableMenu() {
@@ -423,7 +423,7 @@ export default {
       const wrapper = this.getElement('vxe-table--body-wrapper')
       const body = this.getElement('vxe-table--body')
       if (wrapper && body) {
-        this.hasHorisintalScroll = wrapper.clientWidth < body.clientWidth
+        this.hasHorizontalScroll = wrapper.clientWidth < body.clientWidth
       }
     },
     getElement(className) {
