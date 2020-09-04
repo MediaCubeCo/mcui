@@ -427,9 +427,10 @@ export default {
       }
     },
     getElement(className) {
-      const collection = document.getElementsByClassName(className)
+      const el = this.$refs.xTable.$el
+      const collection = el.getElementsByClassName(className)
       return collection && collection.length ? collection[0] : null
-    }
+    },
   },
 }
 </script>
