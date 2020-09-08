@@ -76,6 +76,14 @@ export default {
       type: String,
       default: "m",
     },
+    /**
+     *  Если нужен
+     *  иной цвет текста
+     */
+    textColor: {
+      type: String,
+      default: "",
+    },
   },
 
   computed: {
@@ -83,6 +91,7 @@ export default {
       return {
         [`mc-chip--variation-${this.variation}`]: this.variation,
         [`mc-chip--size-${this.size}`]: this.size,
+        [`mc-chip--text-color-${this.textColor}`]: this.textColor,
       }
     },
   },
@@ -213,6 +222,11 @@ export default {
 
       &-invert {
         background-color: fade-out($value, 0.85);
+      }
+    }
+    &--text-color-#{$color} {
+      #{$block-name}__title {
+        color: $value;
       }
     }
   }

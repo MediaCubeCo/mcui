@@ -44,6 +44,9 @@ const getUniqueProps = key => {
     size: {
       default: select('size', sizes, 'm', key),
     },
+    textColor: {
+      default: select('textColor', {...tokenColors, default: ''}, '', key),
+    },
   }
 }
 
@@ -54,6 +57,7 @@ const getCommonTags = ctx => {
     variation: ctx.variation,
     counter: ctx.counter,
     size: ctx.size,
+    textColor: ctx.textColor,
   }
 }
 
