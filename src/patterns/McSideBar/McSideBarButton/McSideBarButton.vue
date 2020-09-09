@@ -70,7 +70,7 @@ export default {
      *  Additional info
      */
     info: {
-      type: String,
+      type: [String, Number],
       default: "",
     },
     /**
