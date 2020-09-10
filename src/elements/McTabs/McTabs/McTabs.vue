@@ -24,11 +24,13 @@ export default {
   },
   props: {
     /**
-     *  Оличество закешированных
-     *  переходов по табам
+     *  Количество минут, когда
+     *  будет храниться в памяти
+     *  последний посещённый таб
      */
     cacheLifetime: {
-      default: 5,
+      type: Number,
+      default: 0,
     },
     useUrlFragment: {
       default: false,
@@ -79,11 +81,28 @@ export default {
   },
   methods: {
     changedHandler(e) {
+      const lastActiveTab = this.$refs.tabs.getActiveTab()
+      if (lastActiveTab) {
+        if (e.tab.href) {
+          this.setLastActiveTab(lastActiveTab.hash)
+          window.open(e.tab.href, "_blank")
+        }
+        if (e.tab.to && this.$router) {
+          this.setLastActiveTab(lastActiveTab.hash)
+          this.$router.push(e.tab.to)
+        }
+      }
+
       /**
        * Событие при смене таба
        * @property {Object}
        */
       this.$emit("tab-changed", e)
+    },
+    setLastActiveTab(hash) {
+      this.$nextTick(() => {
+        this.$refs.tabs.selectTab(hash)
+      })
     },
     getActiveTab() {
       return this.$refs.tabs.getActiveTab()

@@ -85,12 +85,25 @@ export const Default = () => ({
   template: `<mc-tabs v-bind="tagBind" @changed="handleChange">
       <mc-tab id="custom" name="Custom fragment">Custom fragment content</mc-tab>
       <mc-tab 
-          name="With icons"
+          name="With icon"
           icon-prepend-classes="las la-check-circle"
           icon-prepend-color="red"
-          icon-append-classes="las la-external-link-alt"
       >
           Lorem ipsum dolor sit amet.
+      </mc-tab>
+      <mc-tab
+          name="Href link"
+          icon-append-classes="las la-external-link-alt"
+          href="https://ya.ru"
+      >
+        Этот контент мы не увидим
+      </mc-tab>
+      <mc-tab
+          name="Router link"
+          icon-append-classes="las la-external-link-alt"
+          :to="{name: 'test', params: { id: 123 }}"
+      >
+        Сработает только при наличии this.$router (в проекте nuxt)
       </mc-tab>
       <mc-tab prefix="<<< " suffix=" >>>" name="With prefix and suffix">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, voluptatibus.

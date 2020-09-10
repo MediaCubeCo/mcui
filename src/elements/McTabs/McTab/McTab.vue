@@ -5,6 +5,8 @@
       class="tabs-component-panel"
       :id="computedId"
       role="tabpanel"
+      :href="href"
+      :to="to"
   >
     <!-- @slot контента -->
     <slot />
@@ -86,6 +88,22 @@ export default {
      *  Цвет иконки в конце
      */
     iconAppendColor: {
+      type: String,
+      default: "",
+    },
+    /**
+     *  Если нужна ссылка внутри приложения:
+     * `{name: 'test', params: { id: test.id }}`
+     */
+    to: {
+      type: Object,
+      default: null,
+    },
+    /**
+     *  Если нужна обычная ссылка:
+     * `https://mediacube.agency/`
+     */
+    href: {
       type: String,
       default: "",
     },
