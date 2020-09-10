@@ -427,6 +427,10 @@ $colors: $token-colors;
           border: none;
           user-select: text;
 
+          &#{$block-name}--size-l {
+            line-height: $line-height-250;
+          }
+
           &:hover,
           &:focus {
             color: darken($value, 12%);
@@ -537,6 +541,10 @@ $colors: $token-colors;
           @include size(auto);
           border: none;
           user-select: text;
+
+          &#{$block-name}--size-l {
+            line-height: $line-height-250;
+          }
 
           &:hover,
           &:focus {
