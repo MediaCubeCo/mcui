@@ -662,9 +662,7 @@ $colors: $token-colors;
   }
 
   &--disabled {
-    background-color: $color-hover-gray !important;
-    color: $color-outline-gray !important;
-    border-color: $color-hover-gray !important;
+    filter: opacity(0.5);
   }
 }
 </style>

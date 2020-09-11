@@ -121,7 +121,7 @@ export default {
       @include pseudo();
       @include position(absolute, auto 0 0 0);
       height: 1px;
-      background-color: $color-outline-gray;
+      background-color: $color-hover-gray;
     }
   }
 
