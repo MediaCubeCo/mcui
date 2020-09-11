@@ -96,7 +96,6 @@ export default {
      * `{name: 'test', params: { id: test.id }}`
      */
     to: {
-      type: Object,
       default: null,
     },
     /**
