@@ -39,8 +39,11 @@ export const Default = () => ({
     uppercase: {
       default: boolean('uppercase', true, 'default'),
     },
+    ellipsis: {
+      default: boolean('ellipsis', true, 'default'),
+    },
   },
-  template: `<mc-cell :title="title" :size="size" :uppercase="uppercase">
+  template: `<mc-cell :title="title" :size="size" :uppercase="uppercase" :ellipsis="ellipsis">
     <mc-title>{{slotDefault}}</mc-title>
   </mc-cell>`,
 })

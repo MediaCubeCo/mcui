@@ -165,7 +165,7 @@ export default {
   $block-name: &;
 
   &--border {
-    border-radius: $radius-50;
+    border-radius: $radius-100;
     border: 1px solid $color-outline-gray;
 
     #{$block-name} {

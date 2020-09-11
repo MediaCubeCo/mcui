@@ -3,7 +3,7 @@
     <div class="mc-cell__title">
       <!-- @slot Слот заголовка -->
       <slot name="title">
-        <mc-title variation="overline" :uppercase="uppercase">{{ title }}</mc-title>
+        <mc-title variation="overline" :uppercase="uppercase" :ellipsis="ellipsis">{{ title }}</mc-title>
       </slot>
     </div>
     <div class="mc-cell__content">
@@ -39,6 +39,13 @@ export default {
      * заголовка
      */
     uppercase: {
+      type: Boolean,
+      default: true,
+    },
+    /**
+     * Три точки
+     */
+    ellipsis: {
       type: Boolean,
       default: true,
     },
