@@ -4,6 +4,7 @@ import { action } from "@storybook/addon-actions"
 import McCollapse from './McCollapse'
 import McButton from '../../elements/McButton/McButton'
 import McSlideUpDown from "../../elements/McSlideUpDown/McSlideUpDown"
+import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon"
 
 export default {
   title: 'Patterns/McCollapse',
@@ -30,7 +31,7 @@ const actionsData = {
 }
 
 export const Default = () => ({
-  components: { McCollapse, McButton },
+  components: { McCollapse, McButton, McSvgIcon },
   data() {
     return {
       content: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -52,6 +53,9 @@ export const Default = () => ({
     icon: {
       default: boolean('icon', false, 'default'),
     },
+    slotBottom: {
+      default: boolean('slotBottom', false, 'default'),
+    },
   },
   methods: actionsData,
   template: `<mc-collapse 
@@ -63,6 +67,9 @@ export const Default = () => ({
   >
      <mc-button slot="activator">Title</mc-button>
      <template slot="body">{{content}}</template>
+     <template slot="bottom" v-if="slotBottom">
+       <mc-svg-icon name="arrow_downward" />
+     </template>
   </mc-collapse>`,
 })
 

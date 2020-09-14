@@ -30,6 +30,10 @@
         <slot name="body" />
       </div>
     </mc-slide-up-down>
+    <div v-if="$slots['bottom']" class="mc-collapse__bottom">
+      <!-- @slot Общий нижний слот -->
+      <slot name="bottom" />
+    </div>
   </section>
 </template>
 
@@ -223,6 +227,10 @@ export default {
         border-bottom: none;
       }
     }
+  }
+
+  &__bottom {
+    position: relative;
   }
 
   &--is-open {
