@@ -12,6 +12,7 @@
     :disabled="disabled"
   >
     <mc-svg-icon v-if="icon" slot="icon-prepend" class="mc-side-bar-button__icon" :name="icon" />
+    <span v-if="icon && compact && info" slot="icon-prepend" class="mc-side-bar-button__dot" />
     <template v-if="!compact">
       {{ title }}
       <mc-chip v-if="info" slot="icon-append" variation="blue">{{info}}</mc-chip>
@@ -96,6 +97,14 @@ export default {
 <style lang="scss">
 .mc-side-bar-button {
   $block-name: &;
+
+  &__dot {
+    @include position(absolute, $space-100 6px null null);
+    @include size($size-100);
+    background-color: $color-blue;
+    border-radius: $radius-circle;
+  }
+
   &.mc-button {
     color: $color-gray;
     padding: $space-100;
@@ -128,6 +137,5 @@ export default {
       pointer-events: auto;
     }
   }
-
 }
 </style>
