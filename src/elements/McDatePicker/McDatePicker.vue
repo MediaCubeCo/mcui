@@ -8,18 +8,6 @@
     </label>
     <div class="mc-date-picker__inner">
       <div class="mc-date-picker__input-wrapper">
-<!--        :type="type"-->
-<!--        :append-to-body="appendToBody"-->
-<!--        :disabled-date="disabledDate"-->
-<!--        :clearable="clearable"-->
-<!--        :input-props="inputProps"-->
-<!--        :placeholder="placeholder"-->
-<!--        :name="name"-->
-<!--        :id="name"-->
-<!--        :range="range"-->
-<!--        :inline="inline"-->
-<!--        :disabled="disabled"-->
-<!--        :popup-style="popupStyle"-->
         <date-picker
           v-model="prettyValue"
           v-on="listeners"
@@ -467,6 +455,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      @include child-indent-right($space-200);
       > * {
         @include child-indent-right($space-300);
       }

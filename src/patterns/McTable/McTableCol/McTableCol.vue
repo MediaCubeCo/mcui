@@ -40,11 +40,11 @@
       </slot>
     </template>
     <template v-slot:footer="{ columnIndex, items }">
-      <mc-title v-if="items[columnIndex]" :text-align="textAlign">
+      <mc-title v-if="items[columnIndex]" :text-align="textAlign" weight="semi-bold">
         {{ items[columnIndex] }}
       </mc-title>
       <template v-else-if="getVisibilityCommonInfo(columnIndex, items)">
-        <mc-title v-if="!provideData.canShowLoader" class="mc-table-col__title">
+        <mc-title v-if="!provideData.canShowLoader" class="mc-table-col__title" weight="semi-bold">
           {{ firstColFooter }}
         </mc-title>
         <span

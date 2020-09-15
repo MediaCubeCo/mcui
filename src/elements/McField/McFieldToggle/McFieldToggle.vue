@@ -139,6 +139,7 @@ export default {
     position: relative;
     display: inline-block;
     @include size($size-550, $size-250);
+    flex-shrink: 0;
     & > #{$block-name}__field {
       opacity: 0;
       @include size(0);

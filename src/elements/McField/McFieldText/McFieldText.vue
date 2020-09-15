@@ -439,6 +439,7 @@ export default {
     position: absolute;
     right: $space-150;
     bottom: $space-150;
+    background-color: $color-white;
   }
 
   &__input-wrapper {
