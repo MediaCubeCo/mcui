@@ -31,6 +31,7 @@
       }
       .las {
         @include size($space-300);
+        font-size: 24px;
         margin-right: $space-150;
       }
     }
