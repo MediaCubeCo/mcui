@@ -29,6 +29,10 @@
           }
         }
       }
+      .las {
+        @include size($space-300);
+        margin-right: $space-150;
+      }
     }
   }
 }
