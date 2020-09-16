@@ -146,12 +146,10 @@ export default {
     }
     this.setScrollElement()
     this.scrollContentToBottom()
-    this.$bus.on('chat-update', this.handleChatUpdate)
   },
   beforeDestroy() {
     this.setPosition('slideout')
     this.setPosition('slideout-panel-bg')
-    this.$bus.off('chat-update', this.handleChatUpdate)
   },
   watch: {
     comments: {
@@ -187,12 +185,6 @@ export default {
       this.$nextTick(() => {
         this.scrollElement && this.scrollElement.scrollTo(0, this.scrollElement.offsetHeight)
       })
-    },
-    handleChatUpdate(comments) {
-      if (comments && comments.length) {
-        this.comments = comments
-      }
-      this.loading = false
     },
     handleClose() {
       /**

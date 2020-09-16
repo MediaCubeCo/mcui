@@ -4,7 +4,9 @@
     <mc-preview>
       <mc-avatar slot="left" size="400" rounded lazy :src="computedAvatar"/>
       <mc-date slot="top" size="overline" color="dark-gray" format="YYYY-MM-DD HH:mm" :value="comment.created_at" />
-      <mc-title slot="top" weight="semi-bold">{{ computedName }}</mc-title>
+      <mc-title slot="top" :weight="computedTitle.weight" :color="computedTitle.color">
+        {{ computedTitle.name }}
+      </mc-title>
       <mc-badge v-if="comment.status" slot="bottom" :variation="comment.status.color">
         {{ comment.status.title }}
       </mc-badge>
@@ -84,10 +86,13 @@ export default {
     computedAvatar() {
       return _has(this.comment, ["user", "profile", "avatar"]) ? this.comment.user.profile.avatar : null
     },
-    computedName() {
-      return _has(this.comment, ["user", "full_name"]) && this.comment.user.full_name ?
-          this.comment.user.full_name :
-          this.defaultUserName
+    computedTitle() {
+      const hasUserName = _has(this.comment, ["user", "full_name"]) && this.comment.user.full_name
+      return {
+        name: hasUserName ? this.comment.user.full_name : this.defaultUserName,
+        weight: hasUserName ? 'semi-bold' : 'medium',
+        color: hasUserName ? 'black' : 'blue',
+      }
     },
     filteredComment() {
       let nl2br = this.$options.filters.nl2br
