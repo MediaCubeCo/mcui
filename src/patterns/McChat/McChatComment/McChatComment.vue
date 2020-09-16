@@ -5,9 +5,12 @@
       <mc-avatar slot="left" size="400" rounded lazy :src="computedAvatar"/>
       <mc-date slot="top" size="overline" color="dark-gray" format="YYYY-MM-DD HH:mm" :value="comment.created_at" />
       <mc-title slot="top" weight="semi-bold">{{ computedName }}</mc-title>
-      <mc-title slot="bottom" v-html="filteredComment" class="mc-chat-comment__content" :ellipsis="false" />
+      <mc-badge v-if="comment.status" slot="bottom" :variation="comment.status.color">
+        {{ comment.status.title }}
+      </mc-badge>
+      <mc-title v-if="comment.content" slot="bottom" v-html="filteredComment" :ellipsis="false" />
       <mc-button
-        v-if="editable"
+        v-if="canEdit"
         slot="right"
         class="mc-chat-comment__btn"
         size="xs-compact"
@@ -72,8 +75,11 @@ export default {
   computed: {
     classes() {
       return {
-        'mc-chat-comment--editable': this.editable,
+        'mc-chat-comment--editable': this.canEdit,
       }
+    },
+    canEdit() {
+      return this.editable && !('status' in this.comment)
     },
     computedAvatar() {
       return _has(this.comment, ["user", "profile", "avatar"]) ? this.comment.user.profile.avatar : null
@@ -100,13 +106,7 @@ export default {
       this.$emit('delete', this.comment.id)
     },
     handleClick() {
-      this.$refs.a.focus()
-    },
-    handleDown() {
-
-    },
-    handleUp() {
-
+      this.$refs.a && this.$refs.a.focus()
     },
   },
 }
@@ -128,9 +128,6 @@ export default {
     border-radius: $radius-100;
   }
 
-  &__content {
-    margin-top: $space-50;
-  }
   &__btn {
     visibility: hidden;
   }
@@ -154,6 +151,11 @@ export default {
   .mc-preview__top,
   .mc-preview__bottom {
     cursor: text;
+  }
+
+  .mc-preview__bottom {
+    margin-top: $space-50;
+    @include child-indent-bottom($space-50);
   }
 
   &--editable {

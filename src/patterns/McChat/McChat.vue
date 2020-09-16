@@ -4,9 +4,10 @@
     <mc-title slot="title" :ellipsis="false" weight="semi-bold">{{ title }}</mc-title>
     <div v-if="comments.length" class="mc-chat__comments">
       <mc-chat-comment
-          v-for="comment in computedComments"
+          v-for="comment in sortedComments"
           :key="comment.id"
           :comment="comment"
+          :default-user-name="defaultUserName"
           :editable="editable"
           @delete="handleDelete"
       />
@@ -83,7 +84,7 @@ export default {
       type: String,
     },
     /**
-     * Можно липроизводить
+     * Можно ли производить
      * действия с комментариями
      */
     editable: {
@@ -127,12 +128,22 @@ export default {
       type: Number,
       default: 0,
     },
+    /**
+     * Значение по умолчанию
+     * системного комментария
+     */
+    defaultUserName: {
+      type: String,
+      default: "System comment",
+    },
   },
   mounted() {
     this.setPosition('slideout', { height: 'auto', top: this.indentTop })
     this.setPosition('slideout-panel-bg', { top: this.indentTop })
-    this.formElement = this.$refs.form.$el
-    this.formElementOldHeight = this.$refs.form.$el.offsetHeight
+    if (this.showInput) {
+      this.formElement = this.$refs.form.$el
+      this.formElementOldHeight = this.$refs.form.$el.offsetHeight
+    }
     this.setScrollElement()
     this.scrollContentToBottom()
     this.$bus.on('chat-update', this.handleChatUpdate)
@@ -152,8 +163,10 @@ export default {
     },
   },
   computed: {
-    computedComments() {
-      return this.comments.reverse()
+    sortedComments() {
+      return this.comments.sort(
+          (a, b) => new Date(a.created_at) - new Date(b.created_at),
+      )
     }
   },
   methods: {

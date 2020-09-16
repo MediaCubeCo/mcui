@@ -1,7 +1,7 @@
 .toasted-container {
   .toasted {
     &.mc-toast {
-      padding: $space-100 $space-100 $space-100 $space-150;
+      padding: $space-100 $space-400 $space-100 $space-150;
       &--primary {
         border-radius: $radius-100;
         background-color: $color-black;
@@ -26,6 +26,9 @@
           }
           &:first-child {
             margin-left: $space-600;
+          }
+          &:last-child {
+            margin-right: -$space-300;
           }
         }
       }
