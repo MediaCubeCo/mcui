@@ -55,7 +55,7 @@
                     {{ placeholders.year }}
                   </mc-button>
                 </div>
-                <mc-button variation="blue-outline" size="xs" @click="() => emit($refs.input.currentValue)">
+                <mc-button variation="blue-outline" size="xs" @click="() => handleSubmit(emit)">
                   {{ placeholders.confirm }}
                 </mc-button>
               </div>
@@ -296,6 +296,13 @@ export default {
     },
     handlePickDate(date) {
       this.pickDate = date
+    },
+    handleSubmit(emit) {
+      const isValid = this.$refs.input.currentValue.every(val => this.isValidDate(val))
+      isValid && emit(this.$refs.input.currentValue)
+    },
+    isValidDate(d) {
+      return d instanceof Date && !isNaN(d)
     },
   },
 }
