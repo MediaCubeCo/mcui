@@ -9,20 +9,21 @@
     <div class="mc-date-picker__inner">
       <div class="mc-date-picker__input-wrapper">
         <date-picker
-          v-model="prettyValue"
-          v-on="listeners"
-          v-bind="$attrs"
-          ref="input"
-          class="mc-date-picker__date-picker"
-          range-separator=" — "
-          :confirm="$attrs.range"
-          :input-attr="{ name, id: `${name}-id` }"
-          :lang="lang"
-          :format="format"
-          :editable="editable"
-          :popup-class="popupClass"
-          @input="val => handleEmitDate(val)"
-          @pick="handlePickDate"
+            :value="prettyValue"
+            v-on="listeners"
+            v-bind="$attrs"
+            ref="input"
+            class="mc-date-picker__date-picker"
+            range-separator=" — "
+            :confirm="$attrs.range"
+            :input-attr="{ name, id: `${name}-id` }"
+            :lang="lang"
+            :format="format"
+            :editable="editable"
+            :popup-class="popupClass"
+            @input="val => handleEmitDate(val)"
+            @pick="handlePickDate"
+            @clear="val => handleEmitDate(null)"
         >
           <div v-if="$slots.header" slot="header">
             <!-- @slot Слот для вставки в хедер попапа календаря -->
@@ -36,7 +37,7 @@
             <!-- @slot Слот для вставки в инпут попапа календаря -->
             <slot name="input" />
           </div>
-          <template v-if="$slots.footer || $attrs.range" v-slot:footer="{ emit }">
+          <template v-if="$slots.footer || 'range' in $attrs" v-slot:footer="{ emit }">
             <!-- @slot Слот для вставки в футер попапа календаря -->
             <slot name="footer">
               <div class="mc-datepicker__footer-popup">
@@ -54,7 +55,7 @@
                     {{ placeholders.year }}
                   </mc-button>
                 </div>
-                <mc-button variation="blue-outline" size="xs" @click="() => emit(prettyValue)">
+                <mc-button variation="blue-outline" size="xs" @click="() => emit($refs.input.currentValue)">
                   {{ placeholders.confirm }}
                 </mc-button>
               </div>
@@ -121,7 +122,6 @@ export default {
 
     /**
      *  Редактируемый инпут
-     *
      */
     editable: {
       type: Boolean,
@@ -130,7 +130,6 @@ export default {
 
     /**
      *  Значение
-     *
      */
     value: {
       default: null,
@@ -138,7 +137,6 @@ export default {
 
     /**
      *  Name
-     *
      */
     name: {
       type: String,
@@ -163,7 +161,6 @@ export default {
 
     /**
      *  Формат даты (как в moment.js)
-     *
      */
     format: {
       type: String,
@@ -172,7 +169,6 @@ export default {
 
     /**
      *  Формат отдаваемой даты
-     *
      */
     toFormat: {
       type: String,
@@ -180,7 +176,6 @@ export default {
     },
     /**
      *  Формат отдаваемой даты
-     *
      */
     placeholders: {
       type: Object,
@@ -204,7 +199,7 @@ export default {
   },
   watch: {
     value(newVal) {
-      if (this.$attrs.range) {
+      if ('range' in this.$attrs) {
         this.prettyValue = newVal.map(item => new Date(item))
       } else {
         this.prettyValue = new Date(newVal)
@@ -212,10 +207,10 @@ export default {
     },
   },
   mounted() {
-    if (this.$attrs.range) {
+    if ('range' in this.$attrs) {
       this.prettyValue = this.value
           ? this.value.map(item => new Date(item))
-          : [new Date(), new Date()]
+          : null
     } else {
       this.prettyValue = this.value ? new Date(this.value) : new Date()
     }
@@ -245,39 +240,59 @@ export default {
   },
 
   methods: {
-    handleInput(value) {
+    handleEmitDate(value) {
+      const date = this.getFormattedDate(value)
       /**
        * Событие инпута
        * @property {string}
        */
-      this.$emit("input", value)
+      this.$emit("input", date)
     },
-
-    handleEmitDate(value) {
+    getFormattedDate(value) {
+      if(!value) return null
       let newValue = value
-      if (!value || !value.length) {
+      if (!Array.isArray(newValue)) {
         newValue = this.$moment(value).format(this.toFormat)
       }
-      this.handleInput(newValue)
+      if (Array.isArray(newValue)) {
+        newValue = newValue.map(v => this.$moment(v).format(this.toFormat))
+      }
+      return newValue
     },
     selectPeriod(key) {
-      const start = new Date()
+      let start = new Date()
       const end = this.pickDate || new Date()
       switch (key) {
-        case 'week':
-          start.setTime(end.getTime() - 6 * 24 * 3600 * 1000)
+      case 'week':
+        if (this.$moment) {
+          start = this.$moment(end).subtract(7, 'days')
           break
-        case 'month':
-          start.setMonth(end.getMonth() - 1, end.getDate())
+        }
+        start.setTime(end.getTime() - 6 * 24 * 3600 * 1000)
+        break
+      case 'month':
+        if (this.$moment) {
+          start = this.$moment(end).subtract(1, 'months')
           break
-        case 'quarter':
-          start.setMonth(end.getMonth() - 3, end.getDate())
+        }
+        start.setMonth(end.getMonth() - 1, end.getDate())
+        break
+      case 'quarter':
+        if (this.$moment) {
+          start = this.$moment(end).subtract(3, 'months')
           break
-        case 'year':
-          start.setFullYear(end.getFullYear() - 1, end.getMonth(), end.getDate())
+        }
+        start.setMonth(end.getMonth() - 3, end.getDate())
+        break
+      case 'year':
+        if (this.$moment) {
+          start = this.$moment(end).subtract(1, 'years')
           break
+        }
+        start.setFullYear(end.getFullYear() - 1, end.getMonth(), end.getDate())
+        break
       }
-      this.prettyValue = [start, end]
+      this.$refs.input.currentValue = [this.$moment ? start._d : start, end]
     },
     handlePickDate(date) {
       this.pickDate = date
