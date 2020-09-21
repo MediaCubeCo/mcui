@@ -277,7 +277,7 @@ export default {
           return this._value && this.options.length === 1
         }
       }
-      else if (this.options.length === 0) return this.options.length
+      else if (this.options.length === 0) return !this.options.length
       return false
     },
     hasPrepend() {
