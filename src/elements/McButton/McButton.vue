@@ -65,6 +65,14 @@ export default {
       default: false,
     },
     /**
+     *  Индикация загрузки
+     *  вращением иконки
+     */
+    iconLoading: {
+      type: Boolean,
+      default: false,
+    },
+    /**
      *  Типы:
      *  `button, submit, reset`
      */
@@ -181,6 +189,7 @@ export default {
         [`mc-button--size-${this.size}`]: this.size,
         [`mc-button--text-align-${this.textAlign}`]: this.textAlign,
         "mc-button--loading": this.loading,
+        "mc-button--icon-loading": this.iconLoading,
         "mc-button--is-active": this.isActive,
         "mc-button--disabled": this.disabled,
         "mc-button--rounded": this.rounded && /-compact$/.test(this.size),
@@ -398,8 +407,7 @@ $colors: $token-colors;
       @if $color == "white" {
         background-color: $value;
 
-        &:hover,
-        &:focus {
+        &:hover {
           background-color: fade-out($value, 1 - $opacity-hover);
         }
 
@@ -410,8 +418,7 @@ $colors: $token-colors;
         &-flat {
           color: $value;
 
-          &:hover,
-          &:focus {
+          &:hover {
             opacity: $opacity-hover;
           }
 
@@ -431,8 +438,7 @@ $colors: $token-colors;
             line-height: $line-height-250;
           }
 
-          &:hover,
-          &:focus {
+          &:hover {
             color: darken($value, 12%);
           }
 
@@ -459,8 +465,7 @@ $colors: $token-colors;
           color: $color-white;
         }
 
-        &:hover,
-        &:focus {
+        &:hover {
           background-color: darken($value, 10%);
         }
 
@@ -478,8 +483,7 @@ $colors: $token-colors;
           background-color: fade-out($value, 0.9);
           color: $value;
 
-          &:hover,
-          &:focus {
+          &:hover {
             background-color: fade-out($value, 0.8);
           }
 
@@ -498,8 +502,7 @@ $colors: $token-colors;
           border-color: fade-out($value, 0.6);
           color: $value;
 
-          &:hover,
-          &:focus {
+          &:hover {
             background-color: $value;
             color: $color-white;
           }
@@ -519,8 +522,7 @@ $colors: $token-colors;
         &-flat {
           color: $value;
 
-          &:hover,
-          &:focus {
+          &:hover {
             background-color: fade-out($value, 0.9);
           }
 
@@ -546,8 +548,7 @@ $colors: $token-colors;
             line-height: $line-height-250;
           }
 
-          &:hover,
-          &:focus {
+          &:hover {
             color: darken($value, 12%);
           }
 
@@ -568,8 +569,7 @@ $colors: $token-colors;
     }
 
     &--secondary-color-#{$color} {
-      &:hover,
-      &:focus {
+      &:hover {
         color: $value;
       }
 
@@ -645,6 +645,7 @@ $colors: $token-colors;
   }
 
   &--loading,
+  &--icon-loading,
   &--disabled {
     pointer-events: none;
   }
@@ -658,6 +659,16 @@ $colors: $token-colors;
 
     > *:not(#{$block-name}__loader) {
       opacity: 0;
+    }
+  }
+  &--icon-loading {
+    #{$block-name} {
+      &__append,
+      &__prepend {
+        .mc-svg-icon {
+          animation: $animation-spinner;
+        }
+      }
     }
   }
 

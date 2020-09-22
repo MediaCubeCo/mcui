@@ -110,7 +110,7 @@ export default {
       return this.$attrs.align || "left"
     },
     isSortable() {
-      return this.$attrs.hasOwnProperty("sortable")
+      return this.$attrs.hasOwnProperty("sortable") && this.$attrs.sortable !== false
     },
     ellipsis() {
       if (!this.$attrs.hasOwnProperty("show-overflow")) return true

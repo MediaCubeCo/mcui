@@ -69,6 +69,9 @@ const getUniqueProps = key => {
     loading: {
       default: boolean('loading', false, key),
     },
+    iconLoading: {
+      default: boolean('iconLoading', false, key),
+    },
     type: {
       default: select('type', types, 'default', key)
     },
@@ -121,6 +124,7 @@ const getCommonTags = ctx => {
     nuxt: ctx.nuxt,
     disabled: ctx.disabled,
     loading: ctx.loading,
+    iconLoading: ctx.iconLoading,
     type: ctx.type,
     variation: ctx.variation,
     size: ctx.size,
