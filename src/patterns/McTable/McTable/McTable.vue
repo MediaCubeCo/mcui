@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import _debounce from "lodash/debounce"
+import _throttle from "lodash/throttle"
 import _XEClipboard from "xe-clipboard"
 import _isEmpty from 'lodash/isEmpty'
 
@@ -204,6 +204,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    /**
+     *  Кол-во строк таблицы
+     *  за данное кол-во строк начнется загрузка следующей партии данных
+     */
+    rowsToStartLoad: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
@@ -328,9 +336,9 @@ export default {
         }),
       ]
     },
-    handleScroll: _debounce(function({ scrollTop, $event, type, isY }) {
+    handleScroll: _throttle(function({ scrollTop, $event, type, isY, $table }) {
       const bottomPos = Math.ceil($event.target.scrollHeight - $event.target.clientHeight)
-      const isLoadArea = scrollTop / bottomPos > 0.95
+      const isLoadArea = bottomPos - scrollTop <= $table._data.rowHeight * this.rowsToStartLoad
       if (isLoadArea && !this.$attrs.loading && this.hasMore && type === "body" && isY) {
         this.load()
       }
