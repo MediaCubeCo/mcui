@@ -503,13 +503,13 @@ $colors: $token-colors;
           color: $value;
 
           &:hover {
-            background-color: $value;
-            color: $color-white;
+            background-color: fade-out($value, 0.8);
+            border-color: fade-out($value, 1);
           }
 
           &:active {
-            border-color: darken($value, 15%);
-            background-color: darken($value, 15%);
+            border-color: fade-out($value, 1);
+            background-color: fade-out($value, 0.7);
           }
 
           &#{$block-name} {

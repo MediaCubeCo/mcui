@@ -185,10 +185,11 @@ export default {
     -webkit-appearance: none;
     -webkit-text-fill-color: currentColor;
     color: $color-blue;
+    opacity: 0.2;
 
-    &:hover,
-    &:focus {
-      color: darken($color-red, 10%);
+    &:hover {
+      opacity: 1;
+      color: $color-red;
     }
 
     &:active {
@@ -205,13 +206,13 @@ export default {
         &__button {
           color: $color-white;
 
-          &:hover,
-          &:focus {
-            color: fade-out($color-white, 1 - $opacity-hover);
+          &:hover {
+            opacity: 1;
+            color: $color-white;
           }
 
           &:active {
-            color: fade-out($color-white, 1 - $opacity-active);
+            color: darken($color-white, 15%);
           }
         }
 

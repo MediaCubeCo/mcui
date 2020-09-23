@@ -1,6 +1,6 @@
 <template>
   <div class="mc-table-card" :style="{ marginLeft: ml }">
-    <div class="mc-table-card__header">
+    <div v-if="$slots.header" class="mc-table-card__header">
       <!-- @slot Слот заголовка -->
       <slot name="header" />
     </div>
@@ -8,7 +8,7 @@
       <!-- @slot Слот контента -->
       <slot />
     </div>
-    <div class="mc-table-card__footer">
+    <div v-if="$slots.footer" class="mc-table-card__footer">
       <!-- @slot Слот футера -->
       <slot name="footer" />
     </div>
