@@ -290,7 +290,7 @@ $colors: $token-colors;
 
       &-compact {
         @include size($size-400);
-        padding: $space-100;
+        padding: 6px;
         .mc-svg-icon {
           @include size($size-250);
         }
