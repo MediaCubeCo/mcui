@@ -199,10 +199,8 @@ export default {
        * Событие ввода
        * @property {string}
        */
-      if (value) {
-        this.$emit("input", value)
-        this.$bus.emit('chat-input', value)
-      }
+      this.$emit("input", value)
+      this.$bus.emit('chat-input', value)
 
       if (this.formElement.offsetHeight !== this.formElementOldHeight) {
         this.formElementOldHeight = this.formElement.offsetHeight
