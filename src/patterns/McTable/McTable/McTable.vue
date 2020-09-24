@@ -536,6 +536,8 @@ export default {
   }
 
   .vxe-cell {
+    padding-left: $space-200;
+    padding-right: $space-200;
     &--checkbox {
       display: flex;
       align-items: center;
