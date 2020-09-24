@@ -33,7 +33,7 @@
     </component>
     <div v-if="hasMore || $attrs.loading" class="mc-table-wrapper__footer" :class="footerClasses">
       <div class="mc-table-wrapper__tint"></div>
-      <div v-if="$attrs.loading" class="mc-table-wrapper__loading">
+      <div v-if="$attrs.loading && scrollIsBottom" class="mc-table-wrapper__loading">
         <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader"/>
         <mc-title color="outline-gray">{{ placeholders.loading }}</mc-title>
       </div>
@@ -206,7 +206,7 @@ export default {
     },
     /**
      *  Кол-во строк таблицы
-     *  за данное кол-во строк начнется загрузка следующей партии данных
+     *  за которое начнется подгрузка данных
      */
     rowsToStartLoad: {
       type: Number,
@@ -219,6 +219,7 @@ export default {
       cardIsOpen: false,
       firstColsWidth: 253,
       hasHorizontalScroll: false,
+      scrollIsBottom: false,
     }
   },
   async mounted() {
@@ -340,6 +341,7 @@ export default {
     handleScroll: _throttle(function({ scrollTop, $event, type, isY, $table }) {
       const bottomPos = Math.ceil($event.target.scrollHeight - $event.target.clientHeight)
       const isLoadArea = bottomPos - scrollTop <= $table._data.rowHeight * this.rowsToStartLoad
+      this.scrollIsBottom = scrollTop / bottomPos > 0.95
       if (isLoadArea && !this.$attrs.loading && this.hasMore && type === "body" && isY) {
         this.load()
       }
