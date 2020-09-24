@@ -13,8 +13,8 @@
             :value="prettyValue"
             :placeholder="placeholder"
             @input="handleInput"
-            @keyup.ctrl.enter.native="handleSubmit"
-            @keyup.shift.enter.native="handleSubmit"
+            @keydown.enter.native.prevent="handleSubmit"
+            @keydown.ctrl.enter.native="toNewRow"
         >
           <mc-button
               class="mc-chat-form__btn"
@@ -104,6 +104,9 @@ export default {
        * Событие по отправке
        */
       this.$emit("submit")
+    },
+    toNewRow() {
+      this.prettyValue += '\n'
     },
   },
 }

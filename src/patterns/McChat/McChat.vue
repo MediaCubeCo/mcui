@@ -241,7 +241,6 @@ export default {
   height: 100%;
 
   .mc-drawer__header {
-    border-top: 1px solid $color-hover-gray;
     padding-top: $space-150 - 1px;
     padding-bottom: $space-150;
   }
@@ -255,10 +254,6 @@ export default {
     flex-direction: column-reverse;
     padding-left: $space-150;
     padding-right: $space-150;
-  }
-
-  .mc-drawer__footer {
-    border-bottom: 1px solid $color-hover-gray;
   }
 
   &__comments {

@@ -6,7 +6,6 @@
       <mc-title variation="subtitle" :ellipsis="false" weight="semi-bold">{{ title }}</mc-title>
     </slot>
   </div>
-  <mc-separator v-if="$slots.title || title" color="hover-gray" />
   <div class="mc-drawer__body">
     <div class="mc-drawer__tint"></div>
     <div class="mc-drawer__body-inner">
@@ -14,7 +13,6 @@
       <slot />
     </div>
   </div>
-  <mc-separator v-if="$slots.footer" color="hover-gray" />
   <div class="mc-drawer__footer" v-if="$slots.footer">
     <!-- @slot Слот футера -->
     <slot name="footer" />
@@ -30,7 +28,6 @@
 <script>
 import McButton from "../../elements/McButton/McButton"
 import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon"
-import McSeparator from "../../elements/McSeparator/McSeparator"
 import McTitle from "../../elements/McTitle/McTitle"
 /**
  * More info: https://officert.github.io/vue-slideout-panel
@@ -40,7 +37,6 @@ export default {
   components: {
     McButton,
     McSvgIcon,
-    McSeparator,
     McTitle,
   },
   props: {
@@ -93,6 +89,7 @@ export default {
   &__header {
     @include reset-text-indents();
     padding: 18px $space-600 18px $space-200;
+    border-bottom: 1px solid $color-hover-gray;
   }
 
   &__body {
@@ -107,6 +104,7 @@ export default {
     }
   }
   &__footer {
+    border-top: 1px solid $color-hover-gray;
     padding: $space-200 $space-200;
   }
 
