@@ -225,9 +225,11 @@ export default {
     await this.loadData()
     !this.scrollable && this.createObserver()
     await this.setFirstColsWidth()
+    window.addEventListener('resize', this.checkHorizontalScroll)
   },
   beforeDestroy() {
     this.observer && this.observer.disconnect()
+    window.removeEventListener('resize', this.checkHorizontalScroll)
   },
   watch: {
     canShowFooter(newValue) {
@@ -241,7 +243,6 @@ export default {
     },
     cardIsOpen(newVal) {
       this.toggleColumns(newVal)
-      this.checkHorizontalScroll()
     },
     '$attrs.loading'() {
       this.checkHorizontalScroll()
@@ -389,6 +390,7 @@ export default {
       }
       await this.$refs.xTable.recalculate()
       await this.$refs.xTable.syncData()
+      this.checkHorizontalScroll()
     },
     getFixedHeight(val) {
       return !this.hasMore ? `calc(${val} - 1px)` : val

@@ -184,7 +184,7 @@ export default {
     flex-wrap: nowrap;
     -webkit-appearance: none;
     -webkit-text-fill-color: currentColor;
-    color: $color-blue;
+    color: $color-dark-gray;
     opacity: 0.2;
 
     &:hover {
