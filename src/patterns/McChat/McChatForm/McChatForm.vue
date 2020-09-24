@@ -98,7 +98,7 @@ export default {
       this.$emit("input", value)
     },
     handleSubmit() {
-      if (this.prettyValue === '') return
+      if (this.prettyValue.trim() === '') return
       this.prettyValue = ''
       /**
        * Событие по отправке
