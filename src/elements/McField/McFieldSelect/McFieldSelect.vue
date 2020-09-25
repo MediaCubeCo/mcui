@@ -667,6 +667,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
   }
 
   &--disabled {
+    cursor: not-allowed;
     .multiselect--disabled {
       opacity: 1;
       background: transparent;

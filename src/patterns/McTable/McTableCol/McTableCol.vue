@@ -218,7 +218,7 @@ export default {
     display: none;
     align-items: center;
     flex-wrap: nowrap;
-    @include position(absolute, 0 $space-100 0 null);
+    @include position(absolute, 0 $space-200 0 null);
     @include child-indent-right($space-50);
     background-color: $color-white;
 
