@@ -139,7 +139,6 @@ export default {
   },
   mounted() {
     this.setPosition('slideout', { height: 'auto', top: this.indentTop })
-    this.setPosition('slideout-panel-bg', { top: this.indentTop })
     if (this.showInput) {
       this.formElement = this.$refs.form.$el
       this.formElementOldHeight = this.$refs.form.$el.offsetHeight
@@ -149,11 +148,11 @@ export default {
   },
   beforeDestroy() {
     this.setPosition('slideout')
-    this.setPosition('slideout-panel-bg')
   },
   watch: {
     comments: {
       handler(newVal) {
+        console.log('00000000000')
         newVal.length && this.scrollContentToBottom()
         this.loading = false
       },

@@ -6,11 +6,15 @@
         border-radius: $radius-100;
         background-color: $color-black;
         color: $color-white;
+        font-size: $font-size-200;
+        line-height: $line-height-200;
 
         .action {
           text-decoration: none;
           text-transform: none;
           margin: 0;
+          font-size: $font-size-200;
+          line-height: $line-height-200;
           &.mc-toast__action {
             color: fade-out($color-white, 0.5);
 
@@ -24,7 +28,7 @@
           &:not(:last-child) {
             margin-right: $space-50;
           }
-          &:first-child {
+          &:first-of-type {
             margin-left: $space-600;
           }
           &:last-child {
