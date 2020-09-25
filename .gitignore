@@ -2,6 +2,8 @@
 node_modules
 /dist/img
 .eslintcache
+/storybook-static
+/public
 
 # local env files
 .env.local
