@@ -23,7 +23,7 @@
       @scroll="handleScroll"
       @context-menu-click="contextMenuClickEvent"
     >
-      <!-- @slot Слот очерних mc-table-col -->
+      <!-- @slot Слот дочерних mc-table-col -->
       <slot />
       <template v-slot:empty>
         <mc-title v-if="!$attrs.loading" text-align="center">
@@ -32,7 +32,7 @@
       </template>
     </component>
     <div v-if="hasMore || $attrs.loading" class="mc-table-wrapper__footer" :class="footerClasses">
-      <div class="mc-table-wrapper__tint"></div>
+      <div v-if="footerInfo !== 'total'" class="mc-table-wrapper__tint"></div>
       <div v-if="$attrs.loading && scrollIsBottom" class="mc-table-wrapper__loading">
         <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader"/>
         <mc-title color="outline-gray">{{ placeholders.loading }}</mc-title>
@@ -466,7 +466,7 @@ export default {
 .mc-table-wrapper {
   position: relative;
   &__footer {
-    @include position(absolute, null 5px 0 0);
+    @include position(absolute, null 0 0 0);
     z-index: 2;
     &--indent-bottom {
       bottom: 5px;
