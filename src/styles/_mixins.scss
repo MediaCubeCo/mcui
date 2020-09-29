@@ -224,6 +224,14 @@
   }
 }
 
+@mixin hide-scrollbar() {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
+    display: none;
+  }
+}
+
 @mixin img-ofi($object-fit: "cover") {
   display: block;
   @include position(absolute, 0);

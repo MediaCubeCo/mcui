@@ -12,7 +12,8 @@
         <mc-avatar v-if="user" rounded size="400" :src="user.avatar" />
       </div>
     </div>
-    <mc-separator color="hover-gray" />
+    <mc-separator color="hover-gray" indent-top="100" />
+    <slot name="bottom" />
   </div>
 </template>
 
@@ -59,7 +60,8 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: $space-100 $space-150;
+    padding: $space-100 $space-150 0 $space-150;
+    @include child-indent-right($space-100);
   }
 
   &__left,
@@ -71,7 +73,9 @@ export default {
   }
 
   &__right {
-    margin-left: auto;
+    min-width: 0;
+    flex: 1 0 auto;
+    justify-content: flex-end;
   }
 }
 </style>
