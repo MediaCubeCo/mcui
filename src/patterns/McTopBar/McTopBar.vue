@@ -74,7 +74,7 @@ export default {
 
   &__right {
     min-width: 0;
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     justify-content: flex-end;
   }
 }
