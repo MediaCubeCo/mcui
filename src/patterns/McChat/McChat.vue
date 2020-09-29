@@ -152,7 +152,6 @@ export default {
   watch: {
     comments: {
       handler(newVal) {
-        console.log('00000000000')
         newVal.length && this.scrollContentToBottom()
         this.loading = false
       },
