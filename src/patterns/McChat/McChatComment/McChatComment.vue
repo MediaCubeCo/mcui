@@ -7,7 +7,7 @@
       <mc-title slot="top" :weight="computedTitle.weight" :color="computedTitle.color">
         {{ computedTitle.name }}
       </mc-title>
-      <mc-badge v-if="comment.status" slot="bottom" :variation="comment.status.color">
+      <mc-badge v-if="commentStatus" slot="bottom" :variation="comment.status.color">
         {{ comment.status.title }}
       </mc-badge>
       <mc-title v-if="comment.content" slot="bottom" v-html="filteredComment" :ellipsis="false" />
@@ -105,6 +105,12 @@ export default {
         return `<a class="mc-chat-comment__link" href='${url}' target="_blank">${match.trim()}</a>`
       })
     },
+    commentStatus() {
+      return (
+        (this.comment.status !== null && this.comment.status !== undefined) ||
+        !this.comment.status < 0
+      );
+    }
   },
   methods: {
     handleDelete() {

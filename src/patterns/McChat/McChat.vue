@@ -181,7 +181,7 @@ export default {
     },
     scrollContentToBottom() {
       this.$nextTick(() => {
-        this.scrollElement && this.scrollElement.scrollTo(0, this.scrollElement.offsetHeight)
+        this.scrollElement && this.scrollElement.scrollTo(0, this.scrollElement.scrollHeight)
       })
     },
     handleClose() {

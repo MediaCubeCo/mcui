@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss">
-$light-scale: "hover-gray", "white", "light-blue", "lighter-blue", "toxic", "transparent";
+$light-scale: "hover-gray", "white", "lighter-blue", "toxic", "transparent";
 .mc-badge {
     $block-name: &;
 

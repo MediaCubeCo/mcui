@@ -13,7 +13,7 @@
             :value="prettyValue"
             :placeholder="placeholder"
             @input="handleInput"
-            @keydown.enter.native.prevent="handleSubmit"
+            @keydown.enter.native.prevent.exact="handleSubmit"
             @keydown.ctrl.enter.native="toNewRow"
         >
           <mc-button
