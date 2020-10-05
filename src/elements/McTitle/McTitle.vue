@@ -8,35 +8,35 @@ export default {
      */
     variation: {
       type: String,
-      default: "body",
+      default: "body"
     },
     /**
      * В одну строку с точками в конце, если не вмещается
      */
     ellipsis: {
       type: Boolean,
-      default: true,
+      default: true
     },
     /**
      * Если нужен другой тэг
      */
     tagName: {
       type: String,
-      default: "div",
+      default: "div"
     },
     /**
      * Заглавные буквы
      */
     uppercase: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      * Цвет
      */
     color: {
       type: String,
-      default: "black",
+      default: "black"
     },
     /**
      *  Позиция текста:
@@ -44,14 +44,14 @@ export default {
      */
     textAlign: {
       type: String,
-      default: "left",
+      default: "left"
     },
     /**
      * Если нужна иная высота строки: `100`, `200`, `300` и т.д.
      */
     lineHeight: {
       type: String,
-      default: "",
+      default: ""
     },
     /**
      * Толщина текста:
@@ -59,7 +59,7 @@ export default {
      */
     weight: {
       type: String,
-      default: "medium",
+      default: "medium"
     },
     /**
      * Если нужно указать свою
@@ -67,22 +67,22 @@ export default {
      */
     maxWidth: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   render(h, { props, slots, data }) {
-    let contentStyle = {}
+    let contentStyle = {};
     if (props.maxWidth) {
-      contentStyle = {'max-width': props.maxWidth}
+      contentStyle = { "max-width": props.maxWidth };
     }
     const contentOptions = {
       class: "mc-title__text",
-      style: contentStyle,
-    }
+      style: contentStyle
+    };
     if (data.domProps && data.domProps.innerHTML) {
       contentOptions.domProps = {
-        innerHTML: data.domProps.innerHTML,
-      }
+        innerHTML: data.domProps.innerHTML
+      };
     }
     const classes = {
       "mc-title": true,
@@ -93,36 +93,36 @@ export default {
       [`mc-title--text-align-${props.textAlign}`]: props.textAlign,
       "mc-title--uppercase": props.uppercase,
       [`mc-title--weight-${props.weight}`]: props.weight,
-      ...(data.class || {}),
-    }
+      ...(data.class || {})
+    };
 
     if (data.staticClass) {
-      const staticClasses = data.staticClass.split(" ")
+      const staticClasses = data.staticClass.split(" ");
       staticClasses.forEach(c => {
         if (c) {
-          classes[c] = true
+          classes[c] = true;
         }
-      })
+      });
     }
-    let style = {}
+    let style = {};
     if (data.staticStyle) {
-      style = data.staticStyle
+      style = data.staticStyle;
     }
     return h(
       "component",
       {
         class: classes,
         style,
-        is: props.tagName,
+        is: props.tagName
       },
       [
         slots()["icon-prepend"],
         h("div", contentOptions, slots()["default"]),
-        slots()["icon-append"],
+        slots()["icon-append"]
       ]
-    )
-  },
-}
+    );
+  }
+};
 </script>
 
 <style lang="scss">
@@ -134,14 +134,21 @@ export default {
   max-width: 100%;
   width: 100%;
   text-decoration: none;
-  @include child-indent-right($space-50);
+  //@include child-indent-right($space-50);
 
   &__text {
     padding-bottom: 1px; // fix overflow
     margin-bottom: -1px; // fix overflow
+    & + *:not(:empty) {
+      margin-left: $space-50;
+    }
+    *:not(:empty) + & {
+      margin-left: $space-50;
+    }
   }
 
-  .mc-svg-icon, .mc-button {
+  .mc-svg-icon,
+  .mc-button {
     @include reset-text-indents();
   }
 
@@ -242,10 +249,10 @@ export default {
   }
   &--weight {
     &-medium {
-        font-weight: $font-weight-medium;
+      font-weight: $font-weight-medium;
     }
     &-semi-bold {
-        font-weight: $font-weight-semi-bold;
+      font-weight: $font-weight-semi-bold;
     }
   }
 }
