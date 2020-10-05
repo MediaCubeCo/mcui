@@ -33,7 +33,7 @@
     </component>
     <div v-if="hasMore || $attrs.loading" class="mc-table-wrapper__footer" :class="footerClasses">
       <div v-if="footerInfo !== 'total'" class="mc-table-wrapper__tint"></div>
-      <div v-if="$attrs.loading && scrollIsBottom" class="mc-table-wrapper__loading">
+      <div v-if="$attrs.loading && scrollIsBottom || sortLoading" class="mc-table-wrapper__loading">
         <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader"/>
         <mc-title color="outline-gray">{{ placeholders.loading }}</mc-title>
       </div>
@@ -138,6 +138,10 @@ export default {
           },
         }
       },
+    },
+    sortLoading: {
+      type: Boolean,
+      default: false,
     },
     /**
      *  По какому столбцу
