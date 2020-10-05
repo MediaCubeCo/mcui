@@ -199,7 +199,7 @@ export default {
   },
   watch: {
     value(newVal) {
-      if ('range' in this.$attrs) {
+      if ('range' in this.$attrs && newVal) {
         this.prettyValue = newVal.map(item => new Date(item))
       } else {
         this.prettyValue = new Date(newVal)
