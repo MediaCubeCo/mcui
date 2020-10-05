@@ -1,20 +1,20 @@
 <template>
-<div class="mc-main">
-  <div v-if="$slots['left-bar']" class="mc-main__left">
-    <!-- @slot Слот сайдбара -->
-    <slot name="left-bar"/>
-  </div>
-  <div class="mc-main__right">
-    <!-- @slot Слот хедера -->
-    <slot name="top-bar" />
-    <div class="mc-main__content-wrapper">
-      <div class="mc-main__content">
-        <!-- @slot Слот контента -->
-        <slot />
+  <div class="mc-main">
+    <div v-if="$slots['left-bar']" class="mc-main__left">
+      <!-- @slot Слот сайдбара -->
+      <slot name="left-bar" />
+    </div>
+    <div class="mc-main__right">
+      <!-- @slot Слот хедера -->
+      <slot name="top-bar" />
+      <div class="mc-main__content-wrapper">
+        <div class="mc-main__content">
+          <!-- @slot Слот контента -->
+          <slot />
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -23,11 +23,14 @@
  * на проектах
  */
 export default {
-name: "McMain"
-}
+  name: "McMain"
+};
 </script>
 
 <style lang="scss">
+@import "src/styles/toast";
+@import "src/styles/global";
+
 .mc-main {
   $block-name: &;
 
