@@ -28,8 +28,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "src/styles/toast";
-@import "src/styles/global";
+@import "../../../styles/toast";
+@import "../../../styles/global";
 
 .mc-main {
   $block-name: &;
