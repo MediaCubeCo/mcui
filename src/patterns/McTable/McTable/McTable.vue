@@ -19,7 +19,12 @@
       :scroll-y="scrollY"
       :show-footer="canShowFooter"
       :footer-method="footerMethod"
-      :sort-config="{ remote: !nativeSort, showIcon: false, trigger: 'cell', orders: sortOrders }"
+      :sort-config="{
+        remote: !nativeSort,
+        showIcon: false,
+        trigger: 'cell',
+        orders: sortOrders
+      }"
       @scroll="handleScroll"
       @context-menu-click="contextMenuClickEvent"
     >
@@ -31,10 +36,17 @@
         </mc-title>
       </template>
     </component>
-    <div v-if="hasMore || $attrs.loading" class="mc-table-wrapper__footer" :class="footerClasses">
+    <div
+      v-if="hasMore || $attrs.loading"
+      class="mc-table-wrapper__footer"
+      :class="footerClasses"
+    >
       <div v-if="footerInfo !== 'total'" class="mc-table-wrapper__tint"></div>
-      <div v-if="$attrs.loading && scrollIsBottom || sortLoading" class="mc-table-wrapper__loading">
-        <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader"/>
+      <div
+        v-if="($attrs.loading && scrollIsBottom) || sortLoading"
+        class="mc-table-wrapper__loading"
+      >
+        <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader" />
         <mc-title color="outline-gray">{{ placeholders.loading }}</mc-title>
       </div>
     </div>
@@ -42,12 +54,12 @@
 </template>
 
 <script>
-import _throttle from "lodash/throttle"
-import _XEClipboard from "xe-clipboard"
-import _isEmpty from 'lodash/isEmpty'
+import _throttle from "lodash/throttle";
+import _XEClipboard from "xe-clipboard";
+import _isEmpty from "lodash/isEmpty";
 
-import McTitle from "../../../elements/McTitle/McTitle"
-import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
+import McTitle from "../../../elements/McTitle/McTitle";
+import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon";
 
 /**
  *  More info: https://xuliangzhan.com/vxe-table, https://xuliangzhan.github.io/vxe-table
@@ -56,10 +68,10 @@ export default {
   name: "McTable",
   components: {
     McTitle,
-    McSvgIcon,
+    McSvgIcon
   },
   provide() {
-    const provideData = {}
+    const provideData = {};
     const properties = [
       "canShowLoader",
       "cardIsOpen",
@@ -67,27 +79,27 @@ export default {
       "nativeSort",
       "sortedBy",
       "sortedDescending",
-      "footerInfo",
-    ]
+      "footerInfo"
+    ];
     properties.forEach(property => {
       Object.defineProperty(provideData, property, {
         enumerable: true,
-        get: () => this[property],
-      })
-    })
-    return { provideData }
+        get: () => this[property]
+      });
+    });
+    return { provideData };
   },
   props: {
     items: {
       type: Array,
-      required: true,
+      required: true
     },
     /**
      *  Есть ли ещё данные для подгрузки
      */
     hasMore: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      *  Будет ли иметь таблица
@@ -95,14 +107,14 @@ export default {
      */
     scrollable: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      *  Сортировка таблицей, без api
      */
     nativeSort: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      *  Тип таблицы:
@@ -110,7 +122,7 @@ export default {
      */
     componentTag: {
       type: String,
-      default: "table",
+      default: "table"
     },
     /**
      *  Кастомное контекстное
@@ -118,7 +130,7 @@ export default {
      */
     contextMenu: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      *  Переводы локализаций
@@ -134,14 +146,14 @@ export default {
           menu: {
             copy: "Copy cell value",
             open_in_new_tab: "Open in new tab",
-            open_in_new_window: "Open in new window",
-          },
-        }
-      },
+            open_in_new_window: "Open in new window"
+          }
+        };
+      }
     },
     sortLoading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      *  По какому столбцу
@@ -149,7 +161,7 @@ export default {
      */
     sortedBy: {
       type: String,
-      required: false,
+      required: false
     },
     /**
      *  По убыванию ли
@@ -157,7 +169,7 @@ export default {
      */
     sortedDescending: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      *  Если нужен иной порядок сортировки
@@ -165,8 +177,8 @@ export default {
     sortOrders: {
       type: Array,
       default() {
-        return ["asc", "desc", null]
-      },
+        return ["asc", "desc", null];
+      }
     },
     /**
      *  Параметры виртуального скролла:
@@ -177,9 +189,9 @@ export default {
       type: Object,
       default() {
         return {
-          gt: 0,
-        }
-      },
+          gt: 0
+        };
+      }
     },
     /**
      *  Если нужно отразить
@@ -190,7 +202,7 @@ export default {
      */
     footerInfo: {
       type: String,
-      default: '',
+      default: ""
     },
     /**
      *  Если нужно отразить
@@ -198,7 +210,7 @@ export default {
      */
     totalFooter: {
       type: Object,
-      default: () => {},
+      default: () => {}
     },
     /**
      *  Если нужно переносить
@@ -206,7 +218,7 @@ export default {
      */
     headerBreakWord: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      *  Кол-во строк таблицы
@@ -214,8 +226,8 @@ export default {
      */
     rowsToStartLoad: {
       type: Number,
-      default: 0,
-    },
+      default: 0
+    }
   },
   data() {
     return {
@@ -223,86 +235,88 @@ export default {
       cardIsOpen: false,
       firstColsWidth: 253,
       hasHorizontalScroll: false,
-      scrollIsBottom: false,
-    }
+      scrollIsBottom: false
+    };
   },
   async mounted() {
-    await this.loadData()
-    !this.scrollable && this.createObserver()
-    await this.setFirstColsWidth()
-    window.addEventListener('resize', this.checkHorizontalScroll)
+    await this.loadData();
+    !this.scrollable && this.createObserver();
+    await this.setFirstColsWidth();
+    window.addEventListener("resize", this.checkHorizontalScroll);
   },
   beforeDestroy() {
-    this.observer && this.observer.disconnect()
-    window.removeEventListener('resize', this.checkHorizontalScroll)
+    this.observer && this.observer.disconnect();
+    window.removeEventListener("resize", this.checkHorizontalScroll);
   },
   watch: {
     canShowFooter(newValue) {
-      newValue && this.updateData()
+      newValue && this.updateData();
     },
     items: {
       handler: async function(newVal) {
-        newVal && (await this.loadData())
+        newVal && (await this.loadData());
       },
-      deep: true,
+      deep: true
     },
     cardIsOpen(newVal) {
-      this.toggleColumns(newVal)
+      this.toggleColumns(newVal);
     },
-    '$attrs.loading'() {
-      this.checkHorizontalScroll()
+    "$attrs.loading"() {
+      this.checkHorizontalScroll();
     }
   },
   computed: {
     api() {
-      return this.$refs.xTable
+      return this.$refs.xTable;
     },
     attrs() {
-      const attrs = {...this.$attrs}
-      if ('loading' in attrs) {
-        delete attrs.loading
+      const attrs = { ...this.$attrs };
+      if ("loading" in attrs) {
+        delete attrs.loading;
       }
-      return attrs
+      return attrs;
     },
     canShowLoader() {
-      return !this.scrollable && this.hasMore
+      return !this.scrollable && this.hasMore;
     },
     canShowFooter() {
       if (this.scrollable) {
         switch (this.footerInfo) {
-          case 'total':
-            return true
-          case 'loaded':
-            return !this.hasMore && !this.$attrs.loading && !!this.items.length
+          case "total":
+            return true;
+          case "loaded":
+            return !this.hasMore && !this.$attrs.loading && !!this.items.length;
           default:
-            return false
+            return false;
         }
       }
-      return !!this.items.length
+      return !!this.items.length;
     },
     tag() {
-      return `vxe-${this.componentTag}`
+      return `vxe-${this.componentTag}`;
     },
     classes() {
       return {
         "mc-table--open-card": this.cardIsOpen,
         "mc-table--clickable": this.$listeners["cell-click"],
-        "mc-table--header-break-word": this.headerBreakWord,
-      }
+        "mc-table--header-break-word": this.headerBreakWord
+      };
     },
     wrapperStyles() {
       return {
         width: this.cardIsOpen ? `${this.firstColsWidth}px` : "auto",
-        height: this.$attrs.height ? this.getFixedHeight(this.$attrs.height) : "auto",
+        height: this.$attrs.height
+          ? this.getFixedHeight(this.$attrs.height)
+          : "auto",
         "max-height": this.$attrs["max-height"]
           ? this.getFixedHeight(this.$attrs["max-height"])
-          : "none",
-      }
+          : "none"
+      };
     },
     footerClasses() {
       return {
-        "mc-table-wrapper__footer--indent-bottom": this.hasHorizontalScroll,
-      }
+        "mc-table-wrapper__footer--indent-bottom": this.hasHorizontalScroll
+      };
     },
     tableMenu() {
       const menu = {
@@ -310,44 +324,65 @@ export default {
         body: {
           options: [
             [{ code: "copy", name: this.placeholders.menu.copy }],
-            [{ code: "openInNewTab", name: this.placeholders.menu.open_in_new_tab }],
-            [{ code: "openInNewWindow", name: this.placeholders.menu.open_in_new_window }],
-          ],
-        },
-      }
-      return this.$listeners["cell-click"] && this.contextMenu ? menu : false
-    },
+            [
+              {
+                code: "openInNewTab",
+                name: this.placeholders.menu.open_in_new_tab
+              }
+            ],
+            [
+              {
+                code: "openInNewWindow",
+                name: this.placeholders.menu.open_in_new_window
+              }
+            ]
+          ]
+        }
+      };
+      return this.$listeners["cell-click"] && this.contextMenu ? menu : false;
+    }
   },
   methods: {
     async loadData() {
-      await this.$refs.xTable.loadData(this.items)
-      !this.scrollable && this.setObserveElement()
+      await this.$refs.xTable.loadData(this.items);
+      !this.scrollable && this.setObserveElement();
     },
     reloadData() {
-      this.$refs.xTable.reloadData(this.items)
+      this.$refs.xTable.reloadData(this.items);
     },
     updateData() {
-      this.$refs.xTable.updateData()
+      this.$refs.xTable.updateData();
     },
     footerMethod({ columns, data }) {
       return [
         columns.map(column => {
-          if (column.type === "seq") return data.length
-          if (column.type === "checkbox") return " "
-          if (this.footerInfo === 'total' && !_isEmpty(this.totalFooter)) {
-            const info = Object.entries(this.totalFooter).find(([key]) => key === column.property)
-            return info ? info[1] : null
+          if (column.type === "seq") return data.length;
+          if (column.type === "checkbox") return " ";
+          if (this.footerInfo === "total" && !_isEmpty(this.totalFooter)) {
+            const info = Object.entries(this.totalFooter).find(
+              ([key]) => key === column.property
+            );
+            return info ? info[1] : null;
           }
-          return null
-        }),
-      ]
+          return null;
+        })
+      ];
     },
     handleScroll: _throttle(function({ scrollTop, $event, type, isY, $table }) {
-      const bottomPos = Math.ceil($event.target.scrollHeight - $event.target.clientHeight)
-      const isLoadArea = bottomPos - scrollTop <= $table._data.rowHeight * this.rowsToStartLoad
-      this.scrollIsBottom = scrollTop / bottomPos > 0.95
-      if (isLoadArea && !this.$attrs.loading && this.hasMore && type === "body" && isY) {
-        this.load()
+      const bottomPos = Math.ceil(
+        $event.target.scrollHeight - $event.target.clientHeight
+      );
+      const isLoadArea =
+        bottomPos - scrollTop <= $table._data.rowHeight * this.rowsToStartLoad;
+      this.scrollIsBottom = scrollTop / bottomPos > 0.95;
+      if (
+        isLoadArea &&
+        !this.$attrs.loading &&
+        this.hasMore &&
+        type === "body" &&
+        isY
+      ) {
+        this.load();
       }
     }, 200),
     load() {
@@ -355,51 +390,53 @@ export default {
        * Событие по подгрузке данных
        * (infinity-loading)
        */
-      this.$emit("load")
+      this.$emit("load");
     },
     createObserver() {
       this.observer = new IntersectionObserver(
         entries => {
-          const entry = entries[0]
+          const entry = entries[0];
           if (entry.isIntersecting) {
-            this.load()
+            this.load();
           }
         },
         { threshold: 0.1 }
-      )
-      this.setObserveElement()
+      );
+      this.setObserveElement();
     },
     setObserveElement() {
-      const loader = this.$refs.xTable.$el.getElementsByClassName("mc-table-col__loader")
-      this.observer && loader.length && this.observer.observe(loader[0])
+      const loader = this.$refs.xTable.$el.getElementsByClassName(
+        "mc-table-col__loader"
+      );
+      this.observer && loader.length && this.observer.observe(loader[0]);
     },
     async setFirstColsWidth() {
-      const columns = await this.$refs.xTable.getColumns()
+      const columns = await this.$refs.xTable.getColumns();
       const leftFixedColumnsWidth = columns.reduce((sum, curr) => {
         if (curr.fixed === "left") {
-          return sum + Number(curr.width || curr.minWidth)
+          return sum + Number(curr.width || curr.minWidth);
         }
-        return sum
-      }, 0)
+        return sum;
+      }, 0);
       if (leftFixedColumnsWidth) {
-        this.firstColsWidth = leftFixedColumnsWidth + 5 // 5 - ширина скролла
+        this.firstColsWidth = leftFixedColumnsWidth + 5; // 5 - ширина скролла
       }
     },
     async toggleColumns(val) {
       if (val) {
-        const columns = await this.$refs.xTable.getColumns()
-        const hideColumns = columns.filter(col => col.fixed !== "left")
-        hideColumns.forEach(col => (col.visible = false))
-        await this.$refs.xTable.refreshColumn()
+        const columns = await this.$refs.xTable.getColumns();
+        const hideColumns = columns.filter(col => col.fixed !== "left");
+        hideColumns.forEach(col => (col.visible = false));
+        await this.$refs.xTable.refreshColumn();
       } else {
-        await this.$refs.xTable.resetColumn()
+        await this.$refs.xTable.resetColumn();
       }
-      await this.$refs.xTable.recalculate()
-      await this.$refs.xTable.syncData()
-      this.checkHorizontalScroll()
+      await this.$refs.xTable.recalculate();
+      await this.$refs.xTable.syncData();
+      this.checkHorizontalScroll();
     },
     getFixedHeight(val) {
-      return !this.hasMore ? `calc(${val} - 1px)` : val
+      return !this.hasMore ? `calc(${val} - 1px)` : val;
     },
     contextMenuClickEvent({ menu, row, column }) {
       switch (menu.code) {
@@ -410,45 +447,46 @@ export default {
                * Событие по копированию ячейки
                * из контекстного меню
                */
-              this.$emit("context-menu", "copied")
+              this.$emit("context-menu", "copied");
             }
           }
-          break
+          break;
         case "openInNewTab":
           if (row && column) {
-            window.open(this.getUrl(row))
+            window.open(this.getUrl(row));
           }
-          break
+          break;
         case "openInNewWindow":
           if (row && column) {
-            const features = "toolbar=0,location=0,scrollbars=1,statusbar=1,menubar=0,resizable=1"
-            window.open(this.getUrl(row), "_blank", features)
+            const features =
+              "toolbar=0,location=0,scrollbars=1,statusbar=1,menubar=0,resizable=1";
+            window.open(this.getUrl(row), "_blank", features);
           }
-          break
+          break;
       }
     },
     getUrl(row) {
-      const regExp = /.+\/$/i
-      let pathName = window.location.pathname
+      const regExp = /.+\/$/i;
+      let pathName = window.location.pathname;
       if (!regExp.test(pathName)) {
-        pathName = `${pathName}/`
+        pathName = `${pathName}/`;
       }
-      return `${window.location.origin}${pathName}${row.id}${window.location.search}`
+      return `${window.location.origin}${pathName}${row.id}${window.location.search}`;
     },
     checkHorizontalScroll() {
-      const wrapper = this.getElement('vxe-table--body-wrapper')
-      const body = this.getElement('vxe-table--body')
+      const wrapper = this.getElement("vxe-table--body-wrapper");
+      const body = this.getElement("vxe-table--body");
       if (wrapper && body) {
-        this.hasHorizontalScroll = wrapper.clientWidth < body.clientWidth
+        this.hasHorizontalScroll = wrapper.clientWidth < body.clientWidth;
       }
     },
     getElement(className) {
-      const el = this.$refs.xTable.$el
-      const collection = el.getElementsByClassName(className)
-      return collection && collection.length ? collection[0] : null
-    },
-  },
-}
+      const el = this.$refs.xTable.$el;
+      const collection = el.getElementsByClassName(className);
+      return collection && collection.length ? collection[0] : null;
+    }
+  }
+};
 </script>
 
 <style lang="scss">
@@ -478,7 +516,11 @@ export default {
   }
   &__tint {
     height: $size-900;
-    background: linear-gradient(0deg, $color-white 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(
+      0deg,
+      $color-white 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
   }
   &__loading {
     display: flex;
@@ -515,8 +557,11 @@ export default {
     .vxe-header--column {
       .vxe-cell--title {
         .mc-title__text {
-          white-space: normal;
+          white-space: pre-line;
           word-break: break-word;
+          &:first-line {
+            line-height: 0;
+          }
         }
       }
     }
