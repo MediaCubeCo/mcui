@@ -82,7 +82,7 @@ export const Default = () => ({
   template: `<mc-dropdown v-bind="tagBind" v-model="dropIsOpen">
     <mc-button slot="activator">
       Dropdown
-      <mc-svg-icon slot="icon-append" name="arrow_drop_down"/>
+      <mc-svg-icon slot="icon-append" name="arrow_drop_down" class="rotate"/>
     </mc-button>
     <mc-dropdown-panel>
       <mc-button
