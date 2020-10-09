@@ -9,7 +9,7 @@
       <!-- @slot активатора переключения состояния -->
       <slot name="activator" />
     </div>
-    <div class="mc-dropdown__body">
+    <div :style="dropdownBodyStyles" class="mc-dropdown__body">
       <!-- @slot контента -->
       <slot />
     </div>
@@ -49,6 +49,13 @@ export default {
       default: "bottom",
     },
     /**
+     * Минимальная ширина выпадаюзего списка
+     */
+    listMinWidth: {
+      type: String,
+      default: "inherit"
+    },
+    /**
      * Необходимо ли вращение иконки
      */
     rotateIcon: {
@@ -63,6 +70,11 @@ export default {
         [`mc-dropdown--position-${this.position}`]: this.position,
         [`mc-dropdown--list-position-${this.listPosition}`]: this.listPosition,
         ["mc-dropdown--is-open"]: this.value,
+      }
+    },
+    dropdownBodyStyles() {
+      return {
+        'min-width': this.listMinWidth,
       }
     },
     toggleClasses() {
@@ -129,7 +141,6 @@ export default {
     height: 0;
     overflow: hidden;
     margin: 0;
-    min-width: 200px;
     background-color: transparent;
     opacity: 0;
     visibility: hidden;
