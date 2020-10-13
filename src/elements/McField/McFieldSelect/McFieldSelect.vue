@@ -387,7 +387,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
   .multiselect {
     &__placeholder {
       @include ellipsis();
-      color: $color-black;
+      color: $color-dark-gray;
       font-size: $font-size-200;
       line-height: $line-height-200;
       margin-bottom: $space-150 - 1px;
