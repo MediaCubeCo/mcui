@@ -364,8 +364,8 @@ $colors: $token-colors;
     &-l {
       height: $size-600;
       padding: $space-150 $space-300;
-      font-size: $font-size-300;
-      line-height: $line-height-300;
+      font-size: $font-size-200;
+      line-height: $line-height-200;
 
       &-compact {
         @include size($size-600);

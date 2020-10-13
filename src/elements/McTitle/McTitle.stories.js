@@ -25,6 +25,7 @@ const variations = {
   'subtitle': 'subtitle',
   'body': 'body',
   'overline': 'overline',
+  'article': 'article',
 }
 const positions = {
   'left': 'left',
