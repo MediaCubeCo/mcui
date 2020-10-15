@@ -218,7 +218,6 @@ export default {
         },
         onTagClose(tag, relationKey = null) {
             const value = _cloneDeep(this.value)
-            debugger
             switch (relationKey) {
                 case 'exists':
                     delete value[tag.category][relationKey]
