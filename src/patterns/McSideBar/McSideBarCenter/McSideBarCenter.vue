@@ -11,7 +11,6 @@
           :icon="menuMainItem.icon"
           :title="menuMainItem.name"
           :compact="compact"
-          :exact="isExact"
       />
     </div>
     <mc-separator
@@ -124,11 +123,6 @@ export default {
           ...i,
         }
       })
-    },
-    isExact() {
-      if (!this.$route || !this.$route.name) return false
-      const hasIndex = !this.$route.name.includes("index")
-      return hasIndex && !this.$route.name.includes("id")
     },
     computedUserbackSettings() {
       return {
