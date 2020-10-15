@@ -8184,6 +8184,11 @@ inline-style-parser@0.1.1:
   resolved "https://registry.yarnpkg.com/inline-style-parser/-/inline-style-parser-0.1.1.tgz#ec8a3b429274e9c0a1f1c4ffa9453a7fef72cea1"
   integrity sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==
 
+inputmask-core@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/inputmask-core/-/inputmask-core-2.2.0.tgz#79a75f7f3a4d3312ae95fd2b55a2366a7c91dfba"
+  integrity sha1-eadffzpNMxKulf0rVaI2anyR37o=
+
 inquirer@6.5.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.5.0.tgz#2303317efc9a4ea7ec2e2df6f86569b734accf42"
@@ -15072,6 +15077,14 @@ vue-loader@^15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-masked-input@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/vue-masked-input/-/vue-masked-input-0.5.2.tgz#b47f64ea38e41378182918b1928066569b7504f4"
+  integrity sha1-tH9k6jjkE3gYKRixkoBmVpt1BPQ=
+  dependencies:
+    inputmask-core "^2.2.0"
+    vue "^2.2.6"
+
 vue-moment@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/vue-moment/-/vue-moment-4.1.0.tgz#092a8ff723a96c6f85a0a8e23ad30f0bf320f3b0"
@@ -15163,6 +15176,11 @@ vue2-slideout-panel@^2.12.0:
   integrity sha512-CSoRGJcDTTn/tCBe05+uzt7ZbUqmbGKvxB+2UaLzsHPpMWpnDzwe8Vh/1/FlfjnuhGy6zlhrBTpXfL8LpiGAIg==
   dependencies:
     promise-polyfill "^8.1.0"
+
+vue@^2.2.6:
+  version "2.6.12"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
+  integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
 
 vue@^2.6.11:
   version "2.6.11"
