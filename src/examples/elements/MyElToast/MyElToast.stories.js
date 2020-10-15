@@ -51,41 +51,21 @@ const getUniqueProps = key => {
       default: array('className', ['mc-toast', 'mc-toast--primary'], ',', key),
     },
     keepOnHover: {
-      default: boolean('keepOnHover', false, key),
+      default: boolean('keepOnHover', true, key),
     },
-    // icon: {
-    //   default: text('text', 'las la-info-circle', key),
-    // },
-  }
-}
-
-const getCommonTags = ctx => {
-  return {
-    // text: ctx.text,
-    // theme: ctx.theme,
-    // ellipsis: ctx.ellipsis,
-    // 'tag-name': ctx.tagName,
-    // uppercase: ctx.uppercase,
-    // 'text-align': ctx.textAlign,
-    // 'line-height': ctx.lineHeight,
-    // weight: ctx.weight,
-    // 'max-width': ctx.maxWidth,
   }
 }
 
 export const Default = () => ({
   components: { McRoot, McButton },
   computed: {
-    // tagBind() {
-    //   return getCommonTags(this)
-    // },
     actions() {
       return [
         {
           text : 'Close',
           class: 'mc-toast__action',
           onClick : (e, toastObject) => {
-            toastObject.goAway(0);
+            toastObject.goAway(0)
           },
         },
         {
@@ -93,7 +73,7 @@ export const Default = () => ({
           class: 'mc-toast__action--outline',
           onClick : (e, toastObject) => {
             console.log('cancelled')
-            toastObject.goAway(0);
+            toastObject.goAway(0)
           },
         },
       ]
@@ -106,22 +86,21 @@ export const Default = () => ({
     },
   },
   methods: {
-    showChat() {
+    showToast() {
       let toast = this.$toasted.show(this.text, {
         theme: this.theme,
         position: this.position,
-        // duration : 3000,
-        duration : Infinity,
+        duration : 3000,
+        // duration : Infinity,
         fullWidth : this.fullWidth,
         className : this.className,
         keepOnHover : this.keepOnHover,
         action: this.actions,
-        // icon: this.icon,
       })
     },
   },
   template: `<mc-root>
-    <mc-button @click.prevent="showChat">Show toast</mc-button>
+    <mc-button @click.prevent="showToast">Show toast</mc-button>
   </mc-root>`,
 })
 

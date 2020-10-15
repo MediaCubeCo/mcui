@@ -6,6 +6,7 @@ import VueSlideoutPanel from 'vue2-slideout-panel'
 import VueBus from 'vue-bus'
 import VueMoment from "vue-moment"
 import Toasted from 'vue-toasted'
+import PortalVue from 'portal-vue'
 // for fix error: `Property or method "toJSON" is not defined on the instance but referenced during render`
 Vue.prototype.toJSON = function () {
   return this
@@ -16,3 +17,4 @@ Vue.use(VueSlideoutPanel)
 Vue.use(VueBus)
 Vue.use(VueMoment)
 Vue.use(Toasted)
+Vue.use(PortalVue)
