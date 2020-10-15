@@ -13,7 +13,6 @@ export default {
         },
         /**
          *  Вертикальная черта (в таблице, к примеру)
-         *
         */
         verticalLine: {
             type: Boolean,
