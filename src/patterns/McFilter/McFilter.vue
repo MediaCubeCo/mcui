@@ -262,9 +262,12 @@ export default {
     watch: {
         value: {
             handler(val) {
-                this.currentValues = { ...val.filter }
-                this.currentValuesName = { ...val.filter_name }
-                this.buttonConfirmIsDisable = _isEmpty(val.filter) || _isEmpty(val.filter_name)
+              this.currentValues = { ...val.filter }
+              if (val.filter_name) {
+                const decodedData = window.atob(val.filter_name)
+                this.currentValuesName = JSON.parse(decodedData)
+              }
+              this.buttonConfirmIsDisable = _isEmpty(val.filter) || _isEmpty(val.filter_name)
             },
             immediate: true,
             deep: true,
@@ -539,10 +542,11 @@ export default {
             })
         },
         handleConfirm() {
+            const encodedData = window.btoa(JSON.stringify(this.currentValuesName))
             /**
              * Событие по изменению значения фильтра
              */
-            this.$emit('input', { filter: this.currentValues, filter_name: this.currentValuesName })
+            this.$emit('input', { filter: this.currentValues, filter_name: encodedData })
             if (_isEmpty(this.currentValues)) {
                 this.buttonConfirmIsDisable = true
             }
