@@ -366,7 +366,7 @@ export default {
      */
     isDisabledDate(date) {
       // eslint-disable-next-line no-unsafe-negation
-      if (!"disabledDate" in this.$attrs) return false;
+      if (!this.$attrs.disabledDate) return false;
       if (!this.isRange) return this.$attrs.disabledDate(date);
       else return date.some(d => this.$attrs.disabledDate(d));
     },
