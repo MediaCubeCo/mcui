@@ -9,7 +9,7 @@ const positions = {
 }
 
 export default {
-  title: 'Elements/McFieldToggle',
+  title: 'Elements/McField/McFieldToggle',
   component: McFieldToggle,
   parameters: {
     componentSubtitle: 'Status: Ready',

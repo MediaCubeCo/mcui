@@ -16,7 +16,7 @@ const wrapper = () => {
 }
 
 export default {
-  title: 'Patterns/McTableCard',
+  title: 'Patterns/McTableCard/McTableCard',
   component: McTableCard,
   subcomponents: { McTableCardHeader },
   parameters: {

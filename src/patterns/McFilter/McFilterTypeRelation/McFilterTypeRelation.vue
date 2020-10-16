@@ -171,6 +171,9 @@ export default {
                 currentValue = { ['exists']: [0] }
                 currentValueName = { ['exists']: [0] }
             }
+            /**
+             * Событие по изменению значения
+             */
             this.$emit('input', currentValue, currentValueName)
         },
     },

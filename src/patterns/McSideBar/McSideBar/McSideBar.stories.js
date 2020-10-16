@@ -20,7 +20,7 @@ const wrapper = () => {
 
 
 export default {
-  title: 'Patterns/McSideBar',
+  title: 'Patterns/McSideBar/McSideBar',
   component: McSideBar,
   subcomponents: { McSideBarTop, McSideBarCenter, McSideBarBottom, McSideBarButton, },
   parameters: {

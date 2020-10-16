@@ -3,7 +3,7 @@ import { boolean, text } from '@storybook/addon-knobs'
 import McChatForm from "./McChatForm"
 
 export default {
-  title: 'Patterns/McChatForm',
+  title: 'Patterns/McChat/McChatForm',
   component: McChatForm,
   parameters: {
     componentSubtitle: 'Status: In progress',

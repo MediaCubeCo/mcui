@@ -6,7 +6,7 @@ import McFieldRadioButton from '../McFieldRadioButton/McFieldRadioButton'
 
 
 export default {
-  title: 'Elements/McFieldRadioGroup',
+  title: 'Elements/McField/McFieldRadioGroup',
   component: McFieldRadioGroup,
   subcomponents: { McFieldRadioButton },
   parameters: {

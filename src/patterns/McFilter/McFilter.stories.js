@@ -2,6 +2,7 @@ import { text } from "@storybook/addon-knobs"
 import authUser from '../../mocks/authUser'
 import menuLangs from '../../mocks/menuLangs'
 import { value, filters, placeholders } from '../../mocks/filterMocks'
+import { handleConfirmAction } from '../../helpers/delayedAction'
 
 import McFilter from './McFilter'
 import McTopBar from '../McTopBar/McTopBar'
@@ -10,7 +11,7 @@ import McButton from "../../elements/McButton/McButton"
 import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon"
 
 export default {
-  title: 'Patterns/McFilter',
+  title: 'Patterns/McFilter/McFilter',
   component: McFilter,
   parameters: {
     componentSubtitle: 'Status: In progress',
@@ -57,15 +58,6 @@ export const Default = () => ({
         name: `${authUser.first_name}${authUser.last_name ? ` ${authUser.last_name}` : ''}`,
       }
     },
-    toastOptions(){
-      return {
-        theme: 'toasted-primary',
-        position: 'bottom-center',
-        duration : 3000,
-        className : ['mc-toast', 'mc-toast--primary'],
-        keepOnHover : true,
-      }
-    },
   },
   props: {
     ...getUniqueProps('default'),
@@ -78,38 +70,15 @@ export const Default = () => ({
   },
   methods: {
     onErrorFilter(message) {
-      this.$toasted.show(message, this.toastOptions)
+      this.$toasted.show(message)
     },
     onDeleteFilterPreset(message) {
       const filter = this.$refs.filter
-      filter && this.$toasted.show(message, {
-        ...this.toastOptions,
-        ...this.getToastActions(filter.savePresetsToLocalStorage, filter.getPresetsFromLocalStorage)
-      })
-    },
-    getToastActions(handler, cancelCallback) {
-      return {
-        action: [
-          {
-            text : 'Cancel',
-            class: 'mc-toast__action--outline',
-            onClick : (e, toastObject) => {
-              if (typeof cancelCallback === 'function') cancelCallback()
-              toastObject.goAway(0)
-            },
-          },
-        ],
-        onComplete() {
-          handler()
-        },
-      }
+      filter && handleConfirmAction(filter.savePresetsToLocalStorage, filter.getPresetsFromLocalStorage, message)
     },
     onAllTagsClear(message) {
       const filter = this.$refs.filter
-      filter && this.$toasted.show(message, {
-        ...this.toastOptions,
-        ...this.getToastActions(filter.clearTemporaryValues, filter.revertClearedValues)
-      })
+      filter && handleConfirmAction(filter.clearTemporaryValues, filter.revertClearedValues, message)
     },
   },
   template: `<mc-top-bar :user="user" :menu-langs="menuLangs">

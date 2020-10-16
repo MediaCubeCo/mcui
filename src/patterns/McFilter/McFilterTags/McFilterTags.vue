@@ -214,6 +214,9 @@ export default {
         },
         onTagClick(tag) {
             this.prettyActiveTag = _isEqual(this.prettyActiveTag, tag) ? null : tag
+            /**
+             * Событие по клику на тэг
+             */
             this.$emit('tag-click', tag)
         },
         onTagClose(tag, relationKey = null) {
@@ -237,10 +240,15 @@ export default {
             if (_isEmpty(value[tag.category])) {
                 delete value[tag.category]
             }
-
+            /**
+             * Событие по изменению набора тэгов
+             */
             this.$emit('tag-change', value)
         },
         handleClear() {
+            /**
+             * Событие по очистке всех тэгов
+             */
             this.$emit('clear')
         },
         getFormattedVal(val, filter) {

@@ -1,7 +1,7 @@
 import McTab from './McTab'
 
 export default {
-  title: 'Elements/McTab',
+  title: 'Elements/McTabs/McTab',
   component: McTab,
   parameters: {
     componentSubtitle: 'Status: Ready',

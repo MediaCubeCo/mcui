@@ -3,7 +3,7 @@ import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
 import McButton from "../../../elements/McButton/McButton"
 
 export default {
-  title: 'Patterns/McDropdownPanel',
+  title: 'Patterns/McDropdown/McDropdownPanel',
   component: McDropdownPanel,
   parameters: {
     componentSubtitle: 'Status: Ready',

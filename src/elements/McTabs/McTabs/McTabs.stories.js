@@ -7,7 +7,7 @@ import { getTokensByType } from "../../../utils/getTokens"
 
 
 export default {
-  title: 'Elements/McTabs',
+  title: 'Elements/McTabs/McTabs',
   component: McTabs,
   subcomponents: { McTab },
   parameters: {

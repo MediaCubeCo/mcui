@@ -12,7 +12,7 @@ import McFieldText from "../../elements/McField/McFieldText/McFieldText"
 import chatComments from "../../mocks/chatComments"
 
 export default {
-  title: 'Patterns/McChat',
+  title: 'Patterns/McChat/McChat',
   component: McChat,
   subcomponents: { McDrawer, McChatForm, McChatComment },
   parameters: {

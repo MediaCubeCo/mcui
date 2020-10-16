@@ -3,7 +3,7 @@ import { boolean, text } from '@storybook/addon-knobs'
 import McChatComment from "./McChatComment"
 
 export default {
-  title: 'Patterns/McChatComment',
+  title: 'Patterns/McChat/McChatComment',
   component: McChatComment,
   parameters: {
     componentSubtitle: 'Status: In progress',

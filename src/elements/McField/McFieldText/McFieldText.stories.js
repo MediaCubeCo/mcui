@@ -8,7 +8,7 @@ import McTooltip from '../../McTooltip/McTooltip'
 import { action } from "@storybook/addon-actions"
 
 export default {
-  title: 'Elements/McFieldText',
+  title: 'Elements/McField/McFieldText',
   component: McFieldText,
   parameters: {
     componentSubtitle: 'Status: Ready',

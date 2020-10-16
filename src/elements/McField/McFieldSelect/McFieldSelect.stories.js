@@ -10,7 +10,7 @@ import { action } from "@storybook/addon-actions"
 import { getTokensByType } from "../../../utils/getTokens"
 
 export default {
-  title: 'Elements/McFieldSelect',
+  title: 'Elements/McField/McFieldSelect',
   component: McFieldSelect,
   parameters: {
     componentSubtitle: 'Status: Ready',

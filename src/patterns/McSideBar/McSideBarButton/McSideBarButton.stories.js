@@ -12,7 +12,7 @@ const wrapper = () => {
 }
 
 export default {
-  title: 'patterns/McSideBarButton',
+  title: 'patterns/McSideBar/McSideBarButton',
   component: McSideBarButton,
   parameters: {
     componentSubtitle: 'Status: In Progress',

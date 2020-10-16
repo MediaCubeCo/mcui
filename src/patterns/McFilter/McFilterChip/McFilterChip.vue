@@ -51,6 +51,9 @@ export default {
     },
     methods: {
         handleChipClick(e) {
+            /**
+             * Событие по закрытию тэга
+             */
             this.$emit('close')
             e.stopPropagation()
         },

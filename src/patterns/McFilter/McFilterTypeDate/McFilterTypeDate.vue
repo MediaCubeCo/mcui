@@ -44,10 +44,13 @@ export default {
     computed: {
         period: {
             get() {
-                return this.value && [this.value.more, this.value.less]
+                return this.value ? [this.value.more, this.value.less] : []
             },
             set(val) {
                 const period = !_isEmpty(val) ? { more: val[0], less: val[1] } : {}
+                /**
+                 * Событие по изменению периода
+                 */
                 this.$emit('input', period)
             },
         },

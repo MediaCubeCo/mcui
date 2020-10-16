@@ -44,7 +44,7 @@ const footerInfo = {
 }
 
 export default {
-  title: 'Patterns/McTable',
+  title: 'Patterns/McTable/McTable',
   component: McTable,
   subcomponents: { McTableCol },
   parameters: {

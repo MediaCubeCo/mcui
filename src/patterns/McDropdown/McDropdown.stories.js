@@ -14,7 +14,7 @@ const wrapper = () => {
 }
 
 export default {
-  title: 'Patterns/McDropdown',
+  title: 'Patterns/McDropdown/McDropdown',
   component: McDropdown,
   subcomponents: { McDropdownPanel },
   parameters: {

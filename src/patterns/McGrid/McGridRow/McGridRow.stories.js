@@ -4,7 +4,7 @@ import McGridRow from './McGridRow'
 import McGridCol from '../McGridCol/McGridCol'
 
 export default {
-  title: 'Patterns/McGridRow',
+  title: 'Patterns/McGrid/McGridRow',
   component: McGridRow,
   subcomponents: { McGridCol },
   parameters: {

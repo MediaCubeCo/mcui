@@ -5,7 +5,7 @@ import McButton from "../../../elements/McButton/McButton"
 import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
 
 export default {
-  title: 'Patterns/McTableCardHeader',
+  title: 'Patterns/McTableCard/McTableCardHeader',
   component: McTableCardHeader,
   parameters: {
     componentSubtitle: 'Status: Ready',

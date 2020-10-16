@@ -44,6 +44,9 @@ export default {
                 return this.value
             },
             set(val) {
+                /**
+                 * Событие по изменению значения
+                 */
                 this.$emit('input', val)
             },
         },

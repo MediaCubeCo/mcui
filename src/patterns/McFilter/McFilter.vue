@@ -454,7 +454,7 @@ export default {
                     this.handleConditionChange({})
                     break
                 case 'date':
-                    this.handleConditionChange({})
+                    this.handleConditionChange()
                     break
             }
         },

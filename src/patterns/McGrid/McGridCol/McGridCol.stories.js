@@ -1,7 +1,7 @@
 import McGridCol from './McGridCol'
 
 export default {
-  title: 'Patterns/McGridCol',
+  title: 'Patterns/McGrid/McGridCol',
   component: McGridCol,
   parameters: {
     componentSubtitle: 'Status: Ready, Смотреть McGridRow',

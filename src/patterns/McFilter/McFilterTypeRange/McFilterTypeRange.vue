@@ -107,6 +107,9 @@ export default {
       this.currentLess = less
       this.currentMore = more
 
+      /**
+       * Событие по изменению интервала
+       */
       this.$emit('input', result)
     },
     hasValue(val) {

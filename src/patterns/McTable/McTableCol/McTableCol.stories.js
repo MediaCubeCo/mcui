@@ -1,7 +1,7 @@
 import McTableCol from './McTableCol'
 
 export default {
-  title: 'Patterns/McTableCol',
+  title: 'Patterns/McTable/McTableCol',
   component: McTableCol,
   parameters: {
     componentSubtitle: 'Status: In Progress',

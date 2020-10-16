@@ -5,7 +5,7 @@ import McFieldCheckbox from './McFieldCheckbox'
 
 
 export default {
-  title: 'Elements/McFieldCheckbox',
+  title: 'Elements/McField/McFieldCheckbox',
   component: McFieldCheckbox,
   parameters: {
     componentSubtitle: 'Status: Ready',

@@ -11,7 +11,7 @@ const wrapper = () => {
 }
 
 export default {
-  title: 'Patterns/McSideBarTop',
+  title: 'Patterns/McSideBar/McSideBarTop',
   component: McSideBarTop,
   parameters: {
     componentSubtitle: 'Status: In progress',
