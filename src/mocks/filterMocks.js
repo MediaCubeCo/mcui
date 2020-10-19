@@ -9,20 +9,8 @@ const value = {
     },
     email: "crocodile@gena.com",
   },
-  filter_name: {
-    views_count: {
-      more: 10,
-    },
-    countries: {
-      is: {
-        1: 'Беларусь',
-      },
-      is_not: {
-        2: 'Россия',
-      },
-    },
-    email: "crocodile@gena.com",
-  },
+  //encoded
+  filter_name: 'eyJ2aWV3c19jb3VudCI6eyJtb3JlIjoxMH0sImNvdW50cmllcyI6eyJpcyI6eyIxIjoi0JHQtdC70LDRgNGD0YHRjCJ9LCJpc19ub3QiOnsiMiI6ItCg0L7RgdGB0LjRjyJ9fSwiZW1haWwiOiJjcm9jb2RpbGVAZ2VuYS5jb20ifQ',
 }
 const filters = [
   {
