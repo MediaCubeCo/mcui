@@ -6,9 +6,8 @@
       </div>
       <div class="mc-top-bar__right">
         <slot name="right" />
-        <mc-dropdown v-model="localesDropdownOpen" list-min-width="auto">
+        <mc-dropdown v-if="menuLangs && menuLangs.length" v-model="localesDropdownOpen" list-min-width="auto">
           <mc-button
-            v-if="menuLangs && menuLangs.length"
             slot="activator"
             variation="black-flat"
             uppercase
