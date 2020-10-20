@@ -284,9 +284,7 @@ export default {
       handler(val) {
         this.currentValues = { ...val.filter };
         if (val.filter_name) {
-          this.currentValuesName = JSON.parse(
-            decodeURIComponent(escape(atob(val.filter_name)))
-          );
+          this.currentValuesName = JSON.parse(decodeURI(atob(val.filter_name)))
         }
         this.buttonConfirmIsDisable =
           _isEmpty(val.filter) || _isEmpty(val.filter_name);
@@ -596,7 +594,7 @@ export default {
     },
     handleConfirm() {
       const encodedData = btoa(
-        unescape(encodeURIComponent(JSON.stringify(this.currentValuesName)))
+        encodeURI(JSON.stringify(this.currentValuesName))
       );
       /**
        * Событие по изменению значения фильтра

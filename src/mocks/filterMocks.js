@@ -9,8 +9,7 @@ const value = {
     },
     email: "crocodile@gena.com",
   },
-  //encoded
-  filter_name: 'eyJ2aWV3c19jb3VudCI6eyJtb3JlIjoxMH0sImNvdW50cmllcyI6eyJpcyI6eyIxIjoi0JHQtdC70LDRgNGD0YHRjCJ9LCJpc19ub3QiOnsiMiI6ItCg0L7RgdGB0LjRjyJ9fSwiZW1haWwiOiJjcm9jb2RpbGVAZ2VuYS5jb20ifQ',
+  filter_name: 'JTdCJTIyY291bnRyaWVzJTIyOiU3QiUyMmlzJTIyOiU3QiUyMjMlMjI6JTIyJUQwJUEzJUQwJUJBJUQxJTgwJUQwJUIwJUQwJUI4JUQwJUJEJUQwJUIwJTIyJTdEJTdELCUyMnZpZXdzX2NvdW50JTIyOiU3QiUyMm1vcmUlMjI6MTEsJTIybGVzcyUyMjoyMjIlN0QsJTIyY3JlYXRlZF9hdCUyMjolN0IlMjJtb3JlJTIyOiUyMjIwMjAtMTAtMDglMjIsJTIybGVzcyUyMjolMjIyMDIwLTExLTI3JTIyJTdEJTdE',
 }
 const filters = [
   {
