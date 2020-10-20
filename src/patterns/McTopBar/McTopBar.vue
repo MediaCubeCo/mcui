@@ -6,9 +6,34 @@
       </div>
       <div class="mc-top-bar__right">
         <slot name="right" />
-        <mc-button v-if="menuLangs && menuLangs.length" variation="black-flat" size="s" uppercase>
-          {{ menuLangs[0].name }}
-        </mc-button>
+        <mc-dropdown v-model="localesDropdownOpen" list-min-width="auto">
+          <mc-button
+            v-if="menuLangs && menuLangs.length"
+            slot="activator"
+            variation="black-flat"
+            uppercase
+          >
+            {{ menuLangs[0].name }}
+            <mc-svg-icon
+              slot="icon-append"
+              class="rotate"
+              name="arrow_drop_down"
+            />
+          </mc-button>
+          <mc-dropdown-panel>
+            <mc-button
+              v-for="locale in menuLangs"
+              :key="locale.name"
+              :to="locale.to ? locale.to : locale.href"
+              variation="black-flat"
+              text-align="left"
+              full-width
+            >
+                <mc-avatar slot="icon-prepend" :src="`https://www.countryflags.io/${getFlagName(locale.name)}/flat/64.png`" />
+              {{ locale.name }}
+            </mc-button>
+          </mc-dropdown-panel>
+        </mc-dropdown>
         <mc-avatar v-if="user" rounded size="400" :src="user.avatar" />
       </div>
     </div>
@@ -18,15 +43,21 @@
 </template>
 
 <script>
-import McAvatar from "../../elements/McAvatar/McAvatar"
-import McButton from "../../elements/McButton/McButton"
-import McSeparator from "../../elements/McSeparator/McSeparator"
+import McAvatar from "../../elements/McAvatar/McAvatar";
+import McButton from "../../elements/McButton/McButton";
+import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon";
+import McSeparator from "../../elements/McSeparator/McSeparator";
+import McDropdown from "../McDropdown/McDropdown";
+import McDropdownPanel from "../McDropdown/McDropdownPanel/McDropdownPanel";
 export default {
   name: "McTopBar",
   components: {
     McAvatar,
     McButton,
+    McSvgIcon,
     McSeparator,
+    McDropdown,
+    McDropdownPanel
   },
   props: {
     /**
@@ -35,7 +66,7 @@ export default {
      */
     user: {
       type: Object,
-      default: null,
+      default: null
     },
     /**
      *  Меню языков
@@ -43,11 +74,20 @@ export default {
      */
     menuLangs: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
-
-}
+  data() {
+    return {
+      localesDropdownOpen: false
+    };
+  },
+  methods: {
+    getFlagName(name) {
+      return name.toLowerCase() === 'en' ? 'gb' : name
+    }
+  }
+};
 </script>
 
 <style lang="scss">
