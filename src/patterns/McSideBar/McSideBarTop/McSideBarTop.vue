@@ -70,7 +70,7 @@
 
 <script>
 import _XEUtils from "xe-utils";
-import _isEmpty from 'lodash/isEmpty'
+import _isEmpty from "lodash/isEmpty";
 import McDropdown from "../../McDropdown/McDropdown";
 import McDropdownPanel from "../../McDropdown/McDropdownPanel/McDropdownPanel";
 import McButton from "../../../elements/McButton/McButton";
@@ -176,6 +176,9 @@ export default {
         @include size($size-200);
       }
     }
+  }
+  &__img {
+    margin-left: $space-100;
   }
 }
 </style>
