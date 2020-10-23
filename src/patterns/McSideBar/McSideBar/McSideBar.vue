@@ -1,35 +1,44 @@
 <template>
   <div class="mc-side-bar" :class="classes" :style="styles">
     <mc-side-bar-top
-        :logo-title="logoTitle"
-        :logo-src="logoSrc"
-        :logo-icon="logoIcon"
-        :compact="prettyCompact"
-        :menu-apps="menuApps"
+      :logo-title="logoTitle"
+      :logo-src="logoSrc"
+      :logo-icon="logoIcon"
+      :compact="prettyCompact"
+      :menu-apps="menuApps"
     />
     <mc-side-bar-center
-        :title="menuMainTitle"
-        :menu-main="menuMain"
-        :menu-additional="menuAdditional"
-        :chatra-config="chatraConfig"
-        :userback-config="userbackConfig"
-        :user="user"
-        :compact="prettyCompact"
+      :title="menuMainTitle"
+      :menu-main="menuMain"
+      :menu-additional="menuAdditional"
+      :chatra-config="chatraConfig"
+      :userback-config="userbackConfig"
+      :user="user"
+      :compact="prettyCompact"
     />
-    <mc-side-bar-bottom :hide-text="hideText" :compact="prettyCompact" @toggle-size="handleToggleSize"/>
+    <mc-side-bar-bottom
+      :hide-text="hideText"
+      :compact="prettyCompact"
+      @toggle-size="handleToggleSize"
+    />
   </div>
 </template>
 
 <script>
-import McSideBarTop from "../McSideBarTop/McSideBarTop"
-import McSideBarCenter from "../McSideBarCenter/McSideBarCenter"
-import McSideBarBottom from "../McSideBarBottom/McSideBarBottom"
+import McSideBarTop from "../McSideBarTop/McSideBarTop";
+import McSideBarCenter from "../McSideBarCenter/McSideBarCenter";
+import McSideBarBottom from "../McSideBarBottom/McSideBarBottom";
 export default {
   name: "McSideBar",
   components: {
     McSideBarTop,
     McSideBarCenter,
-    McSideBarBottom,
+    McSideBarBottom
+  },
+  provide() {
+    return {
+      currentThemeConfig: this.currentThemeConfig
+    };
   },
   props: {
     /**
@@ -38,7 +47,7 @@ export default {
      */
     logoTitle: {
       type: String,
-      default: "Dashboard",
+      default: "Dashboard"
     },
     /**
      *  Путь до изображения
@@ -46,7 +55,7 @@ export default {
      */
     logoSrc: {
       type: String,
-      default: "",
+      default: ""
     },
     /**
      *  Имя иконки
@@ -54,7 +63,7 @@ export default {
      */
     logoIcon: {
       type: String,
-      default: "",
+      default: ""
     },
     /**
      *  Заголовок
@@ -62,7 +71,7 @@ export default {
      */
     menuMainTitle: {
       type: String,
-      default: "",
+      default: ""
     },
     /**
      *  Центральное меню
@@ -70,7 +79,7 @@ export default {
      */
     menuMain: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     /**
      *  Меню при клике на +
@@ -78,7 +87,7 @@ export default {
      */
     menuAdditional: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     /**
      *  Меню приложений
@@ -86,7 +95,7 @@ export default {
      */
     menuApps: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     /**
      *  Id чатры
@@ -94,7 +103,7 @@ export default {
      */
     chatraConfig: {
       type: Object,
-      default: null,
+      default: null
     },
     /**
      *  Userback Config
@@ -102,7 +111,7 @@ export default {
      */
     userbackConfig: {
       type: Object,
-      default: null,
+      default: null
     },
     /**
      *  Данные пользователя
@@ -110,7 +119,7 @@ export default {
      */
     user: {
       type: Object,
-      default: null,
+      default: null
     },
     /**
      *  Текст кнопки
@@ -118,58 +127,92 @@ export default {
      */
     hideText: {
       type: String,
-      default: "",
+      default: ""
     },
     /**
      *  Компактный вид
      */
     compact: {
       type: Boolean,
-      default: false,
+      default: false
     },
+    /**
+     * Цветовая схема
+     */
+    variable: {
+      type: String,
+      default: "black"
+    }
   },
   data() {
     return {
       isHidden: false,
       prettyCompact: this.compact,
-      hasCompactClass: this.compact,
-    }
+      hasCompactClass: this.compact
+    };
   },
   watch: {
     hasCompactClass(newValue) {
       if (newValue) {
-          setTimeout(()=> {
-            this.prettyCompact = newValue
-          }, 280)
+        setTimeout(() => {
+          this.prettyCompact = newValue;
+        }, 280);
       } else {
-        this.prettyCompact = newValue
+        this.prettyCompact = newValue;
       }
-      this.isHidden = true
-      setTimeout(()=> {
-        this.isHidden = false
-      }, 280)
+      this.isHidden = true;
+      setTimeout(() => {
+        this.isHidden = false;
+      }, 280);
     },
     compact(newValue) {
-      this.hasCompactClass = newValue
+      this.hasCompactClass = newValue;
     }
   },
   computed: {
     classes() {
       return {
         "mc-side-bar--compact": this.hasCompactClass,
-      }
+        [this.currentThemeConfig.className]: true
+      };
     },
     styles() {
-      return { overflow: `${this.isHidden ? 'hidden' : 'visible'}` }
+      return { overflow: `${this.isHidden ? "hidden" : "visible"}` };
     },
+    currentThemeConfig() {
+      return (
+        this.sidebarThemeConfig[this.variable] ||
+        this.sidebarThemeConfig["black"]
+      );
+    },
+    sidebarThemeConfig() {
+      return {
+        black: {
+          className: "mc-side-bar--color-theme-black",
+          dropdownActivator: "white-link",
+          mainMenuLinks: {
+            variable: "gray-flat",
+            secondaryColor: "white"
+          }
+        },
+        white: {
+          className: "mc-side-bar--color-theme-white",
+          dropdownActivator: "black-link",
+          mainMenuLinks: {
+            variable: "black-flat",
+            secondaryColor: "blue"
+          }
+        }
+      };
+    }
   },
   methods: {
     handleToggleSize() {
-      this.hasCompactClass = !this.hasCompactClass
-      this.$emit('compact', this.hasCompactClass)
+      this.hasCompactClass = !this.hasCompactClass;
+      this.$emit("compact", this.hasCompactClass);
     }
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss">
@@ -179,13 +222,19 @@ export default {
   display: flex;
   flex-direction: column;
   width: 216px;
-  background-color: $color-black;
   padding: $space-150 $space-100 $space-400;
   transition: width 300ms ease;
   @include child-indent-bottom($space-400);
 
   &--compact {
     width: $space-700;
+  }
+  &--color-theme-black {
+    background-color: $color-black;
+  }
+  &--color-theme-white {
+    background-color: $color-white;
+    border-right: 1px solid $color-hover-gray;
   }
 }
 </style>

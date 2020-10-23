@@ -1,25 +1,54 @@
 <template>
   <div class="mc-side-bar-top">
-    <mc-dropdown v-model="dropIsOpen">
+    <mc-preview v-if="!computedMenuApps" slot="activator">
+      <img
+        v-if="logoSrc"
+        slot="left"
+        class="mc-side-bar-top__img"
+        :src="logoSrc"
+        width="24"
+        height="24"
+        :alt="logoTitle"
+      />
+      <mc-title slot="top" weight="semi-bold" variation="h4">
+        <template v-if="!compact">
+          {{ logoTitle }}
+        </template>
+      </mc-title>
+    </mc-preview>
+    <mc-dropdown v-else v-model="dropIsOpen">
       <mc-preview slot="activator">
         <img
-            v-if="logoSrc"
-            slot="left"
-            class="mc-side-bar-top__img"
-            :src="logoSrc"
-            width="24"
-            height="24"
-            :alt="logoTitle"
+          v-if="logoSrc"
+          slot="left"
+          class="mc-side-bar-top__img"
+          :src="logoSrc"
+          width="24"
+          height="24"
+          :alt="logoTitle"
         />
-        <mc-svg-icon v-else-if="logoIcon" slot="left" class="rotate" name="mc_dashboard" />
-        <mc-button slot="top" variation="white-link" :size="compact ? 'l-compact' : 'l'">
+        <mc-svg-icon
+          v-else-if="logoIcon"
+          slot="left"
+          class="rotate"
+          name="mc_dashboard"
+        />
+        <mc-button
+          slot="top"
+          :variation="currentThemeConfig.dropdownActivator"
+          :size="compact ? 'l-compact' : 'l'"
+        >
           <template v-if="!compact">
             {{ logoTitle }}
           </template>
-          <mc-svg-icon slot="icon-append" class="rotate" name="arrow_drop_down" color="gray" />
+          <mc-svg-icon
+            slot="icon-append"
+            class="rotate"
+            name="arrow_drop_down"
+            color="gray"
+          />
         </mc-button>
       </mc-preview>
-
       <mc-dropdown-panel>
         <mc-button
           v-for="menuAppsItem in computedMenuApps"
@@ -31,7 +60,7 @@
           :to="menuAppsItem.to"
           :is-active="menuAppsItem.isActive"
         >
-            <mc-svg-icon slot="icon-prepend" :name="menuAppsItem.icon" />
+          <mc-svg-icon slot="icon-prepend" :name="menuAppsItem.icon" />
           {{ menuAppsItem.name }}
         </mc-button>
       </mc-dropdown-panel>
@@ -40,12 +69,14 @@
 </template>
 
 <script>
-import _XEUtils from 'xe-utils'
-import McDropdown from "../../McDropdown/McDropdown"
-import McDropdownPanel from "../../McDropdown/McDropdownPanel/McDropdownPanel"
-import McButton from "../../../elements/McButton/McButton"
-import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
-import McPreview from "../../McPreview/McPreview"
+import _XEUtils from "xe-utils";
+import _isEmpty from 'lodash/isEmpty'
+import McDropdown from "../../McDropdown/McDropdown";
+import McDropdownPanel from "../../McDropdown/McDropdownPanel/McDropdownPanel";
+import McButton from "../../../elements/McButton/McButton";
+import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon";
+import McPreview from "../../McPreview/McPreview";
+import McTitle from "../../../elements/McTitle/McTitle";
 
 export default {
   name: "McSideBarTop",
@@ -55,11 +86,13 @@ export default {
     McButton,
     McPreview,
     McSvgIcon,
+    McTitle
   },
+  inject: ["currentThemeConfig"],
   data() {
     return {
-      dropIsOpen: false,
-    }
+      dropIsOpen: false
+    };
   },
   props: {
     /**
@@ -68,7 +101,7 @@ export default {
      */
     menuApps: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     /**
      *  Название сервиса
@@ -76,14 +109,14 @@ export default {
      */
     logoTitle: {
       type: String,
-      default: "Dashboard",
+      default: "Dashboard"
     },
     /**
      *  Путь до изображения
      */
     logoSrc: {
       type: String,
-      default: "",
+      default: ""
     },
     /**
      *  Имя иконки
@@ -91,31 +124,32 @@ export default {
      */
     logoIcon: {
       type: String,
-      default: "",
+      default: ""
     },
     /**
      *  Компактный вид
      */
     compact: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
     computedMenuApps() {
-      const apps = []
+      if (_isEmpty(this.menuApps)) return null;
+      const apps = [];
       this.menuApps.forEach(app => {
         if (app.isVisible) {
           apps.push({
             key: _XEUtils.uniqueId(),
-            ...app,
-          })
+            ...app
+          });
         }
-      })
-      return apps
+      });
+      return apps;
     }
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss">

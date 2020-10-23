@@ -1,9 +1,10 @@
 <template>
   <mc-button
     v-on="$listeners"
-    class="mc-side-bar-button"
+    :class="classes"
     text-align="left"
-    variation="white-flat"
+    :variation="currentThemeConfig.mainMenuLinks.variable"
+    :secondary-color="currentThemeConfig.mainMenuLinks.secondaryColor"
     full-width
     :size="compact ? 's-compact' : 's'"
     :href="href"
@@ -11,68 +12,80 @@
     :exact="exact"
     :disabled="disabled"
   >
-    <mc-svg-icon v-if="icon" slot="icon-prepend" class="mc-side-bar-button__icon" :name="icon" />
-    <span v-if="icon && compact && info" slot="icon-prepend" class="mc-side-bar-button__dot" />
+    <mc-svg-icon
+      v-if="icon"
+      slot="icon-prepend"
+      class="mc-side-bar-button__icon"
+      :name="icon"
+    />
+    <span
+      v-if="icon && compact && info"
+      slot="icon-prepend"
+      class="mc-side-bar-button__dot"
+    />
     <template v-if="!compact">
       {{ title }}
-      <mc-chip v-if="info" slot="icon-append" variation="blue">{{info}}</mc-chip>
+      <mc-chip v-if="info" slot="icon-append" variation="blue">{{
+        info
+      }}</mc-chip>
     </template>
   </mc-button>
 </template>
 
 <script>
-import McButton from "../../../elements/McButton/McButton"
-import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
-import McChip from "../../../elements/McChip/McChip"
+import McButton from "../../../elements/McButton/McButton";
+import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon";
+import McChip from "../../../elements/McChip/McChip";
 export default {
   name: "McSideBarButton",
   components: {
     McButton,
     McSvgIcon,
-    McChip,
+    McChip
   },
+  inject: ["currentThemeConfig"],
   props: {
     /**
      *  Если нужна ссылка внутри приложения:
      * `{name: 'test', params: { id: test.id }}`
      */
     to: {
-      default: null,
+      default: null
     },
     /**
      *  Если нужна обычная ссылка:
      * `https://mediacube.agency/`
      */
     href: {
-      default: null,
+      default: null
     },
     /**
      *  Если нужна иконка
      */
     icon: {
       type: String,
-      default: "",
+      default: ""
     },
     /**
      *  Тайтл кнопки
      */
     title: {
       type: String,
-      default: "",
+      default: ""
     },
     /**
      *  Compact size
      */
     compact: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      *  Additional info
      */
     info: {
       type: [String, Number],
-      default: "",
+      default: ""
     },
     /**
      *  Exact
@@ -80,7 +93,7 @@ export default {
      */
     exact: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      *  Отключенное состояние
@@ -88,10 +101,18 @@ export default {
      */
     disabled: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-}
+  computed: {
+    classes() {
+      return {
+        "mc-side-bar-button": true,
+        "blue-hover": this.currentThemeConfig.mainMenuLinks.variable === "black-flat"
+      };
+    }
+  }
+};
 </script>
 
 <style lang="scss">
@@ -106,7 +127,7 @@ export default {
   }
 
   &.mc-button {
-    color: $color-gray;
+    //color: $color-gray;
     padding: $space-100;
     opacity: 1;
     height: auto;
@@ -115,8 +136,11 @@ export default {
     .mc-svg-icon {
       @include size($size-300);
     }
+    &.blue-hover:hover {
+        background-color: $color-lighter-blue;
+    }
     &:hover {
-      color: $color-white;
+      //color: $color-white;
     }
 
     .mc-button__prepend {
