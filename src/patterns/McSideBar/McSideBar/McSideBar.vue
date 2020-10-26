@@ -188,19 +188,21 @@ export default {
     sidebarThemeConfig() {
       return {
         black: {
+          mode: "black",
           className: "mc-side-bar--color-theme-black",
           dropdownActivator: "white-link",
           mainMenuLinks: {
             variable: "gray-flat",
-            secondaryColor: "white"
+            secondaryColor: "white",
           }
         },
         white: {
+          mode: "white",
           className: "mc-side-bar--color-theme-white",
           dropdownActivator: "black-link",
           mainMenuLinks: {
             variable: "black-flat",
-            secondaryColor: "blue"
+            secondaryColor: "blue",
           }
         }
       };

@@ -25,9 +25,9 @@
     />
     <template v-if="!compact">
       {{ title }}
-      <mc-chip v-if="info" slot="icon-append" variation="blue">{{
-        info
-      }}</mc-chip>
+      <mc-chip v-if="info" slot="icon-append" variation="blue">
+        {{ info }}
+      </mc-chip>
     </template>
   </mc-button>
 </template>
@@ -108,7 +108,9 @@ export default {
     classes() {
       return {
         "mc-side-bar-button": true,
-        "blue-hover": this.currentThemeConfig.mainMenuLinks.variable === "black-flat"
+        [`mc-side-bar--${this.currentThemeConfig.mode}__button`]: true,
+        "blue-hover":
+          this.currentThemeConfig.mainMenuLinks.variable === "black-flat"
       };
     }
   }
@@ -137,7 +139,7 @@ export default {
       @include size($size-300);
     }
     &.blue-hover:hover {
-        background-color: $color-lighter-blue;
+      background-color: $color-lighter-blue;
     }
     &:hover {
       //color: $color-white;
@@ -153,11 +155,22 @@ export default {
       height: auto;
       padding: $space-50 $space-100;
     }
-
+  }
+}
+.mc-side-bar {
+  &--black__button {
     &.mc-button--is-active,
     &.mc-button.nuxt-link-active {
       color: $color-white;
       background-color: rgba(92, 102, 112, 0.4);
+      pointer-events: auto;
+    }
+  }
+  &--white__button {
+    &.mc-button--is-active,
+    &.mc-button.nuxt-link-active {
+      color: $color-blue;
+      background-color: $color-lighter-blue;
       pointer-events: auto;
     }
   }
