@@ -1,108 +1,64 @@
 <template>
-  <div class="mc-side-bar-top">
-    <mc-preview v-if="!computedMenuApps" slot="activator">
-      <img
-        v-if="logoSrc"
-        slot="left"
-        class="mc-side-bar-top__img"
-        :src="logoSrc"
-        width="24"
-        height="24"
-        :alt="logoTitle"
-      />
-      <mc-title slot="top" weight="semi-bold" variation="h4">
-        <template v-if="!compact">
-          {{ logoTitle }}
-        </template>
-      </mc-title>
-    </mc-preview>
-    <mc-dropdown v-else v-model="dropIsOpen">
-      <mc-preview slot="activator">
-        <img
-          v-if="logoSrc"
-          slot="left"
-          class="mc-side-bar-top__img"
-          :src="logoSrc"
-          width="24"
-          height="24"
-          :alt="logoTitle"
+  <article
+    ref="sidebar-wrapper"
+    class="mc-side-bar-wrapper"
+    :style="wrapperStyles"
+  >
+    <section
+      class="mc-side-bar-wrapper__backdrop"
+      :class="backdropClasses"
+      @click.stop.prevent="handleToggleSize"
+    >
+      <div
+        ref="sidebar"
+        class="mc-side-bar"
+        :class="sideBarClasses"
+        :style="sideBarStyles"
+        @click.stop
+      >
+        <mc-side-bar-top
+          :logo-title="logoTitle"
+          :logo-src="logoSrc"
+          :logo-icon="logoIcon"
+          :compact="prettyCompact"
+          :menu-apps="menuApps"
         />
-        <mc-svg-icon
-          v-else-if="logoIcon"
-          slot="left"
-          class="rotate"
-          name="mc_dashboard"
+        <mc-side-bar-center
+          :title="menuMainTitle"
+          :menu-main="menuMain"
+          :menu-additional="menuAdditional"
+          :chatra-config="chatraConfig"
+          :userback-config="userbackConfig"
+          :user="user"
+          :compact="prettyCompact"
         />
-        <mc-button
-          slot="top"
-          :variation="currentThemeConfig.dropdownActivator"
-          :size="compact ? 'l-compact' : 'l'"
-        >
-          <template v-if="!compact">
-            {{ logoTitle }}
-          </template>
-          <mc-svg-icon
-            slot="icon-append"
-            class="rotate"
-            name="arrow_drop_down"
-            color="gray"
-          />
-        </mc-button>
-      </mc-preview>
-      <mc-dropdown-panel>
-        <mc-button
-          v-for="menuAppsItem in computedMenuApps"
-          full-width
-          text-align="left"
-          variation="black-flat"
-          :key="`menu-apps-item-${menuAppsItem.key}`"
-          :href="menuAppsItem.href"
-          :to="menuAppsItem.to"
-          :is-active="menuAppsItem.isActive"
-        >
-          <mc-svg-icon slot="icon-prepend" :name="menuAppsItem.icon" />
-          {{ menuAppsItem.name }}
-        </mc-button>
-      </mc-dropdown-panel>
-    </mc-dropdown>
-  </div>
+        <mc-side-bar-bottom
+          :hide-text="hideText"
+          :compact="prettyCompact"
+          @toggle-size="handleToggleSize"
+        />
+      </div>
+    </section>
+  </article>
 </template>
 
 <script>
-import _XEUtils from "xe-utils";
-import _isEmpty from "lodash/isEmpty";
-import McDropdown from "../../McDropdown/McDropdown";
-import McDropdownPanel from "../../McDropdown/McDropdownPanel/McDropdownPanel";
-import McButton from "../../../elements/McButton/McButton";
-import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon";
-import McPreview from "../../McPreview/McPreview";
-import McTitle from "../../../elements/McTitle/McTitle";
-
+import McSideBarTop from "../McSideBarTop/McSideBarTop";
+import McSideBarCenter from "../McSideBarCenter/McSideBarCenter";
+import McSideBarBottom from "../McSideBarBottom/McSideBarBottom";
 export default {
-  name: "McSideBarTop",
+  name: "McSideBar",
   components: {
-    McDropdown,
-    McDropdownPanel,
-    McButton,
-    McPreview,
-    McSvgIcon,
-    McTitle
+    McSideBarTop,
+    McSideBarCenter,
+    McSideBarBottom
   },
-  inject: ["currentThemeConfig"],
-  data() {
+  provide() {
     return {
-      dropIsOpen: false
+      currentThemeConfig: this.currentThemeConfig
     };
   },
   props: {
-    /**
-     *  Меню приложений
-     *
-     */
-    menuApps: {
-      type: Array,
-      default: () => []
-    },
     /**
      *  Название сервиса
      *
@@ -113,6 +69,7 @@ export default {
     },
     /**
      *  Путь до изображения
+     *
      */
     logoSrc: {
       type: String,
@@ -127,58 +84,261 @@ export default {
       default: ""
     },
     /**
+     *  Заголовок
+     *  центрального блока
+     */
+    menuMainTitle: {
+      type: String,
+      default: ""
+    },
+    /**
+     *  Центральное меню
+     *
+     */
+    menuMain: {
+      type: Array,
+      default: () => []
+    },
+    /**
+     *  Меню при клике на +
+     *
+     */
+    menuAdditional: {
+      type: Array,
+      default: () => []
+    },
+    /**
+     *  Меню приложений
+     *
+     */
+    menuApps: {
+      type: Array,
+      default: () => []
+    },
+    /**
+     *  Id чатры
+     *
+     */
+    chatraConfig: {
+      type: Object,
+      default: null
+    },
+    /**
+     *  Userback Config
+     *
+     */
+    userbackConfig: {
+      type: Object,
+      default: null
+    },
+    /**
+     *  Данные пользователя
+     *
+     */
+    user: {
+      type: Object,
+      default: null
+    },
+    /**
+     *  Текст кнопки
+     *  сворачивания меню
+     */
+    hideText: {
+      type: String,
+      default: ""
+    },
+    /**
      *  Компактный вид
      */
     compact: {
       type: Boolean,
       default: false
+    },
+    /**
+     * Цветовая схема
+     */
+    variable: {
+      type: String,
+      default: "black"
+    },
+    /**
+     * Ширина сайдбара
+     */
+    width: {
+      type: String,
+      default: "216px"
+    },
+    /**
+     * Ширина компактного сайдбара
+     */
+    compactWidth: {
+      type: String,
+      default: "56px"
+    },
+    /**
+     * Брейкпоинт после которого
+     * сайдбар становится абсолютным и появляется затемненный бэкдроп
+     */
+    absoluteBreakpoint: {
+      type: Number,
+      default: null
+    },
+    /**
+     * Брейкпоинт после которого
+     * сайдбар полностью прячется
+     */
+    hiddenBreakpoint: {
+      type: Number,
+      default: null
+    }
+  },
+  data() {
+    return {
+      isHidden: false,
+      prettyCompact: this.compact,
+      hasCompactClass: this.compact,
+      windowWidth: null
+    };
+  },
+  watch: {
+    hasCompactClass(newValue) {
+      if (newValue) {
+        setTimeout(() => {
+          this.prettyCompact = newValue;
+        }, 280);
+      } else {
+        this.prettyCompact = newValue;
+      }
+      this.isHidden = true;
+      setTimeout(() => {
+        this.isHidden = false;
+      }, 280);
+    },
+    compact(newValue) {
+      this.hasCompactClass = newValue;
     }
   },
   computed: {
-    computedMenuApps() {
-      if (_isEmpty(this.menuApps)) return null;
-      const apps = [];
-      this.menuApps.forEach(app => {
-        if (app.isVisible) {
-          apps.push({
-            key: _XEUtils.uniqueId(),
-            ...app
-          });
+    sideBarClasses() {
+      return {
+        "mc-side-bar--compact": this.hasCompactClass,
+        [this.currentThemeConfig.className]: true
+      };
+    },
+    sideBarStyles() {
+      return {
+        overflow: `${this.isHidden ? "hidden" : "visible"}`,
+        width: this.hasCompactClass ? this.compactWidth : this.width
+      };
+    },
+    wrapperStyles() {
+      const position =
+        this.hiddenBreakpoint &&
+        this.windowWidth < this.hiddenBreakpoint &&
+        this.hasCompactClass
+          ? {
+              position: "absolute",
+              left: `-${this.compactWidth}`
+            }
+          : {};
+
+      return {
+        width:
+          this.absoluteBreakpoint && this.windowWidth < this.absoluteBreakpoint
+            ? this.compactWidth
+            : this.hasCompactClass
+            ? this.compactWidth
+            : this.width,
+        ...position
+      };
+    },
+    backdropClasses() {
+      return {
+        "mc-side-bar-wrapper__backdrop--full-width":
+          !this.hasCompactClass && this.windowWidth < this.absoluteBreakpoint
+      };
+    },
+    currentThemeConfig() {
+      return (
+        this.sidebarThemeConfig[this.variable] ||
+        this.sidebarThemeConfig["black"]
+      );
+    },
+    sidebarThemeConfig() {
+      return {
+        black: {
+          mode: "black",
+          className: "mc-side-bar--color-theme-black",
+          dropdownActivator: "white",
+          mainMenuLinks: {
+            variable: "gray-flat",
+            secondaryColor: "white"
+          }
+        },
+        white: {
+          mode: "white",
+          className: "mc-side-bar--color-theme-white",
+          dropdownActivator: "black",
+          mainMenuLinks: {
+            variable: "black-flat",
+            secondaryColor: "blue"
+          }
         }
-      });
-      return apps;
+      };
+    }
+  },
+  mounted() {
+    if (this.absoluteBreakpoint || (this.hiddenBreakpoint && window)) {
+      this.resize();
+      window.addEventListener("resize", this.resize);
+    }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.resize);
+  },
+  methods: {
+    handleToggleSize() {
+      this.hasCompactClass = !this.hasCompactClass;
+      this.$emit("compact", this.hasCompactClass);
+    },
+    resize() {
+      this.windowWidth = window.innerWidth;
     }
   }
 };
 </script>
 
 <style lang="scss">
-.mc-side-bar-top {
+.mc-side-bar {
   $block-name: &;
-  @include reset-text-indents();
 
-  .mc-dropdown__toggle {
-    &:hover {
-      cursor: pointer;
-    }
-    .mc-preview__left {
-      margin-right: 0;
-    }
-    .mc-button {
-      line-height: $line-height-250;
-      &__text {
-        margin-left: $space-100;
-      }
-      &__append {
-        margin-left: 0;
-      }
-      .rotate {
-        @include size($size-200);
-      }
-    }
+  display: flex;
+  flex-direction: column;
+  padding: $space-150 $space-100 $space-400;
+  transition: width 300ms ease;
+  @include child-indent-bottom($space-400);
+  &--color-theme-black {
+    background-color: $color-black;
   }
-  &__img {
-    margin-left: $space-100;
+  &--color-theme-white {
+    background-color: $color-white;
+    border-right: 1px solid $color-hover-gray;
+  }
+  &-wrapper {
+    height: 100%;
+    transition: width 300ms ease;
+    &__backdrop {
+      position: absolute;
+      background-color: rgba($color-black, 0.6);
+      z-index: 2;
+      height: inherit;
+      .mc-side-bar {
+        height: inherit;
+      }
+      &--full-width {
+        width: 100%;
+      }
+    }
   }
 }
 </style>
