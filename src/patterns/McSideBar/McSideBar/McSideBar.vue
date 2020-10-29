@@ -182,6 +182,14 @@ export default {
     absoluteBreakpoint: {
       type: Number,
       default: null
+    },
+    /**
+     * Брейкпоинт после которого
+     * сайдбар полностью прячется
+     */
+    hiddenBreakpoint: {
+      type: Number,
+      default: null
     }
   },
   data() {
@@ -224,13 +232,24 @@ export default {
       };
     },
     wrapperStyles() {
+      const position =
+        this.hiddenBreakpoint &&
+        this.windowWidth < this.hiddenBreakpoint &&
+        this.hasCompactClass
+          ? {
+              position: "absolute",
+              left: `-${this.compactWidth}`
+            }
+          : {};
+
       return {
         width:
           this.absoluteBreakpoint && this.windowWidth < this.absoluteBreakpoint
             ? this.compactWidth
             : this.hasCompactClass
             ? this.compactWidth
-            : this.width
+            : this.width,
+        ...position
       };
     },
     backdropClasses() {
@@ -250,7 +269,7 @@ export default {
         black: {
           mode: "black",
           className: "mc-side-bar--color-theme-black",
-          dropdownActivator: "white-link",
+          dropdownActivator: "white",
           mainMenuLinks: {
             variable: "gray-flat",
             secondaryColor: "white"
@@ -259,7 +278,7 @@ export default {
         white: {
           mode: "white",
           className: "mc-side-bar--color-theme-white",
-          dropdownActivator: "black-link",
+          dropdownActivator: "black",
           mainMenuLinks: {
             variable: "black-flat",
             secondaryColor: "blue"
@@ -269,10 +288,13 @@ export default {
     }
   },
   mounted() {
-    if (this.absoluteBreakpoint && window) {
+    if (this.absoluteBreakpoint || (this.hiddenBreakpoint && window)) {
       this.resize();
       window.addEventListener("resize", this.resize);
     }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.resize);
   },
   methods: {
     handleToggleSize() {
