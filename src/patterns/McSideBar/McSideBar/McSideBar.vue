@@ -35,8 +35,12 @@
         <mc-side-bar-bottom
           :hide-text="hideText"
           :compact="prettyCompact"
+          :hidden-mode="hiddenMode"
+          :sidebar-width="width"
           @toggle-size="handleToggleSize"
-        />
+        >
+          <slot name="bottom-message" slot="bottom-message" />
+        </mc-side-bar-bottom>
       </div>
     </section>
   </article>

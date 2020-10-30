@@ -1,21 +1,29 @@
 <template>
-<div class="mc-side-bar-bottom" :class="classes">
-  <mc-side-bar-button
-    class="mc-side-bar-bottom__hide-button"
-    icon="arrow_backward"
-    :title="hideText"
-    :compact="compact"
-    @click="handleClick"
-  />
-</div>
+  <div class="mc-side-bar-bottom" :class="classes">
+    <div
+      v-if="!compact && $slots['bottom-message']"
+      class="mc-side-bar-bottom__slot-message"
+      :style="messageStyles"
+    >
+      <slot name="bottom-message" />
+    </div>
+    <mc-side-bar-button
+      v-if="!hiddenMode"
+      class="mc-side-bar-bottom__hide-button"
+      icon="arrow_backward"
+      :title="hideText"
+      :compact="compact"
+      @click="handleClick"
+    />
+  </div>
 </template>
 
 <script>
-import McSideBarButton from "../McSideBarButton/McSideBarButton"
+import McSideBarButton from "../McSideBarButton/McSideBarButton";
 export default {
   name: "McSideBarBottom",
   components: {
-    McSideBarButton,
+    McSideBarButton
   },
   props: {
     /**
@@ -24,41 +32,54 @@ export default {
      */
     hideText: {
       type: String,
-      default: "",
+      default: ""
     },
     /**
      *  Компактный вид
      */
     compact: {
       type: Boolean,
-      default: false,
+      default: false
     },
+    hiddenMode: {
+      type: Boolean,
+      default: false
+    },
+    sidebarWidth: {
+      type: String,
+      default: null
+    }
   },
   data() {
     return {
       hasCompactClass: this.compact
-    }
+    };
   },
   watch: {
     compact(newValue) {
-      this.hasCompactClass = newValue
+      this.hasCompactClass = newValue;
     }
   },
   computed: {
     classes() {
       return {
-        "mc-side-bar-bottom--compact": this.hasCompactClass,
-      }
+        "mc-side-bar-bottom--compact": this.hasCompactClass
+      };
     },
+    messageStyles() {
+      return {
+        minWidth: this.sidebarWidth
+      };
+    }
   },
   methods: {
     handleClick() {
-      if (this.hasCompactClass !== this.compact) return
-      this.$emit('toggle-size', !this.compact)
-      this.hasCompactClass = !this.hasCompactClass
+      if (this.hasCompactClass !== this.compact) return;
+      this.$emit("toggle-size", !this.compact);
+      this.hasCompactClass = !this.hasCompactClass;
     }
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss">
@@ -81,6 +102,13 @@ export default {
       .mc-side-bar-button__icon {
         transform: rotate(180deg);
       }
+    }
+  }
+  &__slot-message {
+    margin-left: -$space-100;
+    margin-right: -$space-100;
+    & + * {
+      margin-top: $space-500;
     }
   }
 }
