@@ -56,6 +56,18 @@ const getUniqueProps = key => {
     compact: {
       default: boolean('compact', false, key),
     },
+    width: {
+      default: text('width', '216px', key),
+    },
+    compactWidth: {
+      default: text('compactWidth', '56px', key),
+    },
+    absoluteBreakpoint: {
+      default: text('absoluteBreakpoint', 1024, key),
+    },
+    hiddenBreakpoint: {
+      default: text('hiddenBreakpoint', null, key),
+    },
   }
 }
 
@@ -72,6 +84,10 @@ const getCommonTags = ctx => {
     user: ctx.user,
     hideText: ctx.hideText,
     compact: ctx.compact,
+    width: ctx.width,
+    compactWidth: ctx.compactWidth,
+    absoluteBreakpoint: ctx.absoluteBreakpoint,
+    hiddenBreakpoint: ctx.hiddenBreakpoint,
   }
 }
 
