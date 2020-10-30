@@ -216,6 +216,18 @@ export default {
     },
     compact(newValue) {
       this.hasCompactClass = newValue;
+    },
+    absoluteMode: {
+      immediate: true,
+      handler(val) {
+        this.$emit("absolute-mode", val);
+      }
+    },
+    hiddenMode: {
+      immediate: true,
+      handler(val) {
+        this.$emit("hidden-mode", val);
+      }
     }
   },
   computed: {
@@ -233,22 +245,24 @@ export default {
     },
     wrapperStyles() {
       const position =
-        this.hiddenBreakpoint &&
-        this.windowWidth < this.hiddenBreakpoint &&
-        this.hasCompactClass
+        this.hiddenMode && this.hasCompactClass
           ? {
               position: "absolute",
               left: `-${this.compactWidth}`
             }
           : {};
 
+      let width = {
+        width: this.hasCompactClass ? this.compactWidth : this.width
+      };
+      if (this.absoluteMode) {
+        width.width = this.compactWidth;
+      }
+      if (this.hiddenMode) {
+        width.width = "0px";
+      }
       return {
-        width:
-          this.absoluteBreakpoint && this.windowWidth < this.absoluteBreakpoint
-            ? this.compactWidth
-            : this.hasCompactClass
-            ? this.compactWidth
-            : this.width,
+        ...width,
         ...position
       };
     },
@@ -257,6 +271,14 @@ export default {
         "mc-side-bar-wrapper__backdrop--full-width":
           !this.hasCompactClass && this.windowWidth < this.absoluteBreakpoint
       };
+    },
+    absoluteMode() {
+      return (
+        this.absoluteBreakpoint && this.windowWidth < this.absoluteBreakpoint
+      );
+    },
+    hiddenMode() {
+      return this.hiddenBreakpoint && this.windowWidth < this.hiddenBreakpoint;
     },
     currentThemeConfig() {
       return (
