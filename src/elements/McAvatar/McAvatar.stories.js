@@ -34,6 +34,9 @@ const getUniqueProps = key => {
     shadow: {
       default: boolean('shadow', true, key)
     },
+    draggable: {
+      default: boolean('draggable', true, key)
+    },
   }
 }
 
@@ -45,6 +48,7 @@ const getCommonTags = ctx => {
     rounded: ctx.rounded,
     lazy: ctx.lazy,
     shadow: ctx.shadow,
+    draggable: ctx.draggable,
   }
 }
 
