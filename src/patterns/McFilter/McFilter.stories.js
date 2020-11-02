@@ -1,4 +1,4 @@
-import { text } from "@storybook/addon-knobs"
+import { text } from '@storybook/addon-knobs'
 import authUser from '../../mocks/authUser'
 import menuLangs from '../../mocks/menuLangs'
 import { value, filters, placeholders } from '../../mocks/filterMocks'
@@ -6,9 +6,9 @@ import { handleConfirmAction } from '../../helpers/delayedAction'
 
 import McFilter from './McFilter'
 import McTopBar from '../McTopBar/McTopBar'
-import McTitle from "../../elements/McTitle/McTitle"
-import McButton from "../../elements/McButton/McButton"
-import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon"
+import McTitle from '../../elements/McTitle/McTitle'
+import McButton from '../../elements/McButton/McButton'
+import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
 
 export default {
   title: 'Patterns/McFilter/McFilter',
@@ -17,7 +17,8 @@ export default {
     componentSubtitle: 'Status: In progress',
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1801%3A5024',
+      url:
+        'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1801%3A5024',
     },
   },
 }
@@ -42,7 +43,7 @@ export const Default = () => ({
   components: { McFilter, McTopBar, McTitle, McButton, McSvgIcon },
   data() {
     return {
-      filterValues: value
+      filterValues: value,
     }
   },
   computed: {
@@ -55,7 +56,9 @@ export const Default = () => ({
     user() {
       return {
         ...authUser,
-        name: `${authUser.first_name}${authUser.last_name ? ` ${authUser.last_name}` : ''}`,
+        name: `${authUser.first_name}${
+          authUser.last_name ? ` ${authUser.last_name}` : ''
+        }`,
       }
     },
   },
@@ -74,11 +77,21 @@ export const Default = () => ({
     },
     onDeleteFilterPreset(message) {
       const filter = this.$refs.filter
-      filter && handleConfirmAction(filter.savePresetsToLocalStorage, filter.getPresetsFromLocalStorage, message)
+      filter &&
+        handleConfirmAction(
+          filter.savePresetsToLocalStorage,
+          filter.getPresetsFromLocalStorage,
+          message,
+        )
     },
     onAllTagsClear(message) {
       const filter = this.$refs.filter
-      filter && handleConfirmAction(filter.clearTemporaryValues, filter.revertClearedValues, message)
+      filter &&
+        handleConfirmAction(
+          filter.clearTemporaryValues,
+          filter.revertClearedValues,
+          message,
+        )
     },
   },
   template: `<mc-top-bar :user="user" :menu-langs="menuLangs">
@@ -99,4 +112,3 @@ export const Default = () => ({
     <portal-target slot="bottom" name="filterTarget" />
   </mc-top-bar>`,
 })
-

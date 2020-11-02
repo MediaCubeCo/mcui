@@ -53,7 +53,7 @@
                 variation="blue-outline"
                 @click.native="handleStoreTag"
               >
-                {{ placeholders.actions[activeTag ? "save" : "add"] }}
+                {{ placeholders.actions[activeTag ? 'save' : 'add'] }}
               </mc-button>
             </template>
           </div>
@@ -131,25 +131,25 @@
 </template>
 
 <script>
-import _isEmpty from "lodash/isEmpty";
-import _isEqual from "lodash/isEqual";
-import _uniq from "lodash/uniq";
-import _cloneDeep from "lodash/cloneDeep";
-import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon";
-import McButton from "../../elements/McButton/McButton";
-import McTitle from "../../elements/McTitle/McTitle";
-import McFieldSelect from "../../elements/McField/McFieldSelect/McFieldSelect";
-import McFieldText from "../../elements/McField/McFieldText/McFieldText";
-import McCell from "../../patterns/McCells/McCell/McCell";
-import McTooltip from "../../elements/McTooltip/McTooltip";
-import McFilterTypeRelation from "./McFilterTypeRelation/McFilterTypeRelation";
-import McFilterTypeText from "./McFilterTypeText/McFilterTypeText";
-import McFilterTypeRange from "./McFilterTypeRange/McFilterTypeRange";
-import McFilterTypeDate from "./McFilterTypeDate/McFilterTypeDate";
-import McFilterTags from "./McFilterTags/McFilterTags";
+import _isEmpty from 'lodash/isEmpty'
+import _isEqual from 'lodash/isEqual'
+import _uniq from 'lodash/uniq'
+import _cloneDeep from 'lodash/cloneDeep'
+import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
+import McButton from '../../elements/McButton/McButton'
+import McTitle from '../../elements/McTitle/McTitle'
+import McFieldSelect from '../../elements/McField/McFieldSelect/McFieldSelect'
+import McFieldText from '../../elements/McField/McFieldText/McFieldText'
+import McCell from '../../patterns/McCells/McCell/McCell'
+import McTooltip from '../../elements/McTooltip/McTooltip'
+import McFilterTypeRelation from './McFilterTypeRelation/McFilterTypeRelation'
+import McFilterTypeText from './McFilterTypeText/McFilterTypeText'
+import McFilterTypeRange from './McFilterTypeRange/McFilterTypeRange'
+import McFilterTypeDate from './McFilterTypeDate/McFilterTypeDate'
+import McFilterTags from './McFilterTags/McFilterTags'
 
 export default {
-  name: "McFilter",
+  name: 'McFilter',
   components: {
     McFilterTags,
     McFilterTypeRelation,
@@ -162,7 +162,7 @@ export default {
     McFieldSelect,
     McFieldText,
     McCell,
-    McTooltip
+    McTooltip,
   },
   props: {
     /**
@@ -171,21 +171,21 @@ export default {
      */
     name: {
       type: String,
-      required: true
+      required: true,
     },
     /**
      *  Значение фильтра
      */
     value: {
       type: Object,
-      required: true
+      required: true,
     },
     /**
      *  Типы фильтров
      */
     filters: {
       type: Array,
-      required: true
+      required: true,
     },
     /**
      *  Переводы локализаций
@@ -194,46 +194,46 @@ export default {
       type: Object,
       default() {
         return {
-          value: "Value",
-          condition: "Condition",
-          create_preset: "Create new preset",
-          fast_filters: "Fast filters",
-          added_filters: "Added filters",
-          enter_preset_name: "Enter preset name",
+          value: 'Value',
+          condition: 'Condition',
+          create_preset: 'Create new preset',
+          fast_filters: 'Fast filters',
+          added_filters: 'Added filters',
+          enter_preset_name: 'Enter preset name',
           enter_preset_tooltip:
-            "Сохранение выбранных параметров фильтра в пользовательский пресет",
-          from: "From",
-          to: "To",
-          enter: "Enter",
-          choose: "Choose",
+            'Сохранение выбранных параметров фильтра в пользовательский пресет',
+          from: 'From',
+          to: 'To',
+          enter: 'Enter',
+          choose: 'Choose',
           actions: {
-            add: "Add",
-            save: "Save",
-            clear: "Clear",
-            create: "Create",
-            delete_preset: "Delete preset",
-            is: "This",
-            is_not: "Is not",
-            empty: "Empty",
-            confirm: "Confirm"
+            add: 'Add',
+            save: 'Save',
+            clear: 'Clear',
+            create: 'Create',
+            delete_preset: 'Delete preset',
+            is: 'This',
+            is_not: 'Is not',
+            empty: 'Empty',
+            confirm: 'Confirm',
           },
           calendar: {
-            week: "Week",
-            month: "Month",
-            quarter: "Quarter",
-            year: "Year",
-            confirm: "Confirm"
+            week: 'Week',
+            month: 'Month',
+            quarter: 'Quarter',
+            year: 'Year',
+            confirm: 'Confirm',
           },
           messages: {
-            same_filter: "Уже есть фильтр с таким параметром",
-            same_preset_name: "Уже есть фильтр с таким именем",
-            accidentally_cleared: "Случайно очистили?",
-            accidentally_deleted: "Случайно удалили?",
-            more_than: 'Значение "от" не может быть больше значения "до"'
-          }
-        };
-      }
-    }
+            same_filter: 'Уже есть фильтр с таким параметром',
+            same_preset_name: 'Уже есть фильтр с таким именем',
+            accidentally_cleared: 'Случайно очистили?',
+            accidentally_deleted: 'Случайно удалили?',
+            more_than: 'Значение "от" не может быть больше значения "до"',
+          },
+        }
+      },
+    },
   },
   data() {
     return {
@@ -246,64 +246,64 @@ export default {
       currentCondition: null,
       currentConditionName: null,
       buttonConfirmIsDisable: false,
-      newPresetName: "",
+      newPresetName: '',
       dragOptions: {
         scrollPos: 0,
         startClientPos: 0,
         distance: 0,
         isDrag: false,
-        mouseIsDown: false
+        mouseIsDown: false,
       },
-      presets: JSON.parse(window.localStorage.mcFilterPresets || "{}"),
+      presets: JSON.parse(window.localStorage.mcFilterPresets || '{}'),
       activePreset: null,
       temporaryActivePreset: null,
-      activeTag: null
-    };
+      activeTag: null,
+    }
   },
   computed: {
     visibilityToggleVariation() {
       return this.isOpen || !this.buttonConfirmIsDisable
-        ? "blue-invert"
-        : "black-flat";
+        ? 'blue-invert'
+        : 'black-flat'
     },
     currentFilter() {
-      return this.filters.find(f => f.value === this.selectedOptionFilter);
+      return this.filters.find(f => f.value === this.selectedOptionFilter)
     },
     computedComponentTypeName() {
-      return `mc-filter-type-${this.currentFilter.type}`;
+      return `mc-filter-type-${this.currentFilter.type}`
     },
     hasButtonAdd() {
-      return !_isEmpty(this.currentCondition);
+      return !_isEmpty(this.currentCondition)
     },
     buttonCreateIsDisable() {
-      return !this.newPresetName.trim();
-    }
+      return !this.newPresetName.trim()
+    },
   },
   watch: {
     value: {
       handler(val) {
-        this.currentValues = { ...val.filter };
+        this.currentValues = { ...val.filter }
         if (val.filter_name) {
           this.currentValuesName = JSON.parse(decodeURI(atob(val.filter_name)))
         }
         this.buttonConfirmIsDisable =
-          _isEmpty(val.filter) || _isEmpty(val.filter_name);
+          _isEmpty(val.filter) || _isEmpty(val.filter_name)
       },
       immediate: true,
-      deep: true
+      deep: true,
     },
     currentFilter: {
       handler() {
-        this.handleConditionChange();
+        this.handleConditionChange()
       },
-      deep: true
+      deep: true,
     },
     currentValues(newVal, oldVal) {
       if (_isEmpty(oldVal) && !_isEmpty(newVal)) {
-        this.buttonConfirmIsDisable = false;
+        this.buttonConfirmIsDisable = false
       }
       if (_isEmpty(this.value.filter) && _isEmpty(newVal)) {
-        this.buttonConfirmIsDisable = true;
+        this.buttonConfirmIsDisable = true
       }
 
       if (this.activePreset) {
@@ -312,362 +312,362 @@ export default {
             return {
               name: p.name,
               filter: _cloneDeep(this.currentValues),
-              filter_name: _cloneDeep(this.currentValuesName)
-            };
+              filter_name: _cloneDeep(this.currentValuesName),
+            }
           }
-          return p;
-        });
-        this.presets[this.name] = [...mappedPresets];
+          return p
+        })
+        this.presets[this.name] = [...mappedPresets]
         window.localStorage.mcFilterPresets = JSON.stringify({
-          ...this.presets
-        });
+          ...this.presets,
+        })
       }
-    }
+    },
   },
   mounted() {
-    document.documentElement.addEventListener("mousemove", this.onMouseMove);
-    document.documentElement.addEventListener("mouseup", this.onMouseUp);
+    document.documentElement.addEventListener('mousemove', this.onMouseMove)
+    document.documentElement.addEventListener('mouseup', this.onMouseUp)
   },
   beforeDestroy() {
-    document.documentElement.removeEventListener("mousemove", this.onMouseMove);
-    document.documentElement.removeEventListener("mouseup", this.onMouseUp);
+    document.documentElement.removeEventListener('mousemove', this.onMouseMove)
+    document.documentElement.removeEventListener('mouseup', this.onMouseUp)
   },
   methods: {
     onMouseDown(e) {
-      this.dragOptions.startClientPos = e.clientX;
-      this.dragOptions.mouseIsDown = true;
-      this.dragOptions.scrollPos = this.$refs.dragArea.scrollLeft;
+      this.dragOptions.startClientPos = e.clientX
+      this.dragOptions.mouseIsDown = true
+      this.dragOptions.scrollPos = this.$refs.dragArea.scrollLeft
     },
     onMouseMove(e) {
-      if (!this.dragOptions.mouseIsDown) return;
+      if (!this.dragOptions.mouseIsDown) return
 
-      this.dragOptions.distance = e.clientX - this.dragOptions.startClientPos;
+      this.dragOptions.distance = e.clientX - this.dragOptions.startClientPos
       if (Math.abs(this.dragOptions.distance) > 2 && !this.dragOptions.isDrag) {
-        this.dragOptions.isDrag = true;
+        this.dragOptions.isDrag = true
       }
       if (this.dragOptions.isDrag) {
         this.$refs.dragArea.scrollTo({
-          left: this.dragOptions.scrollPos - this.dragOptions.distance
-        });
+          left: this.dragOptions.scrollPos - this.dragOptions.distance,
+        })
       }
       if (Math.abs(this.scrollPos)) {
-        this.dragOptions.scrollPos = 0;
+        this.dragOptions.scrollPos = 0
       }
     },
     onMouseUp() {
       if (this.dragOptions.isDrag) {
-        this.dragOptions.isDrag = false;
+        this.dragOptions.isDrag = false
       }
-      this.dragOptions.mouseIsDown = false;
+      this.dragOptions.mouseIsDown = false
     },
     handlePresetMouseUp(preset) {
-      if (this.dragOptions.isDrag) return;
+      if (this.dragOptions.isDrag) return
       if (this.activePreset && this.activePreset.name === preset.name) {
-        this.activePreset = null;
-        this.currentValues = {};
-        this.currentValuesName = {};
+        this.activePreset = null
+        this.currentValues = {}
+        this.currentValuesName = {}
       } else {
-        this.activePreset = preset;
-        this.currentValues = _cloneDeep(preset.filter);
-        this.currentValuesName = _cloneDeep(preset.filter_name);
+        this.activePreset = preset
+        this.currentValues = _cloneDeep(preset.filter)
+        this.currentValuesName = _cloneDeep(preset.filter_name)
       }
       if (!this.isOpen) {
-        this.handleConfirm();
+        this.handleConfirm()
       }
     },
     handleConditionChange(val = null, valName = null) {
-      this.currentCondition = val;
-      this.currentConditionName = valName || val;
+      this.currentCondition = val
+      this.currentConditionName = valName || val
     },
     handleStoreTag() {
-      this.activeTag ? this.editTag() : this.addTag();
+      this.activeTag ? this.editTag() : this.addTag()
     },
     editTag() {
-      this.currentFilter.type === "relation"
+      this.currentFilter.type === 'relation'
         ? this.editRelationValue()
-        : this.addSimpleValue();
-      this.activeTag = null;
+        : this.addSimpleValue()
+      this.activeTag = null
     },
     addTag() {
-      this.currentFilter.type === "relation"
+      this.currentFilter.type === 'relation'
         ? this.addRelationValue()
-        : this.addSimpleValue();
+        : this.addSimpleValue()
     },
     editRelationValue() {
       const tagRelationValue =
-        this.activeTag.relationKey === "exists"
+        this.activeTag.relationKey === 'exists'
           ? [0]
-          : [Number(this.activeTag.value)];
+          : [Number(this.activeTag.value)]
       const tagRelation = {
         [this.activeTag.category]: {
-          [this.activeTag.relationKey]: tagRelationValue
-        }
-      };
+          [this.activeTag.relationKey]: tagRelationValue,
+        },
+      }
       const selectedRelation = {
-        [this.selectedOptionFilter]: _cloneDeep(this.currentCondition)
-      };
+        [this.selectedOptionFilter]: _cloneDeep(this.currentCondition),
+      }
       if (_isEqual(selectedRelation, tagRelation)) {
         /**
          * Событие по возникшей ошибке
          */
-        this.$emit("error", this.placeholders.messages.same_filter);
-        return;
+        this.$emit('error', this.placeholders.messages.same_filter)
+        return
       }
-      const { category, categoryName } = this.getCategoriesWithNewRelation();
-      if (this.activeTag.relationKey === "exists") {
-        delete category[this.activeTag.relationKey];
-        delete categoryName[this.activeTag.relationKey];
+      const { category, categoryName } = this.getCategoriesWithNewRelation()
+      if (this.activeTag.relationKey === 'exists') {
+        delete category[this.activeTag.relationKey]
+        delete categoryName[this.activeTag.relationKey]
       } else {
         const numerableValues = category[this.activeTag.relationKey].map(i =>
-          Number(i)
-        );
-        const index = numerableValues.indexOf(Number(this.activeTag.value));
+          Number(i),
+        )
+        const index = numerableValues.indexOf(Number(this.activeTag.value))
         if (index !== -1) {
-          category[this.activeTag.relationKey].splice(index, 1);
+          category[this.activeTag.relationKey].splice(index, 1)
           _isEmpty(category[this.activeTag.relationKey]) &&
-            delete category[this.activeTag.relationKey];
+            delete category[this.activeTag.relationKey]
 
-          delete categoryName[this.activeTag.relationKey][this.activeTag.value];
+          delete categoryName[this.activeTag.relationKey][this.activeTag.value]
           _isEmpty(categoryName[this.activeTag.relationKey]) &&
-            delete categoryName[this.activeTag.relationKey];
+            delete categoryName[this.activeTag.relationKey]
         }
       }
 
-      this.setFilterValues(category, categoryName);
+      this.setFilterValues(category, categoryName)
     },
     addRelationValue() {
-      const { category, categoryName } = this.getCategoriesWithNewRelation();
-      this.setFilterValues(category, categoryName);
+      const { category, categoryName } = this.getCategoriesWithNewRelation()
+      this.setFilterValues(category, categoryName)
     },
     getCategoriesWithNewRelation() {
-      const relationKeys = Object.keys(this.currentCondition);
-      const values = _cloneDeep(this.currentValues);
-      const valuesName = _cloneDeep(this.currentValuesName);
-      const selectedCategory = values[this.selectedOptionFilter];
-      const selectedCategoryName = valuesName[this.selectedOptionFilter];
+      const relationKeys = Object.keys(this.currentCondition)
+      const values = _cloneDeep(this.currentValues)
+      const valuesName = _cloneDeep(this.currentValuesName)
+      const selectedCategory = values[this.selectedOptionFilter]
+      const selectedCategoryName = valuesName[this.selectedOptionFilter]
 
       selectedCategory &&
         relationKeys.forEach(k => {
-          if (k === "exists") {
-            selectedCategory[k] = [0];
-            selectedCategoryName[k] = [0];
+          if (k === 'exists') {
+            selectedCategory[k] = [0]
+            selectedCategoryName[k] = [0]
           } else {
             if (k in selectedCategory) {
               selectedCategory[k] = _uniq([
                 ...selectedCategory[k],
-                ...this.currentCondition[k]
-              ]);
+                ...this.currentCondition[k],
+              ])
               selectedCategoryName[k] = {
                 ...selectedCategoryName[k],
-                ...this.currentConditionName[k]
-              };
+                ...this.currentConditionName[k],
+              }
             } else {
-              selectedCategory[k] = this.currentCondition[k];
-              selectedCategoryName[k] = this.currentConditionName[k];
+              selectedCategory[k] = this.currentCondition[k]
+              selectedCategoryName[k] = this.currentConditionName[k]
             }
           }
-        });
-      return { category: selectedCategory, categoryName: selectedCategoryName };
+        })
+      return { category: selectedCategory, categoryName: selectedCategoryName }
     },
     setFilterValues(val, valName) {
       const newVal = {
         ...this.currentValues,
-        [this.selectedOptionFilter]: val || this.currentCondition
-      };
+        [this.selectedOptionFilter]: val || this.currentCondition,
+      }
       if (_isEqual(this.currentValues, newVal)) {
         /**
          * Событие по возникшей ошибке
          */
-        this.$emit("error", this.placeholders.messages.same_filter);
-        return;
+        this.$emit('error', this.placeholders.messages.same_filter)
+        return
       }
-      this.currentValues = newVal;
+      this.currentValues = newVal
       this.currentValuesName = {
         ...this.currentValuesName,
-        [this.selectedOptionFilter]: valName || this.currentConditionName
-      };
+        [this.selectedOptionFilter]: valName || this.currentConditionName,
+      }
 
-      this.setEmptyCondition();
+      this.setEmptyCondition()
     },
     setEmptyCondition() {
       switch (this.currentFilter.type) {
-        case "relation":
-          this.handleConditionChange();
-          break;
-        case "text":
-          this.handleConditionChange("");
-          break;
-        case "range":
-          this.handleConditionChange({});
-          break;
-        case "date":
-          this.handleConditionChange();
-          break;
+        case 'relation':
+          this.handleConditionChange()
+          break
+        case 'text':
+          this.handleConditionChange('')
+          break
+        case 'range':
+          this.handleConditionChange({})
+          break
+        case 'date':
+          this.handleConditionChange()
+          break
       }
     },
     addSimpleValue() {
       if (
-        this.currentFilter.type === "range" &&
+        this.currentFilter.type === 'range' &&
         Object.keys(this.currentCondition).length === 2
       ) {
         if (this.currentCondition.more > this.currentCondition.less) {
           /**
            * Событие по возникшей ошибке
            */
-          this.$emit("error", this.placeholders.messages.more_than);
-          return;
+          this.$emit('error', this.placeholders.messages.more_than)
+          return
         }
       }
-      this.setFilterValues(this.currentCondition, this.currentCondition);
+      this.setFilterValues(this.currentCondition, this.currentCondition)
     },
     onTagsChange(val) {
       if (_isEmpty(val)) {
-        this.currentValues = {};
-        this.currentValuesName = {};
-        return;
+        this.currentValues = {}
+        this.currentValuesName = {}
+        return
       }
-      this.currentValuesName = _cloneDeep(val);
-      this.setRelationsToArrayFormat(val);
+      this.currentValuesName = _cloneDeep(val)
+      this.setRelationsToArrayFormat(val)
     },
     allTagsClear() {
-      this.temporaryValues = _cloneDeep(this.currentValues);
-      this.temporaryValuesName = _cloneDeep(this.currentValuesName);
-      this.currentValues = {};
-      this.currentValuesName = {};
+      this.temporaryValues = _cloneDeep(this.currentValues)
+      this.temporaryValuesName = _cloneDeep(this.currentValuesName)
+      this.currentValues = {}
+      this.currentValuesName = {}
       /**
        * Событие по очистке выбранных фильтров из поля
        */
-      this.$emit("clear", this.placeholders.messages.accidentally_cleared);
+      this.$emit('clear', this.placeholders.messages.accidentally_cleared)
     },
     clearTemporaryValues() {
-      this.temporaryValues = {};
-      this.temporaryValuesName = {};
+      this.temporaryValues = {}
+      this.temporaryValuesName = {}
     },
     revertClearedValues() {
-      this.currentValues = _cloneDeep(this.temporaryValues);
-      this.currentValuesName = _cloneDeep(this.temporaryValuesName);
+      this.currentValues = _cloneDeep(this.temporaryValues)
+      this.currentValuesName = _cloneDeep(this.temporaryValuesName)
     },
     setRelationsToArrayFormat(obj) {
-      const newObj = _cloneDeep(obj);
-      const relationKeys = ["is", "is_not"];
+      const newObj = _cloneDeep(obj)
+      const relationKeys = ['is', 'is_not']
       for (let [categoryKey, categoryVal] of Object.entries(obj)) {
         if (categoryVal.constructor === Object) {
           for (let [key, val] of Object.entries(categoryVal)) {
             if (relationKeys.includes(key) && val.constructor === Object) {
               newObj[categoryKey][key] = [
-                ...Object.keys(val).map(k => Number(k))
-              ];
+                ...Object.keys(val).map(k => Number(k)),
+              ]
             }
           }
         }
       }
-      this.currentValues = newObj;
+      this.currentValues = newObj
     },
     onTagClick(tag) {
-      this.activeTag = _isEqual(this.activeTag, tag) ? null : tag;
+      this.activeTag = _isEqual(this.activeTag, tag) ? null : tag
       if (!this.activeTag) {
-        this.setEmptyCondition();
-        return;
+        this.setEmptyCondition()
+        return
       }
 
-      let condition = null;
-      let conditionName = null;
+      let condition = null
+      let conditionName = null
       if (tag.relationKey) {
         condition = {
           [tag.relationKey]:
-            tag.relationKey === "exists" ? [0] : [Number(tag.value)]
-        };
+            tag.relationKey === 'exists' ? [0] : [Number(tag.value)],
+        }
         conditionName = {
           [tag.relationKey]:
-            tag.relationKey === "exists" ? [0] : { [tag.value]: tag.title }
-        };
+            tag.relationKey === 'exists' ? [0] : { [tag.value]: tag.title },
+        }
       } else {
-        condition = tag.value;
-        conditionName = tag.value;
+        condition = tag.value
+        conditionName = tag.value
       }
 
-      this.selectedOptionFilter = tag.category;
+      this.selectedOptionFilter = tag.category
       this.$nextTick(() => {
-        this.currentCondition = condition;
-        this.currentConditionName = conditionName;
-      });
+        this.currentCondition = condition
+        this.currentConditionName = conditionName
+      })
     },
     handleConfirm() {
       const encodedData = btoa(
-        encodeURI(JSON.stringify(this.currentValuesName))
-      );
+        encodeURI(JSON.stringify(this.currentValuesName)),
+      )
       /**
        * Событие по изменению значения фильтра
        */
-      this.$emit("input", {
+      this.$emit('input', {
         filter: this.currentValues,
-        filter_name: encodedData
-      });
+        filter_name: encodedData,
+      })
       if (_isEmpty(this.currentValues)) {
-        this.buttonConfirmIsDisable = true;
+        this.buttonConfirmIsDisable = true
       }
     },
     handleDeletePreset(preset) {
       const filteredPresets = this.presets[this.name].filter(
-        p => p.name !== preset.name
-      );
-      this.presets[this.name] = [...filteredPresets];
-      this.temporaryActivePreset = _cloneDeep(this.activePreset);
-      this.activePreset = null;
-      this.currentValues = {};
-      this.currentValuesName = {};
+        p => p.name !== preset.name,
+      )
+      this.presets[this.name] = [...filteredPresets]
+      this.temporaryActivePreset = _cloneDeep(this.activePreset)
+      this.activePreset = null
+      this.currentValues = {}
+      this.currentValuesName = {}
       /**
        * Событие по удалению пресета
        */
       this.$emit(
-        "delete-preset",
-        this.placeholders.messages.accidentally_deleted
-      );
+        'delete-preset',
+        this.placeholders.messages.accidentally_deleted,
+      )
     },
     savePresetsToLocalStorage() {
-      window.localStorage.mcFilterPresets = JSON.stringify({ ...this.presets });
+      window.localStorage.mcFilterPresets = JSON.stringify({ ...this.presets })
     },
     getPresetsFromLocalStorage() {
-      this.activePreset = _cloneDeep(this.temporaryActivePreset);
-      this.currentValues = _cloneDeep(this.activePreset.filter);
-      this.currentValuesName = _cloneDeep(this.activePreset.filter_name);
-      this.temporaryActivePreset = null;
-      this.presets = JSON.parse(window.localStorage.mcFilterPresets || "{}");
+      this.activePreset = _cloneDeep(this.temporaryActivePreset)
+      this.currentValues = _cloneDeep(this.activePreset.filter)
+      this.currentValuesName = _cloneDeep(this.activePreset.filter_name)
+      this.temporaryActivePreset = null
+      this.presets = JSON.parse(window.localStorage.mcFilterPresets || '{}')
     },
     handleCreatePreset() {
       if (
         this.presets[this.name] &&
         this.presets[this.name].find(p => p.name === this.newPresetName)
       ) {
-        this.$emit("error", this.placeholders.messages.same_preset_name);
-        return;
+        this.$emit('error', this.placeholders.messages.same_preset_name)
+        return
       }
       const preset = {
         name: this.newPresetName,
         filter: _cloneDeep(this.currentValues),
-        filter_name: _cloneDeep(this.currentValuesName)
-      };
-      if ("mcFilterPresets" in window.localStorage) {
-        const presets = JSON.parse(window.localStorage.mcFilterPresets);
+        filter_name: _cloneDeep(this.currentValuesName),
+      }
+      if ('mcFilterPresets' in window.localStorage) {
+        const presets = JSON.parse(window.localStorage.mcFilterPresets)
         if (this.name in presets) {
-          this.presets[this.name] = [preset, ...this.presets[this.name]];
+          this.presets[this.name] = [preset, ...this.presets[this.name]]
         } else {
-          this.presets[this.name] = [preset];
+          this.presets[this.name] = [preset]
         }
       } else {
-        this.presets[this.name] = [preset];
+        this.presets[this.name] = [preset]
       }
-      window.localStorage.mcFilterPresets = JSON.stringify({ ...this.presets });
-      this.newPresetName = "";
-      this.activePreset = { ...preset };
+      window.localStorage.mcFilterPresets = JSON.stringify({ ...this.presets })
+      this.newPresetName = ''
+      this.activePreset = { ...preset }
     },
     getPresetButtonVariation(preset) {
       return this.activePreset && this.activePreset.name === preset.name
-        ? "blue-invert"
-        : "gray-outline";
-    }
-  }
-};
+        ? 'blue-invert'
+        : 'gray-outline'
+    },
+  },
+}
 </script>
 
 <style lang="scss">

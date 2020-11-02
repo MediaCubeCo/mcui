@@ -23,6 +23,9 @@
     "publish:minor": "yarn release:minor && yarn publish . && git push",
     "publish:major": "yarn release:major && yarn publish . && git push"
   },
+  "lint-staged": {
+    "src/*.{vue}": "eslint --fix --ext .vue src/"
+  },
   "dependencies": {
     "bourbon": "^7.0.0",
     "core-js": "^3.6.5",
@@ -74,9 +77,11 @@
     "babel-preset-vue": "^2.0.2",
     "css-loader": "^3.6.0",
     "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-vue": "^6.2.2",
     "jest-vue-preprocessor": "^1.7.1",
+    "lint-staged": "^10.5.1",
     "node-sass": "^4.14.1",
     "numeral": "^2.0.6",
     "prettier": "^1.19.1",

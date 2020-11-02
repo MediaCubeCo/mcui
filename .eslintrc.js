@@ -1,25 +1,34 @@
 module.exports = {
-  root: true,
-  env: {
-    node: true
-  },
-  extends: ["plugin:vue/essential", "eslint:recommended", "@vue/prettier"],
-  parserOptions: {
-    parser: "babel-eslint"
-  },
-  rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-  },
-  overrides: [
-    {
-      files: [
-        "**/__tests__/*.{j,t}s?(x)",
-        "**/tests/unit/**/*.spec.{j,t}s?(x)"
-      ],
-      env: {
-        jest: true
-      }
+    root: true,
+    env: {
+        node: true,
+        browser: true
+    },
+    extends: [
+        "plugin:vue/recommended",
+        "eslint:recommended",
+        "prettier/vue",
+        "plugin:prettier/recommended"
+    ],
+    rules: {
+        "vue/component-name-in-template-casing": ["error", "kebab-case"],
+        "no-console": "off",
+        "no-debugger": "off",
+        "no-undef": "off",
+        "vue/no-v-html": "off",
+        'semi': [2, 'never'],
+        'vue/max-attributes-per-line': 'off',
+        'prettier/prettier': ['error', { 'semi': false }],
+        'vue/require-default-prop': "off",
+        "vue/require-valid-default-prop": "off",
+    },
+    plugins: [
+        'vue'
+    ],
+    globals: {
+        $nuxt: true
+    },
+    parserOptions: {
+        parser: "babel-eslint"
     }
-  ]
 };
