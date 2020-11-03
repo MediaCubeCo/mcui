@@ -6,12 +6,12 @@
       </div>
       <div class="mc-top-bar__right">
         <slot name="right" />
-        <mc-dropdown v-if="menuLangs && menuLangs.length" v-model="localesDropdownOpen" list-min-width="auto">
-          <mc-button
-            slot="activator"
-            variation="black-flat"
-            uppercase
-          >
+        <mc-dropdown
+          v-if="menuLangs && menuLangs.length"
+          v-model="localesDropdownOpen"
+          list-min-width="auto"
+        >
+          <mc-button slot="activator" variation="black-flat" uppercase>
             {{ menuLangs[0].name }}
             <mc-svg-icon
               slot="icon-append"
@@ -28,12 +28,31 @@
               text-align="left"
               full-width
             >
-                <mc-avatar slot="icon-prepend" :src="`https://www.countryflags.io/${getFlagName(locale.name)}/flat/64.png`" />
+              <mc-avatar
+                slot="icon-prepend"
+                :src="
+                  `https://www.countryflags.io/${getFlagName(
+                    locale.name,
+                  )}/flat/64.png`
+                "
+              />
               {{ locale.name }}
             </mc-button>
           </mc-dropdown-panel>
         </mc-dropdown>
-        <mc-avatar v-if="user" rounded size="400" :src="user.avatar" />
+        <slot name="user">
+          <mc-dropdown v-if="user" v-model="userDropdownOpen" position="right">
+            <mc-button slot="activator" variation="white-flat" size="m-compact">
+              <mc-avatar
+                slot="icon-prepend"
+                rounded
+                size="400"
+                :src="user.avatar"
+              />
+            </mc-button>
+            <slot name="user-dropdown-panel" />
+          </mc-dropdown>
+        </slot>
       </div>
     </div>
     <mc-separator color="hover-gray" indent-top="100" />
@@ -42,21 +61,23 @@
 </template>
 
 <script>
-import McAvatar from "../../elements/McAvatar/McAvatar";
-import McButton from "../../elements/McButton/McButton";
-import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon";
-import McSeparator from "../../elements/McSeparator/McSeparator";
-import McDropdown from "../McDropdown/McDropdown";
-import McDropdownPanel from "../McDropdown/McDropdownPanel/McDropdownPanel";
+import McAvatar from '../../elements/McAvatar/McAvatar'
+import McButton from '../../elements/McButton/McButton'
+import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
+import McSeparator from '../../elements/McSeparator/McSeparator'
+import McDropdown from '../McDropdown/McDropdown'
+import McDropdownPanel from '../McDropdown/McDropdownPanel/McDropdownPanel'
+import McPreview from '../../patterns/McPreview/McPreview'
 export default {
-  name: "McTopBar",
+  name: 'McTopBar',
   components: {
     McAvatar,
     McButton,
     McSvgIcon,
     McSeparator,
     McDropdown,
-    McDropdownPanel
+    McDropdownPanel,
+    McPreview,
   },
   props: {
     /**
@@ -65,7 +86,7 @@ export default {
      */
     user: {
       type: Object,
-      default: null
+      default: null,
     },
     /**
      *  Меню языков
@@ -73,20 +94,21 @@ export default {
      */
     menuLangs: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
-      localesDropdownOpen: false
-    };
+      localesDropdownOpen: false,
+      userDropdownOpen: false,
+    }
   },
   methods: {
     getFlagName(name) {
       return name.toLowerCase() === 'en' ? 'gb' : name
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style lang="scss">
