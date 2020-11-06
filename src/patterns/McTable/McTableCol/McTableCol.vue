@@ -1,38 +1,54 @@
 <template>
-  <vxe-table-column v-bind="attrs" v-on="$listeners" class="mc-table-col">
+  <vxe-table-column v-bind="attrs" class="mc-table-col" v-on="$listeners">
     <template v-slot="{ row, rowIndex }">
       <!-- @slot Слот для mc-table-col -->
       <slot :row="row">
-        <mc-title class="mc-table-col__title" :text-align="textAlign" :ellipsis="ellipsis" >
-          {{ $attrs.type === "seq" ? rowIndex + 1 : row[defaultTitle] }}
+        <mc-title
+          :text-align="textAlign"
+          :ellipsis="ellipsis"
+          class="mc-table-col__title"
+        >
+          {{ $attrs.type === 'seq' ? rowIndex + 1 : row[defaultTitle] }}
         </mc-title>
       </slot>
       <div v-if="$scopedSlots.right" class="mc-table-col__right">
         <!-- @slot Слот справа в ячейке (абсолютно спозиционированный, с бэкграундом) -->
-        <slot name="right" :row="row" />
+        <slot :row="row" name="right" />
       </div>
     </template>
     <template v-slot:header="{ column }">
       <!-- @slot Слот заголовка столбца -->
-      <slot name="header" :column="column">
-        <mc-title class="mc-table-col__title" weight="semi-bold" :text-align="textAlign">
+      <slot :column="column" name="header">
+        <mc-title
+          :text-align="textAlign"
+          class="mc-table-col__title"
+          weight="semi-bold"
+        >
           <mc-svg-icon
-              v-if="isSortable"
-              slot="icon-prepend"
-              size="200"
-              :name="getSortIcon(column)"
-              :color="getSortColor(column)"
+            v-if="isSortable"
+            slot="icon-prepend"
+            :name="getSortIcon(column)"
+            :color="getSortColor(column)"
+            size="200"
           />
-          {{ $attrs.type === "seq" ? "#" : column.title }}
-          <div class="mc-table-col__header-append" slot="icon-append">
+          {{ $attrs.type === 'seq' ? '#' : column.title }}
+          <div slot="icon-append" class="mc-table-col__header-append">
             <!-- @slot Слот для вставки в конец после заголовка столбца -->
             <slot name="header-append" />
           </div>
         </mc-title>
-        <div v-if="$scopedSlots['header-right'] || headerRight" class="mc-table-col__header-right">
+        <div
+          v-if="$scopedSlots['header-right'] || headerRight"
+          class="mc-table-col__header-right"
+        >
           <!-- @slot Слот справа в ячейке хедера (абсолютно спозиционированный, с бэкграундом) -->
-          <slot name="header-right" :column="column">
-            <mc-chip v-if="headerRight" class="mc-table-col__total" variation="gray-invert" size="s">
+          <slot :column="column" name="header-right">
+            <mc-chip
+              v-if="headerRight"
+              class="mc-table-col__total"
+              variation="gray-invert"
+              size="s"
+            >
               {{ headerRight }}
             </mc-chip>
           </slot>
@@ -40,17 +56,25 @@
       </slot>
     </template>
     <template v-slot:footer="{ columnIndex, items }">
-      <mc-title v-if="items[columnIndex]" :text-align="textAlign" weight="semi-bold">
+      <mc-title
+        v-if="items[columnIndex]"
+        :text-align="textAlign"
+        weight="semi-bold"
+      >
         {{ items[columnIndex] }}
       </mc-title>
       <template v-else-if="getVisibilityCommonInfo(columnIndex, items)">
-        <mc-title v-if="!provideData.canShowLoader" class="mc-table-col__title" weight="semi-bold">
+        <mc-title
+          v-if="!provideData.canShowLoader"
+          class="mc-table-col__title"
+          weight="semi-bold"
+        >
           {{ firstColFooter }}
         </mc-title>
         <span
           v-if="provideData.canShowLoader"
-          class="mc-table-col__loader"
           ref="loader"
+          class="mc-table-col__loader"
         ></span>
       </template>
     </template>
@@ -58,21 +82,21 @@
 </template>
 
 <script>
-import McTitle from "../../../elements/McTitle/McTitle"
-import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
-import McChip from "../../../elements/McChip/McChip"
+import McTitle from '../../../elements/McTitle/McTitle'
+import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
+import McChip from '../../../elements/McChip/McChip'
 
 /**
  * Смотреть mc-table
  */
 export default {
-  name: "McTableCol",
+  name: 'McTableCol',
   components: {
     McTitle,
     McSvgIcon,
     McChip,
   },
-  inject: ["provideData"],
+  inject: ['provideData'],
   props: {
     /**
      *  Если нужен бордер
@@ -87,16 +111,16 @@ export default {
      *  в ячейке заголовка справа
      */
     headerRight: {
-      type: Number,
+      type: [Number, String],
       default: null,
     },
   },
   computed: {
     attrs() {
       const classes = {
-        "class-name": this.handleClassName,
-        "header-class-name": this.handleClassName,
-        "footer-class-name": this.handleFooterClassName,
+        'class-name': this.handleClassName,
+        'header-class-name': this.handleClassName,
+        'footer-class-name': this.handleFooterClassName,
       }
       return {
         ...classes,
@@ -107,14 +131,16 @@ export default {
       return this.$attrs.field
     },
     textAlign() {
-      return this.$attrs.align || "left"
+      return this.$attrs.align || 'left'
     },
     isSortable() {
-      return this.$attrs.hasOwnProperty("sortable") && this.$attrs.sortable !== false
+      return (
+        this.$attrs.hasOwnProperty('sortable') && this.$attrs.sortable !== false
+      )
     },
     ellipsis() {
-      if (!this.$attrs.hasOwnProperty("show-overflow")) return true
-      return this.$attrs["show-overflow"] !== false
+      if (!this.$attrs.hasOwnProperty('show-overflow')) return true
+      return this.$attrs['show-overflow'] !== false
     },
     firstColFooter() {
       switch (this.provideData.footerInfo) {
@@ -125,45 +151,53 @@ export default {
         default:
           return ''
       }
-    }
+    },
   },
   methods: {
     getVisibilityCommonInfo(columnIndex, items) {
-        const index = items.indexOf(null)
-        return columnIndex === index
+      const index = items.indexOf(null)
+      return columnIndex === index
     },
     getSortIcon(column) {
       if (!this.provideData.nativeSort) {
-        if (this.provideData.sortedBy && column.property === this.provideData.sortedBy) {
-          return this.provideData.sortedDescending ? "arrow_downward" : "arrow_upward"
+        if (
+          this.provideData.sortedBy &&
+          column.property === this.provideData.sortedBy
+        ) {
+          return this.provideData.sortedDescending
+            ? 'arrow_downward'
+            : 'arrow_upward'
         }
-        return "arrow_up_down"
+        return 'arrow_up_down'
       }
-      if (!column.order) return "arrow_up_down"
-      return column.order === "desc" ? "arrow_downward" : "arrow_upward"
+      if (!column.order) return 'arrow_up_down'
+      return column.order === 'desc' ? 'arrow_downward' : 'arrow_upward'
     },
     getSortColor(column) {
       if (!this.provideData.nativeSort) {
-        if (this.provideData.sortedBy && column.property === this.provideData.sortedBy) {
+        if (
+          this.provideData.sortedBy &&
+          column.property === this.provideData.sortedBy
+        ) {
           return 'black'
         }
-        return "outline-gray"
+        return 'outline-gray'
       }
       return column.order ? 'black' : 'outline-gray'
     },
     handleClassName() {
       const classes = []
       if (this.hasBorder && !this.provideData.cardIsOpen) {
-        classes.push("mc-table-col--border-right")
+        classes.push('mc-table-col--border-right')
       }
-      if (this.$attrs["show-overflow"] === false) {
-        classes.push("mc-table-col--overflow-visible")
+      if (this.$attrs['show-overflow'] === false) {
+        classes.push('mc-table-col--overflow-visible')
       }
       return classes
     },
     handleFooterClassName() {
       if (this.hasBorder && !this.provideData.cardIsOpen) {
-        return "mc-table-col--border-right"
+        return 'mc-table-col--border-right'
       }
     },
   },
@@ -171,9 +205,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~vxe-table/styles/variable.scss";
+@import '~vxe-table/styles/variable.scss';
 //override variables:
-@import "../../../styles/table.scss";
+@import '../../../styles/table.scss';
 
 @mixin col-right-color($color) {
   .mc-table-col__right {

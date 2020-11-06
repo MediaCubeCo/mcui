@@ -194,7 +194,7 @@ export default {
       font-size: $font-size-200;
       line-height: $line-height-250;
       #{$block-name}__text {
-        max-width: 330px;
+        max-width: 536px;
       }
     }
     &-body {
