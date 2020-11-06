@@ -23,19 +23,32 @@
  * на проектах
  */
 export default {
-  name: "McMain"
-};
+  name: 'McMain',
+  mounted() {
+    this.vhFix()
+    window.addEventListener('resize', this.vhFix)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.vhFix)
+  },
+  methods: {
+    vhFix() {
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    },
+  },
+}
 </script>
 
 <style lang="scss">
-@import "../../../styles/toast";
-@import "../../../styles/global";
+@import '../../../styles/toast';
+@import '../../../styles/global';
 
 .mc-main {
   $block-name: &;
 
   display: flex;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   @include custom-scroll();
 
   &__left {

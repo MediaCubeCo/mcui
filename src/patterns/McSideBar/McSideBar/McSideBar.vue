@@ -39,7 +39,7 @@
           :sidebar-width="width"
           @toggle-size="handleToggleSize"
         >
-          <slot name="bottom-message" slot="bottom-message" />
+          <slot slot="bottom-message" name="bottom-message" />
         </mc-side-bar-bottom>
       </div>
     </section>
@@ -47,20 +47,20 @@
 </template>
 
 <script>
-import McSideBarTop from "../McSideBarTop/McSideBarTop";
-import McSideBarCenter from "../McSideBarCenter/McSideBarCenter";
-import McSideBarBottom from "../McSideBarBottom/McSideBarBottom";
+import McSideBarTop from '../McSideBarTop/McSideBarTop'
+import McSideBarCenter from '../McSideBarCenter/McSideBarCenter'
+import McSideBarBottom from '../McSideBarBottom/McSideBarBottom'
 export default {
-  name: "McSideBar",
+  name: 'McSideBar',
   components: {
     McSideBarTop,
     McSideBarCenter,
-    McSideBarBottom
+    McSideBarBottom,
   },
   provide() {
     return {
-      currentThemeConfig: this.currentThemeConfig
-    };
+      currentThemeConfig: this.currentThemeConfig,
+    }
   },
   props: {
     /**
@@ -69,7 +69,7 @@ export default {
      */
     logoTitle: {
       type: String,
-      default: "Dashboard"
+      default: 'Dashboard',
     },
     /**
      *  Путь до изображения
@@ -77,7 +77,7 @@ export default {
      */
     logoSrc: {
       type: String,
-      default: ""
+      default: '',
     },
     /**
      *  Имя иконки
@@ -85,7 +85,7 @@ export default {
      */
     logoIcon: {
       type: String,
-      default: ""
+      default: '',
     },
     /**
      *  Заголовок
@@ -93,7 +93,7 @@ export default {
      */
     menuMainTitle: {
       type: String,
-      default: ""
+      default: '',
     },
     /**
      *  Центральное меню
@@ -101,7 +101,7 @@ export default {
      */
     menuMain: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     /**
      *  Меню при клике на +
@@ -109,7 +109,7 @@ export default {
      */
     menuAdditional: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     /**
      *  Меню приложений
@@ -117,7 +117,7 @@ export default {
      */
     menuApps: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     /**
      *  Id чатры
@@ -125,7 +125,7 @@ export default {
      */
     chatraConfig: {
       type: Object,
-      default: null
+      default: null,
     },
     /**
      *  Userback Config
@@ -133,7 +133,7 @@ export default {
      */
     userbackConfig: {
       type: Object,
-      default: null
+      default: null,
     },
     /**
      *  Данные пользователя
@@ -141,7 +141,7 @@ export default {
      */
     user: {
       type: Object,
-      default: null
+      default: null,
     },
     /**
      *  Текст кнопки
@@ -149,35 +149,35 @@ export default {
      */
     hideText: {
       type: String,
-      default: ""
+      default: '',
     },
     /**
      *  Компактный вид
      */
     compact: {
       type: Boolean,
-      default: false
+      default: false,
     },
     /**
      * Цветовая схема
      */
     variable: {
       type: String,
-      default: "black"
+      default: 'black',
     },
     /**
      * Ширина сайдбара
      */
     width: {
       type: String,
-      default: "216px"
+      default: '216px',
     },
     /**
      * Ширина компактного сайдбара
      */
     compactWidth: {
       type: String,
-      default: "56px"
+      default: '56px',
     },
     /**
      * Брейкпоинт после которого
@@ -185,7 +185,7 @@ export default {
      */
     absoluteBreakpoint: {
       type: Number,
-      default: null
+      default: null,
     },
     /**
      * Брейкпоинт после которого
@@ -193,145 +193,145 @@ export default {
      */
     hiddenBreakpoint: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
       isHidden: false,
       prettyCompact: this.compact,
       hasCompactClass: this.compact,
-      windowWidth: null
-    };
-  },
-  watch: {
-    hasCompactClass(newValue) {
-      if (newValue) {
-        setTimeout(() => {
-          this.prettyCompact = newValue;
-        }, 280);
-      } else {
-        this.prettyCompact = newValue;
-      }
-      this.isHidden = true;
-      setTimeout(() => {
-        this.isHidden = false;
-      }, 280);
-    },
-    compact(newValue) {
-      this.hasCompactClass = newValue;
-    },
-    absoluteMode: {
-      immediate: true,
-      handler(val) {
-        this.$emit("absolute-mode", val);
-      }
-    },
-    hiddenMode: {
-      immediate: true,
-      handler(val) {
-        this.$emit("hidden-mode", val);
-      }
+      windowWidth: null,
     }
   },
   computed: {
     sideBarClasses() {
       return {
-        "mc-side-bar--compact": this.hasCompactClass,
-        [this.currentThemeConfig.className]: true
-      };
+        'mc-side-bar--compact': this.hasCompactClass,
+        [this.currentThemeConfig.className]: true,
+      }
     },
     sideBarStyles() {
       return {
-        overflow: `${this.isHidden ? "hidden" : "visible"}`,
-        width: this.hasCompactClass ? this.compactWidth : this.width
-      };
+        overflow: `${this.isHidden ? 'hidden' : 'visible'}`,
+        width: this.hasCompactClass ? this.compactWidth : this.width,
+      }
     },
     wrapperStyles() {
       const position =
         this.hiddenMode && this.hasCompactClass
           ? {
-              position: "absolute",
-              left: `-${this.compactWidth}`
+              position: 'absolute',
+              left: `-${this.compactWidth}`,
             }
-          : {};
+          : {}
 
       let width = {
-        width: this.hasCompactClass ? this.compactWidth : this.width
-      };
+        width: this.hasCompactClass ? this.compactWidth : this.width,
+      }
       if (this.absoluteMode) {
-        width.width = this.compactWidth;
+        width.width = this.compactWidth
       }
       if (this.hiddenMode) {
-        width.width = "0px";
+        width.width = '0px'
       }
       return {
         ...width,
-        ...position
-      };
+        ...position,
+      }
     },
     backdropClasses() {
       return {
-        "mc-side-bar-wrapper__backdrop--full-width":
-          !this.hasCompactClass && this.windowWidth < this.absoluteBreakpoint
-      };
+        'mc-side-bar-wrapper__backdrop--full-width':
+          !this.hasCompactClass && this.windowWidth < this.absoluteBreakpoint,
+      }
     },
     absoluteMode() {
       return (
         this.absoluteBreakpoint && this.windowWidth < this.absoluteBreakpoint
-      );
+      )
     },
     hiddenMode() {
-      return this.hiddenBreakpoint && this.windowWidth < this.hiddenBreakpoint;
+      return this.hiddenBreakpoint && this.windowWidth < this.hiddenBreakpoint
     },
     currentThemeConfig() {
       return (
         this.sidebarThemeConfig[this.variable] ||
-        this.sidebarThemeConfig["black"]
-      );
+        this.sidebarThemeConfig['black']
+      )
     },
     sidebarThemeConfig() {
       return {
         black: {
-          mode: "black",
-          className: "mc-side-bar--color-theme-black",
-          dropdownActivator: "white",
+          mode: 'black',
+          className: 'mc-side-bar--color-theme-black',
+          dropdownActivator: 'white',
           mainMenuLinks: {
-            variable: "gray-flat",
-            secondaryColor: "white"
-          }
+            variable: 'gray-flat',
+            secondaryColor: 'white',
+          },
         },
         white: {
-          mode: "white",
-          className: "mc-side-bar--color-theme-white",
-          dropdownActivator: "black",
+          mode: 'white',
+          className: 'mc-side-bar--color-theme-white',
+          dropdownActivator: 'black',
           mainMenuLinks: {
-            variable: "black-flat",
-            secondaryColor: "blue"
-          }
-        }
-      };
-    }
+            variable: 'black-flat',
+            secondaryColor: 'blue',
+          },
+        },
+      }
+    },
+  },
+  watch: {
+    hasCompactClass(newValue) {
+      if (newValue) {
+        setTimeout(() => {
+          this.prettyCompact = newValue
+        }, 280)
+      } else {
+        this.prettyCompact = newValue
+      }
+      this.isHidden = true
+      setTimeout(() => {
+        this.isHidden = false
+      }, 280)
+    },
+    compact(newValue) {
+      this.hasCompactClass = newValue
+    },
+    absoluteMode: {
+      immediate: true,
+      handler(val) {
+        this.$emit('absolute-mode', val)
+      },
+    },
+    hiddenMode: {
+      immediate: true,
+      handler(val) {
+        this.$emit('hidden-mode', val)
+      },
+    },
   },
   mounted() {
     if (this.absoluteBreakpoint || (this.hiddenBreakpoint && window)) {
-      this.resize();
-      window.addEventListener("resize", this.resize);
+      this.resize()
+      window.addEventListener('resize', this.resize)
     }
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.resize);
+    window.removeEventListener('resize', this.resize)
   },
   methods: {
     handleToggleSize() {
-      this.hasCompactClass = !this.hasCompactClass;
-      this.$emit("compact", this.hasCompactClass);
+      this.hasCompactClass = !this.hasCompactClass
+      this.$emit('compact', this.hasCompactClass)
     },
     resize() {
-      this.windowWidth = window.innerWidth;
-    }
-  }
-};
+      this.windowWidth = window.innerWidth
+    },
+  },
+}
 </script>
 
 <style lang="scss">
@@ -340,7 +340,7 @@ export default {
 
   display: flex;
   flex-direction: column;
-  padding: $space-150 $space-100 $space-400;
+  padding: $space-250 $space-100 $space-400;
   transition: width 300ms ease;
   @include child-indent-bottom($space-400);
   &--color-theme-black {
