@@ -259,7 +259,8 @@ export default {
     }
   }
 
-  .v--modal {
+  .v--modal,
+  .vm--modal {
     background-color: transparent;
     border-radius: 0;
     box-shadow: none;
@@ -269,7 +270,7 @@ export default {
   &__header {
     padding-bottom: $space-200;
     position: relative;
-    padding-right: 35px;
+    /*padding-right: 35px;*/
   }
 
   &__title {
@@ -285,16 +286,16 @@ export default {
   &__inner {
     position: relative;
     box-shadow: 0 6px 12px rgba(110, 110, 110, 0.61);
-    padding: 21px 25px 25px 25px;
+    padding: $space-500 $space-300;
     background-color: $color-white;
-    /*margin: 0 12px 0 12px;*/
+    margin: 0 12px 0 12px;
     border-radius: $radius-100;
   }
 
   &__control {
     display: flex;
     justify-content: flex-end;
-    padding-top: $space-300;
+    padding-top: $space-500;
     margin-left: -3px;
     margin-right: -3px;
 
