@@ -1,14 +1,14 @@
 <template>
   <modal
-    class="mc-modal"
     :class="classes"
     :name="name"
+    :max-width="maxWidth"
+    :click-to-close="clickToClose"
+    class="mc-modal"
     scrollable
     adaptive
     height="auto"
     width="100%"
-    :max-width="maxWidth"
-    :click-to-close="clickToClose"
     @before-open="handleBeforeOpen"
     @before-close="handleBeforeClose"
     @closed="handleClosed"
@@ -47,7 +47,7 @@
           class="mc-modal__icon-close"
           width="24"
           height="24"
-          name="clear"
+          name="close"
         />
       </button>
     </div>
@@ -162,14 +162,14 @@ export default {
   &__btn-close {
     @include reset-btn();
     @include position(absolute, 17px 15px null null);
-    @include interplay();
+    @include close-link();
     padding: 5px;
     z-index: 1;
   }
   &__btn-back {
     @include reset-btn();
     @include position(absolute, 15px null null 15px);
-    @include interplay();
+    @include close-link();
     padding: 5px;
     z-index: 1;
   }
