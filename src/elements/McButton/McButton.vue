@@ -1,17 +1,24 @@
 <template>
-  <component v-bind="tagBind" v-on="$listeners" class="mc-button" :is="tag" :class="classes" :exact="exact">
-    <span class="mc-button__prepend" v-if="$slots['icon-prepend']">
+  <component
+    :is="tag"
+    v-bind="tagBind"
+    class="mc-button"
+    :class="classes"
+    :exact="exact"
+    v-on="$listeners"
+  >
+    <span v-if="$slots['icon-prepend']" class="mc-button__prepend">
       <!-- @slot Слот для вставки в начало -->
       <slot class="mc-button__prepend" name="icon-prepend" />
     </span>
     <span v-if="loading" class="mc-button__loader">
-      <mc-svg-icon class="mc-button__loader-icon" type="div" name="loader"/>
+      <mc-svg-icon class="mc-button__loader-icon" type="div" name="loader" />
     </span>
-    <span class="mc-button__text" v-if="$slots.default">
+    <span v-if="$slots.default" class="mc-button__text">
       <!-- @slot Слот по умолчанию -->
       <slot />
     </span>
-    <span class="mc-button__append" v-if="$slots['icon-append']">
+    <span v-if="$slots['icon-append']" class="mc-button__append">
       <!-- @slot Слот для вставки в конец -->
       <slot name="icon-append" />
     </span>
@@ -19,9 +26,9 @@
 </template>
 
 <script>
-import McSvgIcon from "../McSvgIcon/McSvgIcon"
+import McSvgIcon from '../McSvgIcon/McSvgIcon'
 export default {
-  name: "McButton",
+  name: 'McButton',
   components: {
     McSvgIcon,
   },
@@ -86,7 +93,7 @@ export default {
      */
     variation: {
       type: String,
-      default: "blue",
+      default: 'blue',
     },
     /**
      *  Размеры:
@@ -94,7 +101,7 @@ export default {
      */
     size: {
       type: String,
-      default: "m",
+      default: 'm',
     },
     /**
      *  Тень
@@ -118,7 +125,7 @@ export default {
      */
     textAlign: {
       type: String,
-      default: "center",
+      default: 'center',
     },
     /**
      *  На всю ширину
@@ -156,14 +163,14 @@ export default {
      */
     defaultTag: {
       type: String,
-      default: "button",
+      default: 'button',
     },
     /**
      * Если нужен другой цвет при взаимодействии
      */
     secondaryColor: {
       type: String,
-      default: "",
+      default: '',
     },
     /**
      * Если нужна подчёркнутая ссылка
@@ -188,24 +195,25 @@ export default {
         [`mc-button--variation-${this.variation}`]: this.variation,
         [`mc-button--size-${this.size}`]: this.size,
         [`mc-button--text-align-${this.textAlign}`]: this.textAlign,
-        "mc-button--loading": this.loading,
-        "mc-button--icon-loading": this.iconLoading,
-        "mc-button--is-active": this.isActive,
-        "mc-button--disabled": this.disabled,
-        "mc-button--rounded": this.rounded && /-compact$/.test(this.size),
-        "mc-button--full-width": this.fullWidth,
-        "mc-button--uppercase": this.uppercase,
-        "mc-button--shadow": this.shadow,
-        [`mc-button--secondary-color-${this.secondaryColor}`]: this.secondaryColor,
-        "mc-button--underline-link": this.underlineLink,
-        "mc-button--bg-flat": this.bgFlat,
+        'mc-button--loading': this.loading,
+        'mc-button--icon-loading': this.iconLoading,
+        'mc-button--is-active': this.isActive,
+        'mc-button--disabled': this.disabled,
+        'mc-button--rounded': this.rounded && /-compact$/.test(this.size),
+        'mc-button--full-width': this.fullWidth,
+        'mc-button--uppercase': this.uppercase,
+        'mc-button--shadow': this.shadow,
+        [`mc-button--secondary-color-${this.secondaryColor}`]: this
+          .secondaryColor,
+        'mc-button--underline-link': this.underlineLink,
+        'mc-button--bg-flat': this.bgFlat,
       }
     },
     tag() {
       if (this.to && this.$router) {
-        return this.nuxt ? "nuxt-link" : "router-link"
+        return this.nuxt ? 'nuxt-link' : 'router-link'
       } else if (this.href) {
-        return "a"
+        return 'a'
       }
       return this.defaultTag
     },
@@ -404,7 +412,7 @@ $colors: $token-colors;
 
   @each $color, $value in $colors {
     &--variation-#{$color} {
-      @if $color == "white" {
+      @if $color == 'white' {
         background-color: $value;
 
         &:hover {
@@ -455,11 +463,10 @@ $colors: $token-colors;
             }
           }
         }
-
       } @else {
         background-color: $value;
 
-        @if $color == "toxic" {
+        @if $color == 'toxic' {
           color: $color-black;
         } @else {
           color: $color-white;
@@ -478,91 +485,91 @@ $colors: $token-colors;
             box-shadow: 0 3px 10px fade-out($value, 0.8);
           }
         }
+      }
 
-        &-invert {
+      &-invert {
+        background-color: fade-out($value, 0.9);
+        color: $value;
+
+        &:hover {
+          background-color: fade-out($value, 0.8);
+        }
+
+        &:active {
+          background-color: fade-out($value, 0.75);
+        }
+
+        &#{$block-name} {
+          &--shadow {
+            box-shadow: 0 3px 10px fade-out($value, 0.8);
+          }
+        }
+      }
+
+      &-outline {
+        border-color: fade-out($value, 0.6);
+        color: $value;
+
+        &:hover {
+          background-color: fade-out($value, 0.8);
+          border-color: fade-out($value, 1);
+        }
+
+        &:active {
+          border-color: fade-out($value, 1);
+          background-color: fade-out($value, 0.7);
+        }
+
+        &#{$block-name} {
+          &--shadow {
+            box-shadow: 0 3px 10px fade-out($value, 0.8);
+          }
+        }
+      }
+
+      &-flat {
+        color: $value;
+
+        &:hover {
           background-color: fade-out($value, 0.9);
-          color: $value;
-
-          &:hover {
-            background-color: fade-out($value, 0.8);
-          }
-
-          &:active {
-            background-color: fade-out($value, 0.75);
-          }
-
-          &#{$block-name} {
-            &--shadow {
-              box-shadow: 0 3px 10px fade-out($value, 0.8);
-            }
-          }
         }
 
-        &-outline {
-          border-color: fade-out($value, 0.6);
-          color: $value;
-
-          &:hover {
-            background-color: fade-out($value, 0.8);
-            border-color: fade-out($value, 1);
-          }
-
-          &:active {
-            border-color: fade-out($value, 1);
-            background-color: fade-out($value, 0.7);
-          }
-
-          &#{$block-name} {
-            &--shadow {
-              box-shadow: 0 3px 10px fade-out($value, 0.8);
-            }
-          }
+        &:active {
+          background-color: fade-out($value, 0.85);
         }
 
-        &-flat {
-          color: $value;
-
-          &:hover {
-            background-color: fade-out($value, 0.9);
-          }
-
-          &:active {
-            background-color: fade-out($value, 0.85);
-          }
-
-          &#{$block-name} {
-            &--shadow {
-              box-shadow: 0 3px 10px fade-out($value, 0.8);
-            }
+        &#{$block-name} {
+          &--shadow {
+            box-shadow: 0 3px 10px fade-out($value, 0.8);
           }
         }
+      }
 
-        &-link {
-          color: $value;
-          padding: 0;
-          @include size(auto);
-          border: none;
-          user-select: text;
+      &-link {
+        color: $value;
+        padding: 0;
+        @include size(auto);
+        border: none;
+        user-select: text;
 
-          &#{$block-name}--size-l {
-            line-height: $line-height-250;
-          }
+        &#{$block-name}--size-l {
+          line-height: $line-height-250;
+        }
 
-          &:hover {
-            color: darken($value, 12%);
-          }
+        &:hover {
+          color: darken($value, 12%);
+        }
 
-          &:active {
-            color: darken($value, 16%);
-          }
+        &:active {
+          color: darken($value, 16%);
+        }
 
-          &#{$block-name} {
-            &--disabled {
-              opacity: $opacity-disabled;
-              background-color: transparent !important;
-              color: $value !important;
-              border-color: transparent !important;
-            }
+        &#{$block-name} {
+          &--disabled {
+            opacity: $opacity-disabled;
+            background-color: transparent !important;
+            color: $value !important;
+            border-color: transparent !important;
           }
         }
       }
@@ -595,7 +602,6 @@ $colors: $token-colors;
         }
       }
     }
-
   }
 
   &--uppercase {
