@@ -187,6 +187,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    /**
+     * Жирность шрифта:
+     * `medium, semi-bold`
+     */
+    weight: {
+      type: String,
+      default: 'semi-bold',
+    },
   },
 
   computed: {
@@ -207,6 +215,7 @@ export default {
           .secondaryColor,
         'mc-button--underline-link': this.underlineLink,
         'mc-button--bg-flat': this.bgFlat,
+        [`mc-button--weight-${this.weight}`]: this.weight,
       }
     },
     tag() {
@@ -248,7 +257,6 @@ $colors: $token-colors;
   flex-wrap: nowrap;
   max-width: 100%;
   font-family: $font-family-main;
-  font-weight: $font-weight-semi-bold;
   border-radius: $radius-100;
   white-space: nowrap;
   user-select: none;
@@ -285,6 +293,15 @@ $colors: $token-colors;
 
     &:empty {
       display: none;
+    }
+  }
+
+  &--weight {
+    &-medium {
+      font-weight: $font-weight-medium;
+    }
+    &-semi-bold {
+      font-weight: $font-weight-semi-bold;
     }
   }
 

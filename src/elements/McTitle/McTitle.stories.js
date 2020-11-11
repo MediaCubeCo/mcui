@@ -2,7 +2,7 @@ import { text, select, boolean } from '@storybook/addon-knobs'
 
 import McTitle from './McTitle'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
-import { getTokensByType, getTokenGroup } from "../../utils/getTokens"
+import { getTokensByType, getTokenGroup } from '../../utils/getTokens'
 
 export default {
   title: 'Elements/McTitle',
@@ -11,34 +11,35 @@ export default {
     componentSubtitle: 'Status: Ready',
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A4',
+      url:
+        'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A4',
     },
   },
 }
 
 const colors = getTokensByType('color')
 const variations = {
-  'h1': 'h1',
-  'h2': 'h2',
-  'h3': 'h3',
-  'h4': 'h4',
-  'subtitle': 'subtitle',
-  'body': 'body',
-  'overline': 'overline',
-  'article': 'article',
+  h1: 'h1',
+  h2: 'h2',
+  h3: 'h3',
+  h4: 'h4',
+  subtitle: 'subtitle',
+  body: 'body',
+  overline: 'overline',
+  article: 'article',
 }
 const positions = {
-  'left': 'left',
-  'center': 'center',
-  'right': 'right',
+  left: 'left',
+  center: 'center',
+  right: 'right',
 }
 const fontWeights = getTokensByType('font-weight')
 const lineHeights = getTokenGroup('line-heights')
-const computedLineHeights = { default: '', ...lineHeights, }
+const computedLineHeights = { default: '', ...lineHeights }
 const getUniqueProps = key => {
   return {
     variation: {
-      default: select('variation', variations, 'body', key)
+      default: select('variation', variations, 'body', key),
     },
     color: {
       default: select('color', colors, 'black', key),
@@ -62,7 +63,11 @@ const getUniqueProps = key => {
       default: text('maxWidth', '', key),
     },
     value: {
-      default: text('slot default', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias autem culpa dignissimos et id minima quae qui sapiente ullam velit?', key),
+      default: text(
+        'slot default',
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias autem culpa dignissimos et id minima quae qui sapiente ullam velit?',
+        key,
+      ),
     },
   }
 }
@@ -86,7 +91,7 @@ export const Default = () => ({
   computed: {
     tagBind() {
       return getCommonTags(this)
-    }
+    },
   },
   props: {
     ...getUniqueProps('default'),
@@ -103,7 +108,7 @@ export const WithIcons = () => ({
   computed: {
     tagBind() {
       return getCommonTags(this)
-    }
+    },
   },
   props: {
     ...getUniqueProps('withIcons'),

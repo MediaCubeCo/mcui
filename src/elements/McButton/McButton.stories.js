@@ -1,10 +1,9 @@
 import { text, select, boolean, object } from '@storybook/addon-knobs'
-import { action } from "@storybook/addon-actions"
-import { getTokensByType } from "../../utils/getTokens"
+import { action } from '@storybook/addon-actions'
+import { getTokensByType } from '../../utils/getTokens'
 
 import McButton from './McButton'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
-
 
 export default {
   title: 'Elements/McButton',
@@ -13,16 +12,17 @@ export default {
     componentSubtitle: 'Status: Ready',
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
+      url:
+        'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
     },
   },
 }
 
 const types = {
-  'button': 'button',
-  'reset': 'reset',
-  'submit': 'submit',
-  'default': null,
+  button: 'button',
+  reset: 'reset',
+  submit: 'submit',
+  default: null,
 }
 const sizesArr = ['xs', 's', 'm', 'l']
 const sizes = {}
@@ -32,11 +32,12 @@ sizesArr.forEach(s => {
 })
 
 const positions = {
-  'left': 'left',
-  'center': 'center',
-  'right': 'right',
+  left: 'left',
+  center: 'center',
+  right: 'right',
 }
 const tokenColors = getTokensByType('color')
+const fontWeights = getTokensByType('font-weight')
 let variations = {}
 Object.keys(tokenColors).forEach(c => {
   const colorVariations = {
@@ -55,7 +56,7 @@ Object.keys(tokenColors).forEach(c => {
 const getUniqueProps = key => {
   return {
     to: {
-      default: object('to', { name: 'test', params: { id: 123 }, }, key),
+      default: object('to', { name: 'test', params: { id: 123 } }, key),
     },
     href: {
       default: text('href', 'https://mediacube.agency/', key),
@@ -73,13 +74,13 @@ const getUniqueProps = key => {
       default: boolean('iconLoading', false, key),
     },
     type: {
-      default: select('type', types, 'default', key)
+      default: select('type', types, 'default', key),
     },
     variation: {
       default: select('variation', variations, 'blue', key),
     },
     size: {
-      default: select('size', sizes, 'm', key)
+      default: select('size', sizes, 'm', key),
     },
     shadow: {
       default: boolean('shadow', false, key),
@@ -106,13 +107,16 @@ const getUniqueProps = key => {
       default: text('defaultTag', 'button', key),
     },
     secondaryColor: {
-      default: select('secondaryColor', {...tokenColors, 'none': ""}, '', key),
+      default: select('secondaryColor', { ...tokenColors, none: '' }, '', key),
     },
     underlineLink: {
       default: boolean('underlineLink', false, key),
     },
     bgFlat: {
       default: boolean('bgFlat', false, key),
+    },
+    weight: {
+      default: select('weight', fontWeights, 'semi-bold', key),
     },
   }
 }
@@ -139,6 +143,7 @@ const getCommonTags = ctx => {
     secondaryColor: ctx.secondaryColor,
     underlineLink: ctx.underlineLink,
     bgFlat: ctx.bgFlat,
+    weight: ctx.weight,
   }
 }
 
@@ -151,7 +156,7 @@ export const Default = () => ({
   computed: {
     tagBind() {
       return getCommonTags(this)
-    }
+    },
   },
   props: {
     ...getUniqueProps('default'),
@@ -169,7 +174,7 @@ export const WithIcons = () => ({
   computed: {
     tagBind() {
       return getCommonTags(this)
-    }
+    },
   },
   props: {
     ...getUniqueProps('withIcons'),
@@ -190,4 +195,3 @@ export const WithIcons = () => ({
       <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" />
   </mc-button>`,
 })
-
