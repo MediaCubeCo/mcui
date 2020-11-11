@@ -278,9 +278,7 @@ export default {
     margin-bottom: 0;
     color: hsl(0, 0%, 13%);
     font-family: $font-family-main;
-    font-size: $size-250;
-    font-weight: 400;
-    line-height: line-height(23, 20);
+    @include reset-text-indents();
   }
 
   &__inner {
