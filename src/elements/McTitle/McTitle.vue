@@ -1,42 +1,42 @@
 <script>
 export default {
+  name: 'McTitle',
   functional: true,
-  name: "McTitle",
   props: {
     /**
      * Уровень: `h1`, `h2`, `h3`, `h4`, `subtitle`, `body`, `overline`, `article`.
      */
     variation: {
       type: String,
-      default: "body"
+      default: 'body',
     },
     /**
      * В одну строку с точками в конце, если не вмещается
      */
     ellipsis: {
       type: Boolean,
-      default: true
+      default: true,
     },
     /**
      * Если нужен другой тэг
      */
     tagName: {
       type: String,
-      default: "div"
+      default: 'div',
     },
     /**
      * Заглавные буквы
      */
     uppercase: {
       type: Boolean,
-      default: false
+      default: false,
     },
     /**
      * Цвет
      */
     color: {
       type: String,
-      default: "black"
+      default: 'black',
     },
     /**
      *  Позиция текста:
@@ -44,14 +44,14 @@ export default {
      */
     textAlign: {
       type: String,
-      default: "left"
+      default: 'left',
     },
     /**
      * Если нужна иная высота строки: `100`, `200`, `300` и т.д.
      */
     lineHeight: {
       type: String,
-      default: ""
+      default: '',
     },
     /**
      * Толщина текста:
@@ -59,7 +59,7 @@ export default {
      */
     weight: {
       type: String,
-      default: "medium"
+      default: 'medium',
     },
     /**
      * Если нужно указать свою
@@ -67,62 +67,63 @@ export default {
      */
     maxWidth: {
       type: String,
-      default: ""
-    }
+      default: '',
+    },
   },
-  render(h, { props, slots, data }) {
-    let contentStyle = {};
+  render(h, { props, slots, data, listeners }) {
+    let contentStyle = {}
     if (props.maxWidth) {
-      contentStyle = { "max-width": props.maxWidth };
+      contentStyle = { 'max-width': props.maxWidth }
     }
     const contentOptions = {
-      class: "mc-title__text",
-      style: contentStyle
-    };
+      class: 'mc-title__text',
+      style: contentStyle,
+    }
     if (data.domProps && data.domProps.innerHTML) {
       contentOptions.domProps = {
-        innerHTML: data.domProps.innerHTML
-      };
+        innerHTML: data.domProps.innerHTML,
+      }
     }
     const classes = {
-      "mc-title": true,
+      'mc-title': true,
       [`mc-title--variation-${props.variation}`]: props.variation,
       [`mc-title--line-height-${props.lineHeight}`]: props.lineHeight,
-      ["mc-title--ellipsis"]: props.ellipsis,
+      ['mc-title--ellipsis']: props.ellipsis,
       [`mc-title--color-${props.color}`]: props.color,
       [`mc-title--text-align-${props.textAlign}`]: props.textAlign,
-      "mc-title--uppercase": props.uppercase,
+      'mc-title--uppercase': props.uppercase,
       [`mc-title--weight-${props.weight}`]: props.weight,
-      ...(data.class || {})
-    };
+      ...(data.class || {}),
+    }
 
     if (data.staticClass) {
-      const staticClasses = data.staticClass.split(" ");
+      const staticClasses = data.staticClass.split(' ')
       staticClasses.forEach(c => {
         if (c) {
-          classes[c] = true;
+          classes[c] = true
         }
-      });
+      })
     }
-    let style = {};
+    let style = {}
     if (data.staticStyle) {
-      style = data.staticStyle;
+      style = data.staticStyle
     }
     return h(
-      "component",
+      'component',
       {
         class: classes,
         style,
-        is: props.tagName
+        is: props.tagName,
+        on: listeners,
       },
       [
-        slots()["icon-prepend"],
-        h("div", contentOptions, slots()["default"]),
-        slots()["icon-append"]
-      ]
-    );
-  }
-};
+        slots()['icon-prepend'],
+        h('div', contentOptions, slots()['default']),
+        slots()['icon-append'],
+      ],
+    )
+  },
+}
 </script>
 
 <style lang="scss">
