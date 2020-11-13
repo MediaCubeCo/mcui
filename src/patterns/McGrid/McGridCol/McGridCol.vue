@@ -1,14 +1,14 @@
 <template>
-  <div class="mc-grid-col" :class="classes" :style="styles">
+  <div :class="classes" :style="styles" class="mc-grid-col">
     <!-- @slot Слот контента -->
     <slot />
   </div>
 </template>
 
 <script>
-import _upperFirst from "lodash/upperFirst"
-const values = ["span", "order", "offset", "push", "pull"]
-const sizes = ["s", "m", "l", "xl", "xxl"]
+import _upperFirst from 'lodash/upperFirst'
+const values = ['span', 'order', 'offset', 'push', 'pull']
+const sizes = ['xs', 's', 'm', 'l', 'xl', 'xxl']
 const props = {}
 
 values.forEach(value => {
@@ -18,8 +18,8 @@ values.forEach(value => {
 })
 
 export default {
-  name: "McGridCol",
-  inject: ["provideData"],
+  name: 'McGridCol',
+  inject: ['provideData'],
   props: {
     /**
      *  Кол-во колонок (всего 12)
@@ -63,7 +63,7 @@ export default {
      */
     basis: {
       type: String,
-      default: "auto",
+      default: 'auto',
     },
   },
 
@@ -84,19 +84,19 @@ export default {
       let colStyle = {}
 
       if (this.provideData.gutterX !== 0) {
-        colStyle["padding-left"] = `${this.provideData.gutterX / 2}px`
-        colStyle["padding-right"] = `${this.provideData.gutterX / 2}px`
+        colStyle['padding-left'] = `${this.provideData.gutterX / 2}px`
+        colStyle['padding-right'] = `${this.provideData.gutterX / 2}px`
       }
 
       if (this.provideData.gutterY !== 0) {
-        colStyle["padding-top"] = `${this.provideData.gutterY / 2}px`
-        colStyle["padding-bottom"] = `${this.provideData.gutterY / 2}px`
+        colStyle['padding-top'] = `${this.provideData.gutterY / 2}px`
+        colStyle['padding-bottom'] = `${this.provideData.gutterY / 2}px`
       }
 
       if (this.stretchSelf) {
-        colStyle["flex"] = `1 0 ${this.basis}`
-      } else if (this.basis !== "auto") {
-        colStyle["flex"] = `0 0 ${this.basis}`
+        colStyle['flex'] = `1 0 ${this.basis}`
+      } else if (this.basis !== 'auto') {
+        colStyle['flex'] = `0 0 ${this.basis}`
       }
 
       return this.order ? { ...colStyle, order: this.order } : colStyle
@@ -115,7 +115,7 @@ export default {
   position: relative;
   max-width: 100%;
 
-  @mixin generate-col($viewport: "") {
+  @mixin generate-col($viewport: '') {
     @for $i from 1 through $cols {
       &--span#{$viewport}-#{$i} {
         flex: 0 0 percentage($i / $cols);
@@ -140,22 +140,26 @@ export default {
     }
   }
 
-  @include generate-col("");
+  @include generate-col('');
+
+  @media #{$media-query-xs} {
+    @include generate-col('-xs');
+  }
 
   @media #{$media-query-s} {
-    @include generate-col("-s");
+    @include generate-col('-s');
   }
 
   @media #{$media-query-m} {
-    @include generate-col("-m");
+    @include generate-col('-m');
   }
 
   @media #{$media-query-l} {
-    @include generate-col("-l");
+    @include generate-col('-l');
   }
 
   @media #{$media-query-xl} {
-    @include generate-col("-xl");
+    @include generate-col('-xl');
   }
 }
 </style>
