@@ -2,21 +2,41 @@
   <div class="mc-chat-comment" :class="classes" @click="handleClick">
     <a ref="a" href="javascript:void(0);" class="mc-chat-comment__back"></a>
     <mc-preview>
-      <mc-avatar slot="left" size="400" rounded lazy :src="computedAvatar"/>
-      <mc-date slot="top" size="overline" color="dark-gray" format="YYYY-MM-DD HH:mm" :value="comment.created_at" />
-      <mc-title slot="top" :weight="computedTitle.weight" :color="computedTitle.color">
+      <mc-avatar slot="left" size="400" rounded lazy :src="computedAvatar" />
+      <mc-date
+        slot="top"
+        size="overline"
+        color="dark-gray"
+        format="YYYY-MM-DD HH:mm"
+        :value="comment.created_at"
+      />
+      <mc-title
+        slot="top"
+        :weight="computedTitle.weight"
+        :color="computedTitle.color"
+      >
         {{ computedTitle.name }}
       </mc-title>
-      <mc-badge v-if="commentStatus" slot="bottom" :variation="comment.status.color">
+      <mc-badge
+        v-if="commentStatus"
+        slot="bottom"
+        :variation="comment.status.color"
+      >
         {{ comment.status.title }}
       </mc-badge>
-      <mc-title v-if="comment.content" slot="bottom" v-html="filteredComment" :ellipsis="false" />
+      <mc-title
+        v-if="comment.content"
+        slot="bottom"
+        :ellipsis="false"
+        v-html="filteredComment"
+      />
       <mc-button
         v-if="canEdit"
         slot="right"
         class="mc-chat-comment__btn"
         size="xs-compact"
         variation="gray-link"
+        secondary-color="red"
         @click.prevent="handleDelete"
       >
         <mc-svg-icon slot="icon-prepend" name="delete" />
@@ -26,19 +46,19 @@
 </template>
 
 <script>
-import _has from "lodash/has"
-import McPreview from "../../McPreview/McPreview"
-import McTitle from "../../../elements/McTitle/McTitle"
-import McDate from "../../../elements/McDate/McDate"
-import McAvatar from "../../../elements/McAvatar/McAvatar"
-import McBadge from "../../../elements/McBadge/McBadge"
-import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon"
-import McButton from "../../../elements/McButton/McButton"
+import _has from 'lodash/has'
+import McPreview from '../../McPreview/McPreview'
+import McTitle from '../../../elements/McTitle/McTitle'
+import McDate from '../../../elements/McDate/McDate'
+import McAvatar from '../../../elements/McAvatar/McAvatar'
+import McBadge from '../../../elements/McBadge/McBadge'
+import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
+import McButton from '../../../elements/McButton/McButton'
 /**
  * Используется только в McChat
  */
 export default {
-  name: "McChatComment",
+  name: 'McChatComment',
   components: {
     McPreview,
     McTitle,
@@ -71,7 +91,7 @@ export default {
      */
     defaultUserName: {
       type: String,
-      default: "System comment",
+      default: 'System comment',
     },
   },
   computed: {
@@ -84,10 +104,13 @@ export default {
       return this.editable && !('status' in this.comment)
     },
     computedAvatar() {
-      return _has(this.comment, ["user", "profile", "avatar"]) ? this.comment.user.profile.avatar : null
+      return _has(this.comment, ['user', 'profile', 'avatar'])
+        ? this.comment.user.profile.avatar
+        : null
     },
     computedTitle() {
-      const hasUserName = _has(this.comment, ["user", "full_name"]) && this.comment.user.full_name
+      const hasUserName =
+        _has(this.comment, ['user', 'full_name']) && this.comment.user.full_name
       return {
         name: hasUserName ? this.comment.user.full_name : this.defaultUserName,
         weight: hasUserName ? 'semi-bold' : 'medium',
@@ -109,8 +132,8 @@ export default {
       return (
         (this.comment.status !== null && this.comment.status !== undefined) ||
         !this.comment.status < 0
-      );
-    }
+      )
+    },
   },
   methods: {
     handleDelete() {
@@ -159,17 +182,13 @@ export default {
     position: relative;
   }
 
-  .mc-preview__top,
-  .mc-preview__bottom {
-    cursor: text;
-  }
-
   .mc-preview__bottom {
     margin-top: $space-50;
     @include child-indent-bottom($space-50);
   }
 
   &--editable {
+    cursor: pointer;
     &:focus-within {
       background-color: $color-hover-gray;
       #{$block-name}__btn {
