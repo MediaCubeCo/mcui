@@ -177,7 +177,7 @@ export default {
      */
     compactWidth: {
       type: String,
-      default: '56px',
+      default: '58px',
     },
     /**
      * Брейкпоинт после которого
