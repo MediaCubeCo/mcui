@@ -1,9 +1,9 @@
 import { text, select, boolean } from '@storybook/addon-knobs'
-import { action } from "@storybook/addon-actions"
+import { action } from '@storybook/addon-actions'
 
 import McTooltip from './McTooltip'
 import McButton from '../McButton/McButton'
-import { getTokensByType } from "../../utils/getTokens"
+import { getTokensByType } from '../../utils/getTokens'
 
 const wrapper = () => {
   return {
@@ -20,7 +20,8 @@ export default {
     componentSubtitle: 'Status: Ready',
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=108%3A322',
+      url:
+        'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=108%3A322',
     },
   },
   decorators: [wrapper],
@@ -43,14 +44,20 @@ positions.forEach(p => {
 })
 
 const widths = {
-  's': 's',
-  'm': 'm',
-  'l': 'l',
+  s: 's',
+  m: 'm',
+  l: 'l',
 }
 
 const sizes = {
-  's': 's',
-  'm': 'm',
+  s: 's',
+  m: 'm',
+}
+const triggers = {
+  hover: 'hover',
+  click: 'click',
+  focus: 'focus',
+  manual: 'manual',
 }
 
 const getUniqueProps = key => {
@@ -63,7 +70,7 @@ const getUniqueProps = key => {
       ),
     },
     placement: {
-      default: select('placement', placements, 'auto', key)
+      default: select('placement', placements, 'auto', key),
     },
     color: {
       default: select('color', colors, 'black', key),
@@ -77,6 +84,9 @@ const getUniqueProps = key => {
     size: {
       default: select('size', sizes, 'm', key),
     },
+    trigger: {
+      default: select('trigger', triggers, 'hover', key),
+    },
   }
 }
 
@@ -88,6 +98,7 @@ const getCommonTags = ctx => {
     'max-width': ctx.maxWidth,
     'arrow-disabled': ctx.arrowDisabled,
     size: ctx.size,
+    trigger: ctx.trigger,
   }
 }
 
@@ -100,7 +111,7 @@ export const Default = () => ({
   computed: {
     tagBind() {
       return getCommonTags(this)
-    }
+    },
   },
   props: {
     ...getUniqueProps('default'),
@@ -108,6 +119,5 @@ export const Default = () => ({
   methods: actionsData,
   template: `<mc-tooltip v-bind="tagBind">
       <mc-button @click="handleClick"> Tooltip </mc-button>
-  </mc-tooltip>`
+  </mc-tooltip>`,
 })
-

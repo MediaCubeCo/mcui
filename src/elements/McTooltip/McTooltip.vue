@@ -1,17 +1,23 @@
 <template>
-  <div class="mc-tooltip-target" v-tooltip="{ content, placement, classes: tooltipClasses }">
+  <div
+    v-tooltip="{ content, placement, classes: tooltipClasses, trigger }"
+    class="mc-tooltip-target"
+  >
     <!-- @slot Слот для элемента, у которого будет всплывать тултип -->
     <slot />
   </div>
 </template>
 
 <script>
-import { VTooltip } from "v-tooltip"
+import { VTooltip } from 'v-tooltip'
 
-VTooltip.options.defaultBoundariesElement = "window"
+VTooltip.options.defaultBoundariesElement = 'window'
 
 export default {
-  name: "McTooltip",
+  name: 'McTooltip',
+  directives: {
+    tooltip: VTooltip,
+  },
   props: {
     /**
      *  Текст подсказки:
@@ -25,21 +31,21 @@ export default {
      */
     placement: {
       type: String,
-      default: "bottom",
+      default: 'bottom',
     },
     /**
      *  Цвет:
      */
     color: {
       type: String,
-      default: "default",
+      default: 'default',
     },
     /**
      *  Максимальная ширина
      */
     maxWidth: {
       type: String,
-      default: "s",
+      default: 's',
     },
     /**
      *  Отключить стрелку
@@ -54,20 +60,25 @@ export default {
      */
     size: {
       type: String,
-      default: "m",
+      default: 'm',
     },
-  },
-  directives: {
-    tooltip: VTooltip,
+    /**
+     *  Событие по отображению:
+     *  'hover', 'click', 'focus' or 'manual'
+     */
+    trigger: {
+      type: String,
+      default: 'hover',
+    },
   },
   computed: {
     tooltipClasses() {
       return [
-        "mc-tooltip",
+        'mc-tooltip',
         `mc-tooltip--color-${this.color}`,
         `mc-tooltip--width-${this.maxWidth}`,
         `mc-tooltip--size-${this.size}`,
-        this.arrowDisabled ? "mc-tooltip--arrow-disabled" : "",
+        this.arrowDisabled ? 'mc-tooltip--arrow-disabled' : '',
       ]
     },
   },
@@ -108,7 +119,7 @@ export default {
       z-index: 1;
     }
 
-    &[x-placement^="top"] {
+    &[x-placement^='top'] {
       margin-bottom: $arrow-size;
 
       .tooltip-arrow {
@@ -123,7 +134,7 @@ export default {
       }
     }
 
-    &[x-placement^="bottom"] {
+    &[x-placement^='bottom'] {
       margin-top: $arrow-size;
 
       .tooltip-arrow {
@@ -138,7 +149,7 @@ export default {
       }
     }
 
-    &[x-placement^="right"] {
+    &[x-placement^='right'] {
       margin-left: $arrow-size;
 
       .tooltip-arrow {
@@ -153,7 +164,7 @@ export default {
       }
     }
 
-    &[x-placement^="left"] {
+    &[x-placement^='left'] {
       margin-right: $arrow-size;
 
       .tooltip-arrow {
@@ -168,13 +179,13 @@ export default {
       }
     }
 
-    &[aria-hidden="true"] {
+    &[aria-hidden='true'] {
       visibility: hidden;
       opacity: 0;
       transition: opacity $duration-s, visibility $duration-s;
     }
 
-    &[aria-hidden="false"] {
+    &[aria-hidden='false'] {
       visibility: visible;
       opacity: 1;
       transition: opacity $duration-s;
@@ -234,7 +245,7 @@ export default {
 
   @each $color, $value in $token-colors {
     &--color-#{$color} {
-      @if $color == "white" {
+      @if $color == 'white' {
         &.tooltip {
           .tooltip-inner {
             color: $color-black;
