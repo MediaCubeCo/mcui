@@ -65,10 +65,11 @@ export default {
     /**
      *  Событие по отображению:
      *  'hover', 'click', 'focus' or 'manual'
+     *  (можно комбинировать)
      */
     trigger: {
       type: String,
-      default: 'hover',
+      default: 'hover focus',
     },
   },
   computed: {

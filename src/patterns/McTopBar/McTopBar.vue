@@ -45,9 +45,9 @@
             <mc-button slot="activator" variation="white-flat" size="m-compact">
               <mc-avatar
                 slot="icon-prepend"
+                :src="user.avatar"
                 rounded
                 size="400"
-                :src="user.avatar"
               />
             </mc-button>
             <slot name="user-dropdown-panel" />
@@ -55,7 +55,7 @@
         </slot>
       </div>
     </div>
-    <mc-separator color="hover-gray" indent-top="100" />
+    <mc-separator :indent-top="$slots.bottom ? '100' : 0" color="hover-gray" />
     <slot name="bottom" />
   </div>
 </template>
