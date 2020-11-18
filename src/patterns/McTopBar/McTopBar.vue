@@ -55,7 +55,7 @@
         </slot>
       </div>
     </div>
-    <mc-separator :indent-top="$slots.bottom ? '100' : 0" color="hover-gray" />
+    <mc-separator :indent-top="$slots.bottom ? '100' : '0'" color="hover-gray" />
     <slot name="bottom" />
   </div>
 </template>
