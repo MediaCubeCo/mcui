@@ -4,6 +4,7 @@ export default [
     icon: "mc_dashboard",
     href: "javascript:void(0);",
     isVisible: true,
+    exact: true,
     isActive: true,
   },
   {
@@ -11,6 +12,7 @@ export default [
     icon: "mc_studio",
     href: "javascript:void(0);",
     isVisible: true,
+    exact: true,
     isActive: false,
   },
   {
@@ -25,6 +27,7 @@ export default [
     icon: "mc_assist",
     href: "javascript:void(0);",
     isVisible: true,
+    exact: true,
     isActive: false,
   },
   {
