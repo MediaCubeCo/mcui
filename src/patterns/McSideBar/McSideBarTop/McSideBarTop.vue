@@ -55,13 +55,14 @@
       <mc-dropdown-panel>
         <mc-button
           v-for="menuAppsItem in computedMenuApps"
+          :key="`menu-apps-item-${menuAppsItem.key}`"
           full-width
           text-align="left"
           variation="black-flat"
-          :key="`menu-apps-item-${menuAppsItem.key}`"
           :href="menuAppsItem.href"
           :to="menuAppsItem.to"
           :is-active="menuAppsItem.isActive"
+          :exact="menuAppsItem.exact"
         >
           <mc-svg-icon slot="icon-prepend" :name="menuAppsItem.icon" />
           {{ menuAppsItem.name }}
@@ -72,31 +73,26 @@
 </template>
 
 <script>
-import _XEUtils from "xe-utils";
-import _isEmpty from "lodash/isEmpty";
-import McDropdown from "../../McDropdown/McDropdown";
-import McDropdownPanel from "../../McDropdown/McDropdownPanel/McDropdownPanel";
-import McButton from "../../../elements/McButton/McButton";
-import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon";
-import McPreview from "../../McPreview/McPreview";
-import McTitle from "../../../elements/McTitle/McTitle";
+import _XEUtils from 'xe-utils'
+import _isEmpty from 'lodash/isEmpty'
+import McDropdown from '../../McDropdown/McDropdown'
+import McDropdownPanel from '../../McDropdown/McDropdownPanel/McDropdownPanel'
+import McButton from '../../../elements/McButton/McButton'
+import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
+import McPreview from '../../McPreview/McPreview'
+import McTitle from '../../../elements/McTitle/McTitle'
 
 export default {
-  name: "McSideBarTop",
+  name: 'McSideBarTop',
   components: {
     McDropdown,
     McDropdownPanel,
     McButton,
     McPreview,
     McSvgIcon,
-    McTitle
+    McTitle,
   },
-  inject: ["currentThemeConfig"],
-  data() {
-    return {
-      dropIsOpen: false
-    };
-  },
+  inject: ['currentThemeConfig'],
   props: {
     /**
      *  Меню приложений
@@ -104,7 +100,7 @@ export default {
      */
     menuApps: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     /**
      *  Название сервиса
@@ -112,14 +108,14 @@ export default {
      */
     logoTitle: {
       type: String,
-      default: "Dashboard"
+      default: 'Dashboard',
     },
     /**
      *  Путь до изображения
      */
     logoSrc: {
       type: String,
-      default: ""
+      default: '',
     },
     /**
      *  Имя иконки
@@ -127,32 +123,37 @@ export default {
      */
     logoIcon: {
       type: String,
-      default: ""
+      default: '',
     },
     /**
      *  Компактный вид
      */
     compact: {
       type: Boolean,
-      default: false
+      default: false,
+    },
+  },
+  data() {
+    return {
+      dropIsOpen: false,
     }
   },
   computed: {
     computedMenuApps() {
-      if (_isEmpty(this.menuApps)) return null;
-      const apps = [];
+      if (_isEmpty(this.menuApps)) return null
+      const apps = []
       this.menuApps.forEach(app => {
         if (app.isVisible) {
           apps.push({
             key: _XEUtils.uniqueId(),
-            ...app
-          });
+            ...app,
+          })
         }
-      });
-      return apps;
-    }
-  }
-};
+      })
+      return apps
+    },
+  },
+}
 </script>
 
 <style lang="scss">
