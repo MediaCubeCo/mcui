@@ -3,16 +3,15 @@
     <label :for="name" class="mc-date-picker__header">
       <!-- @slot Слот для заголовка над инпутом -->
       <slot name="title">
-        <mc-title :ellipsis="false" v-if="title">{{ title }}</mc-title>
+        <mc-title v-if="title" :ellipsis="false">{{ title }}</mc-title>
       </slot>
     </label>
     <div class="mc-date-picker__inner">
       <div class="mc-date-picker__input-wrapper">
         <date-picker
-          :value="prettyValue"
-          v-on="listeners"
-          v-bind="{ ...$attrs, range }"
           ref="input"
+          :value="prettyValue"
+          v-bind="{ ...$attrs, range }"
           class="mc-date-picker__date-picker"
           range-separator=" — "
           :confirm="$attrs.range"
@@ -21,6 +20,7 @@
           :format="format"
           :editable="editable"
           :popup-class="popupClass"
+          v-on="listeners"
           @input="val => handleEmitDate(val)"
           @pick="handlePickDate"
           @clear="val => handleEmitDate(null)"
@@ -100,8 +100,8 @@
       </div>
     </div>
     <div
-      class="mc-date-picker__footer"
       v-if="errorText || helpText || $slots.bottom"
+      class="mc-date-picker__footer"
     >
       <mc-title
         v-if="errorText"
@@ -129,25 +129,25 @@
 </template>
 
 <script>
-import _omit from "lodash/omit";
-import DatePicker from "vue2-datepicker";
-import "vue2-datepicker/locale/ru";
-import "vue2-datepicker/locale/en";
-import "vue2-datepicker/locale/es";
-import MaskedInput from "vue-masked-input";
+import _omit from 'lodash/omit'
+import DatePicker from 'vue2-datepicker'
+import 'vue2-datepicker/locale/ru'
+import 'vue2-datepicker/locale/en'
+import 'vue2-datepicker/locale/es'
+import MaskedInput from 'vue-masked-input'
 
-import McTitle from "../McTitle/McTitle";
-import McSvgIcon from "../McSvgIcon/McSvgIcon";
-import McButton from "../McButton/McButton";
+import McTitle from '../McTitle/McTitle'
+import McSvgIcon from '../McSvgIcon/McSvgIcon'
+import McButton from '../McButton/McButton'
 
 export default {
-  name: "McDatePicker",
+  name: 'McDatePicker',
   components: {
     McSvgIcon,
     McTitle,
     DatePicker,
     McButton,
-    MaskedInput
+    MaskedInput,
   },
   props: {
     /**
@@ -155,7 +155,7 @@ export default {
      */
     title: {
       type: String,
-      default: ""
+      default: '',
     },
 
     /**
@@ -163,7 +163,7 @@ export default {
      */
     helpText: {
       type: String,
-      default: ""
+      default: '',
     },
 
     /**
@@ -171,14 +171,14 @@ export default {
      */
     editable: {
       type: Boolean,
-      default: false
+      default: false,
     },
 
     /**
      *  Значение
      */
     value: {
-      default: null
+      default: null,
     },
 
     /**
@@ -186,7 +186,7 @@ export default {
      */
     name: {
       type: String,
-      required: true
+      required: true,
     },
 
     /**
@@ -194,7 +194,7 @@ export default {
      */
     lang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
 
     /**
@@ -202,7 +202,7 @@ export default {
      */
     errors: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
 
     /**
@@ -210,7 +210,7 @@ export default {
      */
     format: {
       type: String,
-      default: "DD.MM.YYYY"
+      default: 'DD.MM.YYYY',
     },
 
     /**
@@ -218,7 +218,7 @@ export default {
      */
     toFormat: {
       type: String,
-      default: "YYYY-MM-DD"
+      default: 'YYYY-MM-DD',
     },
     /**
      *  Формат отдаваемой даты
@@ -227,82 +227,64 @@ export default {
       type: Object,
       default: () => {
         return {
-          week: "Week",
-          month: "Month",
-          quarter: "Quarter",
-          year: "Year",
-          confirm: "Confirm"
-        };
-      }
+          week: 'Week',
+          month: 'Month',
+          quarter: 'Quarter',
+          year: 'Year',
+          confirm: 'Confirm',
+        }
+      },
     },
     range: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   data() {
     return {
       prettyValue: null,
       pickDate: null,
-      phone: null
-    };
-  },
-  watch: {
-    value(newVal) {
-      if (this.isRange && newVal) {
-        this.prettyValue = newVal.map(item => new Date(item));
-      } else {
-        this.prettyValue = new Date(newVal);
-      }
-    }
-  },
-  mounted() {
-    if (this.isRange) {
-      this.prettyValue = this.value
-        ? this.value.map(item => new Date(item))
-        : null;
-    } else {
-      this.prettyValue = this.value ? new Date(this.value) : new Date();
+      phone: null,
     }
   },
   computed: {
     classes() {
       return {
-        "mc-date-picker--error": this.errorText,
-        "mc-date-picker--disabled": this.$attrs.disabled
-      };
+        'mc-date-picker--error': this.errorText,
+        'mc-date-picker--disabled': this.$attrs.disabled,
+      }
     },
     popupClass() {
       return {
-        "datepicker-popup": true,
-        ...(this.$attrs.popupClass || {})
-      };
+        'datepicker-popup': true,
+        ...(this.$attrs.popupClass || {}),
+      }
     },
 
     errorText() {
-      if (!this.errors || !this.errors.length) return "";
-      return this.errors.join(", ");
+      if (!this.errors || !this.errors.length) return ''
+      return this.errors.join(', ')
     },
 
     listeners() {
-      return _omit(this.$listeners, "input");
+      return _omit(this.$listeners, 'input')
     },
     isRange() {
       // return this.$attrs.range;
       // return "range" in this.$attrs;
-      return this.range;
+      return this.range
     },
     prettyValueInput() {
       if (!Array.isArray(this.prettyValue)) {
-        return this.$moment(this.prettyValue).format(this.format);
+        return this.$moment(this.prettyValue).format(this.format)
       }
       if (Array.isArray(this.prettyValue)) {
         return this.prettyValue
           .map(v => this.$moment(v).format(this.format))
-          .join("—");
+          .join('—')
       }
-      return null;
+      return null
     },
     /**
      * Формирование маски для ввода даты на основе передаваемого формата
@@ -310,8 +292,8 @@ export default {
      * return {String}
      */
     mask() {
-      const mask = this.format.replace(/\w/gm, "1");
-      return this.isRange ? `${mask}—${mask}` : mask;
+      const mask = this.format.replace(/\w/gm, '1')
+      return this.isRange ? `${mask}—${mask}` : mask
     },
     /**
      * Формирование регулярки для проверки даты на основе маски
@@ -319,7 +301,25 @@ export default {
      * return {RegExp}
      */
     dateRegExp() {
-      return new RegExp(`^${this.mask.replace(/1/gm, "\\d")}$`);
+      return new RegExp(`^${this.mask.replace(/1/gm, '\\d')}$`)
+    },
+  },
+  watch: {
+    value(newVal) {
+      if (this.isRange && newVal) {
+        this.prettyValue = newVal.map(item => new Date(item))
+      } else {
+        this.prettyValue = new Date(newVal)
+      }
+    },
+  },
+  mounted() {
+    if (this.isRange) {
+      this.prettyValue = this.value
+        ? this.value.map(item => new Date(item))
+        : null
+    } else {
+      this.prettyValue = this.value ? new Date(this.value) : new Date()
     }
   },
 
@@ -330,17 +330,17 @@ export default {
      * return Void
      */
     handleInputDate(value) {
-      const isValidInput = this.dateRegExp.test(value);
-      if (!isValidInput) return;
-      let date;
+      const isValidInput = this.dateRegExp.test(value)
+      if (!isValidInput) return
+      let date
       if (!this.isRange) {
-        date = this.inputDateToFormat(value);
+        date = this.inputDateToFormat(value)
       }
       if (this.isRange) {
-        date = value.split("—").map(d => this.inputDateToFormat(d));
+        date = value.split('—').map(d => this.inputDateToFormat(d))
       }
-      if (!this.isValidInputDate(date) || this.isDisabledDate(date)) return;
-      this.handleEmitDate(date);
+      if (!this.isValidInputDate(date) || this.isDisabledDate(date)) return
+      this.handleEmitDate(date)
     },
     /**
      * Приведение введенной даты к нужному формату
@@ -348,7 +348,7 @@ export default {
      * return {String}
      */
     inputDateToFormat(date) {
-      return new Date(this.$moment(date, this.format).format(this.toFormat));
+      return new Date(this.$moment(date, this.format).format(this.toFormat))
     },
     /**
      * Проверка на валидную дату
@@ -356,8 +356,8 @@ export default {
      * return {Boolean}
      */
     isValidInputDate(date) {
-      if (!this.isRange) return this.isValidDate(date);
-      else return date.every(d => this.isValidDate(d));
+      if (!this.isRange) return this.isValidDate(date)
+      else return date.every(d => this.isValidDate(d))
     },
     /**
      * Проверка на заблокированные от выбора даты
@@ -366,86 +366,86 @@ export default {
      */
     isDisabledDate(date) {
       // eslint-disable-next-line no-unsafe-negation
-      if (!this.$attrs.disabledDate) return false;
-      if (!this.isRange) return this.$attrs.disabledDate(date);
-      else return date.some(d => this.$attrs.disabledDate(d));
+      if (!this.$attrs.disabledDate) return false
+      if (!this.isRange) return this.$attrs.disabledDate(date)
+      else return date.some(d => this.$attrs.disabledDate(d))
     },
     handleEmitDate(value) {
-      const date = this.getFormattedDate(value);
+      const date = this.getFormattedDate(value)
       /**
        * Событие инпута
        * @property {string}
        */
-      this.$emit("input", date);
+      this.$emit('input', date)
     },
     getFormattedDate(value) {
-      if (!value) return null;
-      let newValue = value;
+      if (!value) return null
+      let newValue = value
       if (!Array.isArray(newValue)) {
-        newValue = this.$moment(value).format(this.toFormat);
+        newValue = this.$moment(value).format(this.toFormat)
       }
       if (Array.isArray(newValue)) {
-        newValue = newValue.map(v => this.$moment(v).format(this.toFormat));
+        newValue = newValue.map(v => this.$moment(v).format(this.toFormat))
       }
-      return newValue;
+      return newValue
     },
     selectPeriod(key) {
-      let start = new Date();
-      const end = this.pickDate || new Date();
+      let start = new Date()
+      const end = this.pickDate || new Date()
       switch (key) {
-        case "week":
+        case 'week':
           if (this.$moment) {
-            start = this.$moment(end).subtract(7, "days");
-            break;
+            start = this.$moment(end).subtract(7, 'days')
+            break
           }
-          start.setTime(end.getTime() - 6 * 24 * 3600 * 1000);
-          break;
-        case "month":
+          start.setTime(end.getTime() - 6 * 24 * 3600 * 1000)
+          break
+        case 'month':
           if (this.$moment) {
-            start = this.$moment(end).subtract(1, "months");
-            break;
+            start = this.$moment(end).subtract(1, 'months')
+            break
           }
-          start.setMonth(end.getMonth() - 1, end.getDate());
-          break;
-        case "quarter":
+          start.setMonth(end.getMonth() - 1, end.getDate())
+          break
+        case 'quarter':
           if (this.$moment) {
-            start = this.$moment(end).subtract(3, "months");
-            break;
+            start = this.$moment(end).subtract(3, 'months')
+            break
           }
-          start.setMonth(end.getMonth() - 3, end.getDate());
-          break;
-        case "year":
+          start.setMonth(end.getMonth() - 3, end.getDate())
+          break
+        case 'year':
           if (this.$moment) {
-            start = this.$moment(end).subtract(1, "years");
-            break;
+            start = this.$moment(end).subtract(1, 'years')
+            break
           }
           start.setFullYear(
             end.getFullYear() - 1,
             end.getMonth(),
-            end.getDate()
-          );
-          break;
+            end.getDate(),
+          )
+          break
       }
-      this.$refs.input.currentValue = [this.$moment ? start._d : start, end];
+      this.$refs.input.currentValue = [this.$moment ? start._d : start, end]
     },
     handlePickDate(date) {
-      this.pickDate = date;
+      this.pickDate = date
     },
     handleSubmit(emit) {
       const isValid = this.$refs.input.currentValue.every(val =>
-        this.isValidDate(val)
-      );
-      isValid && emit(this.$refs.input.currentValue);
+        this.isValidDate(val),
+      )
+      isValid && emit(this.$refs.input.currentValue)
     },
     isValidDate(d) {
-      return d instanceof Date && !isNaN(d);
-    }
-  }
-};
+      return d instanceof Date && !isNaN(d)
+    },
+  },
+}
 </script>
 
 <style lang="scss">
-@import "~vue2-datepicker/scss/index.scss";
+@import '~vue2-datepicker/scss/index.scss';
 .mc-date-picker {
   $block-name: &;
 
@@ -536,6 +536,12 @@ export default {
   right: unset;
   left: $space-100;
   color: $color-black;
+}
+.mx-icon-clear {
+  svg {
+    width: $space-200;
+    height: $space-200;
+  }
 }
 
 .mx-input-wrapper:hover .mx-icon-clear + .mx-icon-calendar {
@@ -690,7 +696,7 @@ export default {
   }
 
   .mx-calendar-decade-separator:after {
-    content: "-";
+    content: '-';
   }
 }
 </style>
