@@ -1,39 +1,50 @@
 <template>
-<div class="mc-drawer">
-  <div class="mc-drawer__header" v-if="$slots.title || title">
-    <!-- @slot Слот заголовка -->
-    <slot name="title">
-      <mc-title variation="subtitle" :ellipsis="false" weight="semi-bold">{{ title }}</mc-title>
-    </slot>
-  </div>
-  <div class="mc-drawer__body">
-    <div class="mc-drawer__tint"></div>
-    <div class="mc-drawer__body-inner">
-      <!-- @slot Слот контента -->
-      <slot />
+  <div class="mc-drawer">
+    <div v-if="$slots.title || title" class="mc-drawer__header">
+      <!-- @slot Слот заголовка -->
+      <slot name="title">
+        <mc-title variation="subtitle" :ellipsis="false" weight="semi-bold">
+          {{ title }}
+        </mc-title>
+      </slot>
     </div>
-  </div>
-  <div class="mc-drawer__footer" v-if="$slots.footer">
-    <!-- @slot Слот футера -->
-    <slot name="footer" />
-  </div>
+    <div class="mc-drawer__body">
+      <div class="mc-drawer__tint"></div>
+      <div class="mc-drawer__body-inner">
+        <!-- @slot Слот контента -->
+        <slot />
+      </div>
+    </div>
+    <div v-if="$slots.footer" class="mc-drawer__footer">
+      <!-- @slot Слот футера -->
+      <slot name="footer" />
+    </div>
 
-  <button v-if="closeVisible" type="button" class="mc-drawer__btn-close" @click.prevent="handleClose">
-    <mc-svg-icon class="mc-drawer__icon-close" :name="iconClose" />
-    <mc-svg-icon class="mc-drawer__icon-close--small" :name="iconClose" size="200" />
-  </button>
-</div>
+    <button
+      v-if="closeVisible"
+      type="button"
+      class="mc-drawer__btn-close"
+      @click.prevent="handleClose"
+    >
+      <mc-svg-icon class="mc-drawer__icon-close" :name="iconClose" />
+      <mc-svg-icon
+        class="mc-drawer__icon-close--small"
+        :name="iconClose"
+        size="200"
+      />
+    </button>
+  </div>
 </template>
 
 <script>
-import McButton from "../../elements/McButton/McButton"
-import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon"
-import McTitle from "../../elements/McTitle/McTitle"
+import McButton from '../../elements/McButton/McButton'
+import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
+import McTitle from '../../elements/McTitle/McTitle'
 /**
  * More info: https://officert.github.io/vue-slideout-panel
  */
 export default {
-  name: "McDrawer",
+  name: 'McDrawer',
   components: {
     McButton,
     McSvgIcon,
@@ -45,7 +56,7 @@ export default {
      */
     title: {
       type: String,
-      default: "",
+      default: '',
     },
     /**
      * Нужна ли кнопка
@@ -71,8 +82,8 @@ export default {
        * Событие закрытия панели
        * @property {Object}
        */
-      this.$emit("close-panel", {});
-    }
+      this.$emit('close-panel', {})
+    },
   },
 }
 </script>
@@ -111,7 +122,11 @@ export default {
   &__tint {
     @include position(absolute, 0 5px null 0);
     height: $size-400;
-    background: linear-gradient(180deg, $color-white 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(
+      180deg,
+      $color-white 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
   }
 
   &__btn-close {
