@@ -1,91 +1,104 @@
 <template>
-  <mc-button
-    v-on="$listeners"
-    :class="classes"
-    text-align="left"
-    :variation="currentThemeConfig.mainMenuLinks.variable"
-    :secondary-color="currentThemeConfig.mainMenuLinks.secondaryColor"
-    full-width
-    :size="compact ? 's-compact' : 's'"
-    :href="href"
-    :to="to"
-    :exact="exact"
-    :disabled="disabled"
+  <mc-tooltip
+    class="mc-side-bar-button__tooltip"
+    :content="compact && withTooltip ? title : ''"
+    size="s"
+    placement="right"
   >
-    <mc-svg-icon
-      v-if="icon"
-      slot="icon-prepend"
-      class="mc-side-bar-button__icon"
-      :name="icon"
-    />
-    <span
-      v-if="icon && compact && info"
-      slot="icon-prepend"
-      class="mc-side-bar-button__dot"
-    />
-    <template v-if="!compact">
-      {{ title }}
-      <mc-chip v-if="info" slot="icon-append" variation="blue">
-        {{ info }}
-      </mc-chip>
-    </template>
-  </mc-button>
+    <mc-button
+      :class="classes"
+      text-align="left"
+      :variation="currentThemeConfig.mainMenuLinks.variable"
+      :secondary-color="currentThemeConfig.mainMenuLinks.secondaryColor"
+      full-width
+      :size="compact ? 's-compact' : 's'"
+      :href="href"
+      :to="to"
+      :exact="exact"
+      :disabled="disabled"
+      v-on="$listeners"
+    >
+      <mc-svg-icon
+        v-if="icon"
+        slot="icon-prepend"
+        class="mc-side-bar-button__icon"
+        :name="icon"
+      />
+      <span
+        v-if="icon && compact && info"
+        slot="icon-prepend"
+        class="mc-side-bar-button__dot"
+      />
+      <template v-if="!compact">
+        {{ title }}
+        <mc-chip v-if="info" slot="icon-append" variation="blue">
+          {{ info }}
+        </mc-chip>
+      </template>
+    </mc-button>
+  </mc-tooltip>
 </template>
 
 <script>
-import McButton from "../../../elements/McButton/McButton";
-import McSvgIcon from "../../../elements/McSvgIcon/McSvgIcon";
-import McChip from "../../../elements/McChip/McChip";
+import McButton from '../../../elements/McButton/McButton'
+import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
+import McChip from '../../../elements/McChip/McChip'
+import McTooltip from '../../../elements/McTooltip/McTooltip'
 export default {
-  name: "McSideBarButton",
+  name: 'McSideBarButton',
   components: {
     McButton,
     McSvgIcon,
-    McChip
+    McChip,
+    McTooltip,
   },
-  inject: ["currentThemeConfig"],
+  inject: ['currentThemeConfig'],
   props: {
     /**
      *  Если нужна ссылка внутри приложения:
      * `{name: 'test', params: { id: test.id }}`
      */
     to: {
-      default: null
+      default: null,
     },
     /**
      *  Если нужна обычная ссылка:
      * `https://mediacube.agency/`
      */
     href: {
-      default: null
+      default: null,
     },
     /**
      *  Если нужна иконка
      */
     icon: {
       type: String,
-      default: ""
+      default: '',
     },
     /**
      *  Тайтл кнопки
      */
     title: {
       type: String,
-      default: ""
+      default: '',
     },
     /**
      *  Compact size
      */
     compact: {
       type: Boolean,
-      default: false
+      default: false,
+    },
+    withTooltip: {
+      type: Boolean,
+      default: false,
     },
     /**
      *  Additional info
      */
     info: {
       type: [String, Number],
-      default: ""
+      default: '',
     },
     /**
      *  Exact
@@ -93,7 +106,7 @@ export default {
      */
     exact: {
       type: Boolean,
-      default: false
+      default: false,
     },
     /**
      *  Отключенное состояние
@@ -101,26 +114,28 @@ export default {
      */
     disabled: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     classes() {
       return {
-        "mc-side-bar-button": true,
+        'mc-side-bar-button': true,
         [`mc-side-bar--${this.currentThemeConfig.mode}__button`]: true,
-        "blue-hover":
-          this.currentThemeConfig.mainMenuLinks.variable === "black-flat"
-      };
-    }
-  }
-};
+        'blue-hover':
+          this.currentThemeConfig.mainMenuLinks.variable === 'black-flat',
+      }
+    },
+  },
+}
 </script>
 
 <style lang="scss">
 .mc-side-bar-button {
   $block-name: &;
-
+  &__tooltip {
+    width: 100%;
+  }
   &__dot {
     @include position(absolute, $space-100 6px null null);
     @include size($size-100);

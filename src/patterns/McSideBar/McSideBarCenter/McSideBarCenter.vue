@@ -19,6 +19,7 @@
         :icon="menuMainItem.icon"
         :title="menuMainItem.name"
         :compact="compact"
+        with-tooltip
       />
     </div>
     <mc-separator
@@ -34,6 +35,7 @@
       icon="chat_messages"
       :title="chatraConfig.title"
       :compact="compact"
+      with-tooltip
       @click="handleToggleUserback"
     />
     <mc-side-bar-button
@@ -41,23 +43,24 @@
       icon="bug_report"
       :title="userbackConfig.title"
       :compact="compact"
+      with-tooltip
       @click="handleToggleUserback"
     />
   </div>
 </template>
 
 <script>
-import _XEUtils from "xe-utils";
-import _has from "lodash/has";
-import McTitle from "../../../elements/McTitle/McTitle";
-import McSideBarButton from "../McSideBarButton/McSideBarButton";
-import McSeparator from "../../../elements/McSeparator/McSeparator";
+import _XEUtils from 'xe-utils'
+import _has from 'lodash/has'
+import McTitle from '../../../elements/McTitle/McTitle'
+import McSideBarButton from '../McSideBarButton/McSideBarButton'
+import McSeparator from '../../../elements/McSeparator/McSeparator'
 export default {
-  name: "McSideBarCenter",
+  name: 'McSideBarCenter',
   components: {
     McTitle,
     McSideBarButton,
-    McSeparator
+    McSeparator,
   },
   props: {
     /**
@@ -65,7 +68,7 @@ export default {
      */
     title: {
       type: String,
-      default: ""
+      default: '',
     },
     /**
      *  Центральное меню
@@ -73,7 +76,7 @@ export default {
      */
     menuMain: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     /**
      *  Меню при клике на +
@@ -81,7 +84,7 @@ export default {
      */
     menuAdditional: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     /**
      *  Id чатры
@@ -89,7 +92,7 @@ export default {
      */
     chatraConfig: {
       type: Object,
-      default: null
+      default: null,
     },
     /**
      *  Userback Config
@@ -97,7 +100,7 @@ export default {
      */
     userbackConfig: {
       type: Object,
-      default: null
+      default: null,
     },
     /**
      *  Данные пользователя
@@ -105,40 +108,37 @@ export default {
      */
     user: {
       type: Object,
-      default: null
+      default: null,
     },
     /**
      *  Компактный вид
      */
     compact: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      menuUserbackIsOpen: false
-    };
-  },
-  mounted() {
-    this.userbackConfig && this.initUserback();
+      menuUserbackIsOpen: false,
+    }
   },
   computed: {
     computedMenuMain() {
       return this.menuMain.map(i => {
         return {
           id: _XEUtils.uniqueId(),
-          ...i
-        };
-      });
+          ...i,
+        }
+      })
     },
     computedUserbackSettings() {
       return {
-        language: _has(this.userbackConfig, "settings.lang")
+        language: _has(this.userbackConfig, 'settings.lang')
           ? this.userbackConfig.settings.lang
-          : "en",
-        style: "text",
-        position: "e",
+          : 'en',
+        style: 'text',
+        position: 'e',
         autohide: true, // не отображаем, т.к. привязка к кнопке в хедере
         logo: this.logoSrc,
         name_field: false, // не выводим так как будем передавать в кастомных даннных.
@@ -149,66 +149,67 @@ export default {
         comment_field_mandatory: true,
         display_category: false,
         display_feedback: false,
-        main_button_text_colour: "#FFFFFF", // hex colour
-        main_button_background_colour: "#4285F4", // hex colour
-        rating_type: "emoji",
-        ...(_has(this.userbackConfig, "settings")
+        main_button_text_colour: '#FFFFFF', // hex colour
+        main_button_background_colour: '#4285F4', // hex colour
+        rating_type: 'emoji',
+        ...(_has(this.userbackConfig, 'settings')
           ? this.userbackConfig.settings
-          : {})
-      };
+          : {}),
+      }
     },
     computedUserbackCustomData() {
-      const user = this.user;
+      const user = this.user
       const data = {
         user_id: user.id,
-        email: user.email || "",
-        name: user.name
-      };
-      if (this.user.company) {
-        const company = user.company;
-        data.company = `${company.first_name}${
-          company.last_name ? ` ${company.last_name}` : ""
-        }`;
+        email: user.email || '',
+        name: user.name,
       }
-      return data;
-    }
+      if (this.user.company) {
+        const company = user.company
+        data.company = `${company.first_name}${
+          company.last_name ? ` ${company.last_name}` : ''
+        }`
+      }
+      return data
+    },
+  },
+  mounted() {
+    this.userbackConfig && this.initUserback()
   },
   methods: {
     initUserback() {
-      this.setUserbackData();
-      (function(id) {
-        const script = document.getElementById(id);
-        script && script.remove();
+      this.setUserbackData()
+      ;(function(id) {
+        const script = document.getElementById(id)
+        script && script.remove()
 
         const container = document.getElementsByClassName(
-          "userback-button-container"
-        )[0];
-        container && container.remove();
+          'userback-button-container',
+        )[0]
+        container && container.remove()
 
-        const s = document.createElement("script");
-        s.id = id;
-        s.async = 1;
-        s.src = "https://static.userback.io/widget/v1.js";
-        const parent_node = document.head || document.body;
-        parent_node.appendChild(s);
-      })("userback-sdk");
+        const s = document.createElement('script')
+        s.id = id
+        s.async = 1
+        s.src = 'https://static.userback.io/widget/v1.js'
+        const parent_node = document.head || document.body
+        parent_node.appendChild(s)
+      })('userback-sdk')
     },
     setUserbackData() {
-      window.Userback = window.Userback || {};
-      window.Userback.access_token = this.userbackConfig.token;
-      window.Userback.widget_settings = this.computedUserbackSettings;
-      window.Userback.categories = this.userbackConfig.categories;
+      window.Userback = window.Userback || {}
+      window.Userback.access_token = this.userbackConfig.token
+      window.Userback.widget_settings = this.computedUserbackSettings
+      window.Userback.categories = this.userbackConfig.categories
       if (this.user) {
-        window.Userback.custom_data = this.computedUserbackCustomData;
+        window.Userback.custom_data = this.computedUserbackCustomData
       }
     },
     handleToggleUserback() {
-      this.menuUserbackIsOpen
-        ? window.Userback.close()
-        : window.Userback.open();
-    }
-  }
-};
+      this.menuUserbackIsOpen ? window.Userback.close() : window.Userback.open()
+    },
+  },
+}
 </script>
 
 <style lang="scss">
