@@ -1,49 +1,61 @@
 <template>
-<div class="mc-chat">
-  <mc-drawer icon-close="arrow_forward" @close-panel="handleClose">
-    <mc-title slot="title" :ellipsis="false" weight="semi-bold">{{ title }}</mc-title>
-    <div v-if="comments.length" class="mc-chat__comments">
-      <mc-chat-comment
+  <div class="mc-chat">
+    <mc-drawer icon-close="arrow_forward" @close-panel="handleClose">
+      <mc-title slot="title" :ellipsis="false" weight="semi-bold">{{
+        title
+      }}</mc-title>
+      <div v-if="comments.length" class="mc-chat__comments">
+        <mc-chat-comment
           v-for="comment in sortedComments"
           :key="comment.id"
           :comment="comment"
           :default-user-name="defaultUserName"
           :editable="editable"
           @delete="handleDelete"
+        />
+      </div>
+      <div v-else class="mc-chat__empty-notice">
+        <mc-svg-icon
+          name="chat_forum"
+          color="outline-gray"
+          size="1000"
+          :weight="1"
+        />
+        <mc-title
+          v-if="emptyMessage"
+          color="outline-gray"
+          text-align="center"
+          >{{ emptyMessage }}</mc-title
+        >
+      </div>
+      <mc-chat-form
+        v-if="showInput"
+        ref="form"
+        slot="footer"
+        :value="value"
+        :loading="loading"
+        :avatar="avatar"
+        :placeholder="placeholder"
+        @input="handleInput"
+        @submit="handleSubmit"
       />
-    </div>
-    <div v-else class="mc-chat__empty-notice">
-      <mc-svg-icon name="chat_forum" color="outline-gray" size="1000" :weight="1" />
-      <mc-title v-if="emptyMessage" color="outline-gray" text-align="center">{{ emptyMessage }}</mc-title>
-    </div>
-    <mc-chat-form
-      v-if="showInput"
-      ref="form"
-      slot="footer"
-      :value="value"
-      :loading="loading"
-      :avatar="avatar"
-      :placeholder="placeholder"
-      @input="handleInput"
-      @submit="handleSubmit"
-    />
-  </mc-drawer>
-</div>
+    </mc-drawer>
+  </div>
 </template>
 
 <script>
-import McDrawer from "../McDrawer/McDrawer"
-import McChatForm from "./McChatForm/McChatForm"
-import McChatComment from "./McChatComment/McChatComment"
-import McButton from "../../elements/McButton/McButton"
-import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon"
-import McSeparator from "../../elements/McSeparator/McSeparator"
-import McTitle from "../../elements/McTitle/McTitle"
+import McDrawer from '../McDrawer/McDrawer'
+import McChatForm from './McChatForm/McChatForm'
+import McChatComment from './McChatComment/McChatComment'
+import McButton from '../../elements/McButton/McButton'
+import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
+import McSeparator from '../../elements/McSeparator/McSeparator'
+import McTitle from '../../elements/McTitle/McTitle'
 /**
  * More info: https://officert.github.io/vue-slideout-panel
  */
 export default {
-  name: "McChat",
+  name: 'McChat',
   components: {
     McDrawer,
     McChatForm,
@@ -53,22 +65,13 @@ export default {
     McSeparator,
     McTitle,
   },
-  data() {
-    return {
-      prettyValue: '',
-      loading: false,
-      scrollElement: null,
-      formElement: null,
-      formElementOldHeight: null,
-    }
-  },
   props: {
     /**
      * Заголовок
      */
     title: {
       type: String,
-      default: "",
+      default: '',
     },
     /**
      * Массив комментариев
@@ -103,7 +106,7 @@ export default {
      */
     placeholder: {
       type: String,
-      default: "",
+      default: '',
     },
     /**
      * Текст при отсутствии
@@ -111,7 +114,7 @@ export default {
      */
     emptyMessage: {
       type: String,
-      default: "",
+      default: '',
     },
     /**
      * Отображение инпута
@@ -134,7 +137,32 @@ export default {
      */
     defaultUserName: {
       type: String,
-      default: "System comment",
+      default: 'System comment',
+    },
+  },
+  data() {
+    return {
+      prettyValue: '',
+      loading: false,
+      scrollElement: null,
+      formElement: null,
+      formElementOldHeight: null,
+    }
+  },
+  computed: {
+    sortedComments() {
+      return this.comments.sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at),
+      )
+    },
+  },
+  watch: {
+    comments: {
+      handler(newVal) {
+        newVal.length && this.scrollContentToBottom()
+        this.loading = false
+      },
+      deep: true,
     },
   },
   mounted() {
@@ -149,22 +177,6 @@ export default {
   beforeDestroy() {
     this.setPosition('slideout')
   },
-  watch: {
-    comments: {
-      handler(newVal) {
-        newVal.length && this.scrollContentToBottom()
-        this.loading = false
-      },
-      deep: true,
-    },
-  },
-  computed: {
-    sortedComments() {
-      return this.comments.sort(
-          (a, b) => new Date(a.created_at) - new Date(b.created_at),
-      )
-    }
-  },
   methods: {
     setPosition(className, { height = '100%', top = 0 } = {}) {
       const els = document.getElementsByClassName(className)
@@ -174,14 +186,17 @@ export default {
       }
     },
     setScrollElement() {
-      const collection = document.getElementsByClassName('mc-drawer__body-inner')
+      const collection = document.getElementsByClassName(
+        'mc-drawer__body-inner',
+      )
       if (collection.length) {
         this.scrollElement = collection[0]
       }
     },
     scrollContentToBottom() {
       this.$nextTick(() => {
-        this.scrollElement && this.scrollElement.scrollTo(0, this.scrollElement.scrollHeight)
+        this.scrollElement &&
+          this.scrollElement.scrollTo(0, this.scrollElement.scrollHeight)
       })
     },
     handleClose() {
@@ -189,7 +204,7 @@ export default {
        * Событие закрытия панели
        * @property {Object}
        */
-      this.$emit("closePanel", {})
+      this.$emit('closePanel', {})
     },
     handleInput(value) {
       this.prettyValue = value
@@ -197,7 +212,7 @@ export default {
        * Событие ввода
        * @property {string}
        */
-      this.$emit("input", value)
+      this.$emit('input', value)
       this.$bus.emit('chat-input', value)
 
       if (this.formElement.offsetHeight !== this.formElementOldHeight) {
@@ -211,7 +226,7 @@ export default {
        * Событие по отправке
        */
       if (this.prettyValue) {
-        this.$emit("submit", this.prettyValue)
+        this.$emit('submit', this.prettyValue)
         this.$bus.emit('chat-submit', this.prettyValue)
       }
     },
@@ -221,15 +236,13 @@ export default {
        */
       this.$emit('delete', id)
       this.$bus.emit('chat-delete', id)
-    }
+    },
   },
 }
 </script>
 
 <style lang="scss">
-.slideout-panel
-.slideout-wrapper
-.slideout {
+.slideout-panel .slideout-wrapper .slideout {
   height: auto;
 }
 .mc-chat {
@@ -266,6 +279,5 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-
 }
 </style>

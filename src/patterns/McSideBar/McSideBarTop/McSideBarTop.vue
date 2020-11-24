@@ -40,6 +40,7 @@
           slot="top"
           :variation="`${currentThemeConfig.dropdownActivator}-link`"
           :size="compact ? 'l-compact' : 'l'"
+          class="mc-side-bar-top__activator-btn"
         >
           <template v-if="!compact">
             {{ logoTitle }}
@@ -183,6 +184,10 @@ export default {
   }
   &__img {
     margin-left: $space-100;
+  }
+  &__activator-btn {
+    font-size: $font-size-400;
+    line-height: $line-height-300;
   }
   &--theme-white {
     .mc-preview__top {

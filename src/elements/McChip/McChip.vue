@@ -13,7 +13,12 @@
     <div v-if="counter || counter === 0" class="mc-chip__counter">
       {{ counter }}
     </div>
-    <button v-if="closable" class="mc-chip__button" type="button" v-on="$listeners">
+    <button
+      v-if="closable"
+      class="mc-chip__button"
+      type="button"
+      v-on="$listeners"
+    >
       <!-- @slot Слот для пользовательской кнопки -->
       <slot name="button">
         <mc-svg-icon size="200" name="cancel" />
@@ -23,9 +28,9 @@
 </template>
 
 <script>
-import McSvgIcon from "../McSvgIcon/McSvgIcon"
+import McSvgIcon from '../McSvgIcon/McSvgIcon'
 export default {
-  name: "McChip",
+  name: 'McChip',
   components: { McSvgIcon },
   props: {
     /**
@@ -34,7 +39,7 @@ export default {
      */
     title: {
       type: String,
-      default: "",
+      default: '',
     },
     /**
      *  Отключенное состояние
@@ -58,7 +63,7 @@ export default {
      */
     variation: {
       type: String,
-      default: "transparent",
+      default: 'transparent',
     },
     /**
      *  Счетчик
@@ -74,7 +79,7 @@ export default {
      */
     size: {
       type: String,
-      default: "m",
+      default: 'm',
     },
     /**
      *  Если нужен
@@ -82,7 +87,7 @@ export default {
      */
     textColor: {
       type: String,
-      default: "",
+      default: '',
     },
   },
 
@@ -109,7 +114,6 @@ export default {
   font-size: $font-size-200;
   line-height: $line-height-200;
   max-width: 100%;
-
 
   border-radius: 100px;
   vertical-align: middle;
@@ -223,6 +227,11 @@ export default {
 
       &-invert {
         background-color: fade-out($value, 0.85);
+      }
+
+      &-outline {
+        border: 1px solid $value;
+        color: $value;
       }
     }
     &--text-color-#{$color} {
