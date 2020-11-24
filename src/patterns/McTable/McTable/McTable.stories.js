@@ -1,5 +1,5 @@
 import { text, select, boolean, object } from '@storybook/addon-knobs'
-import { action } from "@storybook/addon-actions"
+import { action } from '@storybook/addon-actions'
 
 import McTable from './McTable'
 import McTableCol from '../McTableCol/McTableCol'
@@ -13,10 +13,10 @@ import McButton from '../../../elements/McButton/McButton'
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
 import McStack from '../../../patterns/McStack/McStack'
-import McPreview from "../../McPreview/McPreview"
+import McPreview from '../../McPreview/McPreview'
 
 import _minBy from 'lodash/minBy'
-import { number as num } from "../../../utils/filters"
+import { number as num } from '../../../utils/filters'
 
 import body from '../../../mocks/tableInfusersBody'
 const borders = {
@@ -51,11 +51,11 @@ export default {
     componentSubtitle: 'Status: Ready',
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=346%3A1828',
+      url:
+        'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=346%3A1828',
     },
   },
-};
-
+}
 
 const getUniqueProps = key => {
   return {
@@ -81,7 +81,11 @@ const getUniqueProps = key => {
       default: boolean('loading', false, key),
     },
     checkboxConfig: {
-      default: object('checkboxConfig', {labelField: 'user', showHeader: false, highlight: true}, key),
+      default: object(
+        'checkboxConfig',
+        { labelField: 'user', showHeader: false, highlight: true },
+        key,
+      ),
     },
     nativeSort: {
       default: boolean('nativeSort', true, key),
@@ -96,7 +100,11 @@ const getUniqueProps = key => {
       default: select('footerInfo', footerInfo, 'total', key),
     },
     totalFooter: {
-      default: object('totalFooter', { views_count: 12345, roles: 'privet' }, key),
+      default: object(
+        'totalFooter',
+        { views_count: 12345, roles: 'privet' },
+        key,
+      ),
     },
     headerBreakWord: {
       default: boolean('headerBreakWord', false, key),
@@ -158,13 +166,13 @@ export const Default = () => ({
       total: 424,
       placeholders: {
         no_data: 'Данных вообще нет!',
-        loading: "Секундочку...",
+        loading: 'Секундочку...',
         all_loaded: 'Всё уже загружено',
-        total: "Итого",
+        total: 'Итого',
         menu: {
-          copy: "Скопировать данные ячейки",
-          open_in_new_tab: "Открыть в новой вкладке",
-          open_in_new_window: "Открыть в новом окне",
+          copy: 'Скопировать данные ячейки',
+          open_in_new_tab: 'Открыть в новой вкладке',
+          open_in_new_window: 'Открыть в новом окне',
         },
       },
     }
@@ -174,22 +182,30 @@ export const Default = () => ({
       return getCommonTags(this)
     },
     items() {
-      return body.map(item => {
-        return {
-          ...item,
-          avatar: item.image_small,
-          views_count: num(item.views_count, 0),
-          average_views_per_video: num(item.average_views_per_video, 0),
-          subscribers_count: num(item.subscribers_count, 0),
-          categories: item.categories.map(c => c.title).join(', '),
-          language: item.language.name,
-          country: item.country.name,
-          roles: ['Одмен', 'Петух', 'Лопух'],
-          price: item.agency_channels.filter( item => item.type === 2 ).length ?
-            num(_minBy(item.agency_channels.filter( item => item.type === 2 ), 'total').total, 0) + ' $' :
-            null,
-        }
-      }).slice(0, 50)
+      return body
+        .map(item => {
+          return {
+            ...item,
+            avatar: item.image_small,
+            views_count: num(item.views_count, 0),
+            average_views_per_video: num(item.average_views_per_video, 0),
+            subscribers_count: num(item.subscribers_count, 0),
+            categories: item.categories.map(c => c.title).join(', '),
+            language: item.language.name,
+            country: item.country.name,
+            roles: ['Одмен', 'Петух', 'Лопух'],
+            price: item.agency_channels.filter(item => item.type === 2).length
+              ? num(
+                  _minBy(
+                    item.agency_channels.filter(item => item.type === 2),
+                    'total',
+                  ).total,
+                  0,
+                ) + ' $'
+              : null,
+          }
+        })
+        .slice(0, 50)
     },
   },
   props: {
@@ -198,7 +214,7 @@ export const Default = () => ({
   methods: {
     ...actionsData,
     handleCellClassName() {
-      return ""//"mc-table-col--border-bottom"
+      return '' //"mc-table-col--border-bottom"
     },
     sortNameMethod(a, b) {
       return a - b
@@ -294,5 +310,5 @@ export const Default = () => ({
                 </mc-grid-row>
             </template>
         </mc-table-col>
-    </mc-table>`
+    </mc-table>`,
 })
