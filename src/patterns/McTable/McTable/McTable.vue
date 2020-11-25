@@ -10,6 +10,10 @@
       <!-- @slot Слот дочерних mc-table-col -->
       <slot />
       <template v-slot:empty>
+        <img
+          src="../../../assets/img/no_table_data.svg"
+          alt="Empty table data icon"
+        />
         <mc-title v-if="!$attrs.loading" text-align="center">
           {{ placeholders.no_data }}
         </mc-title>
@@ -36,6 +40,7 @@
 import _throttle from 'lodash/throttle'
 import _XEClipboard from 'xe-clipboard'
 import _isEmpty from 'lodash/isEmpty'
+import numeral from 'numeral'
 
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
@@ -236,6 +241,9 @@ export default {
           trigger: 'cell',
           orders: this.sortOrders,
         },
+        'tooltip-config': {
+          theme: 'mcui-black',
+        },
         'row-id': 'id',
         'highlight-hover-row': true,
         'highlight-current-row': true,
@@ -364,7 +372,11 @@ export default {
             const info = Object.entries(this.totalFooter).find(
               ([key]) => key === column.property,
             )
-            return info ? info[1] : null
+            return info
+              ? Number(info[1])
+                ? numeral(info[1]).format('0.00')
+                : info[1]
+              : null
           }
           return null
         }),
@@ -473,9 +485,7 @@ export default {
       if (!regExp.test(pathName)) {
         pathName = `${pathName}/`
       }
-      return `${window.location.origin}${pathName}${row.id}${
-        window.location.search
-      }`
+      return `${window.location.origin}${pathName}${row.id}${window.location.search}`
     },
     checkHorizontalScroll() {
       const wrapper = this.getElement('vxe-table--body-wrapper')
@@ -506,6 +516,17 @@ export default {
   &--tooltip-wrapper {
     .vxe-table--tooltip-content {
       white-space: normal;
+    }
+    &.theme--mcui-black {
+      background: $color-black;
+      color: $color-white;
+      border-radius: $radius-100;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: $font-weight-medium;
+      line-height: $line-height-250;
+      font-size: $font-size-200;
+      box-shadow: 0 $space-50 $space-150 rgba($color-black, 0.16);
+      padding: $space-100 $space-150;
     }
   }
 }
