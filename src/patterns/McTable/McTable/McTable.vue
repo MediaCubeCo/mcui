@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import noTableDataIcon from '../../../assets/img/no_table_data.svg'
+import noTableDataIcon from '../../../assets/img/no_table_data.png'
 import _throttle from 'lodash/throttle'
 import _XEClipboard from 'xe-clipboard'
 import _isEmpty from 'lodash/isEmpty'
