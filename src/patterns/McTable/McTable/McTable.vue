@@ -10,12 +10,14 @@
       <!-- @slot Слот дочерних mc-table-col -->
       <slot />
       <template v-slot:empty>
-        <div class="no_data_icon-wrapper">
-          <img :src="noDataIconSrc" alt="no table data icon" />
-        </div>
-        <mc-title v-if="!$attrs.loading" text-align="center">
-          {{ placeholders.no_data }}
-        </mc-title>
+        <template v-if="!$attrs.loading">
+          <div class="no_data_icon-wrapper">
+            <img :src="noDataIconSrc" alt="no table data icon" />
+          </div>
+          <mc-title text-align="center">
+            {{ placeholders.no_data }}
+          </mc-title>
+        </template>
       </template>
     </component>
     <div
