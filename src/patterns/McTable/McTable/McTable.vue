@@ -275,7 +275,7 @@ export default {
       if (this.scrollable) {
         switch (this.footerInfo) {
           case 'total':
-            return true
+            return !this.cardIsOpen
           case 'loaded':
             return !this.hasMore && !this.$attrs.loading && !!this.items.length
           default:
