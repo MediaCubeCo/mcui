@@ -41,7 +41,7 @@ export default {
     },
 
     mounted() {
-        this.resize()
+        this.vhFix()
         window.addEventListener('resize', this.vhFix)
     },
 
