@@ -382,9 +382,12 @@ export default {
             const info = Object.entries(this.totalFooter).find(
               ([key]) => key === column.property,
             )
+            //если ключ содержит слово count значит число форматироваться не будет, остальные будут по формату
             return info
-              ? Number(info[1])
-                ? numeral(info[1]).format('0.00')
+              ? info[1] && !info[0].match('count')
+                ? numeral(info[1])
+                    .format('0,0.00')
+                    .replace(/,/, ' ')
                 : info[1]
               : null
           }
