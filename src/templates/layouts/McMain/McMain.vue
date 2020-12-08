@@ -1,5 +1,5 @@
 <template>
-    <div ref="main" class="mc-main">
+    <div class="mc-main">
         <div v-if="$slots['left-bar']" class="mc-main__left">
             <!-- @slot Слот сайдбара -->
             <slot name="left-bar" />
@@ -13,7 +13,7 @@
                     <slot />
                 </div>
             </div>
-            <mc-fake-scroll v-else>
+            <mc-fake-scroll v-else ref="fake-scroll" visible="l-down">
                 <div class="mc-main__content">
                     <!-- @slot Слот контента -->
                     <slot />
@@ -37,6 +37,18 @@ export default {
         fakeScroll: {
             type: Boolean,
             default: false,
+        },
+        routeKey: {
+            type: [Number, String],
+            default: '',
+        },
+    },
+
+    watch: {
+        routeKey() {
+            if (this.$refs['fake-scroll']) {
+                this.$refs['fake-scroll'].updateData()
+            }
         },
     },
 

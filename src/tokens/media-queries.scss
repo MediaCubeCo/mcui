@@ -15,3 +15,15 @@ $media-query-m-down: "(max-width: 767px)";
 $media-query-l-down: "(max-width: 1023px)";
 $media-query-xl-down: "(max-width: 1439px)";
 
+$token-media-queries: (
+  "xs": $media-query-xs,
+  "s": $media-query-s,
+  "m": $media-query-m,
+  "l": $media-query-l,
+  "xl": $media-query-xl,
+  "xs-down": $media-query-xs-down,
+  "s-down": $media-query-s-down,
+  "m-down": $media-query-m-down,
+  "l-down": $media-query-l-down,
+  "xl-down": $media-query-xl-down,
+);

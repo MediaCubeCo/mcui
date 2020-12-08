@@ -1,44 +1,41 @@
 <template>
-    <div ref="main" class="mc-fake-scroll">
+    <div ref="main" :class="mainClasses">
         <div class="mc-fake-scroll__main">
             <slot />
         </div>
-        <div v-if="hasScroll" ref="track" class="mc-fake-scroll__track">
+        <div
+            ref="track"
+            :class="trackClasses"
+            @mousedown.stop="onFakeScrollBarTrackMouseDown"
+            @click.stop="onFakeScrollBarTrackClick"
+        >
             <div
                 ref="thumb"
                 class="mc-fake-scroll__thumb"
                 :style="thumbStyles"
-                @mousedown="onFakeScrollBarMouseDown"
+                @mousedown.stop="onFakeScrollBarMouseDown"
             ></div>
         </div>
     </div>
-    <!--  <div v-else class="fake-scroll">-->
-    <!--    <div class="fake-scroll__main">-->
-    <!--      <div ref="content" class="mc-main__content">-->
-    <!--        &lt;!&ndash; @slot Слот контента &ndash;&gt;-->
-    <!--        <slot />-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--    <div v-if="hasScroll" ref="track" class="fake-scroll__track">-->
-    <!--      <div-->
-    <!--          ref="thumb"-->
-    <!--          class="fake-scroll__thumb"-->
-    <!--          :style="thumbStyles"-->
-    <!--          @mousedown="onFakeScrollBarMouseDown"-->
-    <!--      ></div>-->
-    <!--    </div>-->
-    <!--  </div>-->
 </template>
 
 <script>
 export default {
     name: 'McFakeScroll',
+    props: {
+        visible: {
+            type: String,
+            default: '',
+        },
+    },
     data() {
         return {
-            content: null,
             hasScroll: false,
             thumbBox: null,
             trackBox: null,
+            thumbHeight: 0,
+            scrollRatio: 1,
+            trackIsClicked: false,
             dragOptions: {
                 startClientPos: 0,
                 distance: 0,
@@ -48,137 +45,202 @@ export default {
     },
     computed: {
         thumbStyles() {
-            this.content = this.getContentEl()
             return {
-                height: `${this.content.clientHeight * this.scrollRatio}px`,
+                height: `${this.thumbHeight}px`,
             }
         },
-        scrollRatio() {
-            this.content = this.getContentEl()
-            console.log(this.content.scrollHeight)
-            return Math.min(this.content.clientHeight / this.content.scrollHeight, 1.0)
+
+        scrollEl() {
+            return this.$slots.default ? this.$slots.default[0].elm : null
         },
-    },
-    watch: {
-        $route: {
-            handler(val, old) {
-                // this.checkScroll()
-            },
-            deep: true,
+        mainClasses() {
+            return {
+                'mc-fake-scroll': true,
+                [`mc-fake-scroll--visible${this.visible && `-${this.visible}`}`]: true,
+            }
+        },
+        trackClasses() {
+            return {
+                'mc-fake-scroll__track': true,
+                'mc-fake-scroll__track--visible': this.hasScroll,
+            }
         },
     },
     mounted() {
-        // const content = this.$refs.content
-        this.content = this.getContentEl()
-        if (this.content) {
-            this.content.addEventListener('scroll', this.onFakeScrollBarContentScroll)
-        }
+        this.scrollEl && this.scrollEl.addEventListener('scroll', this.onFakeScrollBarContentScroll)
 
-        this.resize()
-        window.addEventListener('resize', this.resize)
+        this.updateData()
+        window.addEventListener('resize', this.updateData)
 
         document.documentElement.addEventListener('mousemove', this.onFakeScrollBarMouseMove)
         document.documentElement.addEventListener('mouseup', this.onFakeScrollBarMouseUp)
     },
 
     beforeDestroy() {
-        this.content && this.content.removeEventListener('scroll', this.onFakeScrollBarContentScroll)
+        this.scrollEl && this.scrollEl.removeEventListener('scroll', this.onFakeScrollBarContentScroll)
         document.documentElement.removeEventListener('mousemove', this.onFakeScrollBarMouseMove)
         document.documentElement.removeEventListener('mouseup', this.onFakeScrollBarMouseUp)
 
-        window.removeEventListener('resize', this.resize)
+        window.removeEventListener('resize', this.updateData)
     },
     methods: {
-        resize() {
+        updateData() {
             this.checkScroll()
+            this.setBoxes()
+            this.setThumbHeight()
+            this.setScrollRatio()
         },
-
-        getContentEl() {
-            return this.$refs.main.querySelector('.mc-fake-scroll__main > *')
-        },
-
         checkScroll() {
             this.hasScroll = false
-            this.content = this.getContentEl()
-            if (this.content) {
-                this.hasScroll = this.content.clientHeight < this.content.scrollHeight
+            if (this.scrollEl) {
+                this.hasScroll = this.scrollEl.clientHeight < this.scrollEl.scrollHeight
             }
+        },
+        setThumbHeight() {
+            const thumbRatio = Math.min(this.scrollEl.clientHeight / this.scrollEl.scrollHeight, 1.0)
+            this.thumbHeight = this.scrollEl.clientHeight * thumbRatio
+            if (this.$refs.thumb) {
+                this.thumbBox.height = this.$refs.thumb.getBoundingClientRect().height
+            }
+        },
+        setScrollRatio() {
+            if (this.thumbBox && this.trackBox) {
+                const availableTrackWay = this.trackBox.height - this.thumbHeight
+                const availableContentWay = this.scrollEl.scrollHeight - this.scrollEl.clientHeight
+                this.scrollRatio = Math.min(availableTrackWay / availableContentWay, 1.0)
+            }
+        },
+        setBoxes() {
+            this.thumbBox = this.getBoxPos(this.$refs.thumb)
+            this.trackBox = this.getBoxPos(this.$refs.track)
+        },
+        getBoxPos(el) {
+            if (!el) return null
+            const box = el.getBoundingClientRect()
+            return {
+                height: box.height,
+                bottom: box.bottom,
+                top: box.top + window.pageYOffset,
+            }
+        },
+
+        onFakeScrollBarTrackMouseDown(e) {
+            this.updateData()
+            let pos = e.clientY - this.trackBox.top
+            if (pos > this.trackBox.height - this.thumbBox.height * 0.5) {
+                pos -= this.thumbBox.height
+            } else if (pos > this.thumbBox.height * 0.5) {
+                pos -= this.thumbBox.height * 0.5
+            }
+
+            this.trackIsClicked = true
+            this.scrollEl.scrollTo({
+                top: pos / this.scrollRatio,
+                behavior: 'smooth',
+            })
+        },
+        onFakeScrollBarTrackClick() {
+            this.trackIsClicked = false
         },
         onFakeScrollBarMouseDown(e) {
             this.dragOptions.startClientPos = e.clientY
             this.dragOptions.mouseIsDown = true
             this.setBoxes()
-        },
-        setBoxes() {
-            this.thumbBox = this.$refs.thumb && this.$refs.thumb.getBoundingClientRect()
-            this.trackBox = this.$refs.thumb && this.$refs.track.getBoundingClientRect()
+            document.body.classList.add('no-user-select')
         },
         onFakeScrollBarMouseMove(e) {
             if (!this.dragOptions.mouseIsDown) return
 
+            this.setThumbHeight()
+            this.setScrollRatio()
+
             this.dragOptions.distance = e.clientY - this.dragOptions.startClientPos
 
-            let calculateTopPos = this.thumbBox.top + this.dragOptions.distance
-            if (calculateTopPos < this.trackBox.top) {
+            let calculateTopPos = this.thumbBox.top - this.trackBox.top + this.dragOptions.distance
+            this.setThumbPos(calculateTopPos)
+            this.scrollEl.scrollTo(0, calculateTopPos / this.scrollRatio)
+        },
+        setThumbPos(pos) {
+            if (pos < 0) {
                 this.$refs.thumb.style.top = '0px'
-            } else if (calculateTopPos + this.thumbBox.height > this.trackBox.bottom) {
-                this.$refs.thumb.style.top = `${this.trackBox.bottom - this.thumbBox.height}px`
+            } else if (pos + this.thumbBox.height > this.trackBox.height) {
+                this.$refs.thumb.style.top = `${this.trackBox.height - this.thumbBox.height}px`
             } else {
-                this.$refs.thumb.style.top = `${calculateTopPos}px`
-                this.content.scrollTo(0, calculateTopPos / this.scrollRatio)
+                this.$refs.thumb.style.top = `${pos}px`
             }
         },
         onFakeScrollBarMouseUp() {
             this.dragOptions.mouseIsDown = false
+            document.body.classList.remove('no-user-select')
         },
         onFakeScrollBarContentScroll(e) {
-            if (this.dragOptions.mouseIsDown) return
-            this.setBoxes()
+            if (this.dragOptions.mouseIsDown || this.trackIsClicked) return
+            this.updateData()
             const topPos = e.target.scrollTop
-
-            if (topPos + this.thumbBox.height > this.trackBox.bottom) {
-                this.$refs.thumb.style.top = `${this.trackBox.bottom - this.thumbBox.height}px`
-            } else {
-                this.$refs.thumb.style.top = `${e.target.scrollTop}px`
-            }
+            this.setThumbPos(topPos * this.scrollRatio)
         },
     },
 }
 </script>
 
 <style lang="scss">
+@mixin track-visibility() {
+    right: 0;
+    width: 5px;
+    opacity: 1;
+}
 .mc-fake-scroll {
-    //$block-name: &;
-    .mc-fake-scroll__main {
+    $block-name: &;
+    &__main {
         > * {
-            @include hide-scrollbar(); // or for slot default
+            @include hide-scrollbar();
         }
     }
     position: relative;
     &__track {
-        @include position(absolute, 0 -20px 0 null);
-        //width: 0;
-        width: 20px;
-        //opacity: 0;
-        opacity: 1;
-        right: 0;
-        background-color: #0c9a9a;
+        @include position(absolute, 0 -5px 0 null);
+        width: 0;
+        opacity: 0;
+        background-color: $color-transparent;
         z-index: 101;
         display: block;
     }
     &__thumb {
         @include position(absolute, 0 1px null 1px);
-        background-color: lightblue;
-        height: 200px;
+        background-color: $color-outline-gray;
+        height: 100px;
         border-radius: $radius-100;
-    }
-    &:hover {
-        //#{$block-name}__track {
-        .mc-fake-scroll__track {
-            right: 0;
-            width: 20px;
-            opacity: 0.8;
+        &:hover {
+            background-color: $color-gray;
         }
     }
+    &:hover {
+        #{$block-name}__track--visible {
+            @include track-visibility();
+        }
+    }
+    &__track--visible:active {
+        @include track-visibility();
+    }
+
+    &--visible {
+        #{$block-name}__track {
+            @include track-visibility();
+        }
+        @each $name, $value in $token-media-queries {
+            &-#{$name} {
+                @media #{$value} {
+                    #{$block-name}__track {
+                        @include track-visibility();
+                    }
+                }
+            }
+        }
+    }
+}
+.no-user-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 </style>
