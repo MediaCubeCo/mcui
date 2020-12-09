@@ -1,6 +1,7 @@
 <template>
     <div ref="main" :class="mainClasses">
         <div class="mc-fake-scroll__main">
+            <!-- @slot Слот для <strong>одного (!)</strong> элемента со скроллом -->
             <slot />
         </div>
         <div
@@ -23,6 +24,12 @@
 export default {
     name: 'McFakeScroll',
     props: {
+        /**
+         * Значение медиа-запроса (из токенов),
+         * при котором скроллбар
+         * будет виден всегда:
+         * `xl`, `xl-down`, `l`, `l-down`, `m`, `m-down` и т.д.
+         */
         visible: {
             type: String,
             default: '',
@@ -210,7 +217,8 @@ export default {
         background-color: $color-outline-gray;
         height: 100px;
         border-radius: $radius-100;
-        &:hover {
+        &:hover,
+        &:active {
             background-color: $color-gray;
         }
     }
