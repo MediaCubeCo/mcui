@@ -1,76 +1,63 @@
 <template>
-  <div
-    class="mc-side-bar-top"
-    :class="`mc-side-bar-top--theme-${currentThemeConfig.dropdownActivator}`"
-  >
-    <mc-preview v-if="!computedMenuApps" slot="activator">
-      <img
-        v-if="logoSrc"
-        slot="left"
-        class="mc-side-bar-top__img"
-        :src="logoSrc"
-        width="24"
-        height="24"
-        :alt="logoTitle"
-      />
-      <mc-title slot="top" weight="semi-bold" variation="h4">
-        <template v-if="!compact">
-          {{ logoTitle }}
-        </template>
-      </mc-title>
-    </mc-preview>
-    <mc-dropdown v-else v-model="dropIsOpen">
-      <mc-preview slot="activator">
-        <img
-          v-if="logoSrc"
-          slot="left"
-          class="mc-side-bar-top__img"
-          :src="logoSrc"
-          width="24"
-          height="24"
-          :alt="logoTitle"
-        />
-        <mc-svg-icon
-          v-else-if="logoIcon"
-          slot="left"
-          class="rotate"
-          name="mc_dashboard"
-        />
-        <mc-button
-          slot="top"
-          :variation="`${currentThemeConfig.dropdownActivator}-link`"
-          :size="compact ? 'l-compact' : 'l'"
-          class="mc-side-bar-top__activator-btn"
-        >
-          <template v-if="!compact">
-            {{ logoTitle }}
-          </template>
-          <mc-svg-icon
-            slot="icon-append"
-            class="rotate"
-            name="arrow_drop_down"
-            color="gray"
-          />
-        </mc-button>
-      </mc-preview>
-      <mc-dropdown-panel>
-        <mc-button
-          v-for="menuAppsItem in computedMenuApps"
-          :key="`menu-apps-item-${menuAppsItem.key}`"
-          full-width
-          text-align="left"
-          variation="black-flat"
-          :href="menuAppsItem.href"
-          :to="menuAppsItem.to"
-          :is-active="menuAppsItem.isActive"
-          :exact="menuAppsItem.exact"
-        >
-          <mc-svg-icon slot="icon-prepend" :name="menuAppsItem.icon" />
-          {{ menuAppsItem.name }}
-        </mc-button>
-      </mc-dropdown-panel>
-    </mc-dropdown>
-  </div>
+    <div class="mc-side-bar-top" :class="`mc-side-bar-top--theme-${currentThemeConfig.dropdownActivator}`">
+        <mc-preview v-if="!computedMenuApps" slot="activator">
+            <img
+                v-if="logoSrc"
+                slot="left"
+                class="mc-side-bar-top__img"
+                :src="logoSrc"
+                width="24"
+                height="24"
+                :alt="logoTitle"
+            />
+            <mc-title slot="top" weight="semi-bold" variation="h4">
+                <template v-if="!compact">
+                    {{ logoTitle }}
+                </template>
+            </mc-title>
+        </mc-preview>
+        <mc-dropdown v-else v-model="dropIsOpen">
+            <mc-preview slot="activator">
+                <img
+                    v-if="logoSrc"
+                    slot="left"
+                    class="mc-side-bar-top__img"
+                    :src="logoSrc"
+                    width="24"
+                    height="24"
+                    :alt="logoTitle"
+                />
+                <mc-svg-icon v-else-if="logoIcon" slot="left" class="rotate" name="mc_dashboard" />
+                <mc-button
+                    slot="top"
+                    :variation="`${currentThemeConfig.dropdownActivator}-link`"
+                    :size="compact ? 'l-compact' : 'l'"
+                    class="mc-side-bar-top__activator-btn"
+                >
+                    <template v-if="!compact">
+                        {{ logoTitle }}
+                    </template>
+                    <mc-svg-icon slot="icon-append" class="rotate" name="arrow_drop_down" color="gray" />
+                </mc-button>
+            </mc-preview>
+            <mc-dropdown-panel>
+                <mc-button
+                    v-for="menuAppsItem in computedMenuApps"
+                    :key="`menu-apps-item-${menuAppsItem.key}`"
+                    full-width
+                    text-align="left"
+                    variation="black-flat"
+                    :href="menuAppsItem.href"
+                    :to="menuAppsItem.to"
+                    :is-active="menuAppsItem.isActive"
+                    :exact="menuAppsItem.exact"
+                >
+                    <mc-svg-icon slot="icon-prepend" :name="menuAppsItem.icon" />
+                    {{ menuAppsItem.name }}
+                </mc-button>
+            </mc-dropdown-panel>
+        </mc-dropdown>
+    </div>
 </template>
 
 <script>
@@ -84,124 +71,126 @@ import McPreview from '../../McPreview/McPreview'
 import McTitle from '../../../elements/McTitle/McTitle'
 
 export default {
-  name: 'McSideBarTop',
-  components: {
-    McDropdown,
-    McDropdownPanel,
-    McButton,
-    McPreview,
-    McSvgIcon,
-    McTitle,
-  },
-  inject: ['currentThemeConfig'],
-  props: {
-    /**
-     *  Меню приложений
-     *
-     */
-    menuApps: {
-      type: Array,
-      default: () => [],
+    name: 'McSideBarTop',
+    components: {
+        McDropdown,
+        McDropdownPanel,
+        McButton,
+        McPreview,
+        McSvgIcon,
+        McTitle,
     },
-    /**
-     *  Название сервиса
-     *
-     */
-    logoTitle: {
-      type: String,
-      default: 'Dashboard',
+    inject: ['currentThemeConfig'],
+    props: {
+        /**
+         *  Меню приложений
+         *
+         */
+        menuApps: {
+            type: Array,
+            default: () => [],
+        },
+        /**
+         *  Название сервиса
+         *
+         */
+        logoTitle: {
+            type: String,
+            default: 'Dashboard',
+        },
+        /**
+         *  Путь до изображения
+         */
+        logoSrc: {
+            type: String,
+            default: '',
+        },
+        /**
+         *  Имя иконки
+         *  заголовка
+         */
+        logoIcon: {
+            type: String,
+            default: '',
+        },
+        /**
+         *  Компактный вид
+         */
+        compact: {
+            type: Boolean,
+            default: false,
+        },
     },
-    /**
-     *  Путь до изображения
-     */
-    logoSrc: {
-      type: String,
-      default: '',
-    },
-    /**
-     *  Имя иконки
-     *  заголовка
-     */
-    logoIcon: {
-      type: String,
-      default: '',
-    },
-    /**
-     *  Компактный вид
-     */
-    compact: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      dropIsOpen: false,
-    }
-  },
-  computed: {
-    computedMenuApps() {
-      if (_isEmpty(this.menuApps)) return null
-      const apps = []
-      this.menuApps.forEach(app => {
-        if (app.isVisible) {
-          apps.push({
-            key: _XEUtils.uniqueId(),
-            ...app,
-          })
+    data() {
+        return {
+            dropIsOpen: false,
         }
-      })
-      return apps
     },
-  },
+    computed: {
+        computedMenuApps() {
+            if (_isEmpty(this.menuApps)) return null
+            const apps = []
+            this.menuApps.forEach(app => {
+                if (app.isVisible) {
+                    apps.push({
+                        key: _XEUtils.uniqueId(),
+                        ...app,
+                    })
+                }
+            })
+            return apps
+        },
+    },
 }
 </script>
 
 <style lang="scss">
 .mc-side-bar-top {
-  $block-name: &;
-  @include reset-text-indents();
+    $block-name: &;
+    @include reset-text-indents();
 
-  .mc-dropdown__toggle {
-    &:hover {
-      cursor: pointer;
+    transform: rotate(180deg);
+
+    .mc-dropdown__toggle {
+        &:hover {
+            cursor: pointer;
+        }
+        .mc-preview__left {
+            margin-right: 0;
+        }
+        .mc-button {
+            line-height: $line-height-250;
+            &__text {
+                margin-left: $space-100;
+            }
+            &__append {
+                margin-left: 0;
+            }
+            .rotate {
+                @include size($size-200);
+            }
+        }
     }
-    .mc-preview__left {
-      margin-right: 0;
-    }
-    .mc-button {
-      line-height: $line-height-250;
-      &__text {
+    &__img {
         margin-left: $space-100;
-      }
-      &__append {
-        margin-left: 0;
-      }
-      .rotate {
-        @include size($size-200);
-      }
     }
-  }
-  &__img {
-    margin-left: $space-100;
-  }
-  &__activator-btn {
-    font-size: $font-size-400;
-    line-height: $line-height-300;
-  }
-  &--theme-white {
-    .mc-preview__top {
-      .mc-title {
-        color: $color-white;
-      }
+    &__activator-btn {
+        font-size: $font-size-400;
+        line-height: $line-height-300;
     }
-  }
-  &--theme-black {
-    .mc-preview__top {
-      .mc-title {
-        color: $color-black;
-      }
+    &--theme-white {
+        .mc-preview__top {
+            .mc-title {
+                color: $color-white;
+            }
+        }
     }
-  }
+    &--theme-black {
+        .mc-preview__top {
+            .mc-title {
+                color: $color-black;
+            }
+        }
+    }
 }
 </style>
