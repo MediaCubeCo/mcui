@@ -63,7 +63,7 @@ export default {
         mainClasses() {
             return {
                 'mc-fake-scroll': true,
-                [`mc-fake-scroll--visible${this.visible && `-${this.visible}`}`]: true,
+                [`mc-fake-scroll--visible${this.visible && `-${this.visible}`}`]: this.hasScroll,
             }
         },
         trackClasses() {
