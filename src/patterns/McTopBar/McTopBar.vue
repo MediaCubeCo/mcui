@@ -6,7 +6,12 @@
             </div>
             <div class="mc-top-bar__right">
                 <slot name="right" />
-                <mc-dropdown v-if="menuLangs && menuLangs.length" v-model="localesDropdownOpen" list-min-width="auto">
+                <mc-dropdown
+                    v-if="menuLangs && menuLangs.length"
+                    v-model="localesDropdownOpen"
+                    list-min-width="auto"
+                    class="mc-top-bar__menu-langs"
+                >
                     <mc-button slot="activator" variation="black-flat" uppercase>
                         {{ menuLangs[0].name }}
                         <mc-svg-icon slot="icon-append" class="rotate" name="arrow_drop_down" />
@@ -113,6 +118,15 @@ export default {
         min-width: 0;
         flex: 1 1 auto;
         justify-content: flex-end;
+    }
+    &__menu-langs {
+        .mc-svg-icon {
+            svg {
+                rect {
+                    stroke: $color-hover-gray;
+                }
+            }
+        }
     }
 }
 </style>
