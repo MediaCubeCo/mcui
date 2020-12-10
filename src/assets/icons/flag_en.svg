@@ -1,6 +1,6 @@
 <svg data-token-name="flag_en" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="1.5" y="3.5" width="21" height="16" fill="white"/>
-<path d="M11 4H13V19H11V4Z" fill="#CE1124"/>
-<path d="M2 10.5625H22V12.4375H2V10.5625Z" fill="#CE1124"/>
-<!--<rect x="1.5" y="3.5" width="21" height="16" stroke="#EDF0F3"/>-->
+    <rect x="1.5" y="3.5" width="21" height="16" fill="white"/>
+    <path d="M11 4H13V19H11V4Z" fill="#CE1124"/>
+    <path d="M2 10.5625H22V12.4375H2V10.5625Z" fill="#CE1124"/>
+    <rect x="1.5" y="3.5" width="21" height="16" stroke="#EDF0F3"/>
 </svg>
