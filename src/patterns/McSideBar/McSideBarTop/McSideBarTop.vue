@@ -149,8 +149,6 @@ export default {
     $block-name: &;
     @include reset-text-indents();
 
-    transform: rotate(180deg);
-
     .mc-dropdown__toggle {
         &:hover {
             cursor: pointer;
