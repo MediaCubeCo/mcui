@@ -193,6 +193,16 @@ pre {
 
 
 // Visibility
+.hidden-xs {
+  @media #{$media-query-xs} {
+    display: none !important;
+  }
+}
+.hidden-s {
+  @media #{$media-query-s} {
+    display: none !important;
+  }
+}
 .hidden-m {
   @media #{$media-query-m} {
     display: none !important;
@@ -204,6 +214,16 @@ pre {
   }
 }
 
+.hidden-xs {
+  @media #{$media-query-xs-down} {
+    display: none !important;
+  }
+}
+.hidden-s-down {
+  @media #{$media-query-s-down} {
+    display: none !important;
+  }
+}
 .hidden-m-down {
   @media #{$media-query-m-down} {
     display: none !important;
