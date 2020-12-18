@@ -20,7 +20,7 @@
                         <mc-button
                             v-for="locale in menuLangs"
                             :key="locale.name"
-                            :to="locale.to ? locale.to : locale.href"
+                            :to="locale.to || locale.href"
                             :exact="locale.exact"
                             variation="black-flat"
                             text-align="left"
