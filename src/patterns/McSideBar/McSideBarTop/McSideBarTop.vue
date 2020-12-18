@@ -10,7 +10,7 @@
                 height="24"
                 :alt="logoTitle"
             />
-            <mc-title slot="top" weight="semi-bold" variation="h4">
+            <mc-title slot="top" weight="semi-bold" :variation="logoTitleVariation">
                 <template v-if="!compact">
                     {{ logoTitle }}
                 </template>
@@ -34,9 +34,9 @@
                     :size="compact ? 'l-compact' : 'l'"
                     class="mc-side-bar-top__activator-btn"
                 >
-                    <template v-if="!compact">
+                    <mc-title v-if="!compact" weight="semi-bold" :variation="logoTitleVariation">
                         {{ logoTitle }}
-                    </template>
+                    </mc-title>
                     <mc-svg-icon slot="icon-append" class="rotate" name="arrow_drop_down" color="gray" />
                 </mc-button>
             </mc-preview>
@@ -97,6 +97,14 @@ export default {
         logoTitle: {
             type: String,
             default: 'Dashboard',
+        },
+        /**
+         *  Размер текста названия сервиса
+         *
+         */
+        logoTitleVariation: {
+            type: String,
+            default: 'subtitle',
         },
         /**
          *  Путь до изображения
