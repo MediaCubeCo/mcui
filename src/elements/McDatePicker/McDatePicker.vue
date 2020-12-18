@@ -370,7 +370,7 @@ export default {
         font-size: $font-size-200;
         line-height: $line-height-200;
         height: $size-500;
-        padding: $space-100 $space-100 $space-100 36px;
+        padding: $space-100 $space-300 $space-100 36px;
         border-color: $color-outline-gray;
         border-radius: $radius-100;
         cursor: pointer;
