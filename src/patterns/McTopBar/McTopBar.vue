@@ -8,6 +8,7 @@
                 <slot name="right" />
                 <mc-dropdown
                     v-if="menuLangs && menuLangs.length"
+                    ref="menuLangs"
                     v-model="localesDropdownOpen"
                     list-min-width="auto"
                     class="mc-top-bar__menu-langs"
@@ -104,6 +105,11 @@ export default {
             localesDropdownOpen: false,
             userDropdownOpen: false,
         }
+    },
+    watch: {
+        currentLang(v) {
+            this.$refs['menuLangs'] && this.$refs['menuLangs'].toggleDropdown()
+        },
     },
 }
 </script>
