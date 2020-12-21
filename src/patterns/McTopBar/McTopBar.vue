@@ -13,7 +13,7 @@
                     class="mc-top-bar__menu-langs"
                 >
                     <mc-button slot="activator" variation="black-flat" uppercase>
-                        {{ menuLangs[0].name }}
+                        {{ currentLang || defaultLang }}
                         <mc-svg-icon slot="icon-append" class="rotate" name="arrow_drop_down" />
                     </mc-button>
                     <mc-dropdown-panel>
@@ -81,6 +81,22 @@ export default {
         menuLangs: {
             type: Array,
             default: () => [],
+        },
+        /**
+         *  Локализация или текст по умолчанию
+         *
+         */
+        defaultLang: {
+            type: String,
+            default: 'Выберите язык',
+        },
+        /**
+         *  Текущая локализация
+         *
+         */
+        currentLang: {
+            type: String,
+            default: null,
         },
     },
     data() {
