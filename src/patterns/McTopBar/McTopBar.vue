@@ -8,19 +8,20 @@
                 <slot name="right" />
                 <mc-dropdown
                     v-if="menuLangs && menuLangs.length"
+                    ref="menuLangs"
                     v-model="localesDropdownOpen"
                     list-min-width="auto"
                     class="mc-top-bar__menu-langs"
                 >
                     <mc-button slot="activator" variation="black-flat" uppercase>
-                        {{ menuLangs[0].name }}
+                        {{ currentLang || defaultLang }}
                         <mc-svg-icon slot="icon-append" class="rotate" name="arrow_drop_down" />
                     </mc-button>
                     <mc-dropdown-panel>
                         <mc-button
                             v-for="locale in menuLangs"
                             :key="locale.name"
-                            :to="locale.to ? locale.to : locale.href"
+                            :to="locale.to || locale.href"
                             :exact="locale.exact"
                             variation="black-flat"
                             text-align="left"
@@ -82,12 +83,33 @@ export default {
             type: Array,
             default: () => [],
         },
+        /**
+         *  Локализация или текст по умолчанию
+         *
+         */
+        defaultLang: {
+            type: String,
+            default: 'Выберите язык',
+        },
+        /**
+         *  Текущая локализация
+         *
+         */
+        currentLang: {
+            type: String,
+            default: null,
+        },
     },
     data() {
         return {
             localesDropdownOpen: false,
             userDropdownOpen: false,
         }
+    },
+    watch: {
+        currentLang(v) {
+            this.$refs['menuLangs'] && this.$refs['menuLangs'].toggleDropdown()
+        },
     },
 }
 </script>
