@@ -23,7 +23,7 @@
                     v-on="listeners"
                     @input="val => handleEmitDate(val)"
                     @pick="handlePickDate"
-                    @clear="val => handleEmitDate(range ? [' ', ' '] : ' ')"
+                    @clear="() => handleEmitDate(range ? [' ', ' '] : ' ')"
                 >
                     <div v-if="$slots.header" slot="header">
                         <!-- @slot Слот для вставки в хедер попапа календаря -->
@@ -37,8 +37,9 @@
                         <!-- @slot Слот для вставки в футер попапа календаря -->
                         <slot name="footer">
                             <div class="mc-datepicker__footer-popup">
-                                <div>
+                                <div class="mc-datepicker__footer-popup-periods">
                                     <mc-button
+                                        v-if="placeholders.week"
                                         variation="black-link"
                                         secondary-color="blue"
                                         @click="selectPeriod('week')"
@@ -46,6 +47,7 @@
                                         {{ placeholders.week }}
                                     </mc-button>
                                     <mc-button
+                                        v-if="placeholders.month"
                                         variation="black-link"
                                         secondary-color="blue"
                                         @click="selectPeriod('month')"
@@ -53,6 +55,7 @@
                                         {{ placeholders.month }}
                                     </mc-button>
                                     <mc-button
+                                        v-if="placeholders.quarter"
                                         variation="black-link"
                                         secondary-color="blue"
                                         @click="selectPeriod('quarter')"
@@ -60,6 +63,7 @@
                                         {{ placeholders.quarter }}
                                     </mc-button>
                                     <mc-button
+                                        v-if="placeholders.year"
                                         variation="black-link"
                                         secondary-color="blue"
                                         @click="selectPeriod('year')"
@@ -266,13 +270,13 @@ export default {
             this.$emit('input', date)
         },
         getFormattedDate(value) {
-            if (!value) return null
             let newValue = value
-            if (!Array.isArray(newValue)) {
-                newValue = this.$moment(value).format(this.toFormat)
-            }
             if (Array.isArray(newValue)) {
-                newValue = newValue.map(v => this.$moment(v).format(this.toFormat))
+                newValue = newValue.map(v => {
+                    return v?.toString?.().trim() ? this.$moment(v).format(this.toFormat) : ' '
+                })
+            } else {
+                newValue = value?.toString?.().trim() ? this.$moment(value).format(this.toFormat) : ' '
             }
             return newValue
         },
