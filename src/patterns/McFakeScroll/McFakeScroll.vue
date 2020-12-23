@@ -48,6 +48,7 @@ export default {
                 distance: 0,
                 mouseIsDown: false,
             },
+            scrollElContentHeight: null,
         }
     },
     computed: {
@@ -73,11 +74,19 @@ export default {
             }
         },
     },
+    watch: {
+        scrollElContentHeight(newValue, oldValue) {
+            if (oldValue !== null) {
+                this.updateData()
+                this.scrollEl.scrollTo(0, newValue * this.scrollRatio)
+            }
+        },
+    },
     mounted() {
         this.scrollEl && this.scrollEl.addEventListener('scroll', this.onFakeScrollBarContentScroll)
 
         this.updateData()
-        window.addEventListener('resize', this.updateData)
+        window.addEventListener('resize', this.resize)
 
         document.documentElement.addEventListener('mousemove', this.onFakeScrollBarMouseMove)
         document.documentElement.addEventListener('mouseup', this.onFakeScrollBarMouseUp)
@@ -88,9 +97,12 @@ export default {
         document.documentElement.removeEventListener('mousemove', this.onFakeScrollBarMouseMove)
         document.documentElement.removeEventListener('mouseup', this.onFakeScrollBarMouseUp)
 
-        window.removeEventListener('resize', this.updateData)
+        window.removeEventListener('resize', this.resize)
     },
     methods: {
+        resize() {
+            this.updateData()
+        },
         updateData() {
             this.checkScroll()
             this.setBoxes()
@@ -104,10 +116,12 @@ export default {
             }
         },
         setThumbHeight() {
-            const thumbRatio = Math.min(this.scrollEl.clientHeight / this.scrollEl.scrollHeight, 1.0)
-            this.thumbHeight = this.scrollEl.clientHeight * thumbRatio
-            if (this.$refs.thumb) {
-                this.thumbBox.height = this.$refs.thumb.getBoundingClientRect().height
+            if (this.scrollEl) {
+                const thumbRatio = Math.min(this.scrollEl.clientHeight / this.scrollEl.scrollHeight, 1.0)
+                this.thumbHeight = this.scrollEl.clientHeight * thumbRatio
+                if (this.$refs.thumb) {
+                    this.thumbBox.height = this.$refs.thumb.getBoundingClientRect().height
+                }
             }
         },
         setScrollRatio() {
@@ -182,9 +196,12 @@ export default {
         },
         onFakeScrollBarContentScroll(e) {
             if (this.dragOptions.mouseIsDown || this.trackIsClicked) return
+
             this.updateData()
             const topPos = e.target.scrollTop
             this.setThumbPos(topPos * this.scrollRatio)
+
+            this.scrollElContentHeight = e.target.scrollHeight
         },
     },
 }
