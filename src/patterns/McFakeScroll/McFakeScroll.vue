@@ -193,7 +193,7 @@ export default {
 <style lang="scss">
 @mixin track-visibility() {
     right: 0;
-    width: 5px;
+    width: 7px;
     opacity: 1;
 }
 .mc-fake-scroll {
@@ -205,7 +205,7 @@ export default {
     }
     position: relative;
     &__track {
-        @include position(absolute, 0 -5px 0 null);
+        @include position(absolute, 0 -7px 0 null);
         width: 0;
         opacity: 0;
         background-color: $color-transparent;
