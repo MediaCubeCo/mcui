@@ -47,7 +47,7 @@ export default {
     watch: {
         routeKey() {
             if (this.$refs['fake-scroll']) {
-                this.$refs['fake-scroll'].updateData()
+                this.$refs['fake-scroll'].resetData()
             }
         },
     },

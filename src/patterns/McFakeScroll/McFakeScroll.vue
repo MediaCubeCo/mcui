@@ -74,18 +74,12 @@ export default {
             }
         },
     },
-    watch: {
-        scrollElContentHeight(newValue, oldValue) {
-            if (oldValue !== null) {
-                this.updateData()
-                this.scrollEl.scrollTo(0, newValue * this.scrollRatio)
-            }
-        },
-    },
     mounted() {
         this.scrollEl && this.scrollEl.addEventListener('scroll', this.onFakeScrollBarContentScroll)
 
-        this.updateData()
+        this.$nextTick(() => {
+            this.updateData()
+        })
         window.addEventListener('resize', this.resize)
 
         document.documentElement.addEventListener('mousemove', this.onFakeScrollBarMouseMove)
@@ -108,6 +102,11 @@ export default {
             this.setBoxes()
             this.setThumbHeight()
             this.setScrollRatio()
+            this.scrollElContentHeight = this.scrollEl.scrollHeight
+        },
+        resetData() {
+            this.scrollEl.scrollTo(0, 0)
+            this.scrollElContentHeight = this.scrollEl.scrollHeight
         },
         checkScroll() {
             this.hasScroll = false
@@ -195,13 +194,16 @@ export default {
             document.body.classList.remove('no-user-select')
         },
         onFakeScrollBarContentScroll(e) {
+            const startScrollElContentHeight = this.scrollElContentHeight
             if (this.dragOptions.mouseIsDown || this.trackIsClicked) return
 
             this.updateData()
             const topPos = e.target.scrollTop
             this.setThumbPos(topPos * this.scrollRatio)
 
-            this.scrollElContentHeight = e.target.scrollHeight
+            if (startScrollElContentHeight !== e.target.scrollHeight) {
+                this.scrollEl.scrollTo(0, e.target.scrollHeight * this.scrollRatio)
+            }
         },
     },
 }
