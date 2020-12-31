@@ -13,6 +13,7 @@
             <mc-title slot="top" weight="semi-bold" :variation="logoTitleVariation">
                 <template v-if="!compact">
                     {{ logoTitle }}
+                    <slot slot="icon-append" name="title-append" />
                 </template>
             </mc-title>
         </mc-preview>
@@ -36,6 +37,7 @@
                 >
                     <mc-title v-if="!compact" weight="semi-bold" :variation="logoTitleVariation">
                         {{ logoTitle }}
+                        <slot slot="icon-append" name="title-append" />
                     </mc-title>
                     <mc-svg-icon slot="icon-append" class="rotate" name="arrow_drop_down" color="gray" />
                 </mc-button>

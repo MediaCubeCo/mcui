@@ -9,7 +9,9 @@
                     :logo-icon="logoIcon"
                     :compact="prettyCompact"
                     :menu-apps="menuApps"
-                />
+                >
+                    <slot slot="title-append" name="title-append" />
+                </mc-side-bar-top>
                 <mc-side-bar-center
                     :title="menuMainTitle"
                     :menu-main="menuMain"
