@@ -425,7 +425,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
             min-height: auto;
 
             @include input-placeholder() {
-                color: $color-black;
+                color: $color-dark-gray;
             }
         }
 
@@ -438,7 +438,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
             min-height: auto;
 
             @include input-placeholder() {
-                color: $color-black;
+                color: $color-dark-gray;
             }
         }
 
