@@ -210,7 +210,6 @@ export default {
         },
         sideBarStyles() {
             return {
-                overflow: `${this.isHidden ? 'hidden' : 'visible'}`,
                 width: this.hasCompactClass ? this.compactWidth : this.width,
             }
         },
@@ -334,6 +333,8 @@ export default {
     flex-direction: column;
     padding: $space-250 $space-100 $space-400;
     transition: width 300ms ease;
+    overflow-x: hidden;
+    overflow-y: auto;
     @include child-indent-bottom($space-400);
     &--color-theme-black {
         background-color: $color-black;

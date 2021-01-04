@@ -158,7 +158,12 @@ export default {
 .mc-side-bar-top {
     $block-name: &;
     @include reset-text-indents();
-
+    position: sticky;
+    top: -20px;
+    padding: 20px 8px;
+    background: $color-white;
+    margin: -20px -8px 12px;
+    z-index: 2;
     .mc-dropdown__toggle {
         &:hover {
             cursor: pointer;
