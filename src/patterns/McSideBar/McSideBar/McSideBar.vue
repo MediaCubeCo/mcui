@@ -12,24 +12,26 @@
                 >
                     <slot slot="title-append" name="title-append" />
                 </mc-side-bar-top>
-                <mc-side-bar-center
-                    :title="menuMainTitle"
-                    :menu-main="menuMain"
-                    :menu-additional="menuAdditional"
-                    :chatra-config="chatraConfig"
-                    :userback-config="userbackConfig"
-                    :user="user"
-                    :compact="prettyCompact"
-                />
-                <mc-side-bar-bottom
-                    :hide-text="hideText"
-                    :compact="prettyCompact"
-                    :hidden-mode="hiddenMode"
-                    :sidebar-width="width"
-                    @toggle-size="handleToggleSize"
-                >
-                    <slot slot="bottom-message" name="bottom-message" />
-                </mc-side-bar-bottom>
+                <section class="mc-side-bar__scrollable-container">
+                    <mc-side-bar-center
+                        :title="menuMainTitle"
+                        :menu-main="menuMain"
+                        :menu-additional="menuAdditional"
+                        :chatra-config="chatraConfig"
+                        :userback-config="userbackConfig"
+                        :user="user"
+                        :compact="prettyCompact"
+                    />
+                    <mc-side-bar-bottom
+                        :hide-text="hideText"
+                        :compact="prettyCompact"
+                        :hidden-mode="hiddenMode"
+                        :sidebar-width="width"
+                        @toggle-size="handleToggleSize"
+                    >
+                        <slot slot="bottom-message" name="bottom-message" />
+                    </mc-side-bar-bottom>
+                </section>
             </div>
         </section>
     </article>
@@ -210,6 +212,7 @@ export default {
         },
         sideBarStyles() {
             return {
+                overflow: `${this.isHidden ? 'hidden' : 'visible'}`,
                 width: this.hasCompactClass ? this.compactWidth : this.width,
             }
         },
@@ -342,6 +345,13 @@ export default {
     &--color-theme-white {
         background-color: $color-white;
         border-right: 1px solid $color-hover-gray;
+    }
+    &__scrollable-container {
+        @include hide-scrollbar;
+        overflow-y: auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
     &-wrapper {
         height: 100%;
