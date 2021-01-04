@@ -162,7 +162,7 @@ export default {
     top: -20px;
     padding: 20px 8px;
     background: $color-white;
-    margin: -20px -8px 12px;
+    margin: -20px -8px 12px !important;
     z-index: 2;
     .mc-dropdown__toggle {
         &:hover {
@@ -192,6 +192,7 @@ export default {
         line-height: $line-height-300;
     }
     &--theme-white {
+        background: $color-black;
         .mc-preview__top {
             .mc-title {
                 color: $color-white;
@@ -199,6 +200,7 @@ export default {
         }
     }
     &--theme-black {
+        background: $color-white;
         .mc-preview__top {
             .mc-title {
                 color: $color-black;
