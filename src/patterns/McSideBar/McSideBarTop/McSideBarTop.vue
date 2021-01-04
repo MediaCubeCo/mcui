@@ -159,10 +159,10 @@ export default {
     $block-name: &;
     @include reset-text-indents();
     position: sticky;
-    top: -20px;
-    padding: 20px 8px;
+    top: -($space-250);
+    padding: $space-250 $space-100;
     background: $color-white;
-    margin: -20px -8px 12px !important;
+    margin: -($space-250) (-($space-100)) $space-150 !important;
     z-index: 2;
     .mc-dropdown__toggle {
         &:hover {
