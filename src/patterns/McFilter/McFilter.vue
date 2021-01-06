@@ -1,14 +1,16 @@
 <template>
     <div class="mc-filter">
         <div class="mc-filter__header">
-            <mc-button
-                :variation="visibilityToggleVariation"
-                :bg-flat="isOpen"
-                size="m-compact"
-                @click="isOpen = !isOpen"
-            >
-                <mc-svg-icon slot="icon-prepend" name="filter_list" />
-            </mc-button>
+            <mc-tooltip :content="placeholders.main_tooltip" placement="top" size="s">
+                <mc-button
+                    :variation="visibilityToggleVariation"
+                    :bg-flat="isOpen"
+                    size="m-compact"
+                    @click="isOpen = !isOpen"
+                >
+                    <mc-svg-icon slot="icon-prepend" name="filter_list" />
+                </mc-button>
+            </mc-tooltip>
             <div v-if="presets[name]" class="mc-filter__presets">
                 <div ref="dragArea" class="mc-filter__presets-inner" @mousedown="onMouseDown">
                     <mc-button
@@ -189,6 +191,7 @@ export default {
             type: Object,
             default() {
                 return {
+                    main_tooltip: '',
                     value: 'Value',
                     condition: 'Condition',
                     create_preset: 'Create new preset',
