@@ -9,25 +9,29 @@
                     :logo-icon="logoIcon"
                     :compact="prettyCompact"
                     :menu-apps="menuApps"
-                />
-                <mc-side-bar-center
-                    :title="menuMainTitle"
-                    :menu-main="menuMain"
-                    :menu-additional="menuAdditional"
-                    :chatra-config="chatraConfig"
-                    :userback-config="userbackConfig"
-                    :user="user"
-                    :compact="prettyCompact"
-                />
-                <mc-side-bar-bottom
-                    :hide-text="hideText"
-                    :compact="prettyCompact"
-                    :hidden-mode="hiddenMode"
-                    :sidebar-width="width"
-                    @toggle-size="handleToggleSize"
                 >
-                    <slot slot="bottom-message" name="bottom-message" />
-                </mc-side-bar-bottom>
+                    <slot slot="title-append" name="title-append" />
+                </mc-side-bar-top>
+                <section class="mc-side-bar__scrollable-container">
+                    <mc-side-bar-center
+                        :title="menuMainTitle"
+                        :menu-main="menuMain"
+                        :menu-additional="menuAdditional"
+                        :chatra-config="chatraConfig"
+                        :userback-config="userbackConfig"
+                        :user="user"
+                        :compact="prettyCompact"
+                    />
+                    <mc-side-bar-bottom
+                        :hide-text="hideText"
+                        :compact="prettyCompact"
+                        :hidden-mode="hiddenMode"
+                        :sidebar-width="width"
+                        @toggle-size="handleToggleSize"
+                    >
+                        <slot slot="bottom-message" name="bottom-message" />
+                    </mc-side-bar-bottom>
+                </section>
             </div>
         </section>
     </article>
@@ -332,6 +336,8 @@ export default {
     flex-direction: column;
     padding: $space-250 $space-100 $space-400;
     transition: width 300ms ease;
+    overflow-x: hidden;
+    overflow-y: auto;
     @include child-indent-bottom($space-400);
     &--color-theme-black {
         background-color: $color-black;
@@ -339,6 +345,13 @@ export default {
     &--color-theme-white {
         background-color: $color-white;
         border-right: 1px solid $color-hover-gray;
+    }
+    &__scrollable-container {
+        @include hide-scrollbar;
+        overflow-y: auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
     &-wrapper {
         height: 100%;

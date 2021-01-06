@@ -13,6 +13,7 @@
             <mc-title slot="top" weight="semi-bold" :variation="logoTitleVariation">
                 <template v-if="!compact">
                     {{ logoTitle }}
+                    <slot slot="icon-append" name="title-append" />
                 </template>
             </mc-title>
         </mc-preview>
@@ -36,6 +37,7 @@
                 >
                     <mc-title v-if="!compact" weight="semi-bold" :variation="logoTitleVariation">
                         {{ logoTitle }}
+                        <slot slot="icon-append" name="title-append" />
                     </mc-title>
                     <mc-svg-icon slot="icon-append" class="rotate" name="arrow_drop_down" color="gray" />
                 </mc-button>
@@ -156,7 +158,12 @@ export default {
 .mc-side-bar-top {
     $block-name: &;
     @include reset-text-indents();
-
+    position: sticky;
+    top: -($space-250);
+    padding: $space-250 $space-100;
+    background: $color-white;
+    margin: -($space-250) (-($space-100)) $space-150 !important;
+    z-index: 2;
     .mc-dropdown__toggle {
         &:hover {
             cursor: pointer;
@@ -185,6 +192,7 @@ export default {
         line-height: $line-height-300;
     }
     &--theme-white {
+        background: $color-black;
         .mc-preview__top {
             .mc-title {
                 color: $color-white;
@@ -192,6 +200,7 @@ export default {
         }
     }
     &--theme-black {
+        background: $color-white;
         .mc-preview__top {
             .mc-title {
                 color: $color-black;
