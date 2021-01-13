@@ -107,6 +107,9 @@ export default {
         resetData() {
             this.scrollEl.scrollTo(0, 0)
             this.scrollElContentHeight = this.scrollEl.scrollHeight
+            setTimeout(() => {
+                this.updateData()
+            }, 0)
         },
         checkScroll() {
             this.hasScroll = false

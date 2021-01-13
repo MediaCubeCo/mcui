@@ -1,19 +1,21 @@
 <template>
     <div class="my-pt-task-list">
         <div v-if="loading">
-            <div class="my-pt-task-list__loading-item" v-for="(n, index) in 5" :key="index">
+            <div v-for="(n, index) in 5" :key="index" class="my-pt-task-list__loading-item">
                 <span class="my-pt-task-list__glow-checkbox" />
-                <span class="my-pt-task-list__glow-text"> <span>Loading</span> <span>cool</span> <span>state</span> </span>
+                <span class="my-pt-task-list__glow-text">
+                    <span>Loading</span> <span>cool</span> <span>state</span>
+                </span>
             </div>
         </div>
-        <div class="my-pt-task-list__items" v-if="noTasks && !this.loading">
+        <div v-if="noTasks && !loading" class="my-pt-task-list__items">
             <div class="my-pt-task-list__wrapper-message">
                 <span class="my-pt-task-list__icon-check" />
                 <div class="my-pt-task-list__title-message">You have no tasks</div>
                 <div class="my-pt-task-list__subtitle-message">Sit back and relax</div>
             </div>
         </div>
-        <div class="my-pt-task-list__items" v-if="showTasks">
+        <div v-if="showTasks" class="my-pt-task-list__items">
             <my-pt-task
                 v-for="(task, index) in tasksInOrder"
                 :key="index"
@@ -26,40 +28,40 @@
 </template>
 
 <script>
-  import MyPtTask from '../../elements/MyElTask/MyElTask.vue'
-  export default {
-    name: "my-pt-task-list",
+import MyPtTask from '../../elements/MyElTask/MyElTask.vue'
+export default {
+    name: 'MyPtTaskList',
     components: {
-      MyPtTask,
+        MyPtTask,
     },
     props: {
-      /**
+        /**
        Description for current prop
        */
-      loading: {
-        type: Boolean,
-        default: false,
-      },
-      tasks: {
-        type: Array,
-        default: () => []
-      },
+        loading: {
+            type: Boolean,
+            default: false,
+        },
+        tasks: {
+            type: Array,
+            default: () => [],
+        },
     },
     computed: {
-      noTasks() {
-        return this.tasks.length === 0
-      },
-      showTasks() {
-        return !this.loading && !this.noTasks
-      },
-      tasksInOrder() {
-        return [
-          ...this.tasks.filter(t => t.state === 'TASK_PINNED'),
-          ...this.tasks.filter(t => t.state !== 'TASK_PINNED'),
-        ];
-      },
+        noTasks() {
+            return this.tasks.length === 0
+        },
+        showTasks() {
+            return !this.loading && !this.noTasks
+        },
+        tasksInOrder() {
+            return [
+                ...this.tasks.filter(t => t.state === 'TASK_PINNED'),
+                ...this.tasks.filter(t => t.state !== 'TASK_PINNED'),
+            ]
+        },
     },
-  }
+}
 </script>
 
 <style lang="scss">
@@ -115,6 +117,5 @@
         line-height: $line-height-250;
         color: $color-gray;
     }
-
 }
 </style>
