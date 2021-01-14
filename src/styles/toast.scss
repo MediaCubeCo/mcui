@@ -1,5 +1,5 @@
 .toasted-container {
-  z-index: $z-index-toasted;
+  z-index: $z-index-toasted !important;
   .toasted {
     &.mc-toast {
       padding: $space-100 $space-400 $space-100 $space-150;
