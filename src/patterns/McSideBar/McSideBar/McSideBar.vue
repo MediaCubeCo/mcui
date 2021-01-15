@@ -359,7 +359,7 @@ export default {
         &__backdrop {
             position: absolute;
             background-color: rgba($color-black, 0.6);
-            z-index: 2;
+            z-index: 25;
             height: inherit;
             .mc-side-bar {
                 height: inherit;
