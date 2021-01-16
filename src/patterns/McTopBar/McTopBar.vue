@@ -54,7 +54,6 @@ import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
 import McSeparator from '../../elements/McSeparator/McSeparator'
 import McDropdown from '../McDropdown/McDropdown'
 import McDropdownPanel from '../McDropdown/McDropdownPanel/McDropdownPanel'
-import McPreview from '../../patterns/McPreview/McPreview'
 export default {
     name: 'McTopBar',
     components: {
@@ -64,7 +63,6 @@ export default {
         McSeparator,
         McDropdown,
         McDropdownPanel,
-        McPreview,
     },
     props: {
         /**
@@ -107,8 +105,8 @@ export default {
         }
     },
     watch: {
-        currentLang(v) {
-            this.$refs['menuLangs'] && this.$refs['menuLangs'].toggleDropdown()
+        currentLang() {
+            this.localesDropdownOpen && this.$refs['menuLangs'] && this.$refs['menuLangs'].closeDropdown()
         },
     },
 }
