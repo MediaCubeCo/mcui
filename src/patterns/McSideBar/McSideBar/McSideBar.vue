@@ -355,6 +355,7 @@ export default {
     &__scrollable-container {
         @include hide-scrollbar;
         overflow-y: auto;
+        overflow-x: hidden;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -365,7 +366,7 @@ export default {
         &__backdrop {
             position: absolute;
             background-color: rgba($color-black, 0.6);
-            z-index: 2;
+            z-index: 25;
             height: inherit;
             .mc-side-bar {
                 height: inherit;
