@@ -75,6 +75,7 @@ export default {
 .mc-main {
     $block-name: &;
 
+    position: relative;
     display: flex;
     height: calc(var(--vh, 1vh) * 100);
     @include custom-scroll();

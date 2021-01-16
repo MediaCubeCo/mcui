@@ -364,6 +364,7 @@ export default {
         height: 100%;
         transition: width 300ms ease;
         &__backdrop {
+            position: absolute;
             background-color: rgba($color-black, 0.6);
             z-index: 25;
             height: inherit;
