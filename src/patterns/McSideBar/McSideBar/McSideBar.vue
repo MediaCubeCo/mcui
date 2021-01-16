@@ -349,6 +349,7 @@ export default {
     &__scrollable-container {
         @include hide-scrollbar;
         overflow-y: auto;
+        overflow-x: hidden;
         height: 100%;
         display: flex;
         flex-direction: column;
