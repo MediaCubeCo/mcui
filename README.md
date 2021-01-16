@@ -7,7 +7,7 @@ This design system based on [Storybook](https://storybook.js.org/) and [Storyboo
 
 **Storybook** runs outside of the main app so users can develop UI components in isolation without worrying about app specific dependencies and requirements.
 
-[![Screenshot](./public/preview.png)](https://storybook.js.org/)
+[![Screenshot](./public/img/preview.png)](https://storybook.js.org/)
 
 ## Project setup
 ```

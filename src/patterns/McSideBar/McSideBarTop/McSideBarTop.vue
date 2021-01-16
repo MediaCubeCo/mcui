@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-side-bar-top" :class="`mc-side-bar-top--theme-${currentThemeConfig.dropdownActivator}`">
+    <div class="mc-side-bar-top" :class="`mc-side-bar-top--theme-${themeConfig.dropdownActivator}`">
         <mc-preview v-if="!computedMenuApps" slot="activator">
             <img
                 v-if="logoSrc"
@@ -31,7 +31,7 @@
                 <mc-svg-icon v-else-if="logoIcon" slot="left" class="rotate" name="mc_dashboard" />
                 <mc-button
                     slot="top"
-                    :variation="`${currentThemeConfig.dropdownActivator}-link`"
+                    :variation="`${themeConfig.dropdownActivator}-link`"
                     :size="compact ? 'l-compact' : 'l'"
                     class="mc-side-bar-top__activator-btn"
                 >
@@ -82,7 +82,7 @@ export default {
         McSvgIcon,
         McTitle,
     },
-    inject: ['currentThemeConfig'],
+    inject: ['provideData'],
     props: {
         /**
          *  Меню приложений
@@ -137,6 +137,19 @@ export default {
         }
     },
     computed: {
+        themeConfig() {
+            return this.provideData
+                ? this.provideData.currentThemeConfig
+                : {
+                      mode: 'black',
+                      className: 'mc-side-bar--color-theme-black',
+                      dropdownActivator: 'white',
+                      mainMenuLinks: {
+                          variable: 'gray-flat',
+                          secondaryColor: 'white',
+                      },
+                  }
+        },
         computedMenuApps() {
             if (_isEmpty(this.menuApps)) return null
             const apps = []

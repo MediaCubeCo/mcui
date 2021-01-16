@@ -49,9 +49,15 @@ export default {
         McSideBarBottom,
     },
     provide() {
-        return {
-            currentThemeConfig: this.currentThemeConfig,
-        }
+        const provideData = {}
+        const properties = ['currentThemeConfig']
+        properties.forEach(property => {
+            Object.defineProperty(provideData, property, {
+                enumerable: true,
+                get: () => this[property],
+            })
+        })
+        return { provideData }
     },
     props: {
         /**
