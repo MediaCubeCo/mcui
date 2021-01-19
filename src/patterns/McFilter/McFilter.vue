@@ -499,6 +499,7 @@ export default {
             this.setFilterValues(this.currentCondition, this.currentCondition)
         },
         onTagsChange(val) {
+            this.activeTag = null
             if (_isEmpty(val)) {
                 this.currentValues = {}
                 this.currentValuesName = {}
