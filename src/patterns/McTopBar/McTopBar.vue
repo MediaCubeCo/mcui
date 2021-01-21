@@ -13,7 +13,7 @@
                     list-min-width="auto"
                     class="mc-top-bar__menu-langs"
                 >
-                    <mc-button slot="activator" variation="black-flat" uppercase>
+                    <mc-button slot="activator" variation="black-link" uppercase>
                         {{ currentLang || defaultLang }}
                         <mc-svg-icon slot="icon-append" class="rotate" name="arrow_drop_down" />
                     </mc-button>
