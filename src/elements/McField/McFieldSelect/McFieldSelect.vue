@@ -221,6 +221,13 @@ export default {
             default: false,
         },
         /**
+         *  Если режим taggable && searchValueInOptions то добавлять введенный тег в опции
+         */
+        searchValueInOptions: {
+            type: Boolean,
+            default: true,
+        },
+        /**
          *  Группировка { label: 'label text', values: Array of objects }
          */
         groupKeys: {
@@ -239,7 +246,7 @@ export default {
                 label: 'name',
                 trackBy: 'value',
                 value: this._value,
-                options: this.options,
+                options: this.computedOptions,
                 searchable: this.searchable,
                 showLabels: this.showLabels,
                 multiple: this.multiple,
@@ -254,6 +261,17 @@ export default {
                 ...(this.groupKeys ? { groupLabel: this.groupKeys.label } : {}),
                 ...(this.groupKeys ? { groupValues: this.groupKeys.values } : {}),
             }
+        },
+        /**
+         * Если режим taggable && searchValueInOptions то добавлять введенный тег в опции
+         * **/
+        computedOptions() {
+            let options = this.options
+            if (this.searchValueInOptions && this.taggable) {
+                const search = this.searchValue
+                return search && search.length ? [{ name: search, value: search }, ...options] : options
+            }
+            return options
         },
         classes() {
             return {
@@ -293,13 +311,13 @@ export default {
             return this.errors.join(', ')
         },
         isEmptyOptionsList() {
-            if (this.hideSelected && !this.searchValue) {
+            if ((this.hideSelected && !this.searchValue) || !this.computedOptions.length) {
                 if (this.multiple) {
                     return this.options.length === this._value.length
                 } else {
                     return this._value && this.options.length === 1
                 }
-            } else if (this.options.length === 0) return !this.options.length
+            } else if (this.computedOptions.length === 0) return !this.computedOptions.length
             return false
         },
         hasPrepend() {
