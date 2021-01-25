@@ -185,7 +185,8 @@ export default {
         },
         /**
          *  Если нужно отразить
-         *  сумму значенй в футере
+         *  сумму значений в футере
+         *  если ключ содержит слово `count` значит формат только по целым числам, остальные будут с дробями
          */
         totalFooter: {
             type: Object,
@@ -369,14 +370,13 @@ export default {
                     if (column.type === 'checkbox') return ' '
                     if (this.footerInfo === 'total' && !_isEmpty(this.totalFooter)) {
                         const info = Object.entries(this.totalFooter).find(([key]) => key === column.property)
-                        //если ключ содержит слово count значит число форматироваться не будет, остальные будут по формату
-                        return info
-                            ? info[1] && !info[0].match('count')
-                                ? numeral(info[1])
-                                      .format('0,0.00')
-                                      .replace(/,/, ' ')
-                                : info[1]
-                            : null
+                        if (!info) return null
+                        let parsedVal = parseFloat(info[1])
+                        if (!parsedVal && parsedVal !== 0) return '—'
+                        const format = !info[0].match('count') ? '0,0.00' : '0,0'
+                        return numeral(parsedVal)
+                            .format(format)
+                            .replace(/,/g, ' ')
                     }
                     return null
                 }),

@@ -20,207 +20,198 @@ import { number as num } from '../../../utils/filters'
 
 import body from '../../../mocks/tableInfusersBody'
 const borders = {
-  default: 'default',
-  full: 'full',
-  outer: 'outer',
-  inner: 'inner',
-  none: 'none',
+    default: 'default',
+    full: 'full',
+    outer: 'outer',
+    inner: 'inner',
+    none: 'none',
 }
 const tags = {
-  grid: 'grid',
-  table: 'table',
+    grid: 'grid',
+    table: 'table',
 }
 const sizes = {
-  default: 'default',
-  medium: 'medium',
-  small: 'small',
-  mini: 'mini',
+    default: 'default',
+    medium: 'medium',
+    small: 'small',
+    mini: 'mini',
 }
 
 const footerInfo = {
-  default: '',
-  total: 'total',
-  loaded: 'loaded',
+    default: '',
+    total: 'total',
+    loaded: 'loaded',
 }
 
 export default {
-  title: 'Patterns/McTable/McTable',
-  component: McTable,
-  subcomponents: { McTableCol },
-  parameters: {
-    componentSubtitle: 'Status: Ready',
-    design: {
-      type: 'figma',
-      url:
-        'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=346%3A1828',
+    title: 'Patterns/McTable/McTable',
+    component: McTable,
+    subcomponents: { McTableCol },
+    parameters: {
+        componentSubtitle: 'Status: Ready',
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=346%3A1828',
+        },
     },
-  },
 }
 
 const getUniqueProps = key => {
-  return {
-    height: {
-      default: text('height', '650', key),
-    },
-    scrollable: {
-      default: boolean('scrollable', true, key),
-    },
-    stripe: {
-      default: boolean('stripe', false, key),
-    },
-    border: {
-      default: select('border', borders, 'outer', key),
-    },
-    componentTag: {
-      default: select('componentTag', tags, 'grid', key),
-    },
-    hasMore: {
-      default: boolean('hasMore', false, key),
-    },
-    loading: {
-      default: boolean('loading', false, key),
-    },
-    checkboxConfig: {
-      default: object(
-        'checkboxConfig',
-        { labelField: 'user', showHeader: false, highlight: true },
-        key,
-      ),
-    },
-    nativeSort: {
-      default: boolean('nativeSort', true, key),
-    },
-    size: {
-      default: select('size', sizes, 'small', key),
-    },
-    contextMenu: {
-      default: boolean('contextMenu', false, key),
-    },
-    footerInfo: {
-      default: select('footerInfo', footerInfo, 'total', key),
-    },
-    totalFooter: {
-      default: object(
-        'totalFooter',
-        { views_count: 12345, roles: 'privet' },
-        key,
-      ),
-    },
-    headerBreakWord: {
-      default: boolean('headerBreakWord', false, key),
-    },
-  }
+    return {
+        height: {
+            default: text('height', '650', key),
+        },
+        scrollable: {
+            default: boolean('scrollable', true, key),
+        },
+        stripe: {
+            default: boolean('stripe', false, key),
+        },
+        border: {
+            default: select('border', borders, 'outer', key),
+        },
+        componentTag: {
+            default: select('componentTag', tags, 'grid', key),
+        },
+        hasMore: {
+            default: boolean('hasMore', false, key),
+        },
+        loading: {
+            default: boolean('loading', false, key),
+        },
+        checkboxConfig: {
+            default: object('checkboxConfig', { labelField: 'user', showHeader: false, highlight: true }, key),
+        },
+        nativeSort: {
+            default: boolean('nativeSort', true, key),
+        },
+        size: {
+            default: select('size', sizes, 'small', key),
+        },
+        contextMenu: {
+            default: boolean('contextMenu', false, key),
+        },
+        footerInfo: {
+            default: select('footerInfo', footerInfo, 'total', key),
+        },
+        totalFooter: {
+            default: object('totalFooter', { views_count: 12345, roles: 'privet' }, key),
+        },
+        headerBreakWord: {
+            default: boolean('headerBreakWord', false, key),
+        },
+    }
 }
 
 const getCommonTags = ctx => {
-  return {
-    height: ctx.height,
-    size: ctx.size,
-    scrollable: ctx.scrollable,
-    stripe: ctx.stripe,
-    border: ctx.border,
-    'component-tag': ctx.componentTag,
-    items: ctx.items,
-    hasMore: ctx.hasMore,
-    loading: ctx.loading,
-    contextMenu: ctx.contextMenu,
-    placeholders: ctx.placeholders,
-    'cell-class-name': ctx.handleCellClassName,
-    'checkbox-config': ctx.checkboxConfig,
-    'native-sort': ctx.nativeSort,
-    footerInfo: ctx.footerInfo,
-    totalFooter: ctx.totalFooter,
-    headerBreakWord: ctx.headerBreakWord,
-  }
+    return {
+        height: ctx.height,
+        size: ctx.size,
+        scrollable: ctx.scrollable,
+        stripe: ctx.stripe,
+        border: ctx.border,
+        'component-tag': ctx.componentTag,
+        items: ctx.items,
+        hasMore: ctx.hasMore,
+        loading: ctx.loading,
+        contextMenu: ctx.contextMenu,
+        placeholders: ctx.placeholders,
+        'cell-class-name': ctx.handleCellClassName,
+        'checkbox-config': ctx.checkboxConfig,
+        'native-sort': ctx.nativeSort,
+        footerInfo: ctx.footerInfo,
+        totalFooter: ctx.totalFooter,
+        headerBreakWord: ctx.headerBreakWord,
+    }
 }
 
 const actionsData = {
-  handleLoad: action('loaded'),
-  handleSorted: action('sorted'),
-  cellClickEvent: action('onCellClick'),
-  handleCheckboxChange: (row, e) => {
-    row.$event.stopPropagation()
-    action('checkboxChanged')(row, e)
-  },
-  handleBtnClick: action('buttonClicked'),
+    handleLoad: action('loaded'),
+    handleSorted: action('sorted'),
+    cellClickEvent: action('onCellClick'),
+    handleCheckboxChange: (row, e) => {
+        row.$event.stopPropagation()
+        action('checkboxChanged')(row, e)
+    },
+    handleBtnClick: action('buttonClicked'),
 }
 
 export const Default = () => ({
-  components: {
-    McTable,
-    McTableCol,
-    McFieldText,
-    McAvatar,
-    McChip,
-    McButton,
-    McSvgIcon,
-    McTitle,
-    McBadge,
-    McGridCol,
-    McGridRow,
-    McStack,
-    McPreview,
-  },
-  data() {
-    return {
-      total: 424,
-      placeholders: {
-        no_data: 'Данных вообще нет!',
-        loading: 'Секундочку...',
-        all_loaded: 'Всё уже загружено',
-        total: 'Итого',
-        menu: {
-          copy: 'Скопировать данные ячейки',
-          open_in_new_tab: 'Открыть в новой вкладке',
-          open_in_new_window: 'Открыть в новом окне',
+    components: {
+        McTable,
+        McTableCol,
+        McFieldText,
+        McAvatar,
+        McChip,
+        McButton,
+        McSvgIcon,
+        McTitle,
+        McBadge,
+        McGridCol,
+        McGridRow,
+        McStack,
+        McPreview,
+    },
+    data() {
+        return {
+            total: 424,
+            placeholders: {
+                no_data: 'Данных вообще нет!',
+                loading: 'Секундочку...',
+                all_loaded: 'Всё уже загружено',
+                total: 'Итого',
+                menu: {
+                    copy: 'Скопировать данные ячейки',
+                    open_in_new_tab: 'Открыть в новой вкладке',
+                    open_in_new_window: 'Открыть в новом окне',
+                },
+            },
+        }
+    },
+    computed: {
+        tagBind() {
+            return getCommonTags(this)
         },
-      },
-    }
-  },
-  computed: {
-    tagBind() {
-      return getCommonTags(this)
+        items() {
+            return body
+                .map(item => {
+                    return {
+                        ...item,
+                        avatar: item.image_small,
+                        views_count: num(item.views_count, 0),
+                        average_views_per_video: num(item.average_views_per_video, 0),
+                        subscribers_count: num(item.subscribers_count, 0),
+                        categories: item.categories.map(c => c.title).join(', '),
+                        language: item.language.name,
+                        country: item.country.name,
+                        roles: ['Одмен', 'Петух', 'Лопух'],
+                        price: item.agency_channels.filter(item => item.type === 2).length
+                            ? num(
+                                  _minBy(
+                                      item.agency_channels.filter(item => item.type === 2),
+                                      'total',
+                                  ).total,
+                                  0,
+                              ) + ' $'
+                            : null,
+                    }
+                })
+                .slice(0, 50)
+        },
     },
-    items() {
-      return body
-        .map(item => {
-          return {
-            ...item,
-            avatar: item.image_small,
-            views_count: num(item.views_count, 0),
-            average_views_per_video: num(item.average_views_per_video, 0),
-            subscribers_count: num(item.subscribers_count, 0),
-            categories: item.categories.map(c => c.title).join(', '),
-            language: item.language.name,
-            country: item.country.name,
-            roles: ['Одмен', 'Петух', 'Лопух'],
-            price: item.agency_channels.filter(item => item.type === 2).length
-              ? num(
-                  _minBy(
-                    item.agency_channels.filter(item => item.type === 2),
-                    'total',
-                  ).total,
-                  0,
-                ) + ' $'
-              : null,
-          }
-        })
-        .slice(0, 50)
+    props: {
+        ...getUniqueProps('default'),
     },
-  },
-  props: {
-    ...getUniqueProps('default'),
-  },
-  methods: {
-    ...actionsData,
-    handleCellClassName() {
-      return '' //"mc-table-col--border-bottom"
+    methods: {
+        ...actionsData,
+        handleCellClassName() {
+            return '' //"mc-table-col--border-bottom"
+        },
+        sortNameMethod(a, b) {
+            return a - b
+        },
     },
-    sortNameMethod(a, b) {
-      return a - b
-    },
-  },
-  template: `<mc-table
+    template: `<mc-table
         ref="table"
         v-bind="tagBind"
         @checkbox-change="handleCheckboxChange"
