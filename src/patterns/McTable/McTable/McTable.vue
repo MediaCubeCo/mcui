@@ -20,7 +20,7 @@
                 </template>
             </template>
         </component>
-        <div v-if="hasMore || $attrs.loading" :class="footerClasses" class="mc-table-wrapper__footer">
+        <div v-if="sortLoading || $attrs.loading" :class="footerClasses" class="mc-table-wrapper__footer">
             <div v-if="footerInfo !== 'total'" class="mc-table-wrapper__tint"></div>
             <div v-if="($attrs.loading && scrollIsBottom) || sortLoading" class="mc-table-wrapper__loading">
                 <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader" />
