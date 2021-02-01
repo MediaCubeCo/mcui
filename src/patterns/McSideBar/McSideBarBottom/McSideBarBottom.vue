@@ -107,6 +107,8 @@ export default {
     &__slot-message {
         margin-left: -$space-100;
         margin-right: -$space-100;
+        padding-left: $space-100;
+        padding-right: $space-100;
         & + * {
             margin-top: $space-500;
         }
