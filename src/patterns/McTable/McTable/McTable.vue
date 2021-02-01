@@ -329,6 +329,12 @@ export default {
         canShowFooter(newValue) {
             newValue && this.updateData()
         },
+        totalFooter: {
+            handler: async function(newVal) {
+                newVal && (await this.loadData())
+            },
+            deep: true,
+        },
         items: {
             handler: async function(newVal) {
                 newVal && (await this.loadData())
