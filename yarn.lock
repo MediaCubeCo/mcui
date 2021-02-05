@@ -16351,10 +16351,10 @@ vuex@^3.4.0:
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.4.0.tgz#20cc086062d750769fce1febb34e7fceeaebde45"
   integrity sha512-ajtqwEW/QhnrBZQsZxCLHThZZaa+Db45c92Asf46ZDXu6uHXgbfVuBaJ4gzD2r4UX0oMJHstFwd2r2HM4l8umg==
 
-vxe-table@^2.9.15:
-  version "2.9.15"
-  resolved "https://registry.yarnpkg.com/vxe-table/-/vxe-table-2.9.15.tgz#8533cf57be343b2172b9dcb24eb29ddb81695215"
-  integrity sha512-le+zGlB68fhxmfPfKuQ1XJdJsxp679U/6xOoLafO9poyU94X7WoUf+uYZzHbmRtlJyYZ3KcKnMRypMsEeULmaw==
+vxe-table@2.10.13:
+  version "2.10.13"
+  resolved "https://registry.yarnpkg.com/vxe-table/-/vxe-table-2.10.13.tgz#c72711fc18949ab406bbf6b7da96d4c45348ce99"
+  integrity sha512-8KXoIthvlOmzn7fs8lySjki1cBLdJxKQGOxWivYNl2U+mxKpPHrGfT5ItCPfKwgKgdTsPlN1gpTllfgC+wBzZA==
 
 w3c-hr-time@^1.0.1:
   version "1.0.2"

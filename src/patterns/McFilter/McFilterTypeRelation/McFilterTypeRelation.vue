@@ -91,7 +91,7 @@ export default {
                     if (key === 'exists') {
                         return []
                     }
-                  selected = [...selected, ...(Array.isArray(val) ? val.map(v => Number(v)) : [[val]])]
+                    selected = [...selected, ...(Array.isArray(val) ? val.map(v => Number(v)) : [[val]])]
                 }
                 options = options.filter(o => !selected.includes(o.value))
             }
