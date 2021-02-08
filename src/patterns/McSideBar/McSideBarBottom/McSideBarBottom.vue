@@ -90,6 +90,7 @@ export default {
     flex-direction: column;
     flex: 1 1 auto;
     justify-content: flex-end;
+    min-height: max-content;
 
     &__hide-button {
         .mc-side-bar-button__icon {
