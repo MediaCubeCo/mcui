@@ -10,6 +10,9 @@
             <mc-badge v-if="commentStatus" slot="bottom" :variation="comment.status.color">
                 {{ comment.status.title }}
             </mc-badge>
+            <mc-title v-else-if="comment.editing_title" slot="bottom">
+                {{ comment.editing_title }}
+            </mc-title>
             <mc-title v-if="comment.content" slot="bottom" :ellipsis="false" v-html="filteredComment" />
             <mc-button
                 v-if="canEdit"
