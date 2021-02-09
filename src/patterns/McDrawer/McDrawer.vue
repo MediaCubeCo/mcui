@@ -99,6 +99,7 @@ export default {
         flex: 1 1 auto;
         min-height: 0;
         overflow-y: auto;
+        height: 100%;
         &-inner {
             max-height: 100%;
             height: 100%;
