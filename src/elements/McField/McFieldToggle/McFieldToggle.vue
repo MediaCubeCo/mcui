@@ -126,6 +126,11 @@ export default {
                 color: $color-outline-gray;
             }
         }
+        @at-root #{$block-name}--checked#{$block-name}--disabled#{$block-name}--colored-text {
+            #{$block-name}__text {
+                color: $color-light-blue;
+            }
+        }
     }
 
     &--text-position-right {
@@ -177,7 +182,12 @@ export default {
         #{$block-name}__slider {
             background-color: $color-outline-gray !important;
             &::before {
-                background-color: fade-out($color-white, 0.4);
+                background-color: $color-hover-gray;
+            }
+        }
+        &#{$block-name}--checked {
+            #{$block-name}__slider {
+                background-color: $color-light-blue !important;
             }
         }
     }
