@@ -56,7 +56,7 @@
     "vuex": "^3.4.0",
     "vxe-table": "2.9.17",
     "webfontloader": "^1.6.28",
-    "xe-utils": "^2.7.1"
+    "xe-utils": "2.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

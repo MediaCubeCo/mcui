@@ -16790,10 +16790,10 @@ xe-clipboard@^1.9.0:
   resolved "https://registry.yarnpkg.com/xe-clipboard/-/xe-clipboard-1.9.0.tgz#1c7312e209950d4953f0326b527d820ce018197c"
   integrity sha512-uIDCzkJmEk9FxBsd0lX1ShOQbdG0A0RYoGefUDqnE2FeBsyrbCLVaIlx7lrJNezUODswUnvs/3E5PzgNRkynaA==
 
-xe-utils@^2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/xe-utils/-/xe-utils-2.7.1.tgz#44ea30ce635e4324b7995afdd52211afeac338b8"
-  integrity sha512-ql/SGkpBFIymalGlWJrDF0Q+qsltnd9Qg0WU/sXHD7IBD95iTVU1HvxJwJkC3AV8syUItBXDsF9HDAdgDfjTlg==
+xe-utils@2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/xe-utils/-/xe-utils-2.7.2.tgz#568c7fe7895b4762ff9d6aeb0be669608f64f2f5"
+  integrity sha512-zk88vpzs2Aztxo2g9M2D7tlCYlkSUO8hk3dyGZn3fE/q7i0EjHvMHo3eaITFD/mAiAo4EgwkXivXmqE/cefyUg==
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
