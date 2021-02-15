@@ -201,7 +201,7 @@ export default {
              * @property {string}
              */
             this.$emit('input', value)
-            this.$bus.emit('chat-input', value)
+            this.$bus && this.$bus.emit('chat-input', value)
 
             if (this.formElement.offsetHeight !== this.formElementOldHeight) {
                 this.formElementOldHeight = this.formElement.offsetHeight
@@ -215,7 +215,7 @@ export default {
              */
             if (this.prettyValue) {
                 this.$emit('submit', this.prettyValue)
-                this.$bus.emit('chat-submit', this.prettyValue)
+                this.$bus && this.$bus.emit('chat-submit', this.prettyValue)
             }
         },
         handleDelete(id) {
@@ -223,7 +223,7 @@ export default {
              * Событие по удалению
              */
             this.$emit('delete', id)
-            this.$bus.emit('chat-delete', id)
+            this.$bus && this.$bus.emit('chat-delete', id)
         },
     },
 }

@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <portal to="filterTarget">
+        <component :is="usePortal ? 'portal' : 'div'" to="filterTarget">
             <div v-if="isOpen" class="mc-filter__body">
                 <div class="mc-filter__body-top">
                     <div class="mc-filter__body-top-left">
@@ -116,7 +116,7 @@
                     </div>
                 </div>
             </div>
-        </portal>
+        </component>
     </div>
 </template>
 
@@ -185,6 +185,14 @@ export default {
             default: false,
         },
         /**
+         *  Использовать ли портал (для рендеринга вне компонента)
+         *  Если да то необходим пакет portal-vue и <portal-target name="filterTarget" /> для рендеринга
+         */
+        usePortal: {
+            type: Boolean,
+            default: true,
+        },
+        /**
          *  Переводы локализаций
          */
         placeholders: {
@@ -251,7 +259,7 @@ export default {
                 isDrag: false,
                 mouseIsDown: false,
             },
-            presets: JSON.parse(window.localStorage.mcFilterPresets || '{}'),
+            presets: {},
             activePreset: null,
             temporaryActivePreset: null,
             activeTag: null,
@@ -319,6 +327,7 @@ export default {
         },
     },
     mounted() {
+        this.presets = JSON.parse(window.localStorage.mcFilterPresets || '{}')
         document.documentElement.addEventListener('mousemove', this.onMouseMove)
         document.documentElement.addEventListener('mouseup', this.onMouseUp)
     },
