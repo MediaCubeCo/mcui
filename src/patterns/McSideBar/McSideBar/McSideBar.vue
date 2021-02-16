@@ -21,8 +21,8 @@
                         :userback-config="userbackConfig"
                         :user="user"
                         :compact="prettyCompact"
-                        @handlerUserbackClick="$emit('handlerUserbackClick')"
-                        @handlerChatraClick="$emit('handlerChatraClick')"
+                        @handlerUserbackClick="$emit('userbackClick')"
+                        @handlerChatraClick="$emit('chatraClick')"
                     />
                     <mc-side-bar-bottom
                         :hide-text="hideText"
