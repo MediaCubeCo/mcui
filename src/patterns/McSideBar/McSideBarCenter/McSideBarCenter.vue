@@ -31,7 +31,7 @@
             :title="chatraConfig.title"
             :compact="compact"
             with-tooltip
-            @click="handleToggleUserback"
+            @click="$emit('handlerChatraClick')"
         />
         <mc-side-bar-button
             v-if="userbackConfig"
@@ -39,7 +39,7 @@
             :title="userbackConfig.title"
             :compact="compact"
             with-tooltip
-            @click="handleToggleUserback"
+            @click="$emit('handlerUserbackClick')"
         />
     </div>
 </template>
@@ -126,74 +126,6 @@ export default {
                     ...i,
                 }
             })
-        },
-        computedUserbackSettings() {
-            return {
-                language: _has(this.userbackConfig, 'settings.lang') ? this.userbackConfig.settings.lang : 'en',
-                style: 'text',
-                position: 'e',
-                autohide: true, // не отображаем, т.к. привязка к кнопке в хедере
-                logo: this.logoSrc,
-                name_field: false, // не выводим так как будем передавать в кастомных даннных.
-                name_field_mandatory: false, // не выводим так как будем передавать в кастомных даннных.
-                email_field: false, // не выводим так как будем передавать в кастомных даннных.
-                email_field_mandatory: false, // не выводим так как будем передавать в кастомных даннных.
-                comment_field: true,
-                comment_field_mandatory: true,
-                display_category: false,
-                display_feedback: false,
-                main_button_text_colour: '#FFFFFF', // hex colour
-                main_button_background_colour: '#4285F4', // hex colour
-                rating_type: 'emoji',
-                ...(_has(this.userbackConfig, 'settings') ? this.userbackConfig.settings : {}),
-            }
-        },
-        computedUserbackCustomData() {
-            const user = this.user
-            const data = {
-                user_id: user.id,
-                email: user.email || '',
-                name: user.name,
-            }
-            if (this.user.company) {
-                const company = user.company
-                data.company = `${company.first_name}${company.last_name ? ` ${company.last_name}` : ''}`
-            }
-            return data
-        },
-    },
-    mounted() {
-        this.userbackConfig && this.initUserback()
-    },
-    methods: {
-        initUserback() {
-            this.setUserbackData()
-            ;(function(id) {
-                const script = document.getElementById(id)
-                script && script.remove()
-
-                const container = document.getElementsByClassName('userback-button-container')[0]
-                container && container.remove()
-
-                const s = document.createElement('script')
-                s.id = id
-                s.async = 1
-                s.src = 'https://static.userback.io/widget/v1.js'
-                const parent_node = document.head || document.body
-                parent_node.appendChild(s)
-            })('userback-sdk')
-        },
-        setUserbackData() {
-            window.Userback = window.Userback || {}
-            window.Userback.access_token = this.userbackConfig.token
-            window.Userback.widget_settings = this.computedUserbackSettings
-            window.Userback.categories = this.userbackConfig.categories
-            if (this.user) {
-                window.Userback.custom_data = this.computedUserbackCustomData
-            }
-        },
-        handleToggleUserback() {
-            this.menuUserbackIsOpen ? window.Userback.close() : window.Userback.open()
         },
     },
 }
