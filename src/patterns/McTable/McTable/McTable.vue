@@ -33,7 +33,6 @@
 <script>
 import noTableDataIcon from '../../../assets/img/no_table_data.png'
 import _throttle from 'lodash/throttle'
-import _XEClipboard from 'xe-clipboard'
 import _isEmpty from 'lodash/isEmpty'
 import numeral from 'numeral'
 
@@ -449,7 +448,7 @@ export default {
         },
         contextMenuClickEvent({ menu, row, column }) {
             switch (menu.code) {
-                case 'copy':
+                case 'copy': //при необходимости использования _XEClipboard.copy заменить на другой плагин не конфликтующий с ssr
                     if (row && column) {
                         if (_XEClipboard.copy(row[column.property].trim())) {
                             /**
