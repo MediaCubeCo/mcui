@@ -74,7 +74,7 @@ export default {
                 h(
                     'div',
                     {
-                        class: ['mc-progress__top', { 'mc-progress__top--reverse-headers': this.reverseHeaders }],
+                        class: ['mc-progress__top', { 'mc-progress__top--reverse-headers': props.reverseHeaders }],
                     },
                     [
                         h(
