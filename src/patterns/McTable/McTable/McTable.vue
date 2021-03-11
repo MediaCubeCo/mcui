@@ -7,8 +7,26 @@
             @scroll="handleScroll"
             @context-menu-click="contextMenuClickEvent"
         >
+            <!-- Отображение скелетной загрузки -->
+            <template v-if="skeletonLoad">
+                <mc-table-col v-for="(item, i) in columnsForFirstLoad" :key="`first-load-col__${i}`" width="200">
+                    <div slot="header" class="loader fat-loader">
+                        <div class="loader__line"></div>
+                    </div>
+                    <div v-if="!i" class="loader">
+                        <div class="avatar"></div>
+                        <div class="preview-content">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                    <div v-else class="loader">
+                        <div class="line"></div>
+                    </div>
+                </mc-table-col>
+            </template>
             <!-- @slot Слот дочерних mc-table-col -->
-            <slot />
+            <slot v-else />
             <template v-slot:empty>
                 <template v-if="!$attrs.loading">
                     <div class="no_data_icon-wrapper">
@@ -38,6 +56,7 @@ import numeral from 'numeral'
 
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
+import McTableCol from '../McTableCol/McTableCol'
 
 /**
  *  More info: https://xuliangzhan.com/vxe-table, https://xuliangzhan.github.io/vxe-table
@@ -47,6 +66,7 @@ export default {
     components: {
         McTitle,
         McSvgIcon,
+        McTableCol,
     },
     provide() {
         const provideData = {}
@@ -215,6 +235,14 @@ export default {
             type: String,
             default: noTableDataIcon,
         },
+        /**
+         *  Отрисовка всей таблицы и полоса загрузки в каждой ячейке (скелетная загрузка)
+         *
+         */
+        skeletonLoad: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -323,6 +351,9 @@ export default {
             }
             return this.$listeners['cell-click'] && this.contextMenu ? menu : false
         },
+        columnsForFirstLoad() {
+            return new Array(20).fill('MCN')
+        },
     },
     watch: {
         canShowFooter(newValue) {
@@ -359,7 +390,11 @@ export default {
     },
     methods: {
         async loadData() {
-            await this.$refs.xTable.loadData(this.items)
+            if (this.skeletonLoad) {
+                await this.$refs.xTable.loadData(this.columnsForFirstLoad.map(i => ({ i })))
+            } else {
+                await this.$refs.xTable.loadData(this.items)
+            }
             !this.scrollable && this.setObserveElement()
         },
         reloadData() {
@@ -614,5 +649,81 @@ export default {
         }
     }
     @include custom-scroll();
+}
+@mixin gradient() {
+    background: $color-hover-gray;
+    background-image: -webkit-gradient(
+        linear,
+        left center,
+        right center,
+        from($color-hover-gray),
+        color-stop(0.2, rgba($color-white, 0.5)),
+        color-stop(0.4, $color-hover-gray),
+        to($color-hover-gray)
+    );
+    background-image: -webkit-linear-gradient(
+        left,
+        $color-hover-gray 0%,
+        rgba($color-white, 0.5) 20%,
+        $color-hover-gray 40%,
+        $color-hover-gray 100%
+    );
+    background-repeat: no-repeat;
+    background-size: 800px 100%;
+    animation: placeHolderShimmer 2s linear infinite forwards;
+    border-radius: 10px;
+    > * {
+        background: transparent;
+        position: relative;
+        margin: 0 auto;
+        width: 100%;
+        overflow: hidden;
+        &:after {
+            content: '';
+            position: absolute;
+            border: 500px solid #fff;
+            width: 100%;
+        }
+    }
+}
+.loader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    .avatar {
+        display: block;
+        float: left;
+        position: relative;
+        height: 24px;
+        width: 24px;
+        min-width: 24px;
+        margin-right: $space-50;
+        @include gradient();
+    }
+    .preview-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        @include child-indent-bottom($space-50);
+    }
+    .line {
+        display: block;
+        position: relative;
+        height: 8px;
+        width: 100%;
+        @include gradient();
+    }
+    &.fat-loader {
+        height: 15px;
+    }
+
+    @-webkit-keyframes placeHolderShimmer {
+        0% {
+            background-position: -468px 0;
+        }
+        100% {
+            background-position: 468px 0;
+        }
+    }
 }
 </style>
