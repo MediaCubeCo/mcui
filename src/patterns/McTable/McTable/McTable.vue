@@ -368,6 +368,7 @@ export default {
         items: {
             handler: async function(newVal) {
                 newVal && (await this.loadData())
+                newVal && (await this.setFirstColsWidth())
             },
             deep: true,
         },
