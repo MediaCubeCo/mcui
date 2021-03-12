@@ -10,8 +10,8 @@
             <!-- Отображение скелетной загрузки -->
             <template v-if="skeletonLoad">
                 <mc-table-col v-for="(item, i) in columnsForFirstLoad" :key="`first-load-col__${i}`" width="200">
-                    <div slot="header" class="loader fat-loader">
-                        <div class="loader__line"></div>
+                    <div slot="header" class="loader loader--more-height">
+                        <div class="line"></div>
                     </div>
                     <div v-if="!i" class="loader">
                         <div class="avatar"></div>
@@ -606,6 +606,7 @@ export default {
     &--header-break-word {
         .vxe-header--column {
             .vxe-cell--title {
+                width: 100%;
                 .mc-title__text {
                     white-space: pre-line;
                     word-break: break-word;
@@ -671,7 +672,7 @@ export default {
     );
     background-repeat: no-repeat;
     background-size: 800px 100%;
-    animation: placeHolderShimmer 2s linear infinite forwards;
+    animation: placeHolderShimmer 1s linear infinite forwards;
     border-radius: 10px;
     > * {
         background: transparent;
@@ -714,8 +715,11 @@ export default {
         width: 100%;
         @include gradient();
     }
-    &.fat-loader {
-        height: 15px;
+    &--more-height {
+        .line {
+            height: 12px;
+            width: 75%;
+        }
     }
 
     @-webkit-keyframes placeHolderShimmer {
