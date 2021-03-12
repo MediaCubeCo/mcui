@@ -9,7 +9,11 @@
         >
             <!-- Отображение скелетной загрузки -->
             <template v-if="skeletonLoad">
-                <mc-table-col v-for="(item, i) in columnsForFirstLoad" :key="`first-load-col__${i}`" width="200">
+                <mc-table-col
+                    v-for="(item, i) in columnsForFirstLoad"
+                    :key="`first-load-col__${i}`"
+                    :width="firstColsWidth"
+                >
                     <div slot="header" class="loader loader--more-height">
                         <div class="line"></div>
                     </div>
