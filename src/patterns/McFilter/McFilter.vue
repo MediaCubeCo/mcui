@@ -4,6 +4,7 @@
             <mc-tooltip :content="placeholders.main_tooltip" placement="top" size="s">
                 <mc-button
                     :variation="visibilityToggleVariation"
+                    :disabled="disabledOpen"
                     :bg-flat="isOpen"
                     size="m-compact"
                     @click="isOpen = !isOpen"
@@ -191,6 +192,13 @@ export default {
         usePortal: {
             type: Boolean,
             default: true,
+        },
+        /**
+         *  Доступен ли фильтр для открытия
+         */
+        disabledOpen: {
+            type: Boolean,
+            default: false,
         },
         /**
          *  Переводы локализаций
