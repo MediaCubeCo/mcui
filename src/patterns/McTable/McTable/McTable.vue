@@ -280,7 +280,7 @@ export default {
                     theme: 'mcui-black',
                 },
                 'row-id': 'id',
-                'highlight-hover-row': true,
+                'highlight-hover-row': !this.skeletonLoad,
                 'highlight-current-row': true,
                 'show-header-overflow': 'tooltip',
                 'show-overflow': 'tooltip',
