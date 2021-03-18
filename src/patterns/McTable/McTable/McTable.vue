@@ -610,7 +610,6 @@ export default {
     &--header-break-word {
         .vxe-header--column {
             .vxe-cell--title {
-                width: 100%;
                 .mc-title__text {
                     white-space: pre-line;
                     word-break: break-word;
@@ -723,6 +722,7 @@ export default {
         .line {
             height: 12px;
             width: 75%;
+            min-width: 150px;
         }
     }
 
