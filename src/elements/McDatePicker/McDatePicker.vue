@@ -21,6 +21,7 @@
                     :format="format"
                     :editable="editable"
                     :popup-class="popupClass"
+                    :inline="inline"
                     v-on="listeners"
                     @input="val => handleEmitDate(val)"
                     @pick="handlePickDate"
@@ -213,6 +214,13 @@ export default {
             },
         },
         range: {
+            type: Boolean,
+            default: false,
+        },
+        /**
+         *  Если значение true, то датапикер отображается в открытом виде
+         */
+        inline: {
             type: Boolean,
             default: false,
         },
