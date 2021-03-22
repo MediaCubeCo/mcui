@@ -10,6 +10,7 @@
             <div class="mc-date-picker__input-wrapper">
                 <date-picker
                     ref="input"
+                    :type="type"
                     :value="prettyValue"
                     v-bind="{ ...$attrs, range }"
                     class="mc-date-picker__date-picker"
@@ -119,6 +120,13 @@ export default {
         McButton,
     },
     props: {
+        /**
+         *  Тип датапикера date|datetime|year|month|time|week
+         */
+        type: {
+            type: String,
+            default: 'date',
+        },
         /**
          *  Заголовок поля:
          */
