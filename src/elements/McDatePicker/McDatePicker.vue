@@ -22,6 +22,7 @@
                     :editable="editable"
                     :popup-class="popupClass"
                     :inline="inline"
+                    :disabled-date="disabledDate"
                     v-on="listeners"
                     @input="val => handleEmitDate(val)"
                     @pick="handlePickDate"
@@ -223,6 +224,16 @@ export default {
         inline: {
             type: Boolean,
             default: false,
+        },
+        /**
+         * Функция проверяюая и устанавливающая доступна ли дата для выбора
+         * Params [String] date - текущая дата
+         * return Boolean, где true - дата заблокированна для выбора
+         * **/
+        disabledDate: {
+            type: Function,
+            // eslint-disable-next-line no-unused-vars
+            default: date => false,
         },
     },
 
