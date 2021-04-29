@@ -12,6 +12,14 @@ export default {
             default: 0,
         },
         /**
+         *  Число для отображения, если не укказано, используется процент
+         *
+         */
+        amount: {
+            type: [Number, Boolean],
+            default: null,
+        },
+        /**
          *  Цвет
          *
          */
@@ -82,7 +90,7 @@ export default {
                             {
                                 class: 'mc-progress__percent',
                             },
-                            [`${errorText ? 0 : props.percent}%`],
+                            [errorText ? 0 : props.amount || `${props.percent}%`],
                         ),
                         props.helpText
                             ? h(
