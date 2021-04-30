@@ -90,7 +90,7 @@ export default {
                             {
                                 class: 'mc-progress__percent',
                             },
-                            [errorText ? 0 : props.amount || `${props.percent}%`],
+                            [errorText ? 0 : props.amount || props.amount === 0 ? props.amount : `${props.percent}%`],
                         ),
                         props.helpText
                             ? h(
