@@ -19,6 +19,7 @@ $color-dark-orange: #BD8400; /* Кнопки, статус данных */
 $color-orange: #FCB100; /* Кнопки, статус данных */
 $color-dark-red: #D5260B; /* Красные кнопки отмены */
 $color-red: #F5563D; /* Красные кнопки отмены */
+$color-pale-pink: #FC9283;
 $color-dark-green: #218321; /* Цифры и положительные действия */
 $color-green: #4DCB4D; /* Зелёные кнопки */
 $color-toxic: #E8F443; /* Кнопки, статус данных */
@@ -44,6 +45,7 @@ $token-colors: (
   "orange": $color-orange,
   "dark-red": $color-dark-red,
   "red": $color-red,
+  "pale-pink": $color-pale-pink,
   "dark-green": $color-dark-green,
   "green": $color-green,
   "toxic": $color-toxic,
