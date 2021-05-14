@@ -16,7 +16,7 @@ export default {
          *
          */
         amount: {
-            type: [Number, Boolean],
+            type: [String, Number, Boolean],
             default: null,
         },
         /**
