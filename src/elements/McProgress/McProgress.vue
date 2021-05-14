@@ -28,6 +28,14 @@ export default {
             default: 'dark-gray',
         },
         /**
+         *  Цвет текста
+         *
+         */
+        helpTextColor: {
+            type: String,
+            default: 'gray',
+        },
+        /**
          *  Вспомогательный текст
          */
         helpText: {
@@ -96,7 +104,10 @@ export default {
                             ? h(
                                   'div',
                                   {
-                                      class: 'mc-progress__help-text',
+                                      class: [
+                                          'mc-progress__help-text',
+                                          `mc-progress__help-text--color-${props.helpTextColor}`,
+                                      ],
                                   },
                                   [props.helpText],
                               )
@@ -175,7 +186,11 @@ export default {
     }
 
     &__help-text {
-        color: $color-gray;
+        @each $color, $value in $token-colors {
+            &--color-#{$color} {
+                color: $value;
+            }
+        }
     }
 
     &__wrapper-line {
