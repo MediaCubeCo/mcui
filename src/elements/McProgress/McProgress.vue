@@ -56,6 +56,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         *  Использовать моноширинный шрифт для percent и amount
+         */
+        monospaceNumbers: {
+            type: Boolean,
+            default: false,
+        },
     },
     render(h, { props, data }) {
         const errorText = props.errors !== null && props.errors.length ? props.errors.join(', ') : ''
@@ -96,7 +103,10 @@ export default {
                         h(
                             'div',
                             {
-                                class: 'mc-progress__percent',
+                                class: {
+                                    'mc-progress__percent': true,
+                                    'mc-progress__percent--monospace': props.monospaceNumbers,
+                                },
                             },
                             [errorText ? 0 : props.amount || props.amount === 0 ? props.amount : `${props.percent}%`],
                         ),
@@ -163,7 +173,11 @@ export default {
             }
         }
     }
-
+    &__percent {
+        &--monospace {
+            font-family: Lucida Console, Courier, monospace;
+        }
+    }
     &--error {
         #{$block-name} {
             &__percent {
