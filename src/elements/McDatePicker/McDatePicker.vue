@@ -380,6 +380,7 @@ export default {
 
     &__input-wrapper {
         width: 100%;
+        min-width: 220px;
     }
 
     &__footer {
