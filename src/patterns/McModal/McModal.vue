@@ -238,14 +238,14 @@ export default {
         }
 
         &.scrollable {
-            overflow-y: auto !important;
-            height: inherit;
             .v--modal-box {
                 margin-bottom: 0;
             }
         }
     }
-
+    @at-root .v--modal-block-scroll {
+        overflow-y: auto !important;
+    }
     .v--modal,
     .vm--modal {
         background-color: transparent;
