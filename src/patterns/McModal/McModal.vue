@@ -223,21 +223,12 @@ export default {
     &.v--modal-overlay {
         z-index: $z-index-overlay;
         background-color: fade-out($color-black, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
 
         .v--modal-background-click {
-            max-height: 100vh;
-            min-height: auto;
-            height: auto;
-            max-width: 100vw;
-            min-width: auto;
-            width: max-content;
-            padding: 20px 0;
-            overflow-y: auto;
-            @include hide-scrollbar();
+            padding-bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .v--modal-box {
@@ -247,6 +238,8 @@ export default {
         }
 
         &.scrollable {
+            min-height: auto;
+            max-height: -webkit-fill-available;
             .v--modal-box {
                 margin-bottom: 0;
             }
