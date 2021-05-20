@@ -7,7 +7,7 @@
             </slot>
         </label>
         <div class="mc-date-picker__inner">
-            <div class="mc-date-picker__input-wrapper">
+            <div class="mc-date-picker__input-wrapper" :style="{ minWidth }">
                 <date-picker
                     ref="input"
                     :type="type"
@@ -235,6 +235,10 @@ export default {
             // eslint-disable-next-line no-unused-vars
             default: date => false,
         },
+        minWidth: {
+            type: String,
+            default: '220px',
+        },
     },
 
     data() {
@@ -380,7 +384,6 @@ export default {
 
     &__input-wrapper {
         width: 100%;
-        min-width: 220px;
     }
 
     &__footer {
