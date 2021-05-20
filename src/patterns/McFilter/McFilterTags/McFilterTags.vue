@@ -3,8 +3,8 @@
         <mc-title>{{ placeholders.added_filters }}</mc-title>
         <div class="mc-filter-tags__body">
             <div class="mc-filter-tags__body-left">
-                <mc-grid-row v-if="simpleTags.length" :gutter-x="4" :gutter-y="8">
-                    <mc-grid-col v-for="tag in simpleTags" :key="tag.id">
+                <mc-grid-row v-if="tagsWithoutFast.length" :gutter-x="4" :gutter-y="8">
+                    <mc-grid-col v-for="tag in tagsWithoutFast" :key="tag.id">
                         <mc-filter-chip
                             :tag="tag"
                             :is-active="checkTagIsActive(tag)"
@@ -27,6 +27,11 @@
                         </mc-grid-col>
                     </mc-grid-row>
                 </template>
+                <mc-grid-row v-if="fastFilterTags.length" :gutter-x="4" :gutter-y="8">
+                    <mc-grid-col v-for="tag in fastFilterTags" :key="tag.id">
+                        <mc-filter-chip :tag="tag" closable @close="() => onTagClose(tag)" />
+                    </mc-grid-col>
+                </mc-grid-row>
             </div>
             <div class="mc-filter-tags__body-right">
                 <mc-button v-if="hasButtonClear" variation="dark-gray-outline" @click="handleClear">
@@ -95,12 +100,25 @@ export default {
         }
     },
     computed: {
+        fastFilterTags() {
+            return this.simpleTags.filter(st => st && st.type === 'fast')
+        },
+        tagsWithoutFast() {
+            return this.simpleTags.filter(st => st && st.type !== 'fast')
+        },
         simpleTags() {
             const tags = []
             !_isEmpty(this.simpleValues) &&
                 Object.entries(this.simpleValues).forEach(([key, value]) => {
                     const filter = this.filters.find(f => f.value === key)
-                    if (filter) {
+                    if (filter && filter.type === 'fast') {
+                        tags.push({
+                            id: _XEUtils.uniqueId(),
+                            categoryName: filter.name,
+                            category: key,
+                            type: 'fast',
+                        })
+                    } else if (filter) {
                         const from = value.more
                             ? `${this.placeholders.from} ${this.getFormattedVal(value.more, filter)}`
                             : ''
@@ -207,6 +225,10 @@ export default {
                 }
                 if (typeof val !== 'object' && parentKey) {
                     this.$set(this.simpleValues, parentKey, parentVal)
+                    continue
+                }
+                if (val === 1 || val === 0) {
+                    this.$set(this.simpleValues, key, { value: key })
                     continue
                 }
                 val && this.addInitTags(val, key)

@@ -33,7 +33,7 @@
                         <mc-field-select
                             v-model="selectedOptionFilter"
                             :title="placeholders.value"
-                            :options="filters"
+                            :options="regularFilters"
                             :placeholder="placeholders.choose"
                             class="mc-filter__main-select"
                             name="filter_value_name"
@@ -67,6 +67,18 @@
                     @tag-click="onTagClick"
                     @clear="allTagsClear"
                 />
+                <section class="mc-filter__body-fast-tags-wrapper">
+                    <mc-chip
+                        v-for="(tag, i) in fastFilters"
+                        :key="i"
+                        variation="gray-outline"
+                        text-color="black"
+                        size="s"
+                        @click.native="handlerSetFastFilter(tag)"
+                    >
+                        {{ tag.name }}
+                    </mc-chip>
+                </section>
                 <div class="mc-filter__body-bottom">
                     <div class="mc-filter__body-bottom-left">
                         <mc-button
@@ -138,6 +150,7 @@ import McFilterTypeText from './McFilterTypeText/McFilterTypeText'
 import McFilterTypeRange from './McFilterTypeRange/McFilterTypeRange'
 import McFilterTypeDate from './McFilterTypeDate/McFilterTypeDate'
 import McFilterTags from './McFilterTags/McFilterTags'
+import McChip from '../../elements/McChip/McChip'
 
 export default {
     name: 'McFilter',
@@ -154,6 +167,7 @@ export default {
         McFieldText,
         McCell,
         McTooltip,
+        McChip,
     },
     props: {
         /**
@@ -274,6 +288,13 @@ export default {
         }
     },
     computed: {
+        fastFilters() {
+            const selected = (this.currentValues && Object.keys(this.currentValues)) || []
+            return this.filters.filter(f => f.type === 'fast' && !selected.includes(f.value))
+        },
+        regularFilters() {
+            return this.filters.filter(f => f.type !== 'fast')
+        },
         visibilityToggleVariation() {
             return this.isOpen || !this.buttonConfirmIsDisable ? 'blue-invert' : 'black-flat'
         },
@@ -281,6 +302,7 @@ export default {
             return this.filters.find(f => f.value === this.selectedOptionFilter)
         },
         computedComponentTypeName() {
+            if (this.currentFilter && this.currentFilter.type === 'fast') return null
             return `mc-filter-type-${this.currentFilter.type}`
         },
         hasButtonAdd() {
@@ -344,6 +366,11 @@ export default {
         document.documentElement.removeEventListener('mouseup', this.onMouseUp)
     },
     methods: {
+        handlerSetFastFilter(tag) {
+            this.selectedOptionFilter = tag.value
+            this.handleConditionChange(tag.default, tag.name)
+            this.handleStoreTag()
+        },
         onMouseDown(e) {
             this.dragOptions.startClientPos = e.clientX
             this.dragOptions.mouseIsDown = true
@@ -725,6 +752,16 @@ export default {
                     background-color: fade-out($color-dark-gray, 0.8);
                     color: $color-dark-gray;
                     border-color: fade-out($color-dark-gray, 1);
+                }
+            }
+        }
+        &-fast-tags-wrapper {
+            margin: -($space-50);
+            & > * {
+                cursor: pointer;
+                margin: ($space-100 / 2) ($space-50 / 2);
+                &:hover {
+                    background-color: $color-outline-gray;
                 }
             }
         }
