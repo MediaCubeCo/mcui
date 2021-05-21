@@ -29,7 +29,9 @@
                 </template>
                 <mc-grid-row v-if="fastFilterTags.length" :gutter-x="4" :gutter-y="8">
                     <mc-grid-col v-for="tag in fastFilterTags" :key="tag.id">
-                        <mc-filter-chip :tag="tag" closable @close="() => onTagClose(tag)" />
+                        <mc-tooltip :content="tag.description || ''" placement="top" size="s">
+                            <mc-filter-chip :tag="tag" closable @close="() => onTagClose(tag)" />
+                        </mc-tooltip>
                     </mc-grid-col>
                 </mc-grid-row>
             </div>
@@ -49,6 +51,7 @@ import _isEmpty from 'lodash/isEmpty'
 import _cloneDeep from 'lodash/cloneDeep'
 
 import McButton from '../../../elements/McButton/McButton'
+import McTooltip from '../../../elements/McTooltip/McTooltip'
 import McTitle from '../../../elements/McTitle/McTitle'
 import McGridRow from '../../../patterns/McGrid/McGridRow/McGridRow'
 import McGridCol from '../../../patterns/McGrid/McGridCol/McGridCol'
@@ -58,6 +61,7 @@ export default {
     components: {
         McFilterChip,
         McButton,
+        McTooltip,
         McTitle,
         McGridRow,
         McGridCol,
@@ -71,8 +75,19 @@ export default {
             default: () => {},
         },
         /**
-         *  Типы фильтров
-         */
+       *  Типы фильтров
+       *
+       *  [{
+                name: Filter title,
+                value: [String] - Filter value(key),
+                type: [String] - Filter type(relation / date / text / fast),
+                options: [Array] - Filter options,
+                getAjaxOne: [Function] - Method for get selected options when filter initialize,
+                getAjaxOptions: [Function] - Method for get options by API,
+                [default]: [String, Number, Boolean] - Only for fast filter type. Fast filter haven't options, we set default value
+                [description]: [String] - Only for fast filter type. Description of fast filter
+            }, ...]
+        */
         filters: {
             type: Array,
             required: true,
@@ -117,6 +132,7 @@ export default {
                             categoryName: filter.name,
                             category: key,
                             type: 'fast',
+                            ...filter,
                         })
                     } else if (filter) {
                         const from = value.more

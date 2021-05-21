@@ -68,16 +68,22 @@
                     @clear="allTagsClear"
                 />
                 <section class="mc-filter__body-fast-tags-wrapper">
-                    <mc-chip
+                    <mc-tooltip
                         v-for="(tag, i) in fastFilters"
                         :key="i"
-                        variation="gray-outline"
-                        text-color="black"
+                        :content="tag.description || ''"
+                        placement="top"
                         size="s"
-                        @click.native="handlerSetFastFilter(tag)"
                     >
-                        {{ tag.name }}
-                    </mc-chip>
+                        <mc-chip
+                            variation="gray-outline"
+                            text-color="black"
+                            size="s"
+                            @click.native="handlerSetFastFilter(tag)"
+                        >
+                            {{ tag.name }}
+                        </mc-chip>
+                    </mc-tooltip>
                 </section>
                 <div class="mc-filter__body-bottom">
                     <div class="mc-filter__body-bottom-left">
@@ -186,8 +192,19 @@ export default {
             required: true,
         },
         /**
-         *  Типы фильтров
-         */
+       *  Типы фильтров
+       *
+       *  [{
+                name: Filter title,
+                value: [String] - Filter value(key),
+                type: [String] - Filter type(relation / date / text / fast),
+                options: [Array] - Filter options,
+                getAjaxOne: [Function] - Method for get selected options when filter initialize,
+                getAjaxOptions: [Function] - Method for get options by API,
+                [default]: [String, Number, Boolean] - Only for fast filter type. Fast filter haven't options, we set default value
+                [description]: [String] - Only for fast filter type. Description of fast filter
+            }, ...]
+       */
         filters: {
             type: Array,
             required: true,
@@ -757,11 +774,13 @@ export default {
         }
         &-fast-tags-wrapper {
             margin: -($space-50);
-            & > * {
-                cursor: pointer;
-                margin: ($space-100 / 2) ($space-50 / 2);
-                &:hover {
-                    background-color: $color-outline-gray;
+            & > .mc-tooltip-target {
+                .mc-chip {
+                    cursor: pointer;
+                    margin: ($space-100 / 2) ($space-50 / 2);
+                    &:hover {
+                        background-color: $color-outline-gray;
+                    }
                 }
             }
         }
