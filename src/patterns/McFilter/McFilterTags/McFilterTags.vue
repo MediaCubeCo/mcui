@@ -87,7 +87,7 @@ export default {
                 [default]: [String, Number, Boolean] - Only for fast filter type. Fast filter haven't options, we set default value
                 [description]: [String] - Only for fast filter type. Description of fast filter
             }, ...]
-        */
+       */
         filters: {
             type: Array,
             required: true,
@@ -243,7 +243,8 @@ export default {
                     this.$set(this.simpleValues, parentKey, parentVal)
                     continue
                 }
-                if (val === 1 || val === 0) {
+                const filter = this.filters.find(f => f.value === key)
+                if (filter && filter.type === 'fast') {
                     this.$set(this.simpleValues, key, { value: key })
                     continue
                 }

@@ -201,6 +201,7 @@ export default {
                 options: [Array] - Filter options,
                 getAjaxOne: [Function] - Method for get selected options when filter initialize,
                 getAjaxOptions: [Function] - Method for get options by API,
+                [relation]: [String] - Filter relation, only for fast filter,
                 [default]: [String, Number, Boolean] - Only for fast filter type. Fast filter haven't options, we set default value
                 [description]: [String] - Only for fast filter type. Description of fast filter
             }, ...]
@@ -384,8 +385,9 @@ export default {
     },
     methods: {
         handlerSetFastFilter(tag) {
+            const filterValue = tag.relation ? { [tag.relation]: tag.default } : tag.default
             this.selectedOptionFilter = tag.value
-            this.handleConditionChange(tag.default, tag.name)
+            this.handleConditionChange(filterValue, tag.name)
             this.handleStoreTag()
         },
         onMouseDown(e) {
