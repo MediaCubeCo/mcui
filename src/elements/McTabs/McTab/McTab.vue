@@ -53,8 +53,16 @@ export default {
          *  (не влияет на значение вставленное в url)
          */
         suffix: {
-            type: String,
+            type: [String, Number],
             default: '',
+        },
+        appendCount: {
+            type: Number,
+            default: null,
+        },
+        appendCountColor: {
+            type: String,
+            default: 'black',
         },
         /**
          *  Отключенное состояние
@@ -126,7 +134,16 @@ export default {
             return (
                 `${this.computedPrefix}` +
                 `<span class="tabs-component-tab__tab-name" data-name="${this.name}">${this.name}</span>` +
-                `${this.computedSuffix}`
+                `${this.computedSuffix}` +
+                (this.appendCount || this.appendCount === 0
+                    ? `<span class="${this.appendCountClasses}">${this.appendCount}</span>`
+                    : '')
+            )
+        },
+        appendCountClasses() {
+            return (
+                `tabs-component-tab__tab-name-append-count ` +
+                `tabs-component-tab__tab-name-append-count--${this.appendCountColor}`
             )
         },
     },
@@ -136,5 +153,16 @@ export default {
 <style lang="scss">
 .tabs-component-panel {
     $block-name: &;
+}
+.tabs-component-tab {
+    &__tab {
+        &-name-append-count {
+            @each $color, $value in $token-colors {
+                &--#{$color} {
+                    color: $value;
+                }
+            }
+        }
+    }
 }
 </style>
