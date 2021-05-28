@@ -9,7 +9,7 @@
         :to="to"
     >
         <!-- @slot контента -->
-        <slot />
+        <slot v-if="visible" />
     </section>
 </template>
 
@@ -72,6 +72,13 @@ export default {
             default: false,
         },
         /**
+         * Виден ли таб
+         */
+        visible: {
+            type: Boolean,
+            default: true,
+        },
+        /**
          *  Классы иконки в начале
          */
         iconPrependClasses: {
@@ -130,15 +137,19 @@ export default {
             const classes = `${this.iconAppendClasses}${colorClass}`
             return this.iconAppendClasses ? `<span class="${classes}"></span>` : this.suffix
         },
-        header() {
+        hasAppendCount() {
+            return this.appendCount || this.appendCount === 0
+        },
+        computedTabName() {
             return (
                 `${this.computedPrefix}` +
                 `<span class="tabs-component-tab__tab-name" data-name="${this.name}">${this.name}</span>` +
                 `${this.computedSuffix}` +
-                (this.appendCount || this.appendCount === 0
-                    ? `<span class="${this.appendCountClasses}">${this.appendCount}</span>`
-                    : '')
+                (this.hasAppendCount ? `<span class="${this.appendCountClasses}">${this.appendCount}</span>` : '')
             )
+        },
+        header() {
+            return this.visible ? this.computedTabName : ''
         },
         appendCountClasses() {
             return (
@@ -163,6 +174,10 @@ export default {
                 }
             }
         }
+    }
+    a:empty {
+        margin: 0;
+        padding: 0;
     }
 }
 </style>
