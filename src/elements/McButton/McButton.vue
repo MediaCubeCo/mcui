@@ -300,7 +300,7 @@ $colors: $token-colors;
     &--size {
         &-xxs {
             height: $size-300;
-            padding: $space-100;
+            padding: 0 $space-100;
             letter-spacing: normal;
             font-size: $font-size-200;
             line-height: $line-height-200;
