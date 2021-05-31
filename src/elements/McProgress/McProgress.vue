@@ -132,7 +132,7 @@ export default {
                     [
                         h('div', {
                             class: lineClasses,
-                            style: { width: `${errorText ? 2 : props.percent}%` },
+                            style: { width: `${errorText ? 2 : Math.sign(props.percent) > 0 ? props.percent : 0}%` },
                         }),
                     ],
                 ),
