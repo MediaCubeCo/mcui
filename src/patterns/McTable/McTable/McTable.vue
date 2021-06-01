@@ -420,7 +420,7 @@ export default {
                         if (!parsedVal && parsedVal !== 0) return '—'
                         const format = !info[0].match('count') ? '0,0.00' : '0,0'
                         return numeral(parsedVal)
-                            .format(format)
+                            .format(format, n => ~~n)
                             .replace(/,/g, ' ')
                     }
                     return null
