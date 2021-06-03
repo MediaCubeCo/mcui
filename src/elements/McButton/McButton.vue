@@ -327,7 +327,7 @@ $colors: $token-colors;
         }
         &-xs {
             height: $size-400;
-            padding: $space-100 $space-150;
+            padding: 0 $space-150;
             letter-spacing: normal;
             font-size: $font-size-200;
             line-height: $line-height-200;
@@ -354,7 +354,7 @@ $colors: $token-colors;
         }
         &-s {
             height: $size-500;
-            padding: $space-150 $space-200;
+            padding: 0 $space-200;
             letter-spacing: normal;
             font-size: $font-size-200;
             line-height: $line-height-200;
@@ -381,7 +381,7 @@ $colors: $token-colors;
         }
         &-m {
             height: $size-500;
-            padding: $space-100 $space-200;
+            padding: 0 $space-200;
             font-size: $font-size-200;
             line-height: $line-height-200;
 
