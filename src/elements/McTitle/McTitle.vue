@@ -4,7 +4,7 @@ export default {
     functional: true,
     props: {
         /**
-         * Уровень: `h1`, `h2`, `h3`, `h4`, `subtitle`, `body`, `overline`, `article`.
+         * Уровень: `h1`, `h2`, `h3`, `h4`, `subtitle`, `body`, `overline`, `article`, 'info'.
          */
         variation: {
             type: String,
@@ -193,6 +193,10 @@ export default {
             #{$block-name}__text {
                 max-width: 536px;
             }
+        }
+        &-info {
+            font-size: $font-size-300;
+            line-height: $line-height-300;
         }
         &-body {
             font-size: $font-size-200;
