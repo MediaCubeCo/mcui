@@ -255,28 +255,30 @@ export default {
     },
     watch: {
         animation() {
-            this.animateDown()
+            this.setDefault()
         },
     },
     methods: {
         animateUp() {
-            this.animation &&
+            if (this.animation) {
                 this.customAnimation?.text &&
-                (this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = this.customAnimation?.text)
-            this.animation && this.$refs['mc-button'].classList.remove(`mc-button--variation-${this.variation}`)
-            this.animation &&
+                    (this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = this.customAnimation?.text)
+                this.$refs['mc-button'].classList.remove(`mc-button--variation-${this.variation}`)
                 this.$refs['mc-button'].classList.add(`mc-button--variation-${this.customAnimation?.background}`)
+            }
         },
         animateDown() {
-            if (this.$refs['mc-button']) {
-                const defaultSlotText =
-                    this.$slots.default && this.$slots.default.find(s => s.text && s.text.trim().length)
-                this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = defaultSlotText
-                    ? defaultSlotText.text
-                    : ''
-                this.$refs['mc-button'].classList.remove(`mc-button--variation-${this.customAnimation?.background}`)
-                this.$refs['mc-button'].classList.add(`mc-button--variation-${this.variation}`)
+            if (this.$refs['mc-button'] && this.animation) {
+                this.setDefault()
             }
+        },
+        setDefault() {
+            const defaultSlotText = this.$slots.default && this.$slots.default.find(s => s.text && s.text.trim().length)
+            this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = defaultSlotText
+                ? defaultSlotText.text
+                : ''
+            this.$refs['mc-button'].classList.remove(`mc-button--variation-${this.customAnimation?.background}`)
+            this.$refs['mc-button'].classList.add(`mc-button--variation-${this.variation}`)
         },
     },
 }
