@@ -268,12 +268,15 @@ export default {
                 this.$refs['mc-button'].classList.add(`mc-button--variation-${this.customAnimation?.background}`)
         },
         animateDown() {
-            const defaultSlotText = this.$slots.default && this.$slots.default.find(s => s.text && s.text.trim().length)
-            this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = defaultSlotText
-                ? defaultSlotText.text
-                : ''
-            this.$refs['mc-button'].classList.remove(`mc-button--variation-${this.customAnimation?.background}`)
-            this.$refs['mc-button'].classList.add(`mc-button--variation-${this.variation}`)
+            if (this.$refs['mc-button']) {
+                const defaultSlotText =
+                    this.$slots.default && this.$slots.default.find(s => s.text && s.text.trim().length)
+                this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = defaultSlotText
+                    ? defaultSlotText.text
+                    : ''
+                this.$refs['mc-button'].classList.remove(`mc-button--variation-${this.customAnimation?.background}`)
+                this.$refs['mc-button'].classList.add(`mc-button--variation-${this.variation}`)
+            }
         },
     },
 }
