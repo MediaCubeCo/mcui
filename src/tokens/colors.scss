@@ -17,6 +17,7 @@ $color-lighter-blue: #E1EDFF; /* Выбранные элементы */
 //additional colors
 $color-dark-orange: #BD8400; /* Кнопки, статус данных */
 $color-orange: #FCB100; /* Кнопки, статус данных */
+$color-yellow: #FFC60A;
 $color-dark-red: #D5260B; /* Красные кнопки отмены */
 $color-red: #F5563D; /* Красные кнопки отмены */
 $color-pale-pink: #FC9283;
@@ -43,6 +44,7 @@ $token-colors: (
   "lighter-blue": $color-lighter-blue,
   "dark-orange": $color-dark-orange,
   "orange": $color-orange,
+  "yellow": $color-yellow,
   "dark-red": $color-dark-red,
   "red": $color-red,
   "pale-pink": $color-pale-pink,
