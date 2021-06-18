@@ -497,7 +497,7 @@ $colors: $token-colors;
 
     @each $color, $value in $colors {
         &--variation-#{$color} {
-            @if $color == 'white' {
+            @if $color == 'white' or $color == 'yellow' {
                 background-color: $value;
 
                 &:hover {
