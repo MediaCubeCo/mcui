@@ -69,6 +69,10 @@ export default {
             type: String,
             default: '',
         },
+        preLine: {
+            type: Boolean,
+            default: false,
+        },
     },
     render(h, { props, slots, data, listeners }) {
         let contentStyle = {}
@@ -91,6 +95,7 @@ export default {
             ['mc-title--ellipsis']: props.ellipsis,
             [`mc-title--color-${props.color}`]: props.color,
             [`mc-title--text-align-${props.textAlign}`]: props.textAlign,
+            [`mc-title--pre-line`]: props.preLine,
             'mc-title--uppercase': props.uppercase,
             [`mc-title--weight-${props.weight}`]: props.weight,
             ...(data.class || {}),
@@ -147,6 +152,12 @@ export default {
     .mc-svg-icon,
     .mc-button {
         @include reset-text-indents();
+    }
+
+    &--pre-line {
+        #{$block-name}__text {
+            white-space: pre-line;
+        }
     }
 
     &--variation {
