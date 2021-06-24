@@ -8,7 +8,7 @@
                     :key="comment.id"
                     :comment="comment"
                     :default-user-name="defaultUserName"
-                    :editable="editable"
+                    :editable="editable && comment.editable"
                     :date-format="dateFormat"
                     @delete="handleDelete"
                 />
