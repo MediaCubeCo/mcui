@@ -12,7 +12,7 @@
                     ref="input"
                     :type="type"
                     :value="prettyValue"
-                    v-bind="{ ...$attrs, range }"
+                    v-bind="{ ...$attrs, range, ...valueType }"
                     class="mc-date-picker__date-picker"
                     range-separator=" — "
                     :confirm="$attrs.range"
@@ -239,6 +239,13 @@ export default {
             type: String,
             default: '220px',
         },
+        /**
+         * Строго использовать переданный формат
+         * */
+        useFormat: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -273,13 +280,16 @@ export default {
         isRange() {
             return this.range
         },
+        valueType() {
+            return this.useFormat ? { 'value-type': 'format' } : {}
+        },
     },
     watch: {
         value(newVal) {
             if (this.isRange && newVal) {
                 this.prettyValue = newVal.map(item => new Date(item))
             } else {
-                this.prettyValue = new Date(newVal)
+                this.prettyValue = this.useFormat ? newVal : new Date(newVal)
             }
         },
     },
@@ -287,13 +297,13 @@ export default {
         if (this.isRange) {
             this.prettyValue = this.value ? this.value.map(item => new Date(item)) : null
         } else {
-            this.prettyValue = this.value ? new Date(this.value) : new Date()
+            this.prettyValue = this.value ? (this.useFormat ? this.value : new Date(this.value)) : new Date()
         }
     },
 
     methods: {
         handleEmitDate(value) {
-            const date = this.getFormattedDate(value)
+            const date = this.useFormat ? value : this.getFormattedDate(value)
             /**
              * Событие инпута
              * @property {string}
