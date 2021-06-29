@@ -248,7 +248,7 @@ export default {
         },
         minutes: {
             type: Array,
-            default: [],
+            default: () => [],
         },
     },
 
