@@ -12,7 +12,7 @@
                     ref="input"
                     :type="type"
                     :value="prettyValue"
-                    v-bind="{ ...$attrs, range, ...valueType, ...minutesOptions }"
+                    v-bind="{ ...$attrs, range, ...valueType, ...minutesOptions, ...secondsOptions }"
                     class="mc-date-picker__date-picker"
                     range-separator=" — "
                     :confirm="$attrs.range"
@@ -250,6 +250,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        seconds: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     data() {
@@ -289,6 +293,9 @@ export default {
         },
         minutesOptions() {
             return this.minutes && this.minutes.length ? { 'minute-options': this.minutes } : {}
+        },
+        secondsOptions() {
+            return this.seconds && this.seconds.length ? { 'second-options': this.seconds } : {}
         },
     },
     watch: {
