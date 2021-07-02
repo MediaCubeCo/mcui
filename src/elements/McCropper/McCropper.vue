@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import VueCropper from 'vue-cropperjs'
+const VueCropper = () => import('vue-cropperjs')
 
 export default {
     name: 'McCropper',
