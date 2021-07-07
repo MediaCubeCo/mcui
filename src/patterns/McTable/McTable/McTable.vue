@@ -1,23 +1,13 @@
 <template>
     <div :style="wrapperStyles" class="mc-table-wrapper">
-        <component
-            :is="tag"
-            v-bind="attrs"
-            v-on="$listeners"
-            @scroll="handleScroll"
-            @context-menu-click="contextMenuClickEvent"
-        >
-            <!-- Отображение скелетной загрузки -->
-            <template v-if="skeletonLoad">
-                <mc-table-col
-                    v-for="(item, i) in columnsForFirstLoad"
-                    :key="`first-load-col__${i}`"
-                    :width="firstColsWidth"
-                >
-                    <div slot="header" class="loader loader--more-height">
+        <!-- Отображение скелетной загрузки -->
+        <section v-if="skeletonLoad" class="skeleton-load-wrapper">
+            <div v-for="(col, i) in columnsForFirstLoad" :key="`skeleton-col__${i}`">
+                <div v-for="(cell, cellI) in col" :key="`skeleton-cell-${cellI}`" class="skeleton-load__cell">
+                    <div v-if="!cellI" class="loader loader--more-height">
                         <div class="line"></div>
                     </div>
-                    <div v-if="!i" class="loader">
+                    <div v-if="!i" class="loader" :style="{ minWidth: `${firstColsWidth}px` }">
                         <div class="avatar"></div>
                         <div class="preview-content">
                             <div class="line"></div>
@@ -27,10 +17,18 @@
                     <div v-else class="loader">
                         <div class="line"></div>
                     </div>
-                </mc-table-col>
-            </template>
+                </div>
+            </div>
+        </section>
+        <component
+            :is="tag"
+            v-bind="attrs"
+            v-on="$listeners"
+            @scroll="handleScroll"
+            @context-menu-click="contextMenuClickEvent"
+        >
             <!-- @slot Слот дочерних mc-table-col -->
-            <slot v-else />
+            <slot />
             <template v-slot:empty>
                 <template v-if="!$attrs.loading">
                     <div class="no_data_icon-wrapper">
@@ -356,7 +354,7 @@ export default {
             return this.$listeners['cell-click'] && this.contextMenu ? menu : false
         },
         columnsForFirstLoad() {
-            return new Array(20).fill('MCN')
+            return new Array(20).fill('').map(() => new Array(20).fill(''))
         },
     },
     watch: {
@@ -395,11 +393,7 @@ export default {
     },
     methods: {
         async loadData() {
-            if (this.skeletonLoad) {
-                await this.$refs.xTable.loadData(this.columnsForFirstLoad.map(i => ({ i })))
-            } else {
-                await this.$refs.xTable.loadData(this.items)
-            }
+            await this.$refs.xTable.loadData(this.items)
             !this.scrollable && this.setObserveElement()
         },
         reloadData() {
@@ -592,6 +586,18 @@ export default {
     &__load-icon {
         animation: $animation-spinner;
     }
+    .skeleton-load {
+        &-wrapper {
+            display: flex;
+            overflow: hidden;
+            max-width: 100%;
+            position: absolute;
+            height: 100%;
+            z-index: 9999;
+            background-color: $color-white;
+            user-select: none;
+        }
+    }
 }
 
 .mc-table {
@@ -696,6 +702,8 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
+    height: $space-500;
+    padding: $space-100 $space-200;
     .avatar {
         display: block;
         float: left;
