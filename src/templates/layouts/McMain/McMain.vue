@@ -78,6 +78,9 @@ export default {
     position: relative;
     display: flex;
     height: calc(var(--vh, 1vh) * 100);
+    min-height: -webkit-fill-available;
+    min-height: -moz-available;
+    min-height: fill-available;
     @include custom-scroll();
 
     &__left {
