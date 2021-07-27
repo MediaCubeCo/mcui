@@ -80,7 +80,7 @@ export default {
     height: calc(var(--vh, 1vh) * 100);
     min-height: -webkit-fill-available;
     min-height: -moz-available;
-    min-height: fill-available;
+    min-height: stretch;
     @include custom-scroll();
 
     &__left {
