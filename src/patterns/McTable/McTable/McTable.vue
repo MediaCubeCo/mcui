@@ -393,14 +393,25 @@ export default {
     },
     methods: {
         async loadData() {
-            await this.$refs.xTable.loadData(this.items)
-            !this.scrollable && this.setObserveElement()
+            if (this.items && this.items.length) {
+                await this.$refs.xTable.loadData(this.items)
+                !this.scrollable && this.setObserveElement()
+                this.checkOccupancy()
+            }
         },
         reloadData() {
             this.$refs.xTable.reloadData(this.items)
         },
         updateData() {
             this.$refs.xTable.updateData()
+        },
+        checkOccupancy() {
+            if (!this.$refs.xTable) return
+            const tableHeight = this.$refs.xTable.$el.getBoundingClientRect().height
+            const tableDataHeight = this.$refs.xTable.rowHeight * this.items.length
+            if (tableHeight >= tableDataHeight && this.hasMore) {
+                this.load()
+            }
         },
         footerMethod({ columns, data }) {
             return [
