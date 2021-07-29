@@ -393,9 +393,9 @@ export default {
     },
     methods: {
         async loadData() {
+            await this.$refs.xTable.loadData(this.items)
+            !this.scrollable && this.setObserveElement()
             if (this.items && this.items.length) {
-                await this.$refs.xTable.loadData(this.items)
-                !this.scrollable && this.setObserveElement()
                 this.checkOccupancy()
             }
         },
