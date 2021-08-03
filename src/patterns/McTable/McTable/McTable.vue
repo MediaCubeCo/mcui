@@ -381,10 +381,10 @@ export default {
             this.checkHorizontalScroll()
         },
     },
-    async mounted() {
-        await this.loadData()
+    mounted() {
+        this.loadData()
         !this.scrollable && this.createObserver()
-        await this.setFirstColsWidth()
+        this.setFirstColsWidth()
         window.addEventListener('resize', this.checkHorizontalScroll)
     },
     beforeDestroy() {
@@ -392,8 +392,8 @@ export default {
         window.removeEventListener('resize', this.checkHorizontalScroll)
     },
     methods: {
-        async loadData() {
-            await this.$refs.xTable.loadData(this.items)
+        loadData() {
+            this.$refs.xTable.loadData(this.items)
             !this.scrollable && this.setObserveElement()
             if (this.items && this.items.length) {
                 this.checkOccupancy()
@@ -464,8 +464,8 @@ export default {
             const loader = this.$refs.xTable.$el.getElementsByClassName('mc-table-col__loader')
             this.observer && loader.length && this.observer.observe(loader[0])
         },
-        async setFirstColsWidth() {
-            const columns = await this.$refs.xTable.getColumns()
+        setFirstColsWidth() {
+            const columns = this.$refs.xTable.getColumns()
             const leftFixedColumnsWidth = columns.reduce((sum, curr) => {
                 if (curr.fixed === 'left') {
                     return sum + Number(curr.width || curr.minWidth)
@@ -476,17 +476,17 @@ export default {
                 this.firstColsWidth = leftFixedColumnsWidth + 5 // 5 - ширина скролла
             }
         },
-        async toggleColumns(val) {
+        toggleColumns(val) {
             if (val) {
-                const columns = await this.$refs.xTable.getColumns()
+                const columns = this.$refs.xTable.getColumns()
                 const hideColumns = columns.filter(col => col.fixed !== 'left')
                 hideColumns.forEach(col => (col.visible = false))
-                await this.$refs.xTable.refreshColumn()
+                this.$refs.xTable.refreshColumn()
             } else {
-                await this.$refs.xTable.resetColumn()
+                this.$refs.xTable.resetColumn()
             }
-            await this.$refs.xTable.recalculate()
-            await this.$refs.xTable.syncData()
+            // this.$refs.xTable.recalculate()
+            // this.$refs.xTable.syncData()
             this.checkHorizontalScroll()
         },
         getFixedHeight(val) {
