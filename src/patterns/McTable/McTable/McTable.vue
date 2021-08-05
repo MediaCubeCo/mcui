@@ -363,13 +363,13 @@ export default {
         },
         totalFooter: {
             handler: async function(newVal) {
-                newVal && (await this.loadData())
+                newVal && (await this.loadData(true))
             },
             deep: true,
         },
         items: {
             handler: async function(newVal) {
-                newVal && (await this.loadData())
+                newVal && (await this.loadData(true))
                 newVal && (await this.setFirstColsWidth())
             },
             deep: true,
@@ -392,11 +392,11 @@ export default {
         window.removeEventListener('resize', this.checkHorizontalScroll)
     },
     methods: {
-        loadData() {
-            this.$refs.xTable.loadData(this.items)
-            !this.scrollable && this.setObserveElement()
-            if (this.items && this.items.length) {
-                this.checkOccupancy()
+        loadData(force = false) {
+            if ((this.items && this.items.length) || force) {
+                this.$refs.xTable.loadData(this.items)
+                !this.scrollable && this.setObserveElement()
+                this.hasMore && this.checkOccupancy()
             }
         },
         reloadData() {
@@ -406,10 +406,10 @@ export default {
             this.$refs.xTable.updateData()
         },
         checkOccupancy() {
-            if (!this.$refs.xTable) return
+            if (!this.$refs.xTable || !this.items?.length) return
             const tableHeight = this.$refs.xTable.$el.getBoundingClientRect().height
             const tableDataHeight = this.$refs.xTable.rowHeight * this.items.length
-            if (tableHeight >= tableDataHeight && this.hasMore) {
+            if (tableHeight >= tableDataHeight) {
                 this.load()
             }
         },
