@@ -91,7 +91,7 @@ export default {
                     if (key === 'exists') {
                         return []
                     }
-                    selected = [...selected, ...(Array.isArray(val) ? val.map(v => Number(v)) : [[val]])]
+                    selected = [...selected, ...(Array.isArray(val) ? val : [[val]])]
                 }
                 options = options.filter(o => !selected.includes(o.value))
             }
@@ -163,8 +163,8 @@ export default {
             const hasVal = value || Number.isInteger(value)
             if (this.relationType !== 'exists' && hasVal) {
                 const selectedOption = this.computedOptions.find(o => String(o.value) === String(value))
-                currentValue = { [this.relationType]: [Number(value)] }
-                currentValueName = { [this.relationType]: { [value]: selectedOption.name } }
+                currentValue = { [this.relationType]: [String(value)] }
+                currentValueName = { [this.relationType]: { [String(value)]: selectedOption.name } }
             }
 
             if (this.relationType === 'exists' && !this.currentValues[this.filter.value]) {

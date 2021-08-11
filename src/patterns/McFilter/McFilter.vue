@@ -447,7 +447,7 @@ export default {
             this.currentFilter.type === 'relation' ? this.addRelationValue() : this.addSimpleValue()
         },
         editRelationValue() {
-            const tagRelationValue = this.activeTag.relationKey === 'exists' ? [0] : [Number(this.activeTag.value)]
+            const tagRelationValue = this.activeTag.relationKey === 'exists' ? [0] : [this.activeTag.value]
             const tagRelation = {
                 [this.activeTag.category]: {
                     [this.activeTag.relationKey]: tagRelationValue,
@@ -468,8 +468,8 @@ export default {
                 delete category[this.activeTag.relationKey]
                 delete categoryName[this.activeTag.relationKey]
             } else {
-                const numerableValues = category[this.activeTag.relationKey].map(i => Number(i))
-                const index = numerableValues.indexOf(Number(this.activeTag.value))
+                const numerableValues = category[this.activeTag.relationKey]
+                const index = numerableValues.indexOf(this.activeTag.value)
                 if (index !== -1) {
                     category[this.activeTag.relationKey].splice(index, 1)
                     _isEmpty(category[this.activeTag.relationKey]) && delete category[this.activeTag.relationKey]
@@ -596,7 +596,7 @@ export default {
                 if (categoryVal.constructor === Object) {
                     for (let [key, val] of Object.entries(categoryVal)) {
                         if (relationKeys.includes(key) && val.constructor === Object) {
-                            newObj[categoryKey][key] = [...Object.keys(val).map(k => Number(k))]
+                            newObj[categoryKey][key] = [...Object.keys(val)]
                         }
                     }
                 }
@@ -609,18 +609,17 @@ export default {
                 this.setEmptyCondition()
                 return
             }
-
             let condition = null
             let conditionName = null
             if (tag.relationKey) {
                 condition = {
-                    [tag.relationKey]: tag.relationKey === 'exists' ? [0] : [Number(tag.value)],
+                    [tag.relationKey]: tag.relationKey === 'exists' ? [0] : [String(tag.value)],
                 }
                 conditionName = {
                     [tag.relationKey]: tag.relationKey === 'exists' ? [0] : { [tag.value]: tag.title },
                 }
             } else {
-                condition = tag.value
+                condition = String(tag.value)
                 conditionName = tag.value
             }
 
