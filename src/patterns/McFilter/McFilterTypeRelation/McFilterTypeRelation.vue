@@ -162,7 +162,7 @@ export default {
             let currentValueName = null
             const hasVal = value || Number.isInteger(value)
             if (this.relationType !== 'exists' && hasVal) {
-                const selectedOption = this.computedOptions.find(o => o.value === Number(value))
+                const selectedOption = this.computedOptions.find(o => String(o.value) === String(value))
                 currentValue = { [this.relationType]: [Number(value)] }
                 currentValueName = { [this.relationType]: { [value]: selectedOption.name } }
             }
