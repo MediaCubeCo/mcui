@@ -1,21 +1,57 @@
 <template>
     <div class="mc-side-bar-center">
-        <mc-title v-if="title" class="mc-side-bar-center__title" :color="compact ? 'transparent' : 'dark-gray'">{{
-            title
-        }}</mc-title>
-        <div v-if="computedMenuMain && computedMenuMain.length" class="mc-side-bar-center__content">
-            <mc-side-bar-button
-                v-for="menuMainItem in computedMenuMain"
+        <mc-title v-if="title" class="mc-side-bar-center__title" :color="compact ? 'transparent' : 'dark-gray'">
+            {{ title }}
+        </mc-title>
+        <div v-if="preparedMainMenu && preparedMainMenu.length" class="mc-side-bar-center__content">
+            <div
+                v-for="(menuMainItem, ii) in preparedMainMenu"
                 :key="menuMainItem.id"
-                :info="menuMainItem.info"
-                :href="menuMainItem.href"
-                :to="menuMainItem.to"
-                :icon="menuMainItem.icon"
-                :icon-color="menuMainItem.iconColor"
-                :title="menuMainItem.name"
-                :compact="compact"
-                with-tooltip
-            />
+                class="mc-side-bar-center__content-item item"
+            >
+                <div class="item__head">
+                    <mc-side-bar-button
+                        :info="menuMainItem.info"
+                        :href="menuMainItem.href"
+                        :to="menuMainItem.to"
+                        :icon="menuMainItem.icon"
+                        :icon-color="menuMainItem.iconColor"
+                        :title="menuMainItem.name"
+                        :compact="compact"
+                        :is-active="menuMainItem.active"
+                        :with-submenu="menuMainItem.menu && !!menuMainItem.menu.length"
+                        with-tooltip
+                    />
+                    <mc-button
+                        v-if="menuMainItem.menu && menuMainItem.menu.length"
+                        :variation="menuMainItem.open ? 'white-link' : 'gray-link'"
+                        size="s-compact"
+                        class="item__head-arrow"
+                        :class="{ rotate: menuMainItem.open }"
+                        @click="handlerToggleSubmenu(menuMainItem)"
+                    >
+                        <mc-svg-icon slot="icon-prepend" name="arrow_forward" />
+                    </mc-button>
+                </div>
+                <div
+                    v-if="menuMainItem.menu && menuMainItem.menu.length"
+                    class="item__submenu"
+                    :class="{ open: menuMainItem.open }"
+                >
+                    <mc-side-bar-button
+                        v-for="(menuItem, i) in menuMainItem.menu"
+                        :key="i"
+                        :info="menuItem.info"
+                        :href="menuItem.href"
+                        :to="menuItem.to"
+                        :icon="menuItem.icon"
+                        :icon-color="menuItem.iconColor"
+                        :title="menuItem.name"
+                        :compact="compact"
+                        with-tooltip
+                    />
+                </div>
+            </div>
         </div>
         <mc-separator
             v-if="chatraConfig || userbackConfig"
@@ -50,12 +86,16 @@ import _has from 'lodash/has'
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSideBarButton from '../McSideBarButton/McSideBarButton'
 import McSeparator from '../../../elements/McSeparator/McSeparator'
+import McButton from '../../../elements/McButton/McButton'
+import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
 export default {
     name: 'McSideBarCenter',
     components: {
         McTitle,
         McSideBarButton,
         McSeparator,
+        McButton,
+        McSvgIcon,
     },
     props: {
         /**
@@ -66,9 +106,24 @@ export default {
             default: '',
         },
         /**
-         *  Центральное меню
-         *
-         */
+       *  Центральное меню
+       *
+       *  {
+                name: [String] - menu item title,
+                icon: [String] - icon,
+                to: [String] - route path (used like link if this route haven't nested menu if they isn't they work like button who open nested menu),
+                info: [String] - info badge text
+                menu: [
+                    {
+                        name: [String] - menu item title,
+                        to: [String] - route path,
+                        info: [String] - info badge text
+                    },
+                    ...
+                ]
+            },
+       *
+       */
         menuMain: {
             type: Array,
             default: () => [],
@@ -116,16 +171,42 @@ export default {
     data() {
         return {
             menuUserbackIsOpen: false,
+            preparedMainMenu: [],
         }
     },
-    computed: {
-        computedMenuMain() {
-            return this.menuMain.map(i => {
+    watch: {
+        menuMain() {
+            this.setMainMenu()
+        },
+        compact() {
+            this.setMainMenu()
+        },
+        $route(to, from) {
+            if (to.path !== from.path) this.setMainMenu()
+        },
+    },
+    created() {
+        this.setMainMenu()
+    },
+    methods: {
+        setMainMenu() {
+            this.preparedMainMenu = this.menuMain.map(i => {
+                const active = (() => {
+                    return i.menu && i.menu.some(r => this.$route.fullPath.match(r.to))
+                })()
                 return {
                     id: _XEUtils.uniqueId(),
                     ...i,
+                    active,
+                    open: (() => {
+                        if (this.compact) return false
+                        if (i.menu) return active
+                    })(),
                 }
             })
+        },
+        handlerToggleSubmenu(item) {
+            item.open = !item.open
         },
     },
 }
@@ -142,6 +223,35 @@ export default {
 
     &__content {
         @include child-indent-bottom($space-50);
+        .item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            &__head {
+                display: flex;
+                align-items: center;
+                &-arrow {
+                    &.rotate {
+                        .mc-svg-icon {
+                            transform: rotate(90deg);
+                        }
+                    }
+                    .mc-svg-icon {
+                        transition: all 0.3s ease;
+                    }
+                }
+            }
+            &__submenu {
+                padding-left: $space-400;
+                max-height: 0;
+                overflow: hidden;
+                transition: all 0.3s ease;
+                &.open {
+                    max-height: 200px;
+                }
+            }
+        }
     }
 }
 </style>

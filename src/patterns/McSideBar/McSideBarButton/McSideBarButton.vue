@@ -86,6 +86,14 @@ export default {
             type: Boolean,
             default: false,
         },
+        withSubmenu: {
+            type: Boolean,
+            default: false,
+        },
+        isActive: {
+            type: Boolean,
+            default: false,
+        },
         /**
          *  Additional info
          */
@@ -127,6 +135,7 @@ export default {
         classes() {
             return {
                 'mc-side-bar-button': true,
+                'mc-side-bar-button__with-submenu': this.withSubmenu,
                 [`mc-side-bar--${this.themeConfig.mode || 'black'}__button`]: true,
                 'blue-hover': this.themeConfig.mainMenuLinks.variable === 'black-flat',
             }
@@ -185,6 +194,9 @@ export default {
             height: auto;
             padding: $space-50 $space-100;
         }
+    }
+    &__with-submenu {
+        background-color: transparent !important;
     }
 }
 .mc-side-bar {
