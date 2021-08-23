@@ -25,7 +25,7 @@
                     <mc-button
                         v-if="menuMainItem.menu && menuMainItem.menu.length"
                         :variation="menuMainItem.open ? 'white-link' : 'gray-link'"
-                        size="s-compact"
+                        size="m-compact"
                         class="item__head-arrow"
                         :class="{ rotate: menuMainItem.open }"
                         @click="handlerToggleSubmenu(menuMainItem)"
@@ -82,7 +82,6 @@
 
 <script>
 import _XEUtils from 'xe-utils'
-import _has from 'lodash/has'
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSideBarButton from '../McSideBarButton/McSideBarButton'
 import McSeparator from '../../../elements/McSeparator/McSeparator'
