@@ -24,11 +24,15 @@
                     />
                     <mc-button
                         v-if="menuMainItem.menu && menuMainItem.menu.length"
-                        :variation="isSubmenuOpen(menuMainItem) && menuMainItem.open ? 'white-link' : 'gray-link'"
+                        :variation="menuMainItem.active() ? 'white-link' : 'gray-link'"
                         size="m-compact"
                         class="item__head-arrow"
-                        :class="{ rotate: isSubmenuOpen(menuMainItem) && menuMainItem.open }"
-                        @click="handlerToggleSubmenu(menuMainItem)"
+                        :class="{
+                            rotate: menuMainItem.active()
+                                ? menuMainItem.active() && menuMainItem.open
+                                : menuMainItem.open,
+                        }"
+                        @click="menuMainItem.open = !menuMainItem.open"
                     >
                         <mc-svg-icon slot="icon-prepend" name="arrow_forward" />
                     </mc-button>
@@ -36,7 +40,9 @@
                 <div
                     v-if="menuMainItem.menu && menuMainItem.menu.length"
                     class="item__submenu"
-                    :class="{ open: isSubmenuOpen(menuMainItem) && menuMainItem.open }"
+                    :class="{
+                        open: menuMainItem.active() ? menuMainItem.active() && menuMainItem.open : menuMainItem.open,
+                    }"
                 >
                     <mc-side-bar-button
                         v-for="(menuItem, i) in menuMainItem.menu"
@@ -174,17 +180,28 @@ export default {
         }
     },
     watch: {
-        menuMain() {
-            this.setMainMenu()
+        menuMain: {
+            deep: true,
+            handler() {
+                this.setMainMenu()
+            },
         },
         compact() {
             this.setMainMenu()
+        },
+        // если переходим на роут с вложенным меню, открываем вложенное меню
+        $route(newRoute, oldRoute) {
+            if (oldRoute.path !== newRoute.path) {
+                const route = this.preparedMainMenu.find(r => r.to === newRoute.path)
+                route?.menu && !this.compact && (route.open = true)
+            }
         },
     },
     created() {
         this.setMainMenu()
     },
     methods: {
+        // заранее формируем меню один раз, так как компьютед излишен и во вторых нужна переменная "open" что бы ее тогглить
         setMainMenu() {
             this.preparedMainMenu = this.menuMain.map(i => {
                 const active = () => {
@@ -194,19 +211,9 @@ export default {
                     id: _XEUtils.uniqueId(),
                     ...i,
                     active,
-                    open: (() => {
-                        if (this.compact) return false
-                        if (i.menu) return active()
-                    })(),
+                    open: active(),
                 }
             })
-        },
-        isSubmenuOpen(item) {
-            if (this.compact) return false
-            if (item.menu) return item.menu.some(r => this.$route.fullPath.match(r.to))
-        },
-        handlerToggleSubmenu(item) {
-            item.open = !item.open
         },
     },
 }
