@@ -152,6 +152,7 @@ export default {
                 to: this.to,
                 exact: this.exact,
                 disabled: this.disabled,
+                'is-active': this.isActive,
             }
         },
     },
