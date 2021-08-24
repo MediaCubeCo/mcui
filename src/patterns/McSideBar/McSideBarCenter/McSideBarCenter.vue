@@ -211,7 +211,7 @@ export default {
                     id: _XEUtils.uniqueId(),
                     ...i,
                     active,
-                    open: active(),
+                    open: !this.compact && active(),
                 }
             })
         },
