@@ -95,10 +95,6 @@ $light-scale: 'hover-gray', 'white', 'lighter-blue', 'toxic', 'transparent';
             }
         }
     }
-    &__text {
-        margin-bottom: -1px;
-    }
-
     &--vertical-line {
         padding: 0;
         border-radius: 0;
