@@ -18,16 +18,16 @@
                         :icon-color="menuMainItem.iconColor"
                         :title="menuMainItem.name"
                         :compact="compact"
-                        :is-active="menuMainItem.active"
+                        :is-active="menuMainItem.active()"
                         :with-submenu="menuMainItem.menu && !!menuMainItem.menu.length"
                         with-tooltip
                     />
                     <mc-button
                         v-if="menuMainItem.menu && menuMainItem.menu.length"
-                        :variation="menuMainItem.open ? 'white-link' : 'gray-link'"
+                        :variation="isSubmenuOpen(menuMainItem) && menuMainItem.open ? 'white-link' : 'gray-link'"
                         size="m-compact"
                         class="item__head-arrow"
-                        :class="{ rotate: menuMainItem.open }"
+                        :class="{ rotate: isSubmenuOpen(menuMainItem) && menuMainItem.open }"
                         @click="handlerToggleSubmenu(menuMainItem)"
                     >
                         <mc-svg-icon slot="icon-prepend" name="arrow_forward" />
@@ -36,7 +36,7 @@
                 <div
                     v-if="menuMainItem.menu && menuMainItem.menu.length"
                     class="item__submenu"
-                    :class="{ open: menuMainItem.open }"
+                    :class="{ open: isSubmenuOpen(menuMainItem) && menuMainItem.open }"
                 >
                     <mc-side-bar-button
                         v-for="(menuItem, i) in menuMainItem.menu"
@@ -180,9 +180,6 @@ export default {
         compact() {
             this.setMainMenu()
         },
-        $route(to, from) {
-            if (to.path !== from.path) this.setMainMenu()
-        },
     },
     created() {
         this.setMainMenu()
@@ -190,19 +187,23 @@ export default {
     methods: {
         setMainMenu() {
             this.preparedMainMenu = this.menuMain.map(i => {
-                const active = (() => {
+                const active = () => {
                     return i.menu && i.menu.some(r => this.$route.fullPath.match(r.to))
-                })()
+                }
                 return {
                     id: _XEUtils.uniqueId(),
                     ...i,
                     active,
                     open: (() => {
                         if (this.compact) return false
-                        if (i.menu) return active
+                        if (i.menu) return active()
                     })(),
                 }
             })
+        },
+        isSubmenuOpen(item) {
+            if (this.compact) return false
+            if (item.menu) return item.menu.some(r => this.$route.fullPath.match(r.to))
         },
         handlerToggleSubmenu(item) {
             item.open = !item.open
