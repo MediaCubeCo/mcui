@@ -6,14 +6,14 @@ export default {
         /**
          *  Дизайн:
          *  `blue, blue-outline т.д.`
-        */
+         */
         variation: {
             type: String,
-            default: "transparent",
+            default: 'transparent',
         },
         /**
          *  Вертикальная черта (в таблице, к примеру)
-        */
+         */
         verticalLine: {
             type: Boolean,
             default: false,
@@ -28,7 +28,7 @@ export default {
         }
 
         if (data.staticClass) {
-            const staticClasses = data.staticClass.split(" ")
+            const staticClasses = data.staticClass.split(' ')
             staticClasses.forEach(c => c && (classes[c] = true))
         }
 
@@ -43,35 +43,37 @@ export default {
                 class: classes,
                 style,
             },
-          [
-            h(
-              "div",
-              {
-                class: "mc-badge__text",
-              },
-              slots()["default"]
-            ),
-          ]
+            [
+                h(
+                    'div',
+                    {
+                        class: 'mc-badge__text',
+                    },
+                    slots()['default'],
+                ),
+            ],
         )
     },
 }
 </script>
 
 <style lang="scss">
-$light-scale: "hover-gray", "white", "lighter-blue", "toxic", "transparent";
+$light-scale: 'hover-gray', 'white', 'lighter-blue', 'toxic', 'transparent';
 .mc-badge {
     $block-name: &;
 
-    @include ellipsis(100%, inline-flex);
+    @include ellipsis(100%, flex);
+    align-items: center;
     color: $color-white;
     font-family: $font-family-main;
     font-size: $font-size-100;
     line-height: $line-height-150;
+    height: $line-height-200;
     font-weight: $font-weight-medium;
     text-transform: uppercase;
     letter-spacing: $letter-spacing-m;
     vertical-align: middle;
-    max-width: 100%;
+    max-width: max-content;
     border-radius: $radius-50;
     padding: 1px $space-100 - 1px;
     border: 1px solid transparent;
@@ -86,12 +88,15 @@ $light-scale: "hover-gray", "white", "lighter-blue", "toxic", "transparent";
                 }
             }
 
-          &-outline {
-            background-color: $color-white;
-            color: $value;
-            border-color: fade-out($value, 0.6);
-          }
+            &-outline {
+                background-color: $color-white;
+                color: $value;
+                border-color: fade-out($value, 0.6);
+            }
         }
+    }
+    &__text {
+        margin-bottom: -1px;
     }
 
     &--vertical-line {
