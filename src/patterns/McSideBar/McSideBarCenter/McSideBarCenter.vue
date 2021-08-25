@@ -11,7 +11,7 @@
             >
                 <div class="item__head">
                     <mc-side-bar-button
-                        :info="menuMainItem.info"
+                        :info="!(menuMainItem.menu && !!menuMainItem.menu.length) && menuMainItem.info"
                         :href="menuMainItem.href"
                         :to="menuMainItem.to"
                         :icon="menuMainItem.icon"
