@@ -20,6 +20,7 @@
                         :compact="compact"
                         :is-active="menuMainItem.active()"
                         :with-submenu="menuMainItem.menu && !!menuMainItem.menu.length"
+                        :with-indicator="menuMainItem.indicator() && !menuMainItem.open"
                         with-tooltip
                     />
                     <mc-button
@@ -211,6 +212,7 @@ export default {
                     id: _XEUtils.uniqueId(),
                     ...i,
                     active,
+                    indicator: () => i.menu && i.menu.some(r => !!r.info),
                     open: !this.compact && active(),
                 }
             })

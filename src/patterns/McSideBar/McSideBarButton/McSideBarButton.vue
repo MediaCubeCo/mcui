@@ -13,11 +13,21 @@
                 class="mc-side-bar-button__icon"
                 :name="icon"
             />
-            <span v-if="icon && compact && info" slot="icon-prepend" class="mc-side-bar-button__dot" />
+            <span
+                v-if="icon && compact && (info || withIndicator)"
+                slot="icon-prepend"
+                class="mc-side-bar-button__dot"
+            />
             <template v-if="!compact">
                 {{ title }}
-                <mc-chip v-if="info" slot="icon-append" variation="blue">
-                    {{ info }}
+                <mc-chip
+                    v-if="info || withIndicator"
+                    slot="icon-append"
+                    variation="blue"
+                    class="mc-side-bar-button__chip"
+                    :class="{ indicator: withIndicator }"
+                >
+                    {{ withIndicator ? '' : info }}
                 </mc-chip>
             </template>
         </mc-button>
@@ -87,6 +97,10 @@ export default {
             default: false,
         },
         withSubmenu: {
+            type: Boolean,
+            default: false,
+        },
+        withIndicator: {
             type: Boolean,
             default: false,
         },
@@ -171,7 +185,12 @@ export default {
         background-color: $color-blue;
         border-radius: $radius-circle;
     }
-
+    &__chip {
+        &.indicator {
+            width: $size-200;
+            min-height: $size-200;
+        }
+    }
     &.mc-button {
         padding: $space-100;
         opacity: 1;
