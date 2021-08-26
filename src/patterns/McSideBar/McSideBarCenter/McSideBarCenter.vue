@@ -5,13 +5,13 @@
         </mc-title>
         <div v-if="preparedMainMenu && preparedMainMenu.length" class="mc-side-bar-center__content">
             <div
-                v-for="(menuMainItem, ii) in preparedMainMenu"
+                v-for="menuMainItem in preparedMainMenu"
                 :key="menuMainItem.id"
                 class="mc-side-bar-center__content-item item"
             >
                 <div class="item__head">
                     <mc-side-bar-button
-                        :info="!(menuMainItem.menu && !!menuMainItem.menu.length) && menuMainItem.info"
+                        :info="!(menuMainItem.menu && !!menuMainItem.menu.length) ? menuMainItem.info : null"
                         :href="menuMainItem.href"
                         :to="menuMainItem.to"
                         :icon="menuMainItem.icon"
@@ -252,10 +252,12 @@ export default {
                 }
             }
             &__submenu {
-                padding-left: $space-400;
                 max-height: 0;
                 overflow: hidden;
                 transition: all 0.3s ease;
+                .mc-side-bar-button {
+                    padding-left: $space-500;
+                }
                 &.open {
                     max-height: 200px;
                 }
