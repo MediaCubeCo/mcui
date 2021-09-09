@@ -286,7 +286,10 @@ export default {
                 if (this.value === null) return []
                 let result = []
                 for (let value of this.value) {
-                    let option = this.options.find(o => {
+                    const options = [
+                        ...(this.groupKeys ? this.options.map(o => o[this.groupKeys.values]).flat() : this.options),
+                    ]
+                    let option = options.find(o => {
                         if (o.value.hasOwnProperty('id') && o.value.id == value.id) {
                             return true
                         }
@@ -313,6 +316,7 @@ export default {
         isEmptyOptionsList() {
             if ((this.hideSelected && !this.searchValue) || !this.computedOptions.length) {
                 if (this.multiple) {
+                    if (this.groupKeys) return false
                     return this.options.length === this._value.length
                 } else {
                     return this._value && this.options.length === 1
