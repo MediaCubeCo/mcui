@@ -26,6 +26,8 @@ export default {
         return {
             observer: null,
             el: null,
+            visible: false,
+            loading: false,
         }
     },
     computed: {
@@ -37,25 +39,38 @@ export default {
     },
     watch: {
         active(value) {
-            if (!value) return this.observer.disconnect()
+            if (!value) {
+                clearInterval(this.interval)
+                return this.observer.disconnect()
+            }
             this.setObserver()
+            this.creteInterval()
         },
     },
     mounted() {
         this.setObserver()
+        this.creteInterval()
     },
     beforeDestroy() {
         this.observer.disconnect()
+        clearInterval(this.interval)
     },
     methods: {
+        creteInterval() {
+            this.interval = setInterval(() => this.active && this.visible && this.$emit('loading'), 1000)
+        },
         setObserver() {
             this.el = document.querySelector('#indicator')
             // создаем IntersectionObserver - смотрит за тем когда элемент попадает во viewport
             this.observer = new IntersectionObserver(([entry]) => {
                 // если попадает во viewport делаем $emit
                 if (entry.intersectionRatio !== 0) {
+                    this.visible = true
                     return this.$emit('loading')
-                } else return this.$emit('hide')
+                } else {
+                    this.visible = false
+                    return this.$emit('hide')
+                }
             })
             // назначаем слушателя на observer
             this.observer.observe(this.el)
