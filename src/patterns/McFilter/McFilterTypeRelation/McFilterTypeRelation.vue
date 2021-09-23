@@ -93,7 +93,7 @@ export default {
                     }
                     selected = [...selected, ...(Array.isArray(val) ? val : [[val]])]
                 }
-                options = options.filter(o => !selected.includes(o.value))
+                options = options.filter(o => !selected.includes(String(o.value)))
             }
 
             return options
