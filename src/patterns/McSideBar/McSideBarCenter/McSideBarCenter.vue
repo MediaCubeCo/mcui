@@ -9,7 +9,7 @@
                 :key="menuMainItem.id"
                 class="mc-side-bar-center__content-item item"
             >
-                <div class="item__head">
+                <div class="item__head" :class="{ active: menuMainItem.active() }" @click="handlerSidebarItemClick">
                     <mc-side-bar-button
                         :info="!(menuMainItem.menu && !!menuMainItem.menu.length) ? menuMainItem.info : null"
                         :href="menuMainItem.href"
@@ -202,6 +202,9 @@ export default {
         this.setMainMenu()
     },
     methods: {
+        handlerSidebarItemClick() {
+            this.$emit('open-side-bar')
+        },
         // заранее формируем меню один раз, так как компьютед излишен и во вторых нужна переменная "open" что бы ее тогглить
         setMainMenu() {
             this.preparedMainMenu = this.menuMain.map(i => {
@@ -250,6 +253,9 @@ export default {
                         transition: all 0.3s ease;
                     }
                 }
+                &:not(.active):hover {
+                    background-color: rgba(92, 102, 112, 0.4);
+                }
             }
             &__submenu {
                 max-height: 0;
@@ -257,6 +263,7 @@ export default {
                 transition: all 0.3s ease;
                 .mc-side-bar-button {
                     padding-left: $space-500;
+                    height: 42px;
                 }
                 &.open {
                     max-height: 200px;

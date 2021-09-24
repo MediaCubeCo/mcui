@@ -23,6 +23,7 @@
                         :compact="prettyCompact"
                         @handlerUserbackClick="$emit('userbackClick')"
                         @handlerChatraClick="$emit('chatraClick')"
+                        @open-side-bar="openSideBar"
                     />
                     <mc-side-bar-bottom
                         :hide-text="hideText"
@@ -327,6 +328,10 @@ export default {
     methods: {
         handleToggleSize() {
             this.hasCompactClass = !this.hasCompactClass
+            this.$emit('compact', this.hasCompactClass)
+        },
+        openSideBar() {
+            this.hasCompactClass = false
             this.$emit('compact', this.hasCompactClass)
         },
         resize() {
