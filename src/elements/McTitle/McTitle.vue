@@ -258,12 +258,15 @@ export default {
     &--text-align {
         &-left {
             justify-content: flex-start;
+            text-align: left;
         }
         &-center {
             justify-content: center;
+            text-align: center;
         }
         &-right {
             justify-content: flex-end;
+            text-align: right;
         }
     }
     &--weight {
