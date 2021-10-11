@@ -29,7 +29,7 @@
         >
             <!-- @slot Слот дочерних mc-table-col -->
             <slot />
-            <template v-slot:empty>
+            <slot slot="empty" name="empty">
                 <template v-if="!$attrs.loading">
                     <div class="no_data_icon-wrapper">
                         <img :src="noDataIconSrc" alt="no table data icon" />
@@ -38,7 +38,7 @@
                         {{ placeholders.no_data }}
                     </mc-title>
                 </template>
-            </template>
+            </slot>
         </component>
         <div v-if="sortLoading || $attrs.loading" :class="footerClasses" class="mc-table-wrapper__footer">
             <div v-if="footerInfo !== 'total'" class="mc-table-wrapper__tint"></div>
