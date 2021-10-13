@@ -176,6 +176,13 @@ export default {
             default: '',
         },
         /**
+         * Если нужен другой цвет фона при взаимодействии
+         */
+        secondaryBackgroundColor: {
+            type: String,
+            default: '',
+        },
+        /**
          * Если нужна подчёркнутая ссылка
          */
         underlineLink: {
@@ -226,6 +233,8 @@ export default {
                 'mc-button--uppercase': this.uppercase,
                 'mc-button--shadow': this.shadow,
                 [`mc-button--secondary-color-${this.secondaryColor}`]: this.secondaryColor,
+                [`mc-button--secondary-background-color-${this.secondaryBackgroundColor}`]: this
+                    .secondaryBackgroundColor,
                 'mc-button--underline-link': this.underlineLink,
                 'mc-button--bg-flat': this.bgFlat,
                 [`mc-button--weight-${this.weight}`]: this.weight,
@@ -667,6 +676,15 @@ $colors: $token-colors;
 
             &:active {
                 color: $value;
+            }
+        }
+
+        &--secondary-background-color-#{$color} {
+            &:hover {
+                background-color: $value;
+            }
+            &:active {
+                background-color: $value;
             }
         }
 

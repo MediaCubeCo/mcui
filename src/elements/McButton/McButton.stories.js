@@ -108,6 +108,9 @@ const getUniqueProps = key => {
         secondaryColor: {
             default: select('secondaryColor', { ...tokenColors, none: '' }, '', key),
         },
+        secondaryBackgroundColor: {
+            default: select('secondaryBackgroundColor', { ...tokenColors, none: '' }, '', key),
+        },
         underlineLink: {
             default: boolean('underlineLink', false, key),
         },
@@ -140,6 +143,7 @@ const getCommonTags = ctx => {
         uppercase: ctx.uppercase,
         'default-tag': ctx.defaultTag,
         secondaryColor: ctx.secondaryColor,
+        secondaryBackgroundColor: ctx.secondaryBackgroundColor,
         underlineLink: ctx.underlineLink,
         bgFlat: ctx.bgFlat,
         weight: ctx.weight,

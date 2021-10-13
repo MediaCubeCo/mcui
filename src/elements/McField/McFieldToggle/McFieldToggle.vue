@@ -60,11 +60,18 @@ export default {
         },
         /**
          *  Позиция текста
-         *  относительно переклбчателя
+         *  относительно переключателя
          */
         textPosition: {
             type: String,
             default: 'left',
+        },
+        /**
+         * Активный цвет
+         */
+        color: {
+            type: String,
+            default: 'blue',
         },
     },
     computed: {
@@ -77,6 +84,7 @@ export default {
                 'mc-field-toggle--disabled': this.disabled,
                 'mc-field-toggle--colored-text': this.coloredText,
                 [`mc-field-toggle--text-position-${this.textPosition}`]: this.textPosition,
+                [`mc-field-toggle--color-${this.color}`]: this.color,
             }
         },
     },
@@ -107,6 +115,7 @@ export default {
         font-size: $font-size-200;
         margin-right: $space-100;
         text-align: right;
+
         &:empty {
             margin-right: 0;
         }
@@ -116,6 +125,7 @@ export default {
         #{$block-name}__text {
             color: $color-gray;
         }
+
         @at-root #{$block-name}--checked#{$block-name}--colored-text {
             #{$block-name}__text {
                 color: $color-blue;
@@ -185,9 +195,22 @@ export default {
                 background-color: $color-hover-gray;
             }
         }
-        &#{$block-name}--checked {
-            #{$block-name}__slider {
-                background-color: $color-light-blue !important;
+    }
+
+    @each $color, $value in $token-colors {
+        &--color-#{$color} {
+            #{$block-name}__wrapper > #{$block-name}__field:checked + #{$block-name}__slider {
+                background-color: $value;
+            }
+            &#{$block-name}--disabled {
+                &#{$block-name}--checked #{$block-name}__slider {
+                    @if $color != 'blue' {
+                        background-color: $value !important;
+                        filter: saturate(50%);
+                    } @else {
+                        background-color: $color-light-blue !important;
+                    }
+                }
             }
         }
     }
