@@ -137,7 +137,7 @@ export default {
         },
         filter() {
             this.relationType = 'is'
-            this.ajaxOptions = []
+            this.$nextTick(() => (this.ajaxOptions = []))
         },
     },
     methods: {
