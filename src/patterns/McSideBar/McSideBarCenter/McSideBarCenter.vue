@@ -203,7 +203,7 @@ export default {
     },
     methods: {
         handlerSidebarItemClick() {
-            this.$emit('open-side-bar')
+            this.compact && this.$emit('open-side-bar')
         },
         // заранее формируем меню один раз, так как компьютед излишен и во вторых нужна переменная "open" что бы ее тогглить
         setMainMenu() {
