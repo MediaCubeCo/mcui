@@ -137,6 +137,7 @@ export default {
         },
         filter() {
             this.relationType = 'is'
+            this.ajaxOptions = []
         },
     },
     methods: {
