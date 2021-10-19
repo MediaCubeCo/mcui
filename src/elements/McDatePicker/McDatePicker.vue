@@ -237,7 +237,7 @@ export default {
         },
         minWidth: {
             type: String,
-            default: '220px',
+            default: '240px',
         },
         /**
          * Строго использовать переданный формат
