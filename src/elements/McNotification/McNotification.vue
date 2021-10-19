@@ -1,5 +1,5 @@
 <template>
-    <div :class="[`mc-notification--variation-${variation}`]" class="mc-notification">
+    <div :class="classes">
         <div class="mc-notification__inner">
             <mc-preview>
                 <!-- @slot Слот для иконки -->
@@ -14,7 +14,7 @@
                         :color="variation"
                         :ellipsis="false"
                         weight="semi-bold"
-                        class="mc-notification__text"
+                        class="mc-notification__title"
                     >
                         {{ title }}
                     </mc-title>
@@ -106,7 +106,11 @@ export default {
             default: false,
         },
     },
-    computed: {},
+    computed: {
+        classes() {
+            return ['mc-notification', `mc-notification--variation-${this.variation}`]
+        },
+    },
     methods: {
         handleClick(e) {
             /**
@@ -189,7 +193,8 @@ export default {
                 background-color: rgba($value, 0.1);
                 color: $value;
             }
-            #{$block-name}__text {
+            #{$block-name}__text,
+            #{$block-name}__title {
                 filter: contrast(59%);
             }
         }
