@@ -38,6 +38,7 @@
                         {{ placeholders.no_data }}
                     </mc-title>
                 </template>
+                <span v-else></span>
             </slot>
         </component>
         <div v-if="sortLoading || $attrs.loading" :class="footerClasses" class="mc-table-wrapper__footer">
