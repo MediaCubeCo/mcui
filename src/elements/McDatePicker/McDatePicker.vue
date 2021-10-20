@@ -380,6 +380,9 @@ export default {
         isValidDate(d) {
             return d instanceof Date && !isNaN(d)
         },
+        closePopup() {
+            this.$refs.input.closePopup()
+        },
     },
 }
 </script>
