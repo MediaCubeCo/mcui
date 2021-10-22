@@ -41,38 +41,51 @@
                         <slot name="footer">
                             <div class="mc-datepicker__footer-popup">
                                 <div class="mc-datepicker__footer-popup-periods">
-                                    <mc-button
-                                        v-if="placeholders.week"
-                                        variation="black-link"
-                                        secondary-color="blue"
-                                        @click="selectPeriod('week')"
-                                    >
-                                        {{ placeholders.week }}
-                                    </mc-button>
-                                    <mc-button
-                                        v-if="placeholders.month"
-                                        variation="black-link"
-                                        secondary-color="blue"
-                                        @click="selectPeriod('month')"
-                                    >
-                                        {{ placeholders.month }}
-                                    </mc-button>
-                                    <mc-button
-                                        v-if="placeholders.quarter"
-                                        variation="black-link"
-                                        secondary-color="blue"
-                                        @click="selectPeriod('quarter')"
-                                    >
-                                        {{ placeholders.quarter }}
-                                    </mc-button>
-                                    <mc-button
-                                        v-if="placeholders.year"
-                                        variation="black-link"
-                                        secondary-color="blue"
-                                        @click="selectPeriod('year')"
-                                    >
-                                        {{ placeholders.year }}
-                                    </mc-button>
+                                    <template v-if="customPresets && customPresets.length">
+                                        <mc-button
+                                            v-for="preset in customPresets"
+                                            :key="preset.title"
+                                            variation="black-link"
+                                            secondary-color="blue"
+                                            @click="handlerPreselectRange(preset.period)"
+                                        >
+                                            {{ preset.title }}
+                                        </mc-button>
+                                    </template>
+                                    <template v-else>
+                                        <mc-button
+                                            v-if="placeholders.week"
+                                            variation="black-link"
+                                            secondary-color="blue"
+                                            @click="selectPeriod('week')"
+                                        >
+                                            {{ placeholders.week }}
+                                        </mc-button>
+                                        <mc-button
+                                            v-if="placeholders.month"
+                                            variation="black-link"
+                                            secondary-color="blue"
+                                            @click="selectPeriod('month')"
+                                        >
+                                            {{ placeholders.month }}
+                                        </mc-button>
+                                        <mc-button
+                                            v-if="placeholders.quarter"
+                                            variation="black-link"
+                                            secondary-color="blue"
+                                            @click="selectPeriod('quarter')"
+                                        >
+                                            {{ placeholders.quarter }}
+                                        </mc-button>
+                                        <mc-button
+                                            v-if="placeholders.year"
+                                            variation="black-link"
+                                            secondary-color="blue"
+                                            @click="selectPeriod('year')"
+                                        >
+                                            {{ placeholders.year }}
+                                        </mc-button>
+                                    </template>
                                 </div>
                                 <mc-button variation="blue-outline" size="xs" @click="() => handleSubmit(emit)">
                                     {{ placeholders.confirm }}
@@ -213,6 +226,22 @@ export default {
                     confirm: 'Confirm',
                 }
             },
+        },
+        /**
+         * Пресеты для быстрых периодов
+         *
+         * [
+         *  {
+         *      title: String,
+         *      period: Array - [start_date, end_date],
+         *  },
+         *  ...
+         * ]
+         *
+         **/
+        customPresets: {
+            type: Array,
+            default: () => [],
         },
         range: {
             type: Boolean,
@@ -369,6 +398,10 @@ export default {
                     break
             }
             this.$refs.input.currentValue = [this.$moment ? start._d : start, end]
+        },
+        handlerPreselectRange(period) {
+            const [start, end] = period
+            this.$refs.input.currentValue = this.$moment ? [this.$moment(start)._d, this.$moment(end)._d] : period
         },
         handlePickDate(date) {
             this.pickDate = date
