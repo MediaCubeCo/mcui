@@ -82,6 +82,7 @@ export default {
         const contentOptions = {
             class: 'mc-title__text',
             style: contentStyle,
+            is: props.tagName,
         }
         if (data.domProps && data.domProps.innerHTML) {
             contentOptions.domProps = {
@@ -114,14 +115,13 @@ export default {
             style = data.staticStyle
         }
         return h(
-            'component',
+            'div',
             {
                 class: classes,
                 style,
-                is: props.tagName,
                 on: listeners,
             },
-            [slots()['icon-prepend'], h('div', contentOptions, slots()['default']), slots()['icon-append']],
+            [slots()['icon-prepend'], h('component', contentOptions, slots()['default']), slots()['icon-append']],
         )
     },
 }
@@ -276,6 +276,21 @@ export default {
         &-semi-bold {
             font-weight: $font-weight-semi-bold;
         }
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: inherit;
+        font-style: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        margin: inherit;
+        margin-block-start: 0;
+        margin-block-end: 0;
+        padding: inherit;
     }
 }
 </style>
