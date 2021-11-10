@@ -215,9 +215,6 @@ export default {
             padding: $space-50 $space-100;
         }
     }
-    &__with-submenu {
-        background-color: transparent !important;
-    }
 }
 .mc-side-bar {
     &--black__button {

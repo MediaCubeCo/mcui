@@ -7,9 +7,10 @@
             <div
                 v-for="menuMainItem in preparedMainMenu"
                 :key="menuMainItem.id"
+                :class="{ 'item-active': menuMainItem.active() }"
                 class="mc-side-bar-center__content-item item"
             >
-                <div class="item__head" :class="{ active: menuMainItem.active() }" @click="handlerSidebarItemClick">
+                <div class="item__head" :class="getMenuItemHeadClasses(menuMainItem)" @click="handlerSidebarItemClick">
                     <mc-side-bar-button
                         :info="!(menuMainItem.menu && !!menuMainItem.menu.length) ? menuMainItem.info : null"
                         :href="menuMainItem.href"
@@ -22,9 +23,10 @@
                         :with-submenu="menuMainItem.menu && !!menuMainItem.menu.length"
                         :with-indicator="menuMainItem.indicator() && !menuMainItem.open"
                         with-tooltip
+                        class="item__head-button--no-hover"
                     />
                     <mc-button
-                        v-if="menuMainItem.menu && menuMainItem.menu.length"
+                        v-if="menuMainItem.menu && menuMainItem.menu.length && !compact"
                         :variation="menuMainItem.active() ? 'white-link' : 'gray-link'"
                         size="m-compact"
                         class="item__head-arrow"
@@ -103,6 +105,7 @@ export default {
         McButton,
         McSvgIcon,
     },
+    inject: ['provideData'],
     props: {
         /**
          *  Заголовок
@@ -180,6 +183,21 @@ export default {
             preparedMainMenu: [],
         }
     },
+    computed: {
+        themeConfig() {
+            return this.provideData
+                ? this.provideData.currentThemeConfig
+                : {
+                      mode: 'black',
+                      className: 'mc-side-bar--color-theme-black',
+                      dropdownActivator: 'white',
+                      mainMenuLinks: {
+                          variable: 'gray-flat',
+                          secondaryColor: 'white',
+                      },
+                  }
+        },
+    },
     watch: {
         menuMain: {
             deep: true,
@@ -202,6 +220,19 @@ export default {
         this.setMainMenu()
     },
     methods: {
+        getMenuItemHeadClasses(menuMainItem) {
+            return {
+                open: menuMainItem.open,
+                active: menuMainItem.active(),
+                'with-submenu': menuMainItem.menu && menuMainItem.menu.length,
+                [`mc-side-bar--${this.themeConfig.mode || 'black'}__button`]: true,
+                'blue-hover': this.themeConfig.mainMenuLinks.variable === 'black-flat',
+                [`mc-button--variation-${this.themeConfig.mainMenuLinks.variable}`]: !!this.themeConfig.mainMenuLinks
+                    .variable,
+                ['mc-side-bar--black__button mc-button nuxt-link-active']:
+                    menuMainItem.menu && menuMainItem.menu.length && !menuMainItem.open && menuMainItem.active(),
+            }
+        },
         handlerSidebarItemClick() {
             this.compact && this.$emit('open-side-bar')
         },
@@ -209,7 +240,10 @@ export default {
         setMainMenu() {
             this.preparedMainMenu = this.menuMain.map(i => {
                 const active = () => {
-                    return i.menu && i.menu.some(r => this.$route.fullPath.match(r.to))
+                    return (
+                        (i.menu && i.menu.some(r => this.$route.fullPath.match(r.to))) ||
+                        !!this.$route.fullPath.match(i.to)
+                    )
                 }
                 return {
                     id: _XEUtils.uniqueId(),
@@ -227,8 +261,6 @@ export default {
 <style lang="scss">
 .mc-side-bar-center {
     $block-name: &;
-    //overflow: hidden;
-
     &__title {
         margin: $space-100;
     }
@@ -240,6 +272,16 @@ export default {
             display: flex;
             flex-direction: column;
             width: 100%;
+            @include child-indent-bottom($space-50);
+            &-active {
+                .item__head.active:not(.with-submenu),
+                .nuxt-link-exact-active {
+                    pointer-events: none;
+                }
+            }
+            .with-submenu {
+                pointer-events: all !important;
+            }
             &__head {
                 display: flex;
                 align-items: center;
@@ -253,14 +295,32 @@ export default {
                         transition: all 0.3s ease;
                     }
                 }
-                &:not(.active):hover {
-                    background-color: rgba(92, 102, 112, 0.4);
+                &-button {
+                    &--no-hover {
+                        .mc-button {
+                            &:hover {
+                                background-color: unset;
+                            }
+                        }
+                        .mc-side-bar-button__with-submenu {
+                            background-color: unset;
+                        }
+                        &:hover {
+                            background-color: unset;
+                        }
+                    }
+                }
+                &.active {
+                    padding: 0;
+                    border-radius: 4px;
+                    border: none;
                 }
             }
             &__submenu {
                 max-height: 0;
                 overflow: hidden;
                 transition: all 0.3s ease;
+                @include child-indent-bottom($space-50);
                 .mc-side-bar-button {
                     padding-left: $space-500;
                     height: 42px;
