@@ -285,6 +285,7 @@ export default {
             &__head {
                 display: flex;
                 align-items: center;
+                border-radius: 4px;
                 &-arrow {
                     &.rotate {
                         .mc-svg-icon {
