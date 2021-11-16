@@ -26,7 +26,6 @@ export default {
         return {
             observer: null,
             el: null,
-            visible: false,
             loading: false,
         }
     },
@@ -39,41 +38,36 @@ export default {
     },
     watch: {
         active(value) {
-            if (!value) {
-                clearInterval(this.interval)
-                return this.observer.disconnect()
+            this.clearAllListeners()
+            if (value) {
+                this.setObserver()
             }
-            this.setObserver()
-            this.creteInterval()
         },
     },
     mounted() {
         this.setObserver()
-        this.creteInterval()
     },
     beforeDestroy() {
-        this.observer.disconnect()
-        clearInterval(this.interval)
+        this.clearAllListeners()
     },
     methods: {
-        creteInterval() {
-            this.interval = setInterval(() => this.active && this.visible && this.$emit('loading'), 1000)
-        },
         setObserver() {
             this.el = document.querySelector('#indicator')
             // создаем IntersectionObserver - смотрит за тем когда элемент попадает во viewport
             this.observer = new IntersectionObserver(([entry]) => {
                 // если попадает во viewport делаем $emit
-                if (entry.intersectionRatio !== 0) {
-                    this.visible = true
+                if (entry.intersectionRatio === 1 && this.active) {
                     return this.$emit('loading')
                 } else {
-                    this.visible = false
                     return this.$emit('hide')
                 }
             })
             // назначаем слушателя на observer
             this.observer.observe(this.el)
+        },
+        clearAllListeners() {
+            this.observer && this.observer.disconnect()
+            this.observer = null
         },
     },
 }
@@ -82,10 +76,9 @@ export default {
 <style lang="scss">
 .el-infinity-loading {
     $block-name: &;
-    position: absolute;
     height: 1px;
     width: 100%;
-    z-index: -1;
+    z-index: 999999;
     user-select: none;
     pointer-events: none;
     background-color: transparent;
