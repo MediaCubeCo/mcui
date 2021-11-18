@@ -21,6 +21,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Компонент в котором происходит скролл, указывается для большей точности, по дефолту используется область видимости браузера
+         * **/
+        root: {
+            type: String,
+            default: null,
+        },
     },
     data() {
         return {
@@ -54,14 +61,21 @@ export default {
         setObserver() {
             this.el = document.querySelector('#indicator')
             // создаем IntersectionObserver - смотрит за тем когда элемент попадает во viewport
-            this.observer = new IntersectionObserver(([entry]) => {
-                // если попадает во viewport делаем $emit
-                if (entry.intersectionRatio === 1 && this.active) {
-                    return this.$emit('loading')
-                } else {
-                    return this.$emit('hide')
-                }
-            })
+            this.observer = new IntersectionObserver(
+                ([entry]) => {
+                    // если попадает во viewport делаем $emit
+                    if (entry.intersectionRatio === 1 && this.active) {
+                        return this.$emit('loading')
+                    } else {
+                        return this.$emit('hide')
+                    }
+                },
+                {
+                    ...(this.root ? { root: document.querySelector(this.root) } : {}),
+                    rootMargin: `0px`,
+                    threshold: 0,
+                },
+            )
             // назначаем слушателя на observer
             this.observer.observe(this.el)
         },
