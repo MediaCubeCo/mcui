@@ -37,6 +37,8 @@ body {
   font-size: $font-size-200;
   line-height: $line-height-200;
   color: $color-black;
+  font-variant: normal !important;
+  font-feature-settings: normal !important;
 }
 
 [tabindex="-1"]:focus {
