@@ -605,7 +605,7 @@ export default {
             max-width: 100%;
             position: absolute;
             height: 100%;
-            z-index: 9999;
+            z-index: 19;
             background-color: $color-white;
             user-select: none;
         }
