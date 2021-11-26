@@ -261,6 +261,7 @@ export default {
 <style lang="scss">
 .mc-side-bar-center {
     $block-name: &;
+    margin-bottom: $space-150;
     &__title {
         margin: $space-100;
     }
