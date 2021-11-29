@@ -36,7 +36,7 @@
                         <!-- @slot Слот для вставки в сайдбар попапа календаря  -->
                         <slot name="sidebar" />
                     </div>
-                    <template v-if="$slots.footer || isRange" v-slot:footer="{ emit }">
+                    <template v-if="isFooterVisible" v-slot:footer="{ emit }">
                         <!-- @slot Слот для вставки в футер попапа календаря -->
                         <slot name="footer">
                             <div class="mc-datepicker__footer-popup">
@@ -87,7 +87,12 @@
                                         </mc-button>
                                     </template>
                                 </div>
-                                <mc-button variation="blue-outline" size="xs" @click="() => handleSubmit(emit)">
+                                <mc-button
+                                    v-if="placeholders.confirm"
+                                    variation="blue-outline"
+                                    size="xs"
+                                    @click="() => handleSubmit(emit)"
+                                >
                                     {{ placeholders.confirm }}
                                 </mc-button>
                             </div>
@@ -117,6 +122,7 @@
 </template>
 
 <script>
+import _isEmpty from 'lodash/isEmpty'
 import _omit from 'lodash/omit'
 import DatePicker from 'vue2-datepicker'
 import 'vue2-datepicker/locale/ru'
@@ -325,6 +331,9 @@ export default {
         },
         secondsOptions() {
             return this.seconds && this.seconds.length ? { 'second-options': this.seconds } : {}
+        },
+        isFooterVisible() {
+            return this.$slots.footer || (this.isRange && (this.customPresets?.length || !_isEmpty(this.placeholders)))
         },
     },
     watch: {
