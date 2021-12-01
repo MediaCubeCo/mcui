@@ -129,6 +129,10 @@ export default {
                 icon = this.getIcon(this.defaultName)
             }
             if (icon && icon.content) {
+                if (icon.content.indexOf('data-keep-original="keep"') !== -1) {
+                    this.svg = icon.content
+                    return
+                }
                 if (icon.content.indexOf('stroke') !== -1) {
                     let filledSvg = icon.content.replace(/stroke=\S+/g, `fill="none" stroke="${this.fill}" `)
                     this.svg = filledSvg.replace(/stroke-width=\S+/g, `stroke-width="${this.computedWeight}" `)
