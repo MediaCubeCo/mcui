@@ -273,6 +273,10 @@ export default {
                         variable: 'gray-flat',
                         secondaryColor: 'white',
                     },
+                    closeButton: {
+                        variable: 'gray-link',
+                        secondaryColor: 'white',
+                    },
                 },
                 white: {
                     mode: 'white',
@@ -280,6 +284,10 @@ export default {
                     dropdownActivator: 'black',
                     mainMenuLinks: {
                         variable: 'black-flat',
+                        secondaryColor: 'blue',
+                    },
+                    closeButton: {
+                        variable: 'black-link',
                         secondaryColor: 'blue',
                     },
                 },

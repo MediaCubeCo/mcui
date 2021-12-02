@@ -13,6 +13,8 @@
             icon="arrow_backward"
             :title="hideText"
             :compact="compact"
+            :variation="closeButtonProps.variable"
+            :secondary-color="closeButtonProps.secondaryColor"
             @click="handleClick"
         />
     </div>
@@ -25,6 +27,7 @@ export default {
     components: {
         McSideBarButton,
     },
+    inject: ['provideData'],
     props: {
         /**
          *  Текст кнопки
@@ -56,6 +59,9 @@ export default {
         }
     },
     computed: {
+        closeButtonProps() {
+            return this.provideData?.currentThemeConfig?.closeButton || {}
+        },
         classes() {
             return {
                 'mc-side-bar-bottom--compact': this.hasCompactClass,

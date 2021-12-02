@@ -92,6 +92,19 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         *  Дизайн:
+         *  `blue, red, blue-outline, blue-invert, blue-flat и т.д.`
+         */
+        variation: {
+            type: String,
+        },
+        /**
+         * Если нужен другой цвет при взаимодействии
+         */
+        secondaryColor: {
+            type: String,
+        },
         withTooltip: {
             type: Boolean,
             default: false,
@@ -151,13 +164,13 @@ export default {
                 'mc-side-bar-button': true,
                 'mc-side-bar-button__with-submenu': this.withSubmenu,
                 [`mc-side-bar--${this.themeConfig.mode || 'black'}__button`]: true,
-                'blue-hover': this.themeConfig.mainMenuLinks.variable === 'black-flat',
+                'blue-hover': !this.secondaryColor && this.themeConfig.mainMenuLinks.variable === 'black-flat',
             }
         },
         btnAttrs() {
             return {
-                variation: this.themeConfig.mainMenuLinks.variable,
-                'secondary-color': this.themeConfig.mainMenuLinks.secondaryColor,
+                variation: this.variation || this.themeConfig.mainMenuLinks.variable,
+                'secondary-color': this.secondaryColor || this.themeConfig.mainMenuLinks.secondaryColor,
                 class: this.classes,
                 'text-align': 'left',
                 'full-width': true,
