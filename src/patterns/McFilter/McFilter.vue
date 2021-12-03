@@ -619,7 +619,7 @@ export default {
                     [tag.relationKey]: tag.relationKey === 'exists' ? [0] : { [tag.value]: tag.title },
                 }
             } else {
-                condition = String(tag.value)
+                condition = tag.value?.constructor === Object ? tag.value : String(tag.value)
                 conditionName = tag.value
             }
 
