@@ -226,6 +226,7 @@ export default {
         .mc-chip {
             height: auto;
             padding: $space-50 $space-100;
+            font-variant-numeric: tabular-nums;
         }
     }
 }
