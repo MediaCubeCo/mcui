@@ -1,6 +1,6 @@
 <template>
     <section class="el-infinity-loading__wrapper">
-        <div id="indicator" :style="styles" class="el-infinity-loading"></div>
+        <div id="indicator" class="el-infinity-loading"></div>
     </section>
 </template>
 <script>
@@ -36,13 +36,6 @@ export default {
             loading: false,
         }
     },
-    computed: {
-        styles() {
-            return {
-                transform: `translateY(-${this.overlap}px)`,
-            }
-        },
-    },
     watch: {
         active(value) {
             this.clearAllListeners()
@@ -64,7 +57,7 @@ export default {
             this.observer = new IntersectionObserver(
                 ([entry]) => {
                     // если попадает во viewport делаем $emit
-                    if (entry.intersectionRatio === 1 && this.active) {
+                    if ((entry.intersectionRatio === 1 || entry.isIntersecting) && this.active) {
                         return this.$emit('loading')
                     } else {
                         return this.$emit('hide')
@@ -72,8 +65,8 @@ export default {
                 },
                 {
                     ...(this.root ? { root: document.querySelector(this.root) } : {}),
-                    rootMargin: `0px`,
-                    threshold: 0,
+                    rootMargin: `${this.overlap}px`,
+                    threshold: 0.1,
                 },
             )
             // назначаем слушателя на observer
