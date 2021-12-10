@@ -69,6 +69,17 @@ export default {
             default: false,
         },
         /**
+         * Передаваемое состояние загрузки
+         *
+         * Нужно для метода switchingDisableTab
+         * в случае, если состояние табов (active/disable)
+         * задается динамически
+         */
+        loading: {
+            type: Boolean,
+            default: false,
+        },
+        /**
          * Закрепленные табы
          *
          * Добавляет верхнее расстояние
@@ -122,6 +133,12 @@ export default {
             return this.$refs.tabs.getActiveTab()
         },
         switchingDisableTab() {
+            /**
+             * Переключает активный и в то
+             * же время задизейбленный таб
+             * на первый доступный
+             */
+            if (this.loading) return
             const activeTab = this.$refs.tabs?.tabs?.find(tab => tab.isActive)
             if (!activeTab?.isDisabled) return
             const firstAvailableTab = this.$refs.tabs.tabs.find(tab => !tab?.isDisabled && !tab?.href && !tab?.to)
