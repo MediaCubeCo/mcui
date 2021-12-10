@@ -90,6 +90,9 @@ export default {
             }
         },
     },
+    updated() {
+        this.switchingDisableTab()
+    },
     methods: {
         changedHandler(e) {
             const lastActiveTab = this.$refs.tabs.getActiveTab()
@@ -117,6 +120,12 @@ export default {
         },
         getActiveTab() {
             return this.$refs.tabs.getActiveTab()
+        },
+        switchingDisableTab() {
+            const activeTab = this.$refs.tabs?.tabs?.find(tab => tab.isActive)
+            if (!activeTab?.isDisabled) return
+            const firstAvailableTab = this.$refs.tabs.tabs.find(tab => !tab?.isDisabled && !tab?.href && !tab?.to)
+            firstAvailableTab && this.$refs.tabs.selectTab(firstAvailableTab.hash)
         },
     },
 }
