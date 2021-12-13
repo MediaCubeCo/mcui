@@ -40,9 +40,6 @@ const getUniqueProps = key => {
     uppercase: {
       default: boolean('uppercase', false, key),
     },
-    sticky: {
-      default: boolean('sticky', false, key),
-    },
   }
 }
 
@@ -55,7 +52,6 @@ const getCommonTags = ctx => {
     color: ctx.color,
     'accent-color': ctx.accentColor,
     uppercase: ctx.uppercase,
-    sticky: ctx.sticky,
   }
 }
 

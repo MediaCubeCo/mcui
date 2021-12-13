@@ -68,16 +68,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        /**
-         * Закрепленные табы
-         *
-         * Добавляет верхнее расстояние
-         * для табов для правильного отображения
-         */
-        sticky: {
-            type: Boolean,
-            default: false,
-        },
     },
     computed: {
         classes() {
@@ -86,7 +76,6 @@ export default {
                 [`mc-tabs--accent-color-${this.accentColor}`]: this.accentColor,
                 [`mc-tabs--tab-variation-${this.tabVariation}`]: this.tabVariation,
                 [`mc-tabs--uppercase`]: this.uppercase,
-                [`mc-tabs--sticky`]: this.sticky,
             }
         },
     },
@@ -203,18 +192,6 @@ export default {
         flex-wrap: nowrap;
         overflow-x: auto;
         @include border();
-    }
-
-    &--sticky {
-        .tabs-component-tabs {
-            position: sticky;
-            top: 0;
-            z-index: $z-index-sticky;
-            background-color: $color-white;
-        }
-        .tabs-component-tab-a {
-            padding-top: $space-150;
-        }
     }
 
     .tabs-component-tab {
