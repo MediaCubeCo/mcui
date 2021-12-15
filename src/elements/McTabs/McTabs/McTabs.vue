@@ -23,6 +23,9 @@ export default {
         Tabs,
     },
     props: {
+        value: {
+            type: String,
+        },
         /**
          *  Количество минут, когда
          *  будет храниться в памяти
@@ -89,22 +92,39 @@ export default {
                 [`mc-tabs--uppercase`]: this.uppercase,
             }
         },
+        activeTab: {
+            get() {
+                return this.value
+            },
+            set(value) {
+                this.$emit('input', value)
+            },
+        },
+    },
+    mounted() {
+        this.checkInitTab()
     },
     updated() {
         this.switchingDisableTab()
     },
     methods: {
+        checkInitTab() {
+            this.activeTab && this.setActiveTab(`#${this.activeTab}`)
+        },
+        setActiveTab(tabHash) {
+            this.$refs.tabs.selectTab(tabHash)
+        },
         changedHandler(e) {
+            this.activeTab = e?.tab?.hash?.replace('#', '')
             const lastActiveTab = this.$refs.tabs.getActiveTab()
-            if (lastActiveTab) {
-                if (e.tab.href) {
-                    this.setLastActiveTab(lastActiveTab.hash)
-                    window.open(e.tab.href, '_blank')
-                }
-                if (e.tab.to && this.$router) {
-                    this.setLastActiveTab(lastActiveTab.hash)
-                    this.$router.push(e.tab.to)
-                }
+            if (!lastActiveTab) return
+            if (e.tab.href) {
+                this.setLastActiveTab(lastActiveTab.hash)
+                window.open(e.tab.href, '_blank')
+            }
+            if (e.tab.to && this.$router) {
+                this.setLastActiveTab(lastActiveTab.hash)
+                this.$router.push(e.tab.to)
             }
 
             /**
@@ -115,7 +135,7 @@ export default {
         },
         setLastActiveTab(hash) {
             this.$nextTick(() => {
-                this.$refs.tabs.selectTab(hash)
+                this.setActiveTab(hash)
             })
         },
         getActiveTab() {
@@ -131,7 +151,7 @@ export default {
             const activeTab = this.$refs.tabs?.tabs?.find(tab => tab.isActive)
             if (!activeTab?.isDisabled) return
             const firstAvailableTab = this.$refs.tabs.tabs.find(tab => !tab?.isDisabled && !tab?.href && !tab?.to)
-            firstAvailableTab && this.$refs.tabs.selectTab(firstAvailableTab.hash)
+            firstAvailableTab && this.setActiveTab(firstAvailableTab.hash)
         },
     },
 }
