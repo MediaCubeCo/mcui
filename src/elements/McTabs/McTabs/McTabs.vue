@@ -109,7 +109,10 @@ export default {
     },
     methods: {
         checkInitTab() {
-            this.activeTab && this.setActiveTab(`#${this.activeTab}`)
+            if (this.activeTab) {
+                const tab = this.$refs.tabs.$children.find(t => t.id === this.activeTab)
+                tab?.hash && this.setActiveTab(tab.hash)
+            }
         },
         setActiveTab(tabHash) {
             this.$refs.tabs.selectTab(tabHash)
