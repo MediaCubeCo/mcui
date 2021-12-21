@@ -118,7 +118,7 @@ export default {
             this.$refs.tabs.selectTab(tabHash)
         },
         changedHandler(e) {
-            this.activeTab = e?.tab?.hash?.replace('#', '')
+            this.activeTab = e?.tab?.id || e?.tab?.hash?.replace('#', '')
             const lastActiveTab = this.$refs.tabs.getActiveTab()
             if (!lastActiveTab) return
             if (e.tab.href) {
