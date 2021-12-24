@@ -12,7 +12,7 @@
                     ref="input"
                     :type="type"
                     :value="prettyValue"
-                    v-bind="{ ...$attrs, range, ...valueType, ...minutesOptions, ...secondsOptions }"
+                    v-bind="{ ...$attrs, range, ...valueType, ...hoursOptions, ...minutesOptions, ...secondsOptions }"
                     class="mc-date-picker__date-picker"
                     range-separator=" — "
                     :confirm="$attrs.range"
@@ -23,6 +23,7 @@
                     :popup-class="popupClass"
                     :inline="inline"
                     :disabled-date="disabledDate"
+                    :disabled-time="disabledTime"
                     v-on="listeners"
                     @input="val => handleEmitDate(val)"
                     @pick="handlePickDate"
@@ -263,9 +264,19 @@ export default {
         /**
          * Функция проверяюая и устанавливающая доступна ли дата для выбора
          * Params [String] date - текущая дата
-         * return Boolean, где true - дата заблокированна для выбора
+         * return Boolean, где true - дата заблокирована для выбора
          * **/
         disabledDate: {
+            type: Function,
+            // eslint-disable-next-line no-unused-vars
+            default: date => false,
+        },
+        /**
+         * Функция проверяюая и устанавливающая доступно ли время для выбора
+         * Params [String] date - текущая дата
+         * return Boolean, где true - время заблокировано для выбора
+         * **/
+        disabledTime: {
             type: Function,
             // eslint-disable-next-line no-unused-vars
             default: date => false,
@@ -280,6 +291,10 @@ export default {
         useFormat: {
             type: Boolean,
             default: false,
+        },
+        hours: {
+            type: Array,
+            default: () => [],
         },
         minutes: {
             type: Array,
@@ -325,6 +340,9 @@ export default {
         },
         valueType() {
             return this.useFormat ? { 'value-type': 'format' } : {}
+        },
+        hoursOptions() {
+            return this.hours && this.hours.length ? { 'hour-options': this.hours } : {}
         },
         minutesOptions() {
             return this.minutes && this.minutes.length ? { 'minute-options': this.minutes } : {}
