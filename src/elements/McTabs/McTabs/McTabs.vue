@@ -118,7 +118,6 @@ export default {
             this.$refs.tabs.selectTab(tabHash)
         },
         changedHandler(e) {
-            this.activeTab = e?.tab?.id || e?.tab?.hash?.replace('#', '')
             const lastActiveTab = this.$refs.tabs.getActiveTab()
             if (!lastActiveTab) return
             if (e.tab.href) {
@@ -129,6 +128,7 @@ export default {
                 this.setLastActiveTab(lastActiveTab.hash)
                 this.$router.push(e.tab.to)
             }
+            if (!e.tab.href && !e.tab.to) this.activeTab = e?.tab?.id || e?.tab?.hash?.replace('#', '')
 
             /**
              * Событие при смене таба
