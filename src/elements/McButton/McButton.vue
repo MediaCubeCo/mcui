@@ -764,7 +764,9 @@ $colors: $token-colors;
     }
 
     &--disabled {
-        filter: opacity(0.5);
+        background-color: $color-hover-gray;
+        color: $color-outline-gray;
+        cursor: not-allowed;
     }
 }
 </style>
