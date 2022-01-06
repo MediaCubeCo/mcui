@@ -8,7 +8,7 @@
             <!-- @slot Слот контента -->
             <slot />
         </div>
-        <div v-if="$slots.footer" class="mc-table-card__footer" :class="computedFooterClasses">
+        <div :class="computedFooterClasses">
             <!-- @slot Слот футера -->
             <slot name="footer" />
         </div>
@@ -37,6 +37,7 @@ export default {
     computed: {
         computedFooterClasses() {
             return {
+                'mc-table-card__footer': this.$slots.footer,
                 'mc-table-card__footer--with-blur': this.footerBlur && !this.body_scrolled_to_bottom,
             }
         },
