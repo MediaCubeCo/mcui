@@ -41,8 +41,25 @@ export default {
             }
         },
     },
+    watch: {
+        footerBlur(val) {
+            if (val) {
+                this.initBlur()
+            } else {
+                this.bodyEl && this.bodyEl.removeEventListener('scroll', this.handlerScroll)
+            }
+        },
+    },
     mounted() {
         if (this.footerBlur) {
+            this.initBlur()
+        }
+    },
+    beforeDestroy() {
+        this.bodyEl && this.bodyEl.removeEventListener('scroll', this.handlerScroll)
+    },
+    methods: {
+        initBlur() {
             try {
                 this.body_scrolled_to_bottom = false
                 this.bodyEl = document.querySelector('.mc-table-card__body')
@@ -50,12 +67,7 @@ export default {
             } catch (e) {
                 console.error(e)
             }
-        }
-    },
-    beforeDestroy() {
-        this.bodyEl && this.bodyEl.removeEventListener('scroll', this.handlerScroll)
-    },
-    methods: {
+        },
         handlerScroll(e) {
             try {
                 this.body_scrolled_to_bottom = e.target.offsetHeight + e.target.scrollTop === e.target.scrollHeight
