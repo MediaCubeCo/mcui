@@ -37,6 +37,7 @@ const positions = {
 }
 const tokenColors = getTokensByType('color')
 const fontWeights = getTokensByType('font-weight')
+const computedFontWeights = { default: '', ...fontWeights }
 let variations = {}
 Object.keys(tokenColors).forEach(c => {
     const colorVariations = {
@@ -115,7 +116,7 @@ const getUniqueProps = key => {
             default: boolean('bgFlat', false, key),
         },
         weight: {
-            default: select('weight', fontWeights, 'semi-bold', key),
+            default: select('weight', computedFontWeights, 'semi-bold', key),
         },
     }
 }

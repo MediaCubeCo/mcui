@@ -3,7 +3,7 @@
         <label :for="name" class="mc-date-picker__header">
             <!-- @slot Слот для заголовка над инпутом -->
             <slot name="title">
-                <mc-title v-if="title" :ellipsis="false">{{ title }}</mc-title>
+                <mc-title v-if="title" :ellipsis="false" weight="medium">{{ title }}</mc-title>
             </slot>
         </label>
         <div class="mc-date-picker__inner">
@@ -614,6 +614,7 @@ export default {
             height: auto;
             th {
                 font-size: $font-size-200;
+                font-weight: $font-weight-normal;
                 color: $color-dark-gray;
             }
         }
