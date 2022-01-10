@@ -8,7 +8,7 @@
             <!-- @slot Слот контента -->
             <slot />
         </div>
-        <div :class="computedFooterClasses">
+        <div v-if="$slots.footer || footerBlur" :class="computedFooterClasses">
             <!-- @slot Слот футера -->
             <slot name="footer" />
         </div>
