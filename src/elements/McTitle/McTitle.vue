@@ -55,11 +55,11 @@ export default {
         },
         /**
          * Толщина текста:
-         * medium, semi-bold
+         * normal, medium, semi-bold
          */
         weight: {
             type: String,
-            default: 'medium',
+            default: '',
         },
         /**
          * Если нужно указать свою
@@ -162,10 +162,10 @@ export default {
 
     &--variation {
         font-family: $font-family-main;
-        font-weight: $font-weight-medium;
         &-h1 {
             font-size: $font-size-700;
             line-height: $line-height-600;
+            font-weight: $font-weight-semi-bold;
             #{$block-name}__text {
                 max-width: 920px;
             }
@@ -173,6 +173,7 @@ export default {
         &-h2 {
             font-size: $font-size-600;
             line-height: $line-height-500;
+            font-weight: $font-weight-semi-bold;
             #{$block-name}__text {
                 max-width: 820px;
             }
@@ -180,6 +181,7 @@ export default {
         &-h3 {
             font-size: $font-size-500;
             line-height: $line-height-400;
+            font-weight: $font-weight-semi-bold;
             #{$block-name}__text {
                 max-width: 720px;
             }
@@ -187,10 +189,12 @@ export default {
         &-h4 {
             font-size: $font-size-400;
             line-height: $line-height-300;
+            font-weight: $font-weight-semi-bold;
             #{$block-name}__text {
                 max-width: 700px;
             }
         }
+
         &-subtitle {
             font-size: $font-size-300;
             line-height: $line-height-250;
@@ -219,6 +223,7 @@ export default {
         &-overline {
             font-size: $font-size-100;
             line-height: $line-height-150;
+            font-weight: $font-weight-medium;
             #{$block-name}__text {
                 max-width: 330px;
             }
@@ -270,6 +275,9 @@ export default {
         }
     }
     &--weight {
+        &-normal {
+            font-weight: $font-weight-normal;
+        }
         &-medium {
             font-weight: $font-weight-medium;
         }

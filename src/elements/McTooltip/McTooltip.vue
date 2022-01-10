@@ -118,7 +118,6 @@ export default {
             color: $color-white;
             border-radius: $radius-100;
             font-family: $font-family-main;
-            font-weight: $font-weight-medium;
             line-height: $line-height-250;
             font-size: $font-size-300;
             box-shadow: $shadow-s;

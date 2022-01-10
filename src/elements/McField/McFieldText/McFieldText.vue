@@ -3,7 +3,7 @@
         <label :for="name" class="mc-field-text__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
-                <mc-title v-if="title" :ellipsis="false">{{ title }}</mc-title>
+                <mc-title v-if="title" :ellipsis="false" weight="medium">{{ title }}</mc-title>
             </slot>
         </label>
         <div class="mc-field-text__inner">

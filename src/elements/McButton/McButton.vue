@@ -192,7 +192,7 @@ export default {
         },
         /**
          * Жирность шрифта:
-         * `medium, semi-bold`
+         * `normal, medium, semi-bold`
          */
         weight: {
             type: String,
@@ -338,6 +338,9 @@ $colors: $token-colors;
     }
 
     &--weight {
+        &-normal {
+            font-weight: $font-weight-normal;
+        }
         &-medium {
             font-weight: $font-weight-medium;
         }

@@ -561,8 +561,8 @@ export default {
             background: $color-black;
             color: $color-white;
             border-radius: $radius-100;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: $font-weight-medium;
+            font-family: $font-family-main;
+            font-weight: $font-weight-normal;
             line-height: $line-height-250;
             font-size: $font-size-200;
             box-shadow: 0 $space-50 $space-150 rgba($color-black, 0.16);

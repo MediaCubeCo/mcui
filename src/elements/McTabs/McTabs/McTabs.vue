@@ -190,6 +190,7 @@ export default {
             .tabs-component-tab-a {
                 font-size: $font-size-100;
                 line-height: $line-height-150;
+                font-weight: $font-weight-medium;
             }
         }
     }
@@ -299,7 +300,6 @@ export default {
         position: relative;
         display: inline-flex;
         font-family: $font-family-main;
-        font-weight: $font-weight-medium;
         text-decoration: none;
         padding-bottom: $space-150;
         margin: 0 $space-150;

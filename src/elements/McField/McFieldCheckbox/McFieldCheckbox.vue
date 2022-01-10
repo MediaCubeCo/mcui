@@ -3,7 +3,7 @@
         <div v-if="title || $slots.header" class="mc-field-text__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
-                <mc-title :ellipsis="false">{{ title }}</mc-title>
+                <mc-title :ellipsis="false" weight="medium">{{ title }}</mc-title>
             </slot>
         </div>
         <div class="mc-field-checkbox__input-wrap">

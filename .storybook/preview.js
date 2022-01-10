@@ -1,4 +1,5 @@
 import WebFontLoader from "../src/utils/webFontLoader"
+import '../src/assets/fonts/inter/inter.css'
 import "normalize.css/normalize.css"
 import '../src/styles/main.scss'
 
