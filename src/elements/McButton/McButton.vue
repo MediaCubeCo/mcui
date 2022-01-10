@@ -347,6 +347,9 @@ $colors: $token-colors;
         &-semi-bold {
             font-weight: $font-weight-semi-bold;
         }
+        &-bold {
+            font-weight: $font-weight-bold;
+        }
     }
 
     &--size {
