@@ -768,6 +768,7 @@ $colors: $token-colors;
 
     &--disabled {
         background-color: $color-hover-gray;
+        border-color: $color-hover-gray;
         color: $color-outline-gray;
         cursor: not-allowed;
     }
