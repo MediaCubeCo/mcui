@@ -189,7 +189,7 @@ export default {
         &-h4 {
             font-size: $font-size-400;
             line-height: $line-height-300;
-            font-weight: $font-weight-semi-bold;
+            font-weight: $font-weight-bold;
             #{$block-name}__text {
                 max-width: 700px;
             }
@@ -283,6 +283,9 @@ export default {
         }
         &-semi-bold {
             font-weight: $font-weight-semi-bold;
+        }
+        &-bold {
+            font-weight: $font-weight-bold;
         }
     }
     h1,
