@@ -100,6 +100,9 @@ const getUniqueProps = key => {
         headerBreakWord: {
             default: boolean('headerBreakWord', false, key),
         },
+        monoFont: {
+            default: boolean('monoFont', false, key),
+        },
     }
 }
 
@@ -122,6 +125,7 @@ const getCommonTags = ctx => {
         footerInfo: ctx.footerInfo,
         totalFooter: ctx.totalFooter,
         headerBreakWord: ctx.headerBreakWord,
+        monoFont: ctx.monoFont,
     }
 }
 
