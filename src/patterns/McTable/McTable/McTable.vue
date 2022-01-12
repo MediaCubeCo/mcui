@@ -246,6 +246,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Моноширинный шрифт для строк
+         */
+        monoFont: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -317,6 +324,7 @@ export default {
                 'mc-table--open-card': this.cardIsOpen,
                 'mc-table--clickable': this.$listeners['cell-click'],
                 'mc-table--header-break-word': this.headerBreakWord,
+                'mc-table--mono-font': this.monoFont,
             }
         },
         wrapperStyles() {
@@ -613,6 +621,14 @@ export default {
 }
 
 .mc-table {
+    &--mono-font {
+        .vxe-table--body {
+            .vxe-body--row {
+                font-feature-settings: 'tnum';
+                font-variant-numeric: tabular-nums;
+            }
+        }
+    }
     &--open-card {
         .vxe-table--body-wrapper,
         .vxe-table--footer-wrapper {
