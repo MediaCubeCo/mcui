@@ -175,7 +175,8 @@ export default {
     }
     &__percent {
         &--monospace {
-            font-family: Lucida Console, Courier, monospace;
+            font-feature-settings: 'tnum';
+            font-variant-numeric: tabular-nums;
         }
     }
     &--error {
