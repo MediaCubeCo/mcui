@@ -248,6 +248,10 @@ export default {
             } else if (this.disabled || this.loading) {
                 result.disabled = true
             }
+
+            if (this.variation?.match('link')) {
+                result.rel = 'noreferrer'
+            }
             result.type = this.type
 
             return result
