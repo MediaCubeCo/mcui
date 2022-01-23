@@ -722,26 +722,13 @@ $colors: $token-colors;
 
     &--text-align {
         &-left {
-            #{$block-name} {
-                &__text {
-                    margin-right: auto;
-                }
-            }
+            justify-content: flex-start;
         }
         &-center {
-            #{$block-name} {
-                &__text {
-                    margin-left: auto;
-                    margin-right: auto;
-                }
-            }
+            justify-content: center;
         }
         &-right {
-            #{$block-name} {
-                &__text {
-                    margin-left: auto;
-                }
-            }
+            justify-content: flex-end;
         }
     }
 
