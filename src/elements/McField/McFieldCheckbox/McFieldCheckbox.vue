@@ -12,6 +12,7 @@
                     class="mc-field-checkbox__icon"
                     :name="isChecked ? 'checkbox--checked' : 'checkbox'"
                     :color="isChecked ? 'blue' : 'gray'"
+                    :size="checkboxSize"
                 />
                 <input
                     :disabled="disabled"
@@ -141,6 +142,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        checkboxSize: {
+            type: String,
+            default: '250',
+        },
     },
     computed: {
         classes() {
@@ -148,6 +153,7 @@ export default {
                 'mc-field-checkbox--error': this.errors,
                 'mc-field-checkbox--disabled': this.disabled,
                 'mc-field-checkbox--empty': !this.mainText && !this.$slots.default,
+                [`mc-field-checkbox--size-${this.checkboxSize}`]: !!this.checkboxSize,
             }
         },
         errorText() {
@@ -184,10 +190,19 @@ export default {
 <style lang="scss">
 .mc-field-checkbox {
     $block-name: &;
-
+    position: relative;
     display: block;
-    min-width: $size-200;
-    min-height: $size-200;
+    &--size {
+        @each $size, $value in $token-icon-sizes {
+            &-#{$size} {
+                min-width: $value;
+                min-height: $value;
+            }
+            #{$block-name}__icon {
+                @include size($value);
+            }
+        }
+    }
 
     &__header {
         @include reset-text-indents();
@@ -200,17 +215,17 @@ export default {
     }
 
     &__name {
-        display: inline-block;
         @include reset();
         position: relative;
-        padding-left: $space-250;
         line-height: $line-height-200;
         font-size: $font-size-200;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
     }
 
     &__icon {
-        @include size($size-200);
-        @include position(absolute, 0 null null 0);
         z-index: 1;
         &:hover {
             color: $color-blue;
@@ -219,7 +234,7 @@ export default {
 
     &__name-text {
         display: inline-block;
-
+        margin-left: $space-100;
         &:before {
             @include pseudo(none);
             @include size($size-200);
