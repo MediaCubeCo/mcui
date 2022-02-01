@@ -156,7 +156,8 @@ export default {
 
     &--pre-line {
         #{$block-name}__text {
-            white-space: pre-line;
+            white-space: pre-line !important;
+            word-break: normal;
         }
     }
 
