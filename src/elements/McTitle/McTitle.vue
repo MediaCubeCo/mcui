@@ -299,10 +299,8 @@ export default {
         font-style: inherit;
         font-size: inherit;
         line-height: inherit;
-        margin: inherit;
         margin-block-start: 0;
         margin-block-end: 0;
-        padding: inherit;
     }
 }
 </style>
