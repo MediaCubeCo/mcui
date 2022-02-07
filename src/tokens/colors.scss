@@ -8,6 +8,7 @@ $color-dark-gray: #5C6670; /* Иконки, доп.текст, менее акт
 $color-gray: #8F99A3; /* Для плашек, хорошо держит форму */
 $color-outline-gray: #C7CCD1; /* Для обводок */
 $color-hover-gray: #EDF0F3; /* Ховеры и неактивные эл-ты */
+$color-bg-gray: #E5E5E5; /* Бэкграунд */
 $color-white: #FFFFFF; /* Основной фон */
 //main colors
 $color-hover-blue: #0A54C2; /* Кнопки, ссылки, выделение активных элементов */
@@ -37,6 +38,7 @@ $token-colors: (
   "gray": $color-gray,
   "outline-gray": $color-outline-gray,
   "hover-gray": $color-hover-gray,
+  "bg-gray": $color-bg-gray,
   "white": $color-white,
   "hover-blue": $color-hover-blue,
   "blue": $color-blue,
