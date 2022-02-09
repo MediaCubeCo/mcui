@@ -30,7 +30,7 @@
                 <slot name="footer" />
             </div>
             <button v-if="arrowVisible" type="button" class="mc-modal__btn-back" @click.prevent="handleBack">
-                <mc-svg-icon name="backspace" class="mc-modal__icon-back" />
+                <mc-svg-icon name="arrow_leftward" class="mc-modal__icon-back" />
             </button>
             <button v-if="closeVisible" type="button" class="mc-modal__btn-close" @click.prevent="close">
                 <mc-svg-icon class="mc-modal__icon-close" width="24" height="24" name="close" />
@@ -146,14 +146,14 @@ export default {
     }
     &__btn-close {
         @include reset-btn();
-        @include position(absolute, 17px 15px null null);
+        @include position(absolute, 35px 15px null null);
         @include close-link();
         padding: 5px;
         z-index: 1;
     }
     &__btn-back {
         @include reset-btn();
-        @include position(absolute, 15px null null 15px);
+        @include position(absolute, 35px null null 15px);
         @include close-link();
         padding: 5px;
         z-index: 1;
@@ -176,14 +176,6 @@ export default {
     &.overlay-fade-leave-active {
         .mc-modal__inner {
             transform: translate3d(0, -20px, 0);
-        }
-    }
-
-    &.mc-modal--arrow-visible {
-        .mc-modal {
-            &__header {
-                padding-left: 35px;
-            }
         }
     }
 
@@ -254,9 +246,10 @@ export default {
     }
 
     &__header {
-        padding-bottom: $space-200;
+        padding-bottom: $space-400;
         position: relative;
-        /*padding-right: 35px;*/
+        padding-right: 35px;
+        padding-left: 35px;
     }
 
     &__title {
