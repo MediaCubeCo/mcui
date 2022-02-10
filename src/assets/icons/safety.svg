@@ -1,0 +1,5 @@
+<svg data-token-name="safety" width="24" height="24" fill="none" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+<path d="M18.6666 14.666V12.7905C18.6666 11.6177 17.4721 10.666 15.9999 10.666C14.5278 10.666 13.3333 11.6177 13.3333 12.7905V14.666" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.4545 14.666H18.5455C19.3484 14.666 20 15.3902 20 16.2826V19.7161C20 20.6085 19.3484 21.3327 18.5455 21.3327H13.4545C12.6516 21.3327 12 20.6085 12 19.7161V16.2826C12 15.3902 12.6516 14.666 13.4545 14.666Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.78 29.226C23.2645 27.4127 28 21.3474 28 14.8762V8.9087C28 7.70572 27.2635 6.62126 26.137 6.16644L18.841 3.21825C17.0215 2.48194 14.9815 2.48194 13.1605 3.21825L5.8645 6.16644C4.7365 6.62126 4 7.70572 4 8.9087V14.8762C4 21.3474 8.7355 27.4141 15.22 29.226C15.727 29.3682 16.273 29.3682 16.78 29.226Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
