@@ -5,13 +5,7 @@
             <slot />
         </span>
         <span class="mc-field-toggle__wrapper">
-            <input
-                class="mc-field-toggle__field"
-                type="checkbox"
-                :checked="_value"
-                :disabled="disabled"
-                @input="e => change(e.target.checked)"
-            />
+            <input v-bind="inputProps" @input="e => change(e.target.checked)" />
             <span class="mc-field-toggle__slider"></span>
         </span>
     </label>
@@ -73,6 +67,14 @@ export default {
             type: String,
             default: 'blue',
         },
+
+        /**
+         * Атрибут tabindex для главного элемента
+         */
+
+        tabindex: {
+            type: Number,
+        },
     },
     computed: {
         _value() {
@@ -85,6 +87,15 @@ export default {
                 'mc-field-toggle--colored-text': this.coloredText,
                 [`mc-field-toggle--text-position-${this.textPosition}`]: this.textPosition,
                 [`mc-field-toggle--color-${this.color}`]: this.color,
+            }
+        },
+        inputProps() {
+            return {
+                checked: this._value,
+                disabled: this.disabled,
+                tabindex: this.tabindex,
+                class: 'mc-field-toggle__field',
+                type: 'checkbox',
             }
         },
     },

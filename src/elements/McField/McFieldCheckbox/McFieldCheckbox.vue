@@ -14,14 +14,7 @@
                     :color="isChecked ? 'blue' : 'gray'"
                     :size="checkboxSize"
                 />
-                <input
-                    :disabled="disabled"
-                    class="mc-field-checkbox__input"
-                    type="checkbox"
-                    :name="name"
-                    :checked="isChecked"
-                    @change="handleChange"
-                />
+                <input v-bind="inputProps" @change="handleChange" />
                 <span v-if="mainText || $slots.default" class="mc-field-checkbox__name-text">
                     <!-- @slot Слот для пользовательской подписи чекбокса -->
                     <slot>
@@ -146,6 +139,14 @@ export default {
             type: String,
             default: '250',
         },
+
+        /**
+         * Атрибут tabindex для главного элемента
+         *
+         */
+        tabindex: {
+            type: Number,
+        },
     },
     computed: {
         classes() {
@@ -154,6 +155,16 @@ export default {
                 'mc-field-checkbox--disabled': this.disabled,
                 'mc-field-checkbox--empty': !this.mainText && !this.$slots.default,
                 [`mc-field-checkbox--size-${this.checkboxSize}`]: !!this.checkboxSize,
+            }
+        },
+        inputProps() {
+            return {
+                disabled: this.disabled,
+                type: this.checkbox,
+                name: this.name,
+                checked: this.isChecked,
+                tabindex: this.tabindex,
+                class: 'mc-field-checkbox__input',
             }
         },
         errorText() {

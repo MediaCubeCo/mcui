@@ -48,17 +48,20 @@
                 >
                     <!-- @slot Слот в конце инпута -->
                     <slot name="append" />
-                    <mc-button v-if="copy" variation="blue-link" size="m-compact" @click.prevent="handlerCopy(value)">
+                    <mc-button v-if="copy" variation="black-link" size="m-compact" @click.prevent="handlerCopy(value)">
                         <mc-svg-icon slot="icon-append" name="copy" />
                     </mc-button>
-                    <mc-button
-                        v-if="isPassword"
-                        variation="blue-link"
-                        size="m-compact"
-                        @click.prevent="togglePasswordVisibility"
-                    >
-                        <mc-svg-icon slot="icon-append" :name="passwordIcon" />
-                    </mc-button>
+                    <component v-bind="passwordTooltipProps">
+                        <mc-button
+                            v-if="isPassword"
+                            variation="black-link"
+                            size="m-compact"
+                            tabindex="-1"
+                            @click.prevent="togglePasswordVisibility"
+                        >
+                            <mc-svg-icon slot="icon-append" :name="passwordIcon" />
+                        </mc-button>
+                    </component>
                 </div>
                 <mc-title
                     v-if="hasCharCounter"
@@ -105,6 +108,7 @@ import TextareaAutosize from 'vue-textarea-autosize/src/components/TextareaAutos
 import McTitle from '../../McTitle/McTitle'
 import McButton from '../../McButton/McButton'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
+import McTooltip from '../../McTooltip/McTooltip'
 
 export default {
     name: 'McFieldText',
@@ -113,6 +117,7 @@ export default {
         McTitle,
         McSvgIcon,
         TextareaAutosize,
+        McTooltip,
     },
     props: {
         /**
@@ -240,6 +245,23 @@ export default {
             type: Boolean,
             default: false,
         },
+
+        /**
+         * Атрибут tabindex для главного элемента
+         *
+         */
+        tabindex: {
+            type: Number,
+        },
+
+        /**
+         * Tooltip для кнопка "показать пароль"
+         *
+         */
+        passwordTooltip: {
+            type: String,
+            default: null,
+        },
     },
 
     data() {
@@ -287,6 +309,7 @@ export default {
                 name: this.name,
                 id: this.name,
                 autocomplete: this.autocomplete,
+                tabindex: this.tabindex,
             }
         },
 
@@ -329,6 +352,20 @@ export default {
         listeners() {
             return _omit(this.$listeners, 'input')
         },
+
+        passwordTooltipProps() {
+            return this.passwordTooltip
+                ? {
+                      is: 'mc-tooltip',
+                      content: this.passwordTooltip,
+                      placement: 'top',
+                      size: 's',
+                  }
+                : {
+                      is: 'div',
+                      class: 'mc-field-text__empty-tooltip',
+                  }
+        },
     },
 
     mounted() {
@@ -351,14 +388,26 @@ export default {
 
         calculateSlotPadding(name) {
             const tokenSpace = parseInt(getTokenValue('$space-50'))
-            return (
+            let result =
                 this.$slots[name] &&
                 this.$slots[name].reduce((acc, cur, index) => {
                     const $el = cur.elm || cur
                     const space = index && tokenSpace
                     return acc + $el.getBoundingClientRect().width + space
                 }, 0)
-            )
+
+            if (name === 'prepend') return result
+
+            /**
+             *  Также увеличиваем padding при наличии кнопки копирования и если тип password
+             */
+
+            const iconSpace = parseInt(getTokenValue('$space-300'))
+
+            result = result ? result + tokenSpace : tokenSpace
+            this.copy && (result += iconSpace)
+            this.isPassword && (result += iconSpace)
+            return result
         },
         handlerCopy(value) {
             /**
@@ -538,9 +587,12 @@ export default {
                 color: $color-dark-gray;
                 background-color: $color-hover-gray;
                 border-color: $color-outline-gray;
-                padding-right: $space-700;
             }
         }
+    }
+
+    &__empty-tooltip {
+        display: contents;
     }
 }
 </style>

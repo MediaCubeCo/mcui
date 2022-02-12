@@ -1,4 +1,4 @@
-import { text, boolean, select } from '@storybook/addon-knobs'
+import { text, boolean, select, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { getTokensByType } from '../../../utils/getTokens'
 
@@ -36,6 +36,9 @@ const getUniqueProps = key => {
         color: {
             default: select('color', colors, 'blue', key),
         },
+        tabindex: {
+            default: number('tabindex', null, {}, key),
+        },
     }
 }
 
@@ -45,6 +48,7 @@ const getCommonTags = ctx => {
         'text-position': ctx.textPosition,
         'colored-text': ctx.coloredText,
         color: ctx.color,
+        tabindex: ctx.tabindex,
     }
 }
 
