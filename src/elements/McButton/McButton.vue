@@ -209,6 +209,14 @@ export default {
                 text: null,
             }),
         },
+
+        /**
+         * Атрибут tabindex для главного элемента
+         *
+         */
+        tabindex: {
+            type: Number,
+        },
     },
 
     computed: {
@@ -253,6 +261,7 @@ export default {
                 result.rel = 'noreferrer'
             }
             result.type = this.type
+            result.tabindex = this.tabindex
 
             return result
         },
