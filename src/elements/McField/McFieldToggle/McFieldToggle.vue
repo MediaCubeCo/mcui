@@ -73,7 +73,7 @@ export default {
          */
 
         tabindex: {
-            type: Number,
+            type: [String, Number],
         },
     },
     computed: {
