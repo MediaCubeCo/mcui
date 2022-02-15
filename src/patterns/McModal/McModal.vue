@@ -237,6 +237,11 @@ export default {
             }
         }
     }
+
+    .v--modal-box {
+        min-width: 320px;
+    }
+
     .v--modal,
     .vm--modal {
         background-color: transparent;
