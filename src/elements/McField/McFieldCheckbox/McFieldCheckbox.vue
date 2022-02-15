@@ -160,10 +160,10 @@ export default {
         inputProps() {
             return {
                 disabled: this.disabled,
-                type: this.checkbox,
                 name: this.name,
                 checked: this.isChecked,
                 tabindex: this.tabindex,
+                type: 'checkbox',
                 class: 'mc-field-checkbox__input',
             }
         },
