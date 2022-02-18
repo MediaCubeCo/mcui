@@ -382,6 +382,24 @@ export default {
             font-weight: $font-weight-bold;
         }
     }
+    @each $media, $value in $token-media-queries {
+        @media #{$value} {
+            &--weight-#{$media} {
+                &-normal {
+                    font-weight: $font-weight-normal;
+                }
+                &-medium {
+                    font-weight: $font-weight-medium;
+                }
+                &-semi-bold {
+                    font-weight: $font-weight-semi-bold;
+                }
+                &-bold {
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
+    }
     h1,
     h2,
     h3,
