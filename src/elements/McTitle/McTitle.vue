@@ -1,8 +1,20 @@
 <script>
+import _upperFirst from 'lodash/upperFirst'
+
+const values = ['variation', 'weight']
+const sizes = ['xs', 's', 'm', 'l', 'xl', 'xxl']
+const variationProps = {}
+
+values.forEach(value => {
+    sizes.forEach(size => {
+        variationProps[`${value}-${size}`] = { type: String }
+    })
+})
 export default {
     name: 'McTitle',
     functional: true,
     props: {
+        ...variationProps,
         /**
          * Уровень: `h1`, `h2`, `h3`, `h4`, `subtitle`, `body`, `overline`, `article`, 'info'.
          */
@@ -89,17 +101,24 @@ export default {
                 innerHTML: data.domProps.innerHTML,
             }
         }
+        const responsivePropsClasses = {}
+        values.forEach(value => {
+            responsivePropsClasses[`mc-title--${value}-${props[value]}`] = props[value]
+            sizes.forEach(size => {
+                const sizeValue = props[`${value}${_upperFirst(size)}`]
+                responsivePropsClasses[`mc-title--${value}-${size}-${sizeValue}`] = sizeValue
+            })
+        })
         const classes = {
             'mc-title': true,
-            [`mc-title--variation-${props.variation}`]: props.variation,
             [`mc-title--line-height-${props.lineHeight}`]: props.lineHeight,
             ['mc-title--ellipsis']: props.ellipsis,
             [`mc-title--color-${props.color}`]: props.color,
             [`mc-title--text-align-${props.textAlign}`]: props.textAlign,
             [`mc-title--pre-line`]: props.preLine,
             'mc-title--uppercase': props.uppercase,
-            [`mc-title--weight-${props.weight}`]: props.weight,
             ...(data.class || {}),
+            ...responsivePropsClasses,
         }
 
         if (data.staticClass) {
@@ -227,6 +246,80 @@ export default {
             font-weight: $font-weight-medium;
             #{$block-name}__text {
                 max-width: 330px;
+            }
+        }
+    }
+
+    @each $media, $value in $token-media-queries {
+        @media #{$value} {
+            &--variation-#{$media} {
+                font-family: $font-family-main;
+                &-h1 {
+                    font-size: $font-size-700;
+                    line-height: $line-height-600;
+                    font-weight: $font-weight-semi-bold;
+                    #{$block-name}__text {
+                        max-width: 920px;
+                    }
+                }
+                &-h2 {
+                    font-size: $font-size-600;
+                    line-height: $line-height-500;
+                    font-weight: $font-weight-semi-bold;
+                    #{$block-name}__text {
+                        max-width: 820px;
+                    }
+                }
+                &-h3 {
+                    font-size: $font-size-500;
+                    line-height: $line-height-400;
+                    font-weight: $font-weight-semi-bold;
+                    #{$block-name}__text {
+                        max-width: 720px;
+                    }
+                }
+                &-h4 {
+                    font-size: $font-size-400;
+                    line-height: $line-height-300;
+                    font-weight: $font-weight-bold;
+                    #{$block-name}__text {
+                        max-width: 700px;
+                    }
+                }
+
+                &-subtitle {
+                    font-size: $font-size-300;
+                    line-height: $line-height-250;
+                    #{$block-name}__text {
+                        max-width: 640px;
+                    }
+                }
+                &-article {
+                    font-size: $font-size-200;
+                    line-height: $line-height-250;
+                    #{$block-name}__text {
+                        max-width: 536px;
+                    }
+                }
+                &-info {
+                    font-size: $font-size-300;
+                    line-height: $line-height-300;
+                }
+                &-body {
+                    font-size: $font-size-200;
+                    line-height: $line-height-200;
+                    #{$block-name}__text {
+                        max-width: 330px;
+                    }
+                }
+                &-overline {
+                    font-size: $font-size-100;
+                    line-height: $line-height-150;
+                    font-weight: $font-weight-medium;
+                    #{$block-name}__text {
+                        max-width: 330px;
+                    }
+                }
             }
         }
     }
