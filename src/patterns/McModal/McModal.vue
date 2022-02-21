@@ -277,7 +277,7 @@ export default {
     &__control {
         display: flex;
         justify-content: flex-end;
-        padding-top: $space-500;
+        padding-top: $space-400;
         margin-left: -3px;
         margin-right: -3px;
 
