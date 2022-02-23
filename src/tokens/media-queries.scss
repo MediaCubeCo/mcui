@@ -15,6 +15,9 @@ $media-query-m-down: "(max-width: 767px)";
 $media-query-l-down: "(max-width: 1023px)";
 $media-query-xl-down: "(max-width: 1439px)";
 
+$media-desktop: "(hover: hover) and (pointer: fine)";
+$media-mobile: "(hover: none) and (pointer: coarse)";
+
 $token-media-queries: (
   "xs": $media-query-xs,
   "s": $media-query-s,
