@@ -88,6 +88,9 @@ const getUniqueProps = key => {
         rounded: {
             default: boolean('rounded', false, key),
         },
+        semiRounded: {
+            default: boolean('semi-rounded', false, key),
+        },
         textAlign: {
             default: select('textAlign', positions, 'center', key),
         },
@@ -137,6 +140,7 @@ const getCommonTags = ctx => {
         size: ctx.size,
         shadow: ctx.shadow,
         rounded: ctx.rounded,
+        semiRounded: ctx.semiRounded,
         'text-align': ctx.textAlign,
         'full-width': ctx.fullWidth,
         'is-active': ctx.isActive,

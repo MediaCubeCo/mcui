@@ -123,6 +123,14 @@ export default {
             default: false,
         },
         /**
+         *  Закругленная
+         *
+         */
+        semiRounded: {
+            type: Boolean,
+            default: false,
+        },
+        /**
          *  Позиция текста внутри кнопки:
          *  `left, center, right`
          */
@@ -230,6 +238,7 @@ export default {
                 'mc-button--is-active': this.isActive,
                 'mc-button--disabled': this.disabled,
                 'mc-button--rounded': this.rounded && /-compact$/.test(this.size),
+                'mc-button--semi-rounded': this.semiRounded,
                 'mc-button--full-width': this.fullWidth,
                 'mc-button--uppercase': this.uppercase,
                 'mc-button--shadow': this.shadow,
@@ -723,6 +732,10 @@ $colors: $token-colors;
 
     &--rounded {
         border-radius: $radius-circle;
+    }
+
+    &--semi-rounded {
+        border-radius: 50px;
     }
 
     &--full-width {
