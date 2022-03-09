@@ -268,10 +268,13 @@ export default {
     &__inner {
         position: relative;
         box-shadow: 0 6px 12px rgba(110, 110, 110, 0.61);
-        padding: $space-500 $space-300;
         background-color: $color-white;
         margin: 0 12px 0 12px;
         border-radius: $radius-100;
+        padding: $space-300;
+        @media #{$media-query-m} {
+            padding: $space-500 $space-300;
+        }
     }
 
     &__control {
