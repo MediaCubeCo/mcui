@@ -57,6 +57,7 @@
                             variation="black-link"
                             size="m-compact"
                             tabindex="-1"
+                            type="button"
                             @click.prevent="togglePasswordVisibility"
                         >
                             <mc-svg-icon slot="icon-append" :name="passwordIcon" />
