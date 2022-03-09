@@ -255,10 +255,13 @@ export default {
     }
 
     &__header {
-        padding-bottom: $space-400;
+        padding-bottom: $space-300;
         position: relative;
         padding-right: 35px;
         padding-left: 35px;
+        @media #{$media-query-m} {
+            padding-bottom: $space-400;
+        }
     }
 
     &__title {
