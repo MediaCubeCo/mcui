@@ -146,17 +146,21 @@ export default {
     }
     &__btn-close {
         @include reset-btn();
-        @include position(absolute, 35px 15px null null);
+        @include position(absolute, 24px 24px null null);
         @include close-link();
-        padding: 5px;
         z-index: 1;
+        @media #{$media-query-m} {
+            @include position(absolute, 40px 24px null null);
+        }
     }
     &__btn-back {
         @include reset-btn();
-        @include position(absolute, 35px null null 15px);
+        @include position(absolute, 24px null null 24px);
         @include close-link();
-        padding: 5px;
         z-index: 1;
+        @media #{$media-query-m} {
+            @include position(absolute, 40px null null 24px);
+        }
     }
 
     &__icon-close {
