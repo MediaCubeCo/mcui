@@ -9,4 +9,16 @@ $radius-100: 8px;
 $radius-150: 12px; /* Additional token */
 $radius-200: 16px;
 $radius-300: 24px;
+$radius-rounded: 300px;
 $radius-circle: 50%;
+
+$token-radius: (
+  "square": $radius-square,
+  "50": $radius-50,
+  "100": $radius-100,
+  "150": $radius-150,
+  "200": $radius-200,
+  "300": $radius-300,
+  "rounded": $radius-rounded,
+  "circle": $radius-circle
+)
