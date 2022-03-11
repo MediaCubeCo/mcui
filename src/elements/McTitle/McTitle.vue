@@ -308,6 +308,14 @@ export default {
                     line-height: $line-height-300;
                     font-weight: $font-weight-medium;
                 }
+                &-body {
+                    font-size: $font-size-200;
+                    line-height: $line-height-200;
+                    font-weight: $font-weight-medium;
+                    #{$block-name}__text {
+                        max-width: 330px;
+                    }
+                }
                 &-overline {
                     font-size: $font-size-100;
                     line-height: $line-height-150;
