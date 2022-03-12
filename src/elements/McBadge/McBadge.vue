@@ -18,12 +18,16 @@ export default {
             type: Boolean,
             default: false,
         },
+        modern: {
+            type: Boolean,
+            default: false,
+        },
     },
     render(h, { props, slots, data }) {
         const classes = {
             'mc-badge': true,
-            [`mc-badge--variation-${props.variation}`]: props.variation,
-            ['mc-badge--vertical-line']: props.verticalLine,
+            'mc-badge--vertical-line': props.verticalLine,
+            [`mc-badge--variation-${props.variation}${props.modern ? '-modern' : ''}`]: props.variation,
             ...(data.class || {}),
         }
 
@@ -75,7 +79,7 @@ $light-scale: 'hover-gray', 'white', 'lighter-blue', 'toxic', 'transparent';
     vertical-align: middle;
     max-width: max-content;
     border-radius: $radius-50;
-    padding: 1px $space-100 - 1px;
+    padding: 2px $space-100;
     border: 1px solid transparent;
 
     @each $color, $value in $token-colors {
@@ -92,6 +96,11 @@ $light-scale: 'hover-gray', 'white', 'lighter-blue', 'toxic', 'transparent';
                 background-color: $color-white;
                 color: $value;
                 border-color: fade-out($value, 0.6);
+            }
+            &-modern {
+                background-color: rgba($value, 0.1);
+                color: $value;
+                border-radius: $radius-150;
             }
         }
     }
