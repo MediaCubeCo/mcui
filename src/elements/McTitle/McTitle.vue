@@ -218,6 +218,7 @@ export default {
         &-subtitle {
             font-size: $font-size-300;
             line-height: $line-height-250;
+            font-weight: $font-weight-medium;
             #{$block-name}__text {
                 max-width: 640px;
             }
@@ -225,6 +226,7 @@ export default {
         &-article {
             font-size: $font-size-200;
             line-height: $line-height-250;
+            font-weight: $font-weight-medium;
             #{$block-name}__text {
                 max-width: 536px;
             }
@@ -232,10 +234,12 @@ export default {
         &-info {
             font-size: $font-size-300;
             line-height: $line-height-300;
+            font-weight: $font-weight-medium;
         }
         &-body {
             font-size: $font-size-200;
             line-height: $line-height-200;
+            font-weight: $font-weight-medium;
             #{$block-name}__text {
                 max-width: 330px;
             }
