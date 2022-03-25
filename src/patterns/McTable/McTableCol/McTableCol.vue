@@ -41,7 +41,7 @@
         </template>
         <template v-slot:footer="{ columnIndex, items }">
             <mc-title v-if="items[columnIndex]" :text-align="textAlign" weight="semi-bold">
-                {{ items[columnIndex] }}
+                {{ items[columnIndex] }}{{ totalAppend }}
             </mc-title>
             <template v-else-if="getVisibilityCommonInfo(columnIndex, items)">
                 <mc-title v-if="!provideData.canShowLoader" class="mc-table-col__title" weight="semi-bold">
@@ -104,6 +104,9 @@ export default {
         },
         textAlign() {
             return this.$attrs.align || 'left'
+        },
+        totalAppend() {
+            return this.$attrs['total-append'] || ''
         },
         isSortable() {
             return this.$attrs.hasOwnProperty('sortable') && this.$attrs.sortable !== false
