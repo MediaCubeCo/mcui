@@ -433,7 +433,7 @@ export default {
                         let parsedVal = parseFloat(info[1])
                         if (!parsedVal && parsedVal !== 0) return '—'
                         const format = !info[0].match('count') ? '0,0.00' : '0,0'
-                        const roundedVal = Math.floor(parsedVal * 100) / 100
+                        const roundedVal = Math[Math.sign(parsedVal) < 0 ? 'floor' : 'ceil'](parsedVal * 100) / 100
                         return numeral(roundedVal)
                             .format(format)
                             .replace(/,/g, ' ')
