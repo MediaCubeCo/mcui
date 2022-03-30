@@ -38,6 +38,9 @@ const getUniqueProps = key => {
         helpText: {
             default: text('helpText', 'Default help text', key),
         },
+        mask: {
+            default: text('mask', null, key),
+        },
         disabled: {
             default: boolean('disabled', false, key),
         },
@@ -79,6 +82,7 @@ const getCommonTags = ctx => {
         type: ctx.type,
         title: ctx.title,
         'help-text': ctx.helpText,
+        mask: ctx.mask,
         disabled: ctx.disabled,
         value: ctx.value,
         errors: ctx.errors,

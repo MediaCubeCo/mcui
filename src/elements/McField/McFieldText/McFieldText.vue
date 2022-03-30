@@ -30,16 +30,30 @@
                         @input="handleInput"
                     />
 
-                    <input
-                        v-else
-                        ref="input"
-                        v-bind="inputAttrs"
-                        :type="prettyType"
-                        :readonly="readOnly"
-                        :maxlength="maxLength"
-                        v-on="listeners"
-                        @input="$event => handleInput($event.target.value)"
-                    />
+                    <template v-else>
+                        <!-- When possible, prefer to use input type="tel" to avoid glitch on android devices -->
+                        <input
+                            v-if="mask"
+                            ref="input"
+                            v-mask="mask"
+                            v-bind="inputAttrs"
+                            type="tel"
+                            :readonly="readOnly"
+                            :maxlength="maxLength"
+                            v-on="listeners"
+                            @input="$event => handleInput($event.target.value)"
+                        />
+                        <input
+                            v-else
+                            ref="input"
+                            v-bind="inputAttrs"
+                            :type="prettyType"
+                            :readonly="readOnly"
+                            :maxlength="maxLength"
+                            v-on="listeners"
+                            @input="$event => handleInput($event.target.value)"
+                        />
+                    </template>
                 </label>
                 <div
                     v-if="$slots.append || copy || isPassword"
@@ -104,6 +118,7 @@
 <script>
 import _omit from 'lodash/omit'
 import { getTokenValue } from '../../../utils/getTokens'
+import { mask } from 'vue-the-mask'
 
 import TextareaAutosize from 'vue-textarea-autosize/src/components/TextareaAutosize.vue'
 import McTitle from '../../McTitle/McTitle'
@@ -113,6 +128,7 @@ import McTooltip from '../../McTooltip/McTooltip'
 
 export default {
     name: 'McFieldText',
+    directives: { mask },
     components: {
         McButton,
         McTitle,
@@ -136,6 +152,17 @@ export default {
          *
          */
         title: {
+            type: String,
+            default: null,
+        },
+
+        /**
+         *  Маска поля:
+         *
+         * tokens - https://vuejs-tips.github.io/vue-the-mask/#tokens
+         *
+         */
+        mask: {
             type: String,
             default: null,
         },
