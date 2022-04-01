@@ -51,7 +51,7 @@
                             :readonly="readOnly"
                             :maxlength="maxLength"
                             v-on="listeners"
-                            @input="$event => handleInput($event.target.value)"
+                            @input="prepareHandleInput"
                         />
                     </template>
                 </label>
@@ -141,6 +141,8 @@ export default {
          *  Тип:
          * `textarea, textarea-autosize и
          * нативные как text, password, email и т.д.`
+         *
+         * кастомный num - разрешает ввод только цифр и дробных чисел, без ислчений ввиде буквы 'E'
          */
         type: {
             type: String,
@@ -401,6 +403,15 @@ export default {
     },
 
     methods: {
+        prepareHandleInput(e) {
+            let value = e.target.value
+            if (this.type === 'num') {
+                const [first] = /\d*[\.]?\d*/.exec(String(e.target.value)) || []
+                value = first
+                e.target.value = first
+            }
+            this.handleInput(value)
+        },
         handleInput(value) {
             /**
              * Событие инпута
