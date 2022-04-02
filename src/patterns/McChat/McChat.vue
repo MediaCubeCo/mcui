@@ -240,10 +240,12 @@ export default {
     .mc-drawer__header {
         padding-top: $space-150 - 1px;
         padding-bottom: $space-150;
+        z-index: 12;
     }
 
     .mc-drawer__btn-close {
         @include position(absolute, 0 0 null null);
+        z-index: 12;
     }
 
     .mc-drawer__body-inner {
