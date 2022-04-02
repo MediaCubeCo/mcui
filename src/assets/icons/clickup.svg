@@ -1,0 +1,14 @@
+<svg data-token-name="clickup" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 17.3703L6.32155 15.0167C8.08626 17.147 9.96117 18.129 12.0481 18.129C14.1239 18.129 15.9458 17.1587 17.631 15.0451L21 17.3419C18.5685 20.3896 15.5468 22 12.0481 22C8.56057 22 5.50965 20.4 3 17.3703Z" fill="url(#paint0_linear_8030_38779)"/>
+<path d="M12.0213 7.12L6.19376 11.8323L3.5 8.90064L12.0337 2L20.5 8.9058L17.7939 11.8271L12.0213 7.12Z" fill="url(#paint1_linear_8030_38779)"/>
+<defs>
+<linearGradient id="paint0_linear_8030_38779" x1="3" y1="19.766" x2="21" y2="19.766" gradientUnits="userSpaceOnUse">
+<stop stop-color="#8930FD"/>
+<stop offset="1" stop-color="#49CCF9"/>
+</linearGradient>
+<linearGradient id="paint1_linear_8030_38779" x1="3.5" y1="8.68692" x2="20.5" y2="8.68692" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF02F0"/>
+<stop offset="1" stop-color="#FFC800"/>
+</linearGradient>
+</defs>
+</svg>
