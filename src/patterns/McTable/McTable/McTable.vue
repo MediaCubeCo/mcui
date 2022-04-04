@@ -672,7 +672,9 @@ export default {
             cursor: pointer;
         }
     }
-
+    .vxe-table--footer {
+        border-bottom: 1px solid $color-hover-gray;
+    }
     .vxe-cell {
         padding-left: $space-200;
         padding-right: $space-200;
