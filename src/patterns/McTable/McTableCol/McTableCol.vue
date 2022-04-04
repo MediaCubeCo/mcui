@@ -3,7 +3,7 @@
         <template v-slot="{ row, rowIndex }">
             <!-- @slot Слот для mc-table-col -->
             <slot :row="row">
-                <mc-title :text-align="textAlign" :ellipsis="ellipsis" class="mc-table-col__title">
+                <mc-title :text-align="textAlign" :ellipsis="ellipsis" weight="normal" class="mc-table-col__title">
                     {{ $attrs.type === 'seq' ? rowIndex + 1 : row[defaultTitle] }}
                 </mc-title>
             </slot>
