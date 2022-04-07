@@ -85,6 +85,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        nowrap: {
+            type: Boolean,
+            default: false,
+        },
     },
     render(h, { props, slots, data, listeners }) {
         let contentStyle = {}
@@ -116,6 +120,7 @@ export default {
             [`mc-title--color-${props.color}`]: props.color,
             [`mc-title--text-align-${props.textAlign}`]: props.textAlign,
             [`mc-title--pre-line`]: props.preLine,
+            [`mc-title--nowrap`]: props.nowrap,
             'mc-title--uppercase': props.uppercase,
             ...(data.class || {}),
             ...responsivePropsClasses,
@@ -177,6 +182,12 @@ export default {
         #{$block-name}__text {
             white-space: pre-line !important;
             word-break: normal;
+        }
+    }
+
+    &--nowrap {
+        #{$block-name}__text {
+            white-space: nowrap;
         }
     }
 
