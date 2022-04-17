@@ -91,7 +91,10 @@ $light-scale: 'hover-gray', 'white', 'lighter-blue', 'toxic', 'transparent';
                     color: $color-black;
                 }
             }
-
+            &-invert {
+                background-color: fade-out($value, 0.9);
+                color: $value;
+            }
             &-outline {
                 background-color: $color-white;
                 color: $value;
