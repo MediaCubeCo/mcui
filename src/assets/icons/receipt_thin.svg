@@ -1,0 +1,6 @@
+<svg data-token-name="receipt_thin" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 7H8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.13 11H8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4 4V19.191C4 19.563 4.391 19.804 4.724 19.639L6.667 18.667L9.11 19.889C9.251 19.959 9.416 19.959 9.557 19.889L12 18.667L14.443 19.888C14.584 19.958 14.749 19.958 14.89 19.888L17.333 18.666L19.276 19.638C19.609 19.804 20 19.563 20 19.191V4C20 3.448 19.552 3 19 3H5C4.448 3 4 3.448 4 4Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 15H8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
