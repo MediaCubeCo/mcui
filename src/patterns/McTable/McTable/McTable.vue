@@ -430,6 +430,7 @@ export default {
                     if (this.footerInfo === 'total' && !_isEmpty(this.totalFooter)) {
                         const info = Object.entries(this.totalFooter).find(([key]) => key === column.property)
                         if (!info) return null
+                        if (!column?.params?.modifyTotal) return info[1]
                         let parsedVal = parseFloat(info[1])
                         if (!parsedVal && parsedVal !== 0) return '—'
                         const format = !info[0].match('count') ? '0,0.00' : '0,0'

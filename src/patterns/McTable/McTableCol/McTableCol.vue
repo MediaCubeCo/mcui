@@ -86,6 +86,13 @@ export default {
             type: [Number, String],
             default: null,
         },
+        /**
+         * Нужно ли применять фильтры для тотала колонки
+         * */
+        modifyTotal: {
+            type: Boolean,
+            default: true,
+        },
     },
     computed: {
         attrs() {
@@ -97,6 +104,9 @@ export default {
             return {
                 ...classes,
                 ...this.$attrs,
+                params: {
+                    modifyTotal: this.modifyTotal,
+                },
             }
         },
         defaultTitle() {
