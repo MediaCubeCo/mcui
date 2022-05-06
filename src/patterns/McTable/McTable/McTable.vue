@@ -629,6 +629,12 @@ export default {
                 font-variant-numeric: tabular-nums;
             }
         }
+        .vxe-table--footer {
+            .vxe-footer--row {
+                font-feature-settings: 'tnum';
+                font-variant-numeric: tabular-nums;
+            }
+        }
     }
     &--open-card {
         .vxe-table--body-wrapper,
