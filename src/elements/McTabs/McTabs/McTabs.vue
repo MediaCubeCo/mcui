@@ -121,12 +121,12 @@ export default {
             const lastActiveTab = this.$refs.tabs.getActiveTab()
             if (!lastActiveTab) return
             if (e.tab.href) {
-                this.setLastActiveTab(lastActiveTab.hash)
                 window.open(e.tab.href, '_blank')
+                return
             }
             if (e.tab.to && this.$router) {
-                this.setLastActiveTab(lastActiveTab.hash)
                 this.$router.push(e.tab.to)
+                return
             }
             if (!e.tab.href && !e.tab.to) this.activeTab = e?.tab?.id || e?.tab?.hash?.replace('#', '')
 
