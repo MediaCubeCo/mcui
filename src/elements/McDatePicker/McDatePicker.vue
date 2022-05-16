@@ -90,7 +90,7 @@
                                 </div>
                                 <mc-button
                                     v-if="placeholders.confirm"
-                                    variation="blue-outline"
+                                    variation="purple-outline"
                                     size="xs"
                                     @click="() => handleSubmit(emit)"
                                 >
