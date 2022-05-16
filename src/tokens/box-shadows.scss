@@ -12,6 +12,11 @@ $shadow-xs-blue: 0px 2px 8px rgba(51, 68, 153, 0.1);
 $shadow-s-blue: 0 4px 12px rgba(51, 68, 153, 0.1);
 $shadow-m-blue: 0 12px 32px rgba(51, 68, 153, 0.2);
 
+$shadow-xs-purple: 0px 2px 8px rgba(91, 44, 205, 0.1);
+$shadow-s-purple: 0 4px 12px rgba(91, 44, 205, 0.1);
+$shadow-m-purple: 0 12px 32px rgba(91, 44, 205, 0.2);
+
+
 $token-shadows: (
   'xs': $shadow-xs,
   's': $shadow-s,
@@ -20,4 +25,7 @@ $token-shadows: (
   'xs-blue': $shadow-xs-blue,
   's-blue': $shadow-s-blue,
   'm-blue': $shadow-m-blue,
+  'xs-purple': $shadow-xs-purple,
+  's-purple': $shadow-s-purple,
+  'm-purple': $shadow-m-purple,
 );
