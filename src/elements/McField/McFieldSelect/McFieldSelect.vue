@@ -478,7 +478,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
             padding: 0 $space-500 0 $space-100;
             overflow: hidden;
             &:hover {
-                border-color: $color-blue;
+                border-color: $color-purple;
             }
         }
 
@@ -501,7 +501,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
             font-family: $font-family-main;
             margin-top: $space-50;
             margin-bottom: $space-50;
-            background-color: $color-lighter-blue;
+            background-color: $color-lighter-purple;
             color: $color-black;
             padding: $size-50 $size-50 $size-50 $size-100;
             border-radius: 100px;
@@ -518,7 +518,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
         &__tag-icon {
             @include size($size-200);
             position: relative;
-            background-color: $color-blue;
+            background-color: $color-purple;
             border-radius: $radius-circle;
             flex: 0 0 auto;
 
@@ -571,7 +571,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
                 color: $color-black;
             }
             &--selected {
-                background-color: $color-lighter-blue;
+                background-color: $color-lighter-purple;
                 color: $color-black;
                 font-weight: $font-weight-medium;
             }
@@ -584,11 +584,11 @@ $text-white: scale-color($color-white, $alpha: -10%);
         &--active {
             .multiselect {
                 &__tags {
-                    border-color: $color-blue;
+                    border-color: $color-purple;
                 }
                 &__select {
                     &::before {
-                        border-color: $color-blue transparent transparent;
+                        border-color: $color-purple transparent transparent;
                     }
                 }
             }

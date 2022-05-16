@@ -77,7 +77,7 @@ const getUniqueProps = key => {
             default: select('type', types, 'default', key),
         },
         variation: {
-            default: select('variation', variations, 'blue', key),
+            default: select('variation', variations, 'purple', key),
         },
         size: {
             default: select('size', sizes, 'm', key),

@@ -180,7 +180,7 @@ export const Textarea = () => ({
     },
     methods: actionsData,
     template: `<mc-field-text v-bind="tagBind" @input="handleInput">
-      <mc-button v-if="isAppend" slot="append" variation="blue-link" size="m-compact" @click="handleClick">
+      <mc-button v-if="isAppend" slot="append" variation="purple-link" size="m-compact" @click="handleClick">
           <mc-svg-icon slot="icon-append" name="send" />
       </mc-button>
   </mc-field-text>`,

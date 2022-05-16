@@ -226,7 +226,7 @@ export default {
                 active: menuMainItem.active(),
                 'with-submenu': menuMainItem.menu && menuMainItem.menu.length,
                 [`mc-side-bar--${this.themeConfig.mode || 'black'}__button`]: true,
-                'blue-hover': this.themeConfig.mainMenuLinks.variable === 'black-flat',
+                'purple-hover': this.themeConfig.mainMenuLinks.variable === 'black-flat',
                 [`mc-button--variation-${this.themeConfig.mainMenuLinks.variable}`]: !!this.themeConfig.mainMenuLinks
                     .variable,
                 ['mc-side-bar--black__button mc-button nuxt-link-active']:

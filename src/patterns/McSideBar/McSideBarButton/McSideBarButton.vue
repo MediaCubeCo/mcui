@@ -23,7 +23,7 @@
                 <mc-chip
                     v-if="info || withIndicator"
                     slot="icon-append"
-                    variation="blue"
+                    variation="purple"
                     class="mc-side-bar-button__chip"
                     :class="{ indicator: withIndicator }"
                 >
@@ -94,7 +94,7 @@ export default {
         },
         /**
          *  Дизайн:
-         *  `blue, red, blue-outline, blue-invert, blue-flat и т.д.`
+         *  `purple, red, purple-outline, purple-invert, purple-flat и т.д.`
          */
         variation: {
             type: String,
@@ -164,7 +164,7 @@ export default {
                 'mc-side-bar-button': true,
                 'mc-side-bar-button__with-submenu': this.withSubmenu,
                 [`mc-side-bar--${this.themeConfig.mode || 'black'}__button`]: true,
-                'blue-hover': !this.secondaryColor && this.themeConfig.mainMenuLinks.variable === 'black-flat',
+                'purple-hover': !this.secondaryColor && this.themeConfig.mainMenuLinks.variable === 'black-flat',
             }
         },
         btnAttrs() {
@@ -195,7 +195,7 @@ export default {
     &__dot {
         @include position(absolute, $space-100 6px null null);
         @include size($size-100);
-        background-color: $color-blue;
+        background-color: $color-purple;
         border-radius: $radius-circle;
     }
     &__chip {
@@ -213,8 +213,8 @@ export default {
         .mc-svg-icon {
             @include size($size-300);
         }
-        &.blue-hover:hover {
-            background-color: $color-lighter-blue;
+        &.purple-hover:hover {
+            background-color: $color-lighter-purple;
         }
 
         .mc-button__prepend {
@@ -242,8 +242,8 @@ export default {
     &--white__button {
         &.mc-button--is-active,
         &.mc-button.nuxt-link-active {
-            color: $color-blue;
-            background-color: $color-lighter-blue;
+            color: $color-purple;
+            background-color: $color-lighter-purple;
             pointer-events: auto;
         }
     }

@@ -102,7 +102,7 @@ export default {
             return {
                 name: hasUserName ? this.comment.user.full_name : this.defaultUserName,
                 weight: hasUserName ? 'semi-bold' : 'medium',
-                color: hasUserName ? 'black' : 'blue',
+                color: hasUserName ? 'black' : 'purple',
             }
         },
         filteredComment() {
@@ -151,14 +151,14 @@ export default {
         visibility: hidden;
     }
     &__link {
-        color: $color-blue;
+        color: $color-purple;
         &:hover,
         &:focus {
-            color: $color-hover-blue;
+            color: $color-hover-purple;
         }
 
         &:active {
-            color: $color-hover-blue;
+            color: $color-hover-purple;
         }
     }
 

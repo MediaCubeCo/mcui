@@ -1,86 +1,85 @@
 import { text, boolean } from '@storybook/addon-knobs'
 
 import McTableCard from './McTableCard'
-import McTableCardHeader from "./McTableCardHeader/McTableCardHeader"
-import McTitle from "../../elements/McTitle/McTitle"
-import McSvgIcon from "../../elements/McSvgIcon/McSvgIcon"
-import McButton from "../../elements/McButton/McButton"
-import McRoot from "../../templates/layouts/McRoot/McRoot"
+import McTableCardHeader from './McTableCardHeader/McTableCardHeader'
+import McTitle from '../../elements/McTitle/McTitle'
+import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
+import McButton from '../../elements/McButton/McButton'
+import McRoot from '../../templates/layouts/McRoot/McRoot'
 
 const wrapper = () => {
-  return {
-    template: `<div style="position: relative; margin-bottom: -3rem; height: calc(100vh - 3rem); width: 100%;">
+    return {
+        template: `<div style="position: relative; margin-bottom: -3rem; height: calc(100vh - 3rem); width: 100%;">
         <story />
     </div>`,
-  }
+    }
 }
 
 export default {
-  title: 'Patterns/McTableCard/McTableCard',
-  component: McTableCard,
-  subcomponents: { McTableCardHeader },
-  parameters: {
-    componentSubtitle: 'Status: Ready',
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/file/3gG13Y8ShNTZBxA0GBU40U/Dashboard-Panel?node-id=268%3A66',
+    title: 'Patterns/McTableCard/McTableCard',
+    component: McTableCard,
+    subcomponents: { McTableCardHeader },
+    parameters: {
+        componentSubtitle: 'Status: Ready',
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/file/3gG13Y8ShNTZBxA0GBU40U/Dashboard-Panel?node-id=268%3A66',
+        },
     },
-  },
-  decorators: [wrapper],
+    decorators: [wrapper],
 }
 
-
 export const Default = () => ({
-  components: { McTableCard, McTableCardHeader, McTitle, McSvgIcon, McButton, McRoot },
-  props: {
-    ml: {
-      default: text('ml (margin-left)', '100px', 'default'),
+    components: { McTableCard, McTableCardHeader, McTitle, McSvgIcon, McButton, McRoot },
+    props: {
+        ml: {
+            default: text('ml (margin-left)', '100px', 'default'),
+        },
+        hasSlotFooter: {
+            default: boolean('slot footer', true, 'default'),
+        },
     },
-    hasSlotFooter: {
-      default: boolean('slot footer', true, 'default'),
+    methods: {
+        getCardTopPos() {
+            const cards = document.getElementsByClassName('mc-table-card')
+            return cards.length ? cards[0].getBoundingClientRect().top : 0
+        },
+        showChat() {
+            this.panelResult = this.$showPanel({
+                component: 'McChat',
+                width: '320px',
+                openOn: 'right',
+                hideBg: true,
+                removeBg: false,
+                disableBgClick: false,
+                keepAlive: false,
+                props: {
+                    title: 'Chat',
+                    emptyMessage: 'History is clear',
+                    showInput: true,
+                    value: '',
+                    // loading: this.loading,
+                    editable: true,
+                    avatar: 'https://avatars3.githubusercontent.com/u/43079603?s=460&v=4',
+                    comments: [],
+                    indentTop: this.getCardTopPos(),
+                },
+            })
+        },
     },
-  },
-  methods: {
-    getCardTopPos() {
-      const cards = document.getElementsByClassName('mc-table-card')
-      return cards.length ? cards[0].getBoundingClientRect().top : 0
-    },
-    showChat() {
-      this.panelResult = this.$showPanel({
-        component: "McChat",
-        width: '320px',
-        openOn: 'right',
-        hideBg: true,
-        removeBg: false,
-        disableBgClick: false,
-        keepAlive: false,
-        props: {
-          title: 'Chat',
-          emptyMessage: 'History is clear',
-          showInput: true,
-          value: '',
-          // loading: this.loading,
-          editable: true,
-          avatar: 'https://avatars3.githubusercontent.com/u/43079603?s=460&v=4',
-          comments: [],
-          indentTop: this.getCardTopPos(),
-        }
-      })
-    },
-  },
-  template: `<mc-root>
+    template: `<mc-root>
       <mc-table-card :ml="ml">
       <mc-table-card-header slot="header" button-back-text="Back to list">
         <template slot="right">
-          <mc-button variation="blue-link" size="xs">
+          <mc-button variation="purple-link" size="xs">
             Add channel
             <mc-svg-icon slot="icon-append" name="add" />
           </mc-button>
-          <mc-button variation="blue-link" size="xs">
+          <mc-button variation="purple-link" size="xs">
             Amount
             <mc-svg-icon slot="icon-append" name="edit_solid" />
           </mc-button>
-          <mc-button variation="blue-link" size="xs" @click.prevent="showChat">
+          <mc-button variation="purple-link" size="xs" @click.prevent="showChat">
             Chat
             <mc-svg-icon slot="icon-append" name="chat" />
           </mc-button>
@@ -107,4 +106,3 @@ export const Default = () => ({
     </mc-table-card>
   </mc-root>`,
 })
-

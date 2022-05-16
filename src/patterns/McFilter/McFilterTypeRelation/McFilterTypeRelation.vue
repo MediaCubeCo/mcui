@@ -15,7 +15,7 @@
                 <mc-button
                     v-for="relation in relations"
                     :key="relation"
-                    :variation="relationType === relation ? 'blue' : 'dark-gray-outline'"
+                    :variation="relationType === relation ? 'purple' : 'dark-gray-outline'"
                     @click="() => changeRelationType(relation)"
                 >
                     {{ placeholders.actions[`${relation === 'exists' ? 'empty' : relation}`] }}

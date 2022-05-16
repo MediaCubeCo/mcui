@@ -64,7 +64,7 @@ export default {
         },
         /**
          *  Цвет текста:
-         *  `blue, red, gray и т.д.`
+         *  `purple, red, gray и т.д.`
          */
         color: {
             type: String,

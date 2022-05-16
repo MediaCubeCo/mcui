@@ -228,16 +228,16 @@ export const Default = () => ({
         <mc-table-col field="title" title="Канал" width="248" fixed="left" has-border :headerRight="total">
             <template v-slot="{ row }">
               <mc-preview>
-                <mc-avatar slot="left" border-color="blue" dot-color="orange" lazy :src="row.avatar" />
+                <mc-avatar slot="left" border-color="purple" dot-color="orange" lazy :src="row.avatar" />
                 <mc-title slot="top"> {{ row.title }} </mc-title>
                 <mc-title slot="bottom" color="gray" variation="overline"> {{ row.youtube_id }} </mc-title>
               </mc-preview>
             </template>
             <template v-slot:right="{ row }">
-                <mc-button style="margin-right: 4px;" variation="blue-link" size="xs-compact" @click.stop="handleBtnClick">
+                <mc-button style="margin-right: 4px;" variation="purple-link" size="xs-compact" @click.stop="handleBtnClick">
                     <mc-svg-icon slot="icon-append" name="edit" />
                 </mc-button>
-                <mc-button variation="blue-link" size="xs-compact" @click.stop="handleBtnClick">
+                <mc-button variation="purple-link" size="xs-compact" @click.stop="handleBtnClick">
                     <mc-svg-icon slot="icon-append" name="delete" />
                 </mc-button>
             </template>

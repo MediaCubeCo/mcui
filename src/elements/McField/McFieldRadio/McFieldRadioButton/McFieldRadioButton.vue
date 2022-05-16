@@ -125,7 +125,7 @@ export default {
             transition: border-color $duration-m;
         }
         &:hover::before {
-            border-color: $color-blue;
+            border-color: $color-purple;
         }
 
         &::after {
@@ -148,10 +148,10 @@ export default {
 
         &:checked ~ #{$block-name}__icon {
             &::before {
-                border-color: $color-blue;
+                border-color: $color-purple;
             }
             &::after {
-                background-color: $color-blue;
+                background-color: $color-purple;
             }
         }
     }

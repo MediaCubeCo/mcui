@@ -92,11 +92,11 @@ export default {
         },
         /**
          *  Дизайн:
-         *  `blue, red, blue-outline, blue-invert, blue-flat и т.д.`
+         *  `purple, red, purple-outline, purple-invert, purple-flat и т.д.`
          */
         variation: {
             type: String,
-            default: 'blue',
+            default: 'purple',
         },
         /**
          *  Размеры:
@@ -724,7 +724,7 @@ $colors: $token-colors;
 
     &--is-active,
     &.nuxt-link-active {
-        color: $color-blue;
+        color: $color-purple;
         background-color: transparent;
         border-color: transparent;
         pointer-events: none;

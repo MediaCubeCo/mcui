@@ -18,7 +18,7 @@
                         v-for="preset in presets[name]"
                         :key="preset.name"
                         :variation="getPresetButtonVariation(preset)"
-                        secondary-color="blue"
+                        secondary-color="purple"
                         @mouseup="() => handlePresetMouseUp(preset)"
                     >
                         {{ preset.name }}
@@ -47,7 +47,7 @@
                                 :current-values="!activeTag ? currentValues : {}"
                                 @input="handleConditionChange"
                             />
-                            <mc-button v-if="hasButtonAdd" variation="blue-outline" @click.native="handleStoreTag">
+                            <mc-button v-if="hasButtonAdd" variation="purple-outline" @click.native="handleStoreTag">
                                 {{ placeholders.actions[activeTag ? 'save' : 'add'] }}
                             </mc-button>
                         </template>
@@ -126,7 +126,7 @@
                         />
                         <mc-button
                             :disabled="buttonCreateIsDisable"
-                            variation="blue-outline"
+                            variation="purple-outline"
                             size="s"
                             @click.native="handleCreatePreset"
                         >
@@ -314,7 +314,7 @@ export default {
             return this.filters.filter(f => f.type !== 'fast')
         },
         visibilityToggleVariation() {
-            return this.isOpen || !this.buttonConfirmIsDisable ? 'blue-invert' : 'black-flat'
+            return this.isOpen || !this.buttonConfirmIsDisable ? 'purple-invert' : 'black-flat'
         },
         currentFilter() {
             return this.filters.find(f => f.value === this.selectedOptionFilter)
@@ -689,7 +689,7 @@ export default {
             this.activePreset = { ...preset }
         },
         getPresetButtonVariation(preset) {
-            return this.activePreset && this.activePreset.name === preset.name ? 'blue-invert' : 'gray-outline'
+            return this.activePreset && this.activePreset.name === preset.name ? 'purple-invert' : 'gray-outline'
         },
     },
 }

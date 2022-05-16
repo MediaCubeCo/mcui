@@ -123,7 +123,7 @@ export const WithIcons = () => ({
         },
     },
     template: `<mc-title v-bind="tagBind"> 
-      <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" color="blue" /> 
+      <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" color="purple" /> 
       {{ value }} 
       <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" color="red" /> 
   </mc-title>`,

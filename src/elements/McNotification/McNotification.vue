@@ -58,11 +58,11 @@ export default {
     props: {
         /**
          * Дизайн:
-         * blue, red, orange и т.д.
+         * purple, red, orange и т.д.
          */
         variation: {
             type: String,
-            default: 'blue',
+            default: 'purple',
         },
         /**
          * Заголовок блока

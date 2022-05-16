@@ -34,7 +34,7 @@ const getUniqueProps = key => {
             default: boolean('coloredText', false, key),
         },
         color: {
-            default: select('color', colors, 'blue', key),
+            default: select('color', colors, 'purple', key),
         },
         tabindex: {
             default: number('tabindex', null, {}, key),
