@@ -34,7 +34,7 @@ const getUniqueProps = key => {
             ),
         },
         variation: {
-            default: select('variation', tokenColors, 'blue', key),
+            default: select('variation', tokenColors, 'purple', key),
         },
         iconName: {
             default: select('iconName', icons, 'info', key),

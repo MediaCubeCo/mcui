@@ -61,7 +61,7 @@ export default {
          */
         accentColor: {
             type: String,
-            default: 'blue',
+            default: 'purple',
         },
         /**
          *  Заглавные буквы

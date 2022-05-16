@@ -8,7 +8,7 @@
             <input type="text" :readonly="true" :value="task.title" placeholder="Input title" />
         </div>
         <div class="my-pt-task__actions">
-            <a @click="$emit('pinTask', task.id)" v-if="!isChecked">
+            <a v-if="!isChecked" @click="$emit('pinTask', task.id)">
                 <span class="my-pt-task__actions-icon" />
             </a>
         </div>
@@ -16,32 +16,31 @@
 </template>
 
 <script>
-  export default {
-    name: 'my-el-task',
+export default {
+    name: 'MyElTask',
     props: {
-      task: {
-        type: Object,
-        required: true,
-        default: () => ({
-          id: '',
-          state: '',
-          title: '',
-        }),
-      },
+        task: {
+            type: Object,
+            required: true,
+            default: () => ({
+                id: '',
+                state: '',
+                title: '',
+            }),
+        },
     },
     computed: {
-      taskClass() {
-        return `my-pt-task ${this.task.state}`
-      },
-      isChecked() {
-        return this.task.state === 'TASK_ARCHIVED'
-      },
+        taskClass() {
+            return `my-pt-task ${this.task.state}`
+        },
+        isChecked() {
+            return this.task.state === 'TASK_ARCHIVED'
+        },
     },
-  };
+}
 </script>
 
 <style lang="scss">
-
 .my-pt-task {
     $block-name: &;
     font-size: $font-size-200;
@@ -63,7 +62,7 @@
         flex: 1;
     }
 
-    input[type="text"] {
+    input[type='text'] {
         width: 100%;
 
         &:focus {
@@ -82,7 +81,7 @@
             color: #eee;
 
             &:hover {
-                color: $color-blue;
+                color: $color-purple;
             }
             &:active {
                 color: $color-gray;
@@ -95,18 +94,18 @@
             text-align: center;
             margin-left: $space-200;
             &::before {
-                content: "*";
+                content: '*';
             }
         }
     }
 
     &.TASK_PINNED {
         a {
-            color: $color-blue;
+            color: $color-purple;
         }
     }
     &.TASK_ARCHIVED {
-        input[type="text"] {
+        input[type='text'] {
             color: #aaa;
         }
     }

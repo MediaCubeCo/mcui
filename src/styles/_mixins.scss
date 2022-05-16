@@ -173,7 +173,7 @@
   }
 }
 
-@mixin default-link($main-color: $color-black, $second-color: $color-blue) {
+@mixin default-link($main-color: $color-black, $second-color: $color-purple) {
   color: $main-color;
   &:hover,
   &:focus {
@@ -189,7 +189,7 @@
   @include default-link($color-black, $color-red);
 }
 @mixin text-link() {
-  @include default-link($color-blue, $color-hover-blue);
+  @include default-link($color-purple, $color-hover-purple);
 }
 @mixin close-link() {
   @include default-link($color-gray, $color-black);

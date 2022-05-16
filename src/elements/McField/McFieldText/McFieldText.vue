@@ -555,7 +555,7 @@ export default {
         &:focus,
         &:hover {
             outline: 0;
-            border-color: $color-blue;
+            border-color: $color-purple;
         }
 
         &::-webkit-search-cancel-button,

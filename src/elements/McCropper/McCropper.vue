@@ -71,7 +71,7 @@ export default {
 .mc-cropper {
     $block-name: &;
 
-    $color-main: $color-blue;
+    $color-main: $color-purple;
 
     .cropper {
         &-modal {

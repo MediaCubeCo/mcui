@@ -117,12 +117,12 @@ a {
 }
 
 ::selection {
-  background: fade-out($color-blue, 0);
+  background: fade-out($color-purple, 0);
   color: $color-white;
 }
 
 ::-moz-selection {
-  background: fade-out($color-blue, 0);
+  background: fade-out($color-purple, 0);
   color: $color-white;
 }
 

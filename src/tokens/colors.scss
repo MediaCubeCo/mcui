@@ -12,11 +12,17 @@ $color-hover-gray: #EDF0F3; /* Ховеры и неактивные эл-ты */
 $color-bg-gray: #F8F9FA; /* Бэкграунд */
 $color-white: #FFFFFF; /* Основной фон */
 //main colors
-$color-hover-blue: #0A54C2; /* Кнопки, ссылки, выделение активных элементов */
-$color-blue: #2578F4; /* Кнопки, ссылки, выделение активных элементов и иконки */
-$color-light-blue: #92BBFA; /* Текст на accent blue */
-$color-lighter-blue: #E1EDFF; /* Выбранные элементы */
+$color-hover-purple: #7238FF; /* Кнопки, ссылки, выделение активных элементов */
+$color-purple: #8756FF; /* Кнопки, ссылки, выделение активных элементов и иконки */
+$color-light-purple: #CBB7FF; /* Текст на accent purple */
+$color-lighter-purple: #EEE8FF; /* Выбранные элементы */
+
 //additional colors
+$color-hover-blue: #0A54C2; /* Альтернатива – Кнопки, ссылки, выделение активных элементов */
+$color-blue: #2578F4; /* Альтернатива – Кнопки, ссылки, выделение активных элементов и иконки */
+$color-light-blue: #92BBFA; /* Альтернатива – Текст на accent blue */
+$color-lighter-blue: #E1EDFF; /* Альтернатива – Выбранные элементы */
+
 $color-dark-orange: #BD8400; /* Кнопки, статус данных */
 $color-orange: #FCB100; /* Кнопки, статус данных */
 $color-yellow: #FFC60A;
@@ -26,7 +32,7 @@ $color-pale-pink: #FC9283;
 $color-dark-green: #218321; /* Цифры и положительные действия */
 $color-green: #4DCB4D; /* Зелёные кнопки */
 $color-toxic: #E8F443; /* Кнопки, статус данных */
-$color-purple: #7835FF; /* Статус данных */
+
 $color-ultraviolet: #C41CFD; /* Статус данных */
 $color-pinkish: #F073B1; /* Статус данных */
 $color-azure: #0A85C2; /* Статус данных */
@@ -34,29 +40,32 @@ $color-azure: #0A85C2; /* Статус данных */
 $color-transparent: transparent; /* Прозрачный фон */
 
 $token-colors: (
-  "black": $color-black,
-  "dark-gray": $color-dark-gray,
-  "gray": $color-gray,
-  "outline-gray": $color-outline-gray,
-  "hover-gray": $color-hover-gray,
-  "bg-gray": $color-bg-gray,
-  "white": $color-white,
-  "hover-blue": $color-hover-blue,
-  "blue": $color-blue,
-  "light-blue": $color-light-blue,
-  "lighter-blue": $color-lighter-blue,
-  "dark-orange": $color-dark-orange,
-  "orange": $color-orange,
-  "yellow": $color-yellow,
-  "dark-red": $color-dark-red,
-  "red": $color-red,
-  "pale-pink": $color-pale-pink,
-  "dark-green": $color-dark-green,
-  "green": $color-green,
-  "toxic": $color-toxic,
-  "purple": $color-purple,
-  "ultraviolet": $color-ultraviolet,
-  "pinkish": $color-pinkish,
-  "azure": $color-azure,
-  "transparent": $color-transparent,
+        "purple": $color-purple,
+        "hover-purple": $color-hover-purple,
+        "light-purple": $color-light-purple,
+        "lighter-purple": $color-lighter-purple,
+        "black": $color-black,
+        "dark-gray": $color-dark-gray,
+        "gray": $color-gray,
+        "outline-gray": $color-outline-gray,
+        "hover-gray": $color-hover-gray,
+        "bg-gray": $color-bg-gray,
+        "white": $color-white,
+        "hover-blue": $color-hover-blue,
+        "blue": $color-blue,
+        "light-blue": $color-light-blue,
+        "lighter-blue": $color-lighter-blue,
+        "dark-orange": $color-dark-orange,
+        "orange": $color-orange,
+        "yellow": $color-yellow,
+        "dark-red": $color-dark-red,
+        "red": $color-red,
+        "pale-pink": $color-pale-pink,
+        "dark-green": $color-dark-green,
+        "green": $color-green,
+        "toxic": $color-toxic,
+        "ultraviolet": $color-ultraviolet,
+        "pinkish": $color-pinkish,
+        "azure": $color-azure,
+        "transparent": $color-transparent,
 );

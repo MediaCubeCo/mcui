@@ -65,7 +65,7 @@ export default {
          */
         color: {
             type: String,
-            default: 'blue',
+            default: 'purple',
         },
 
         /**
@@ -139,7 +139,7 @@ export default {
 
         @at-root #{$block-name}--checked#{$block-name}--colored-text {
             #{$block-name}__text {
-                color: $color-blue;
+                color: $color-purple;
             }
         }
         @at-root #{$block-name}--disabled#{$block-name}--colored-text {
@@ -149,7 +149,7 @@ export default {
         }
         @at-root #{$block-name}--checked#{$block-name}--disabled#{$block-name}--colored-text {
             #{$block-name}__text {
-                color: $color-light-blue;
+                color: $color-light-purple;
             }
         }
     }
@@ -173,7 +173,7 @@ export default {
             @include size(0);
 
             &:checked + #{$block-name}__slider {
-                background-color: $color-blue;
+                background-color: $color-purple;
 
                 &:before {
                     transform: translateX($space-300);
@@ -215,11 +215,11 @@ export default {
             }
             &#{$block-name}--disabled {
                 &#{$block-name}--checked #{$block-name}__slider {
-                    @if $color != 'blue' {
+                    @if $color != 'purple' {
                         background-color: $value !important;
                         filter: saturate(50%);
                     } @else {
-                        background-color: $color-light-blue !important;
+                        background-color: $color-light-purple !important;
                     }
                 }
             }

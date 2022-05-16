@@ -5,7 +5,7 @@ export default {
     props: {
         /**
          *  Дизайн:
-         *  `blue, blue-outline т.д.`
+         *  `purple, purple-outline т.д.`
          */
         variation: {
             type: String,
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="scss">
-$light-scale: 'hover-gray', 'white', 'lighter-blue', 'toxic', 'transparent';
+$light-scale: 'hover-gray', 'white', 'lighter-blue', 'lighter-purple', 'toxic', 'transparent';
 .mc-badge {
     $block-name: &;
 

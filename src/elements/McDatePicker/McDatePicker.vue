@@ -47,7 +47,7 @@
                                             v-for="preset in customPresets"
                                             :key="preset.title"
                                             variation="black-link"
-                                            secondary-color="blue"
+                                            secondary-color="purple"
                                             @click="handlerPreselectRange(preset.period)"
                                         >
                                             {{ preset.title }}
@@ -57,7 +57,7 @@
                                         <mc-button
                                             v-if="placeholders.week"
                                             variation="black-link"
-                                            secondary-color="blue"
+                                            secondary-color="purple"
                                             @click="selectPeriod('week')"
                                         >
                                             {{ placeholders.week }}
@@ -65,7 +65,7 @@
                                         <mc-button
                                             v-if="placeholders.month"
                                             variation="black-link"
-                                            secondary-color="blue"
+                                            secondary-color="purple"
                                             @click="selectPeriod('month')"
                                         >
                                             {{ placeholders.month }}
@@ -73,7 +73,7 @@
                                         <mc-button
                                             v-if="placeholders.quarter"
                                             variation="black-link"
-                                            secondary-color="blue"
+                                            secondary-color="purple"
                                             @click="selectPeriod('quarter')"
                                         >
                                             {{ placeholders.quarter }}
@@ -81,7 +81,7 @@
                                         <mc-button
                                             v-if="placeholders.year"
                                             variation="black-link"
-                                            secondary-color="blue"
+                                            secondary-color="purple"
                                             @click="selectPeriod('year')"
                                         >
                                             {{ placeholders.year }}
@@ -499,7 +499,7 @@ export default {
         color: $color-black;
         &:hover,
         &:focus {
-            border-color: $color-blue;
+            border-color: $color-purple;
         }
     }
 
@@ -599,7 +599,7 @@ export default {
             .mx-btn-text {
                 color: $color-black;
                 &:hover {
-                    color: $color-blue;
+                    color: $color-purple;
                 }
             }
             .mx-icon {
@@ -650,19 +650,19 @@ export default {
             border-radius: $radius-100;
         }
         &:hover {
-            color: $color-blue;
-            background-color: fade-out($color-blue, 0.9);
+            color: $color-purple;
+            background-color: fade-out($color-purple, 0.9);
             border-radius: $radius-100;
         }
         &.today {
-            color: $color-blue;
+            color: $color-purple;
         }
         &.active {
             color: $color-white;
             background-color: $color-white;
 
             div {
-                background-color: $color-blue;
+                background-color: $color-purple;
                 height: 100%;
                 display: flex;
                 align-items: center;
@@ -677,8 +677,8 @@ export default {
 
             &:hover {
                 div {
-                    color: $color-blue;
-                    background-color: fade-out($color-blue, 0.9);
+                    color: $color-purple;
+                    background-color: fade-out($color-purple, 0.9);
                     border-radius: $radius-100;
                 }
             }
@@ -698,7 +698,7 @@ export default {
             border-radius: 0;
             background-color: $color-hover-gray;
             &.today {
-                color: $color-blue;
+                color: $color-purple;
             }
         }
     }

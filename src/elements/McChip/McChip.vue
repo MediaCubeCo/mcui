@@ -1,244 +1,239 @@
 <template>
-  <section class="mc-chip" tabindex="0" :class="classes">
-    <div v-if="$slots.icon" class="mc-chip__icon">
-      <!-- @slot Слот для иконки -->
-      <slot name="icon" />
-    </div>
-    <div v-if="title || $slots.default" class="mc-chip__title">
-      <!-- @slot контента -->
-      <slot>
-        {{ title }}
-      </slot>
-    </div>
-    <div v-if="counter || counter === 0" class="mc-chip__counter">
-      {{ counter }}
-    </div>
-    <button
-      v-if="closable"
-      class="mc-chip__button"
-      type="button"
-      v-on="$listeners"
-    >
-      <!-- @slot Слот для пользовательской кнопки -->
-      <slot name="button">
-        <mc-svg-icon size="200" name="cancel" />
-      </slot>
-    </button>
-  </section>
+    <section class="mc-chip" tabindex="0" :class="classes">
+        <div v-if="$slots.icon" class="mc-chip__icon">
+            <!-- @slot Слот для иконки -->
+            <slot name="icon" />
+        </div>
+        <div v-if="title || $slots.default" class="mc-chip__title">
+            <!-- @slot контента -->
+            <slot>
+                {{ title }}
+            </slot>
+        </div>
+        <div v-if="counter || counter === 0" class="mc-chip__counter">
+            {{ counter }}
+        </div>
+        <button v-if="closable" class="mc-chip__button" type="button" v-on="$listeners">
+            <!-- @slot Слот для пользовательской кнопки -->
+            <slot name="button">
+                <mc-svg-icon size="200" name="cancel" />
+            </slot>
+        </button>
+    </section>
 </template>
 
 <script>
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
 export default {
-  name: 'McChip',
-  components: { McSvgIcon },
-  props: {
-    /**
-     *  Text content
-     *
-     */
-    title: {
-      type: String,
-      default: '',
+    name: 'McChip',
+    components: { McSvgIcon },
+    props: {
+        /**
+         *  Text content
+         *
+         */
+        title: {
+            type: String,
+            default: '',
+        },
+        /**
+         *  Отключенное состояние
+         *
+         */
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+        /**
+         *  Кнопка закрытия
+         *
+         */
+        closable: {
+            type: Boolean,
+            default: false,
+        },
+        /**
+         *  Дизайн:
+         *  `purple, purple-invert т.д.`
+         */
+        variation: {
+            type: String,
+            default: 'transparent',
+        },
+        /**
+         *  Счетчик
+         *
+         */
+        counter: {
+            type: [Number, String],
+            default: null,
+        },
+        /**
+         *  Размер: m, s
+         *
+         */
+        size: {
+            type: String,
+            default: 'm',
+        },
+        /**
+         *  Если нужен
+         *  иной цвет текста
+         */
+        textColor: {
+            type: String,
+            default: '',
+        },
     },
-    /**
-     *  Отключенное состояние
-     *
-     */
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     *  Кнопка закрытия
-     *
-     */
-    closable: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     *  Дизайн:
-     *  `blue, blue-invert т.д.`
-     */
-    variation: {
-      type: String,
-      default: 'transparent',
-    },
-    /**
-     *  Счетчик
-     *
-     */
-    counter: {
-      type: [Number, String],
-      default: null,
-    },
-    /**
-     *  Размер: m, s
-     *
-     */
-    size: {
-      type: String,
-      default: 'm',
-    },
-    /**
-     *  Если нужен
-     *  иной цвет текста
-     */
-    textColor: {
-      type: String,
-      default: '',
-    },
-  },
 
-  computed: {
-    classes() {
-      return {
-        [`mc-chip--variation-${this.variation}`]: this.variation,
-        [`mc-chip--size-${this.size}`]: this.size,
-        [`mc-chip--text-color-${this.textColor}`]: this.textColor,
-      }
+    computed: {
+        classes() {
+            return {
+                [`mc-chip--variation-${this.variation}`]: this.variation,
+                [`mc-chip--size-${this.size}`]: this.size,
+                [`mc-chip--text-color-${this.textColor}`]: this.textColor,
+            }
+        },
     },
-  },
 }
 </script>
 
 <style lang="scss">
 .mc-chip {
-  $block-name: &;
+    $block-name: &;
 
-  display: inline-flex;
-  align-items: center;
-  color: $color-black;
-  font-family: $font-family-main;
-  font-size: $font-size-200;
-  line-height: $line-height-200;
-  max-width: 100%;
-
-  border-radius: 100px;
-  vertical-align: middle;
-  outline: none;
-  > * {
-    margin-right: $space-50;
-  }
-  > *:first-child {
-    margin-left: $space-50;
-  }
-
-  &--size {
-    &-m {
-      height: $size-400;
-      padding-left: $space-100;
-      padding-right: $space-100;
-    }
-    &-s {
-      height: $size-300;
-      padding-left: $space-50;
-      padding-right: $space-50;
-    }
-  }
-
-  &__icon {
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
     align-items: center;
-    margin-left: 0;
-  }
-
-  &__title {
-    @include ellipsis();
-    @include layout-flex-fix();
-
-    &:empty {
-      display: none;
-    }
-  }
-
-  &__counter {
-    flex: 0 0 auto;
+    color: $color-black;
     font-family: $font-family-main;
     font-size: $font-size-200;
     line-height: $line-height-200;
-    color: $color-dark-gray;
+    max-width: 100%;
 
-    &:empty {
-      display: none;
+    border-radius: 100px;
+    vertical-align: middle;
+    outline: none;
+    > * {
+        margin-right: $space-50;
     }
-  }
-
-  &__button {
-    @include size($size-200);
-    position: relative;
-    display: flex;
-    flex: 0 0 auto;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin-right: 0;
-    border-radius: 0;
-    user-select: none;
-    text-decoration: none;
-    text-transform: none;
-    background-color: transparent;
-    background-image: none;
-    cursor: pointer;
-    outline: 0;
-    border: none;
-    transition: all $duration-s;
-    flex-wrap: nowrap;
-    -webkit-appearance: none;
-    -webkit-text-fill-color: currentColor;
-    color: $color-dark-gray;
-    opacity: 0.2;
-
-    &:hover {
-      opacity: 1;
-      color: $color-red;
+    > *:first-child {
+        margin-left: $space-50;
     }
 
-    &:active {
-      color: darken($color-red, 15%);
+    &--size {
+        &-m {
+            height: $size-400;
+            padding-left: $space-100;
+            padding-right: $space-100;
+        }
+        &-s {
+            height: $size-300;
+            padding-left: $space-50;
+            padding-right: $space-50;
+        }
     }
-  }
 
-  @each $color, $value in $token-colors {
-    &--variation-#{$color} {
-      background-color: $value;
-      color: $color-white;
+    &__icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0;
+    }
 
-      #{$block-name} {
-        &__button {
-          color: $color-white;
+    &__title {
+        @include ellipsis();
+        @include layout-flex-fix();
 
-          &:hover {
+        &:empty {
+            display: none;
+        }
+    }
+
+    &__counter {
+        flex: 0 0 auto;
+        font-family: $font-family-main;
+        font-size: $font-size-200;
+        line-height: $line-height-200;
+        color: $color-dark-gray;
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    &__button {
+        @include size($size-200);
+        position: relative;
+        display: flex;
+        flex: 0 0 auto;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin-right: 0;
+        border-radius: 0;
+        user-select: none;
+        text-decoration: none;
+        text-transform: none;
+        background-color: transparent;
+        background-image: none;
+        cursor: pointer;
+        outline: 0;
+        border: none;
+        transition: all $duration-s;
+        flex-wrap: nowrap;
+        -webkit-appearance: none;
+        -webkit-text-fill-color: currentColor;
+        color: $color-dark-gray;
+        opacity: 0.2;
+
+        &:hover {
             opacity: 1;
+            color: $color-red;
+        }
+
+        &:active {
+            color: darken($color-red, 15%);
+        }
+    }
+
+    @each $color, $value in $token-colors {
+        &--variation-#{$color} {
+            background-color: $value;
             color: $color-white;
-          }
 
-          &:active {
-            color: darken($color-white, 15%);
-          }
+            #{$block-name} {
+                &__button {
+                    color: $color-white;
+
+                    &:hover {
+                        opacity: 1;
+                        color: $color-white;
+                    }
+
+                    &:active {
+                        color: darken($color-white, 15%);
+                    }
+                }
+
+                &__counter {
+                    color: fade-out($color-white, 0.5);
+                }
+            }
+
+            &-invert {
+                background-color: fade-out($value, 0.85);
+            }
+
+            &-outline {
+                border: 1px solid $value;
+                color: $value;
+            }
         }
-
-        &__counter {
-          color: fade-out($color-white, 0.5);
+        &--text-color-#{$color} {
+            #{$block-name}__title {
+                color: $value;
+            }
         }
-      }
-
-      &-invert {
-        background-color: fade-out($value, 0.85);
-      }
-
-      &-outline {
-        border: 1px solid $value;
-        color: $value;
-      }
     }
-    &--text-color-#{$color} {
-      #{$block-name}__title {
-        color: $value;
-      }
-    }
-  }
 }
 </style>

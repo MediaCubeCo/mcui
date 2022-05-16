@@ -39,7 +39,7 @@ export default {
             return `${this.tag.categoryName}${append}`
         },
         computedVariation() {
-            return this.closable ? 'blue-invert' : 'hover-gray'
+            return this.closable ? 'purple-invert' : 'hover-gray'
         },
         classes() {
             return {
@@ -69,11 +69,11 @@ export default {
         border-radius: $space-150;
         &:hover {
             cursor: pointer;
-            background-color: fade-out($color-blue, 0.6);
+            background-color: fade-out($color-purple, 0.6);
         }
     }
     &--is-active {
-        background-color: fade-out($color-blue, 0.6);
+        background-color: fade-out($color-purple, 0.6);
     }
 
     .mc-title {
