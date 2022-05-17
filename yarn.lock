@@ -9057,7 +9057,7 @@ ignore@^4.0.3, ignore@^4.0.6:
   resolved "https://registry.npmjs.org/ignore/-/ignore-4.0.6.tgz"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-imask@^6.4.2:
+imask@^6.2.0:
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/imask/-/imask-6.4.2.tgz#f1c67e6961640bf5b09d7b4a34dcf4f9a3df7e22"
   integrity sha512-xvEgbTdk6y2dW2UAysq0NRPmO6PuaXM5NHIt4TXEJEwXUHj26M0p/fXqyrSJdNXFaGVOtqYjPRnNdrjQQhDuuA==
@@ -16171,10 +16171,10 @@ vue-cropperjs@3.0.0:
   dependencies:
     cropperjs "^1.1.3"
 
-vue-demi@^0.12.1:
-  version "0.12.5"
-  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.5.tgz#8eeed566a7d86eb090209a11723f887d28aeb2d1"
-  integrity sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==
+vue-demi@^0.11.2:
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.11.4.tgz#6101992fe4724cf5634018a16e953f3052e94e2a"
+  integrity sha512-/3xFwzSykLW2HiiLie43a+FFgNOcokbBJ+fzvFXd0r2T8MYohqvphUyDQ8lbAwzQ3Dlcrb1c9ykifGkhSIAk6A==
 
 vue-docgen-api@^4.1.0:
   version "4.25.0"
@@ -16218,13 +16218,13 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.npmjs.org/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
 
-vue-imask@^6.4.2:
-  version "6.4.2"
-  resolved "https://registry.yarnpkg.com/vue-imask/-/vue-imask-6.4.2.tgz#1cffc9cfaab5673ad0ab68c1bd44cfa5e17f2043"
-  integrity sha512-WJgwZa+cENuOwZmI3FY6aiuoXs2/QSbtXjtRHCC9/bX7CTgeVBaBabh2tBX38QFEvQeUfmDnzKL6++SgQdYjQA==
+vue-imask@6.2.2:
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/vue-imask/-/vue-imask-6.2.2.tgz#552ec70fc2e0a428d00727589f222516cbc804de"
+  integrity sha512-6mp0G+Nvur41FGV4j80QWcl2YZ9FSSY34NzAdpzDdgma9BwDxPX5p+VPPfIeGKZA3wJKi/mHCt07MVOdYE5glQ==
   dependencies:
-    imask "^6.4.2"
-    vue-demi "^0.12.1"
+    imask "^6.2.0"
+    vue-demi "^0.11.2"
 
 vue-jest@^3.0.5:
   version "3.0.5"

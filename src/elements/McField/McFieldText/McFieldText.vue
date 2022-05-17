@@ -32,16 +32,22 @@
 
                     <template v-else>
                         <!-- When possible, prefer to use input type="tel" to avoid glitch on android devices -->
-                        <input
+                        <imask-input
                             v-if="mask"
                             ref="input"
-                            v-mask="maskConfig"
                             v-bind="inputAttrs"
-                            type="tel"
+                            :mask="mask"
+                            :lazy="false"
+                            :overwrite="false"
+                            :unmask="true"
+                            :definitions="{
+                                '#': /./,
+                            }"
                             :readonly="readOnly"
                             :maxlength="maxLength"
+                            type="tel"
                             v-on="listeners"
-                            @input="$event => handleInput($event.target.value)"
+                            @input="handleInput"
                         />
                         <input
                             v-else
@@ -118,7 +124,7 @@
 <script>
 import _omit from 'lodash/omit'
 import { getTokenValue } from '../../../utils/getTokens'
-import { IMaskDirective } from 'vue-imask'
+import { IMaskComponent } from 'vue-imask'
 
 import TextareaAutosize from 'vue-textarea-autosize/src/components/TextareaAutosize.vue'
 import McTitle from '../../McTitle/McTitle'
@@ -128,13 +134,13 @@ import McTooltip from '../../McTooltip/McTooltip'
 
 export default {
     name: 'McFieldText',
-    directives: { mask: IMaskDirective },
     components: {
         McButton,
         McTitle,
         McSvgIcon,
         TextareaAutosize,
         McTooltip,
+        'imask-input': IMaskComponent,
     },
     props: {
         /**
@@ -310,16 +316,6 @@ export default {
                 'mc-field-text--textarea-autosize': this.isTextareaAutosize,
                 'mc-field-text--disabled': this.disabled,
                 'mc-field-text--copy': this.copy,
-            }
-        },
-
-        maskConfig() {
-            return {
-                mask: this.mask,
-                lazy: false,
-                definitions: {
-                    '#': /./,
-                },
             }
         },
 
