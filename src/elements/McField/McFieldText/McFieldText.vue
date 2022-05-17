@@ -35,7 +35,7 @@
                         <input
                             v-if="mask"
                             ref="input"
-                            v-mask="mask"
+                            v-mask="maskConfig"
                             v-bind="inputAttrs"
                             type="tel"
                             :readonly="readOnly"
@@ -118,7 +118,7 @@
 <script>
 import _omit from 'lodash/omit'
 import { getTokenValue } from '../../../utils/getTokens'
-import { mask } from 'vue-the-mask'
+import { IMaskDirective } from 'vue-imask'
 
 import TextareaAutosize from 'vue-textarea-autosize/src/components/TextareaAutosize.vue'
 import McTitle from '../../McTitle/McTitle'
@@ -128,7 +128,7 @@ import McTooltip from '../../McTooltip/McTooltip'
 
 export default {
     name: 'McFieldText',
-    directives: { mask },
+    directives: { mask: IMaskDirective },
     components: {
         McButton,
         McTitle,
@@ -161,7 +161,7 @@ export default {
         /**
          *  Маска поля:
          *
-         * tokens - https://vuejs-tips.github.io/vue-the-mask/#tokens
+         * tokens - https://imask.js.org/guide.html
          *
          */
         mask: {
@@ -310,6 +310,16 @@ export default {
                 'mc-field-text--textarea-autosize': this.isTextareaAutosize,
                 'mc-field-text--disabled': this.disabled,
                 'mc-field-text--copy': this.copy,
+            }
+        },
+
+        maskConfig() {
+            return {
+                mask: this.mask,
+                lazy: false,
+                definitions: {
+                    '#': /./,
+                },
             }
         },
 
