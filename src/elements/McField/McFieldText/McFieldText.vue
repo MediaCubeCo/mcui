@@ -35,17 +35,7 @@
                         <imask-input
                             v-if="mask"
                             ref="input"
-                            v-bind="inputAttrs"
-                            :mask="mask"
-                            :lazy="false"
-                            :overwrite="false"
-                            :unmask="true"
-                            :definitions="{
-                                '#': /./,
-                            }"
-                            :readonly="readOnly"
-                            :maxlength="maxLength"
-                            type="tel"
+                            v-bind="maskInputAttrs"
                             v-on="listeners"
                             @input="handleInput"
                         />
@@ -298,6 +288,14 @@ export default {
             type: String,
             default: null,
         },
+
+        /**
+         * Очищаем данные от маски на выходе
+         */
+        clearOutput: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -333,6 +331,22 @@ export default {
 
         hasCharCounter() {
             return this.maxLength && (this.isTextarea || this.isTextareaAutosize)
+        },
+
+        maskInputAttrs() {
+            return {
+                ...this.inputAttrs,
+                mask: this.mask,
+                lazy: false,
+                overwrite: false,
+                unmask: this.clearOutput,
+                definitions: {
+                    '#': /./,
+                },
+                readonly: this.readOnly,
+                maxlength: this.maxLength,
+                type: 'tel',
+            }
         },
 
         inputAttrs() {
@@ -524,6 +538,7 @@ export default {
     &__append {
         right: $space-100;
         padding: $space-100 0 $space-100 $space-50;
+
         &--indent-bottom {
             padding-bottom: $space-400;
         }
@@ -599,6 +614,7 @@ export default {
             &__prepend {
                 align-items: flex-start;
             }
+
             &__input {
                 height: auto;
                 min-height: 92px;
