@@ -33,7 +33,7 @@
                     <template v-else>
                         <!-- When possible, prefer to use input type="tel" to avoid glitch on android devices -->
                         <imask-input
-                            v-if="mask || maskOptions"
+                            v-if="isMaskVisible"
                             ref="input"
                             v-bind="maskInputAttrs"
                             v-on="listeners"
@@ -114,7 +114,7 @@
 <script>
 import _omit from 'lodash/omit'
 import { getTokenValue } from '../../../utils/getTokens'
-import { IMaskComponent } from 'vue-imask'
+import { IMaskComponent, IMask } from 'vue-imask'
 
 import TextareaAutosize from 'vue-textarea-autosize/src/components/TextareaAutosize.vue'
 import McTitle from '../../McTitle/McTitle'
@@ -139,6 +139,7 @@ export default {
          * нативные как text, password, email и т.д.`
          *
          * кастомный num - разрешает ввод только цифр и дробных чисел, без ислчений ввиде буквы 'E'
+         * date - добавляет placeholder, маску и ограничения ввода
          */
         type: {
             type: String,
@@ -336,6 +337,10 @@ export default {
             }
         },
 
+        isMaskVisible() {
+            return this.mask || this.maskOptions || this.prettyType === 'date'
+        },
+
         isTextarea() {
             return this.type === 'textarea'
         },
@@ -352,6 +357,18 @@ export default {
             return this.maxLength && (this.isTextarea || this.isTextareaAutosize)
         },
 
+        dateMask() {
+            return {
+                mask: Date,
+                autofix: true,
+                blocks: {
+                    d: { mask: IMask.MaskedRange, placeholderChar: 'd', from: 1, to: 31, maxLength: 2 },
+                    m: { mask: IMask.MaskedRange, placeholderChar: 'm', from: 1, to: 12, maxLength: 2 },
+                    Y: { mask: IMask.MaskedRange, placeholderChar: 'y', from: 1900, to: 2999, maxLength: 4 },
+                },
+            }
+        },
+
         maskInputAttrs() {
             return {
                 ...this.inputAttrs,
@@ -366,6 +383,7 @@ export default {
                 maxlength: this.maxLength,
                 type: 'tel',
                 ...(this.maskOptions ?? {}),
+                ...(this.prettyType === 'date' ? this.dateMask : {}),
             }
         },
 
