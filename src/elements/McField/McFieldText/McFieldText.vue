@@ -33,7 +33,7 @@
                     <template v-else>
                         <!-- When possible, prefer to use input type="tel" to avoid glitch on android devices -->
                         <imask-input
-                            v-if="mask"
+                            v-if="mask || maskOptions"
                             ref="input"
                             v-bind="maskInputAttrs"
                             v-on="listeners"
