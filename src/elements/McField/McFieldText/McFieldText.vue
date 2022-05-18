@@ -313,7 +313,7 @@ export default {
          */
         maskOptions: {
             type: Object,
-            default: () => ({}),
+            default: null,
         },
     },
 
@@ -365,7 +365,7 @@ export default {
                 readonly: this.readOnly,
                 maxlength: this.maxLength,
                 type: 'tel',
-                ...this.maskOptions,
+                ...(this.maskOptions ?? {}),
             }
         },
 
