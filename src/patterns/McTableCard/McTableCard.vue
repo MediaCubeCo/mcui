@@ -126,6 +126,7 @@ export default {
                 width: 100%;
                 left: 0;
                 bottom: 100%;
+                pointer-events: none;
             }
         }
     }
