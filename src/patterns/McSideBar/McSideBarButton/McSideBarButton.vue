@@ -217,11 +217,14 @@ export default {
             background-color: $color-lighter-purple;
         }
 
+        .mc-button__text {
+            margin-right: $space-100;
+        }
         .mc-button__prepend {
             margin-right: $space-100;
         }
         .mc-button__append {
-            margin-left: $space-100;
+            margin-left: auto;
         }
         .mc-chip {
             height: auto;
