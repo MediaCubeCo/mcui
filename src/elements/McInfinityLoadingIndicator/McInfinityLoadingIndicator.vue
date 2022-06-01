@@ -1,6 +1,6 @@
 <template>
     <section class="el-infinity-loading__wrapper">
-        <div id="indicator" class="el-infinity-loading"></div>
+        <div :id="id" class="el-infinity-loading"></div>
     </section>
 </template>
 <script>
@@ -34,6 +34,7 @@ export default {
             observer: null,
             el: null,
             loading: false,
+            id: `indicator_${Date.now()}`,
         }
     },
     watch: {
@@ -52,7 +53,7 @@ export default {
     },
     methods: {
         setObserver() {
-            this.el = document.querySelector('#indicator')
+            this.el = document.getElementById(this.id)
             // создаем IntersectionObserver - смотрит за тем когда элемент попадает во viewport
             this.observer = new IntersectionObserver(
                 ([entry]) => {
