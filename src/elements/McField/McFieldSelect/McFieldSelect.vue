@@ -431,7 +431,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
     .multiselect {
         &__placeholder {
             @include ellipsis();
-            color: $color-dark-gray;
+            color: $color-gray;
             font-size: $font-size-200;
             line-height: $line-height-200;
             margin-bottom: $space-150 - 1px;
@@ -447,7 +447,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
             min-height: auto;
 
             @include input-placeholder() {
-                color: $color-dark-gray;
+                color: $color-gray;
             }
         }
 
@@ -460,7 +460,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
             min-height: auto;
 
             @include input-placeholder() {
-                color: $color-dark-gray;
+                color: $color-gray;
             }
         }
 

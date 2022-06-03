@@ -625,7 +625,7 @@ export default {
         }
 
         @include input-placeholder() {
-            color: $color-dark-gray;
+            color: $color-gray;
         }
     }
 

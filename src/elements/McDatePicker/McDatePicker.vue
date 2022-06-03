@@ -501,6 +501,9 @@ export default {
         &:focus {
             border-color: $color-purple;
         }
+        &::placeholder {
+            color: $color-gray;
+        }
     }
 
     &--error {
