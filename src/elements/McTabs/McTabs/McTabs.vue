@@ -1,27 +1,61 @@
 <template>
-    <tabs
-        ref="tabs"
-        class="mc-tabs"
-        :class="classes"
-        :cache-lifetime="cacheLifetime"
-        :options="{ useUrlFragment, defaultTabHash }"
-        @changed="e => changedHandler(e)"
-    >
-        <!-- @slot для табов -->
-        <slot />
-    </tabs>
+    <div class="mc-tabs" :class="classes">
+        <div class="tabs-component">
+            <ul role="tablist" class="tabs-component-tabs">
+                <li
+                    v-for="(tab, i) in tabs"
+                    v-show="tab.isVisible"
+                    :key="i"
+                    :class="{ 'is-active': tab.isActive, 'is-disabled': tab.isDisabled }"
+                    class="tabs-component-tab"
+                    role="presentation"
+                >
+                    <a
+                        :aria-controls="tab.hash"
+                        :aria-selected="tab.isActive"
+                        :href="tab.to || tab.hash"
+                        class="tabs-component-tab-a"
+                        role="tab"
+                        @click="selectTab(tab.hash, $event)"
+                        v-html="tab.header"
+                    ></a>
+                </li>
+            </ul>
+            <div class="tabs-component-panels">
+                <slot />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-import Tabs from 'vue-tabs-component/src/components/Tabs.vue'
-import McTab from '../McTab/McTab'
+class ExpiringStorage {
+    get(key) {
+        const cached = JSON.parse(localStorage.getItem(key))
+
+        if (!cached) return null
+
+        const expires = new Date(cached.expires)
+
+        if (expires < new Date()) {
+            localStorage.removeItem(key)
+            return null
+        }
+
+        return cached.value
+    }
+
+    set(key, value, lifeTimeInMinutes) {
+        const currentTime = new Date().getTime()
+        const expires = new Date(currentTime + lifeTimeInMinutes * 60000)
+        localStorage.setItem(key, JSON.stringify({ value, expires }))
+    }
+}
+
+const expiringStorage = new ExpiringStorage()
 
 export default {
     name: 'McTabs',
-    components: {
-        McTab,
-        Tabs,
-    },
     props: {
         value: {
             type: String,
@@ -83,6 +117,12 @@ export default {
             default: false,
         },
     },
+    data: () => ({
+        tabs: [],
+        activeTabHash: '',
+        activeTabIndex: 0,
+        lastActiveTabHash: '',
+    }),
     computed: {
         classes() {
             return {
@@ -100,9 +140,50 @@ export default {
                 this.$emit('input', value)
             },
         },
+        storageKey() {
+            return `vue-tabs-component.cache.${window.location.host}${window.location.pathname}`
+        },
+    },
+    watch: {
+        loading(val, oldVal) {
+            if (!val && oldVal)
+                this.$nextTick(() => {
+                    this.checkInitTab()
+                })
+        },
+    },
+    created() {
+        this.tabs = this.$children
     },
     mounted() {
+        this.options = {
+            useUrlFragment: this.useUrlFragment,
+            defaultTabHash: this.defaultTabHash,
+        }
         this.checkInitTab()
+
+        window.addEventListener('hashchange', () => this.selectTab(window.location.hash))
+
+        if (this.findTab(window.location.hash)) {
+            this.selectTab(window.location.hash)
+            return
+        }
+
+        const previousSelectedTabHash = expiringStorage.get(this.storageKey)
+
+        if (this.findTab(previousSelectedTabHash)) {
+            this.selectTab(previousSelectedTabHash)
+            return
+        }
+
+        if (this.options.defaultTabHash !== null && this.findTab('#' + this.options.defaultTabHash)) {
+            this.selectTab('#' + this.options.defaultTabHash)
+            return
+        }
+
+        if (this.tabs.length) {
+            this.selectTab(this.tabs[0].hash)
+        }
     },
     updated() {
         this.switchingDisableTab()
@@ -110,15 +191,15 @@ export default {
     methods: {
         checkInitTab() {
             if (this.activeTab) {
-                const tab = this.$refs.tabs.$children.find(t => t.id === this.activeTab)
+                const tab = this.$children.find(t => t.id === this.activeTab)
                 tab?.hash && tab?.hash?.replace('#', '') && this.setActiveTab(tab.hash)
             }
         },
         setActiveTab(tabHash) {
-            this.$refs.tabs.selectTab(tabHash)
+            this.selectTab(tabHash)
         },
         changedHandler(e) {
-            const lastActiveTab = this.$refs.tabs.getActiveTab()
+            const lastActiveTab = this.getActiveTab()
             if (!lastActiveTab) return
             if (e.tab.href) {
                 window.open(e.tab.href, '_blank')
@@ -141,9 +222,6 @@ export default {
                 this.setActiveTab(hash)
             })
         },
-        getActiveTab() {
-            return this.$refs.tabs.getActiveTab()
-        },
         switchingDisableTab() {
             /**
              * Переключает активный и в то
@@ -151,10 +229,98 @@ export default {
              * на первый доступный
              */
             if (this.loading) return
-            const activeTab = this.$refs.tabs?.tabs?.find(tab => tab.isActive)
+            const activeTab = this.tabs?.find(tab => tab.isActive)
             if (!activeTab?.isDisabled) return
-            const firstAvailableTab = this.$refs.tabs.tabs.find(tab => !tab?.isDisabled && !tab?.href && !tab?.to)
+            const firstAvailableTab = this.tabs.find(tab => !tab?.isDisabled && !tab?.href && !tab?.to)
             firstAvailableTab && this.setActiveTab(firstAvailableTab.hash)
+        },
+        findTab(hash) {
+            return this.tabs.find(tab => tab.hash === hash)
+        },
+
+        selectTab(selectedTabHash, event) {
+            // See if we should store the hash in the url fragment.
+            if (event && !this.options.useUrlFragment) {
+                event.preventDefault()
+            }
+
+            const selectedTab = this.findTab(selectedTabHash)
+
+            if (!selectedTab) {
+                return
+            }
+
+            if (selectedTab.isDisabled) {
+                event.preventDefault()
+                return
+            }
+
+            if (this.lastActiveTabHash === selectedTab.hash) {
+                this.$emit('clicked', { tab: selectedTab })
+                return
+            }
+
+            this.tabs.forEach(tab => {
+                tab.isActive = tab.hash === selectedTab.hash
+            })
+
+            this.changedHandler({ tab: selectedTab })
+
+            this.activeTabHash = selectedTab.hash
+            this.activeTabIndex = this.getTabIndex(selectedTabHash)
+
+            this.lastActiveTabHash = this.activeTabHash = selectedTab.hash
+
+            expiringStorage.set(this.storageKey, selectedTab.hash, this.cacheLifetime)
+        },
+
+        setTabVisible(hash, visible) {
+            const tab = this.findTab(hash)
+
+            if (!tab) {
+                return
+            }
+
+            tab.isVisible = visible
+
+            if (tab.isActive) {
+                // If tab is active, set a different one as active.
+                tab.isActive = visible
+
+                this.tabs.every(tab => {
+                    if (tab.isVisible) {
+                        tab.isActive = true
+
+                        return false
+                    }
+
+                    return true
+                })
+            }
+        },
+
+        getTabIndex(hash) {
+            const tab = this.findTab(hash)
+
+            return this.tabs.indexOf(tab)
+        },
+
+        getTabHash(index) {
+            const tab = this.tabs.find(tab => this.tabs.indexOf(tab) === index)
+
+            if (!tab) {
+                return
+            }
+
+            return tab.hash
+        },
+
+        getActiveTab() {
+            return this.findTab(this.activeTabHash)
+        },
+
+        getActiveTabIndex() {
+            return this.getTabIndex(this.activeTabHash)
         },
     },
 }
