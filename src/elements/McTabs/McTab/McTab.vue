@@ -14,17 +14,11 @@
 </template>
 
 <script>
-import Tab from 'vue-tabs-component/src/components/Tab.vue'
-import McSvgIcon from '../../McSvgIcon/McSvgIcon'
 /**
  * Смотреть McTabs
  */
 export default {
     name: 'McTab',
-    components: {
-        McSvgIcon,
-    },
-    extends: Tab,
     props: {
         /**
          *  Если нужен иной фрагмент в url после #
@@ -122,7 +116,22 @@ export default {
             default: '',
         },
     },
+    data: () => ({
+        isActive: false,
+        isVisible: true,
+    }),
     computed: {
+        computedId() {
+            return this.id ? this.id : this.name.toLowerCase().replace(/ /g, '-')
+        },
+
+        hash() {
+            if (this.isDisabled) {
+                return '#'
+            }
+
+            return '#' + this.computedId
+        },
         computedPrefix() {
             const colorClass = this.iconPrependColor
                 ? ` tabs-component-tab__icon-prepend--color-${this.iconPrependColor}`
