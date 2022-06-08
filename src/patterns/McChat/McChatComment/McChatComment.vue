@@ -95,7 +95,7 @@ export default {
             return this.editable && !('status' in this.comment)
         },
         computedAvatar() {
-            return _has(this.comment, ['user', 'profile', 'avatar']) ? this.comment.user.profile.avatar : null
+            return this.comment?.moderator?.avatar ?? this.comment?.user?.avatar ?? this.comment?.user?.profile?.avatar
         },
         computedTitle() {
             const hasUserName = _has(this.comment, ['user', 'full_name']) && this.comment.user.full_name
