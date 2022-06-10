@@ -19,6 +19,7 @@
                     <slot />
                 </div>
             </mc-fake-scroll>
+            <slot name="bottom" />
         </div>
         <slot name="includes" />
     </div>
