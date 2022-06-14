@@ -280,7 +280,7 @@ export default {
         border-radius: $radius-100;
         padding: $space-300;
         @media #{$media-query-m} {
-            padding: $space-500 $space-300;
+            padding: $space-400;
         }
     }
 
