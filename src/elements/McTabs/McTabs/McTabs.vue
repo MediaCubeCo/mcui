@@ -260,11 +260,13 @@ export default {
                 return
             }
 
+            this.changedHandler({ tab: selectedTab })
+
+            if (!!selectedTab.href || !!selectedTab.to) return
+
             this.tabs.forEach(tab => {
                 tab.isActive = tab.hash === selectedTab.hash
             })
-
-            this.changedHandler({ tab: selectedTab })
 
             this.activeTabHash = selectedTab.hash
             this.activeTabIndex = this.getTabIndex(selectedTabHash)
