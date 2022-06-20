@@ -106,6 +106,10 @@ export default {
             type: Object,
             default: null,
         },
+        useTimezone: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -139,7 +143,14 @@ export default {
                             ? `${this.placeholders.from} ${this.getFormattedVal(value.more, filter)}`
                             : ''
                         const to = value.less
-                            ? `${this.placeholders.to} ${this.getFormattedVal(value.less, filter)}`
+                            ? `${this.placeholders.to} ${this.getFormattedVal(
+                                  filter.type === 'date' && this.useTimezone
+                                      ? this.$moment(value.less)
+                                            .subtract(1, 'days')
+                                            .format()
+                                      : value.less,
+                                  filter,
+                              )}`
                             : ''
                         const space = from && to ? ' ' : ''
                         const title = typeof value === 'object' ? `${from}${space}${to}`.toLowerCase() : value

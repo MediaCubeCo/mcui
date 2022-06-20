@@ -11,6 +11,7 @@
                 <date-picker
                     ref="input"
                     :type="type"
+                    :value-type="useTimezone ? 'format' : 'date'"
                     :value="prettyValue"
                     v-bind="{ ...$attrs, range, ...valueType, ...hoursOptions, ...minutesOptions, ...secondsOptions }"
                     class="mc-date-picker__date-picker"
@@ -123,6 +124,8 @@
 </template>
 
 <script>
+import momentTz from 'moment-timezone'
+import moment from 'moment'
 import _isEmpty from 'lodash/isEmpty'
 import _omit from 'lodash/omit'
 import DatePicker from 'vue2-datepicker'
@@ -304,16 +307,26 @@ export default {
             type: Array,
             default: () => [],
         },
+        timezone: {
+            type: String,
+            default: momentTz.tz.guess(),
+        },
+        useTimezone: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
         return {
-            prettyValue: null,
             pickDate: null,
             phone: null,
         }
     },
     computed: {
+        currentTimezone() {
+            return this.timezone || 'UTC'
+        },
         classes() {
             return {
                 'mc-date-picker--error': this.errorText,
@@ -353,27 +366,29 @@ export default {
         isFooterVisible() {
             return this.$slots.footer || (this.isRange && (this.customPresets?.length || !_isEmpty(this.placeholders)))
         },
-    },
-    watch: {
-        value(newVal) {
-            if (this.isRange && newVal) {
-                this.prettyValue = newVal.map(item => new Date(item))
-            } else {
-                this.prettyValue = this.useFormat ? newVal : new Date(newVal)
+        prettyValue() {
+            if (!this.useTimezone) {
+                if (this.isRange && this.value) return this.value.map(item => new Date(item))
+                return this.useFormat ? this.value : new Date(this.value)
             }
+            const formattingDate = date =>
+                momentTz.tz(moment(date, 'YYYY-MM-DD HH:mm:SS')._i, this.currentTimezone).format(this.format)
+            if (this.isRange && this.value) {
+                const [start_date, end_date] = this.value
+                const prepared_value = [
+                    start_date,
+                    moment(end_date)
+                        .subtract(1, 'days')
+                        .format(),
+                ]
+                return prepared_value.map(item => formattingDate(item))
+            }
+            return formattingDate(this.value)
         },
     },
-    mounted() {
-        if (this.isRange) {
-            this.prettyValue = this.value ? this.value.map(item => new Date(item)) : null
-        } else {
-            this.prettyValue = this.value ? (this.useFormat ? this.value : new Date(this.value)) : new Date()
-        }
-    },
-
     methods: {
         handleEmitDate(value) {
-            const date = this.useFormat ? value : this.getFormattedDate(value)
+            const date = this.getFormattedDate(value)
             /**
              * Событие инпута
              * @property {string}
@@ -382,12 +397,33 @@ export default {
         },
         getFormattedDate(value) {
             let newValue = value
+
+            if (!this.useTimezone) {
+                if (Array.isArray(newValue)) {
+                    return newValue.map(v => {
+                        return v?.toString?.().trim() ? this.$moment(v).format(this.toFormat) : ' '
+                    })
+                }
+                return value?.toString?.().trim() ? this.$moment(value).format(this.toFormat) : ' '
+            }
+
+            const formatingDate = date =>
+                momentTz
+                    .tz(moment(date, this.format).format('YYYY-MM-DD HH:mm:SS'), this.currentTimezone)
+                    .utc()
+                    .format()
             if (Array.isArray(newValue)) {
-                newValue = newValue.map(v => {
-                    return v?.toString?.().trim() ? this.$moment(v).format(this.toFormat) : ' '
-                })
+                const [start_date, end_date] = newValue
+                if (start_date?.trim()?.length && end_date?.trim()?.length)
+                    newValue = [
+                        start_date,
+                        moment(end_date, this.format)
+                            .add(1, 'days')
+                            .format(this.format),
+                    ]
+                newValue = newValue.map(v => formatingDate(v))
             } else {
-                newValue = value?.toString?.().trim() ? this.$moment(value).format(this.toFormat) : ' '
+                newValue = formatingDate(value)
             }
             return newValue
         },

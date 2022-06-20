@@ -45,6 +45,7 @@
                                 :filter="currentFilter"
                                 :placeholders="placeholders"
                                 :current-values="!activeTag ? currentValues : {}"
+                                :use-timezone="useTimezone"
                                 @input="handleConditionChange"
                             />
                             <mc-button v-if="hasButtonAdd" variation="purple-outline" @click.native="handleStoreTag">
@@ -63,6 +64,7 @@
                     :filters="filters"
                     :placeholders="placeholders"
                     :active-tag="activeTag"
+                    :use-timezone="useTimezone"
                     @tag-change="onTagsChange"
                     @tag-click="onTagClick"
                     @clear="allTagsClear"
@@ -278,6 +280,10 @@ export default {
                     },
                 }
             },
+        },
+        useTimezone: {
+            type: Boolean,
+            default: false,
         },
     },
     data() {
