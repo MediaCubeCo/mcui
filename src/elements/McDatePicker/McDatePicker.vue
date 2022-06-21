@@ -11,7 +11,6 @@
                 <date-picker
                     ref="input"
                     :type="type"
-                    :value-type="useTimezone ? 'format' : 'date'"
                     :value="prettyValue"
                     v-bind="{ ...$attrs, range, ...valueType, ...hoursOptions, ...minutesOptions, ...secondsOptions }"
                     class="mc-date-picker__date-picker"
@@ -351,8 +350,11 @@ export default {
         isRange() {
             return this.range
         },
+        isTime() {
+            return this.type === 'time'
+        },
         valueType() {
-            return this.useFormat ? { 'value-type': 'format' } : {}
+            return this.useFormat || this.useTimezone ? { 'value-type': 'format' } : {}
         },
         hoursOptions() {
             return this.hours && this.hours.length ? { 'hour-options': this.hours } : {}
@@ -404,7 +406,11 @@ export default {
                         return v?.toString?.().trim() ? this.$moment(v).format(this.toFormat) : ' '
                     })
                 }
-                return value?.toString?.().trim() ? this.$moment(value).format(this.toFormat) : ' '
+                return value?.toString?.().trim()
+                    ? this.isTime
+                        ? this.$moment(value)._i
+                        : this.$moment(value).format(this.toFormat)
+                    : ' '
             }
 
             const formatingDate = date =>
