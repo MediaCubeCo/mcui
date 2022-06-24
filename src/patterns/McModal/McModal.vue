@@ -291,7 +291,7 @@ export default {
         margin-left: -3px;
         margin-right: -3px;
         @media #{$media-query-m} {
-            padding-top: $space-500;
+            padding-top: $space-400;
         }
 
         &:empty {
