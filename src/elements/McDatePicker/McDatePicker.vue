@@ -476,8 +476,10 @@ export default {
             this.pickDate = date
         },
         handleSubmit(emit) {
-            const isValid = this.$refs.input.currentValue.every(val => this.isValidDate(val))
-            isValid && emit(this.$refs.input.currentValue)
+            if (this.$refs.input.currentValue.every(val => this.isValidDate(val))) {
+                emit(this.$refs.input.currentValue)
+                this.closePopup()
+            }
         },
         isValidDate(d) {
             return d instanceof Date && !isNaN(d)
