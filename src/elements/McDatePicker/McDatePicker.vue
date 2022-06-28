@@ -24,6 +24,7 @@
                     :inline="inline"
                     :disabled-date="disabledDate"
                     :disabled-time="disabledTime"
+                    :append-to-body="appendToBody"
                     v-on="listeners"
                     @input="val => handleEmitDate(val)"
                     @pick="handlePickDate"
@@ -255,6 +256,10 @@ export default {
         range: {
             type: Boolean,
             default: false,
+        },
+        appendToBody: {
+            type: Boolean,
+            default: true,
         },
         /**
          *  Если значение true, то датапикер отображается в открытом виде
