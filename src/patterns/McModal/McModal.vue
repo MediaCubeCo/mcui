@@ -237,6 +237,7 @@ export default {
             height: 100vh;
             max-height: fit-content;
             min-height: unset;
+            overflow-y: auto;
             .v--modal-box {
                 margin-bottom: 0;
             }
