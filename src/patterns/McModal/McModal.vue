@@ -234,8 +234,9 @@ export default {
         }
 
         &.scrollable {
-            min-height: auto;
-            max-height: -webkit-fill-available;
+            height: 100vh;
+            max-height: fit-content;
+            min-height: unset;
             .v--modal-box {
                 margin-bottom: 0;
             }
