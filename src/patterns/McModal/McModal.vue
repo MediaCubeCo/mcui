@@ -219,6 +219,14 @@ export default {
     &.v--modal-overlay {
         z-index: $z-index-overlay;
         background-color: fade-out($color-black, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100% !important;
+        height: 100% !important;
+        max-height: -webkit-fill-available !important;
 
         .v--modal-background-click {
             padding-bottom: 0;
@@ -234,9 +242,6 @@ export default {
         }
 
         &.scrollable {
-            height: 100vh;
-            max-height: fit-content;
-            min-height: unset;
             overflow-y: auto;
             .v--modal-box {
                 margin-bottom: 0;
