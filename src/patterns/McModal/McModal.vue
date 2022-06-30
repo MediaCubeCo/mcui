@@ -227,7 +227,7 @@ export default {
         width: 100% !important;
         height: 100% !important;
         max-height: -webkit-fill-available !important;
-        min-height: unset !important;
+        min-height: 100% !important;
 
         .v--modal-background-click {
             padding-bottom: 0;
