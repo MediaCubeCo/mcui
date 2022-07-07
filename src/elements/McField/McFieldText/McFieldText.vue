@@ -464,7 +464,7 @@ export default {
         prepareHandleInput(e) {
             let value = e.target.value
             if (this.type === 'num') {
-                const [first] = /\d*[\.]?\d*/.exec(String(e.target.value)) || []
+                const [first] = /-?\d*[\.]?\d*/.exec(String(e.target.value)) || []
                 value = first
                 e.target.value = first
             }
