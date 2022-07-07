@@ -418,6 +418,7 @@ export default {
                     : ' '
             }
 
+            const hasDate = date => date && date?.trim()?.length
             const formatingDate = date =>
                 momentTz
                     .tz(moment(date, this.format).format('YYYY-MM-DD HH:mm:SS'), this.currentTimezone)
@@ -425,14 +426,14 @@ export default {
                     .format()
             if (Array.isArray(newValue)) {
                 const [start_date, end_date] = newValue
-                if (start_date?.trim()?.length && end_date?.trim()?.length)
+                if (hasDate(start_date) && hasDate(end_date))
                     newValue = [
                         start_date,
                         moment(end_date, this.format)
                             .add(1, 'days')
                             .format(this.format),
                     ]
-                newValue = newValue.map(v => formatingDate(v))
+                newValue = newValue.every(d => hasDate(d)) ? newValue.map(v => formatingDate(v)) : newValue
             } else {
                 newValue = formatingDate(value)
             }
