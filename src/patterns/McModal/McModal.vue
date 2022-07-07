@@ -150,7 +150,7 @@ export default {
         @include close-link();
         z-index: 1;
         @media #{$media-query-m} {
-            @include position(absolute, 40px 24px null null);
+            @include position(absolute, 32px 24px null null);
         }
     }
     &__btn-back {
@@ -159,7 +159,7 @@ export default {
         @include close-link();
         z-index: 1;
         @media #{$media-query-m} {
-            @include position(absolute, 40px null null 24px);
+            @include position(absolute, 32px null null 24px);
         }
     }
 
