@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import _isEmpty from 'lodash/isEmpty'
 import McDatePicker from '../../../elements/McDatePicker/McDatePicker'
 export default {
     name: 'McFilterTypeDate',
@@ -52,7 +51,7 @@ export default {
                 return this.value ? [this.value.more, this.value.less] : []
             },
             set(val) {
-                const period = !_isEmpty(val) ? { more: val[0], less: val[1] } : {}
+                const period = (val || []).every(d => !!d?.trim()?.length) ? { more: val[0], less: val[1] } : {}
                 /**
                  * Событие по изменению периода
                  */
