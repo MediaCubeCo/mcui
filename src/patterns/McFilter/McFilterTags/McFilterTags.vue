@@ -106,10 +106,6 @@ export default {
             type: Object,
             default: null,
         },
-        useTimezone: {
-            type: Boolean,
-            default: false,
-        },
     },
     data() {
         return {
@@ -144,7 +140,7 @@ export default {
                             : ''
                         const to = value.less
                             ? `${this.placeholders.to} ${this.getFormattedVal(
-                                  filter.type === 'date' && this.useTimezone
+                                  filter.type === 'date' && filter.useTimezone
                                       ? this.$moment(value.less)
                                             .subtract(1, 'days')
                                             .format()
