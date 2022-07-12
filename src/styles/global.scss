@@ -126,6 +126,12 @@ a {
   color: $color-white;
 }
 
+input,
+textarea,
+[contenteditable] {
+  caret-color: $color-purple;
+}
+
 button {
   -webkit-appearance: none;
 }
