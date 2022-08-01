@@ -13,7 +13,7 @@
                     <a
                         :aria-controls="tab.hash"
                         :aria-selected="tab.isActive"
-                        :href="tab.to || tab.hash"
+                        :href="tab.to || tab.href || tab.hash"
                         class="tabs-component-tab-a"
                         role="tab"
                         @click="selectTab(tab.hash, $event)"
