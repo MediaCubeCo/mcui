@@ -139,6 +139,7 @@ export default {
          * нативные как text, password, email и т.д.`
          *
          * кастомный num - разрешает ввод только цифр и дробных чисел, без ислчений ввиде буквы 'E'
+         * кастомный int - разрешает ввод только целочисленных значений
          * date - добавляет placeholder, маску и ограничения ввода
          */
         type: {
@@ -465,6 +466,11 @@ export default {
             let value = e.target.value
             if (this.type === 'num') {
                 const [first] = /-?\d*[\.]?\d*/.exec(String(e.target.value)) || []
+                value = first
+                e.target.value = first
+            }
+            if (this.type === 'int') {
+                const [first] = /-?\d*/.exec(String(e.target.value)) || []
                 value = first
                 e.target.value = first
             }
