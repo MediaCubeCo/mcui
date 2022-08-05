@@ -724,7 +724,7 @@ export default {
             }
         }
         &.in-range {
-            background-color: rgba(37, 120, 244, 0.1);
+            background-color: rgba($color-purple, 0.1);
             color: $color-black;
             border-radius: 0;
 
