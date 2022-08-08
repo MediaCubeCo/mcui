@@ -723,6 +723,9 @@ export default {
                 box-shadow: $shadow-s;
             }
         }
+        &.hover-in-range {
+            background-color: rgba($color-purple, 0.1);
+        }
         &.in-range {
             background-color: rgba($color-purple, 0.1);
             color: $color-black;
@@ -745,6 +748,9 @@ export default {
             user-select: none;
             pointer-events: none;
             color: $color-hover-gray !important;
+            &.hover-in-range {
+                background-color: unset;
+            }
         }
         &.disabled {
             color: $color-outline-gray;
