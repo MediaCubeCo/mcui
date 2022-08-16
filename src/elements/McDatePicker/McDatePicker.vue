@@ -609,6 +609,11 @@ export default {
     box-shadow: $shadow-s;
     z-index: 12222;
 
+    @media #{$media-query-s-down} {
+        left: $space-200;
+        right: $space-200;
+    }
+
     .mx-calendar + .mx-calendar {
         border-left: none;
     }
