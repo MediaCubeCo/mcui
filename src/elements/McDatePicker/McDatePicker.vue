@@ -610,7 +610,7 @@ export default {
     z-index: 12222;
 
     @media #{$media-query-s-down} {
-        left: $space-200;
+        left: $space-200 !important;
         right: $space-200;
     }
 
