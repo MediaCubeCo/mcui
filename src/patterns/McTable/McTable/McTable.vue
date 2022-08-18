@@ -624,6 +624,11 @@ export default {
 .mc-table {
     &--mono-font {
         .vxe-table--body {
+            .vxe-body--column {
+                &.col--checkbox {
+                    padding: $space-50 0;
+                }
+            }
             .vxe-body--row {
                 font-feature-settings: 'tnum';
                 font-variant-numeric: tabular-nums;
