@@ -673,6 +673,29 @@ export default {
             width: 100%;
         }
     }
+    .vxe-header--row {
+        .col--checkbox {
+            .vxe-cell {
+                &--title {
+                    overflow: unset;
+                }
+            }
+        }
+    }
+    .vxe-cell--checkbox {
+        &:hover {
+            .vxe-checkbox--icon::before {
+                border-color: $color-purple !important;
+            }
+        }
+        &.is--checked,
+        &.is--indeterminate {
+            .vxe-checkbox--icon::before {
+                border-color: $color-purple;
+                background-color: $color-purple;
+            }
+        }
+    }
     .vxe-header--column {
         .vxe-cell {
             &--title {
