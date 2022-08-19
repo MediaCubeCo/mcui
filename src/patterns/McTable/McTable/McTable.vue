@@ -686,6 +686,7 @@ export default {
         }
     }
     .vxe-cell--checkbox {
+        z-index: 1;
         &:hover {
             .vxe-checkbox--icon::before {
                 border-color: $color-purple !important;
