@@ -638,6 +638,7 @@ export default {
                 filter: this.currentValues,
                 filter_name: encodedData,
             })
+            this.$emit('confirm')
             if (_isEmpty(this.currentValues)) {
                 this.buttonConfirmIsDisable = true
             }
