@@ -578,6 +578,9 @@ export default {
             padding: $space-100 $space-150;
         }
     }
+    .vxe-body--row.row--cheched {
+        background-color: rgba($color-purple, 0.05);
+    }
 }
 .mc-table-wrapper {
     position: relative;
