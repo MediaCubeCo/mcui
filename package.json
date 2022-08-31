@@ -35,7 +35,7 @@
     "bourbon": "^7.0.0",
     "core-js": "^3.6.5",
     "lodash": "^4.17.15",
-    "moment-timezone": "^0.5.34",
+    "moment-timezone": "^0.5.35",
     "normalize.css": "^8.0.1",
     "portal-vue": "^2.1.7",
     "postcss-import": "^12.0.1",
