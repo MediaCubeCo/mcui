@@ -571,8 +571,8 @@ $text-white: scale-color($color-white, $alpha: -10%);
                 color: $color-black;
             }
             &--selected {
-                background-color: $color-lighter-purple;
-                color: $color-black;
+                background-color: $color-lighter-purple !important;
+                color: $color-black !important;
                 font-weight: $font-weight-medium;
             }
 
