@@ -589,11 +589,11 @@ export default {
     }
 
     &__char-counter {
-        width: auto;
+        width: auto !important;
         position: absolute;
         right: $space-150;
         bottom: $space-150;
-        background-color: $color-white;
+        background-color: $color-transparent;
     }
 
     &__input-wrapper {
