@@ -3,6 +3,12 @@
         <mc-drawer icon-close="arrow_forward" @close-panel="handleClose">
             <mc-title slot="title" :ellipsis="false" weight="semi-bold">{{ title }}</mc-title>
             <div v-if="comments.length" class="mc-chat__comments">
+                <mc-infinity-loading-indicator
+                    ref="indicator"
+                    :active="hasMoreMessages"
+                    :overlap="0"
+                    @loading="handleLoading"
+                />
                 <mc-chat-comment
                     v-for="comment in sortedComments"
                     :key="comment.id"
@@ -131,6 +137,13 @@ export default {
             type: String,
             default: 'YYYY-MM-DD HH:mm',
         },
+        /**
+         * Если сообщений показано меньше, чем всего
+         */
+        hasMoreMessages: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -146,11 +159,14 @@ export default {
             const comments = [...this.comments]
             return comments.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
         },
+        indicatorPosition() {
+            return this.comments.length && this.$refs.indicator?.$el?.offsetTop
+        },
     },
     watch: {
         comments: {
-            handler(newVal) {
-                newVal.length && this.scrollContentToBottom()
+            handler(newVal, prevVal) {
+                this.scrollContent(prevVal.length < newVal.length && this.indicatorPosition)
                 this.loading = false
             },
             deep: true,
@@ -185,6 +201,18 @@ export default {
         scrollContentToBottom() {
             this.$nextTick(() => {
                 this.scrollElement && this.scrollElement.scrollTo(0, this.scrollElement.scrollHeight)
+            })
+        },
+        handleLoading() {
+            this.$emit('loading')
+        },
+        /**
+         * скроллит контент (необходимо, чтобы фиксировать контент на месте при подгрузке новых сообщений)
+         * если не указан аргумент, то в самый низ
+         * */
+        scrollContent(position) {
+            this.$nextTick(() => {
+                this.scrollElement && this.scrollElement.scrollTo(0, position || this.scrollElement.scrollHeight)
             })
         },
         handleClose() {
