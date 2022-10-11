@@ -54,7 +54,15 @@
                     :is-active="menuAppsItem.isActive"
                     :exact="menuAppsItem.exact"
                 >
-                    <mc-svg-icon slot="icon-prepend" :name="menuAppsItem.icon" />
+                    <mc-svg-icon v-if="menuAppsItem.icon" slot="icon-prepend" :name="menuAppsItem.icon" />
+                    <img
+                        v-else-if="menuAppsItem.image"
+                        :src="menuAppsItem.image"
+                        slot="icon-prepend"
+                        width="24"
+                        height="24"
+                        alt="service image"
+                    />
                     {{ menuAppsItem.name }}
                 </mc-button>
             </mc-dropdown-panel>
