@@ -44,6 +44,7 @@ import McChatForm from './McChatForm/McChatForm'
 import McChatComment from './McChatComment/McChatComment'
 import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
 import McTitle from '../../elements/McTitle/McTitle'
+import McInfinityLoadingIndicator from '../../elements/McInfinityLoadingIndicator/McInfinityLoadingIndicator'
 /**
  * More info: https://officert.github.io/vue-slideout-panel
  */
@@ -55,6 +56,7 @@ export default {
         McChatComment,
         McSvgIcon,
         McTitle,
+        McInfinityLoadingIndicator,
     },
     props: {
         /**
