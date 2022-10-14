@@ -612,6 +612,7 @@ export default {
     @media #{$media-query-s-down} {
         left: $space-200 !important;
         right: $space-200;
+        width: fit-content;
     }
 
     .mx-calendar + .mx-calendar {
