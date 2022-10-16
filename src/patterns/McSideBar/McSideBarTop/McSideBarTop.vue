@@ -17,7 +17,7 @@
                 </template>
             </mc-title>
         </mc-preview>
-        <mc-dropdown v-else v-model="dropIsOpen">
+        <mc-dropdown v-else v-model="dropIsOpen" :position="dropdownPosition">
             <mc-preview slot="activator">
                 <img
                     v-if="logoSrc"
@@ -57,8 +57,8 @@
                     <mc-svg-icon v-if="menuAppsItem.icon" slot="icon-prepend" :name="menuAppsItem.icon" />
                     <img
                         v-else-if="menuAppsItem.image"
-                        :src="menuAppsItem.image"
                         slot="icon-prepend"
+                        :src="menuAppsItem.image"
                         width="24"
                         height="24"
                         alt="service image"
@@ -130,6 +130,10 @@ export default {
         logoIcon: {
             type: String,
             default: '',
+        },
+        dropdownPosition: {
+            type: String,
+            default: 'left',
         },
         /**
          *  Компактный вид
