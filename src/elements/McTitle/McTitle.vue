@@ -425,4 +425,18 @@ export default {
         margin-block-end: 0;
     }
 }
+html[direction='rtl'] {
+    .mc-title {
+        &__text {
+            & + *:not(:empty) {
+                margin-left: unset;
+                margin-right: $space-50;
+            }
+            *:not(:empty) + & {
+                margin-left: unset;
+                margin-right: $space-50;
+            }
+        }
+    }
+}
 </style>

@@ -126,4 +126,57 @@ export default {
         }
     }
 }
+html[direction='rtl'] {
+    .mc-preview {
+        $block-name: &;
+        &--size {
+            &-s {
+                #{$block-name}__left {
+                    margin-right: unset;
+                    margin-left: $space-50;
+                }
+                #{$block-name}__right {
+                    margin-left: unset;
+                    margin-right: $space-50;
+                }
+            }
+            &-m {
+                #{$block-name}__left {
+                    margin-right: unset;
+                    margin-left: $space-100;
+                }
+                #{$block-name}__right {
+                    margin-left: unset;
+                    margin-right: $space-100;
+                }
+            }
+            &-l {
+                #{$block-name}__left {
+                    margin-right: unset;
+                    margin-left: $space-150;
+                }
+                #{$block-name}__right {
+                    margin-left: unset;
+                    margin-right: $space-150;
+                }
+                #{$block-name}__bottom {
+                    margin-top: $space-50;
+                }
+            }
+            &-xl {
+                #{$block-name}__left {
+                    margin-right: unset;
+                    margin-left: $space-200;
+                }
+                #{$block-name}__right {
+                    margin-left: unset;
+                    margin-right: $space-200;
+                }
+                #{$block-name}__bottom {
+                    margin-top: $space-50;
+                }
+            }
+        }
+    }
+}
 </style>
