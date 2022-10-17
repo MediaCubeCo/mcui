@@ -4,8 +4,9 @@
             <mc-title slot="title" :ellipsis="false" weight="semi-bold">{{ title }}</mc-title>
             <div v-if="comments.length" class="mc-chat__comments">
                 <mc-infinity-loading-indicator
+                    v-if="hasMoreMessages"
                     ref="indicator"
-                    :active="hasMoreMessages"
+                    active
                     :overlap="0"
                     @loading="handleLoading"
                 />
