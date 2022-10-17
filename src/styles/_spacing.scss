@@ -30,10 +30,20 @@ $spacing-ratio: $line-height-250;
     margin-bottom: $space;
   }
 }
+@mixin child-indent-top($space) {
+  > *:not(:first-child) {
+    margin-top: $space;
+  }
+}
 
 @mixin child-indent-right($space) {
   > *:not(:last-child) {
     margin-right: $space;
+  }
+}
+@mixin child-indent-left($space) {
+  > *:not(:first-child) {
+    margin-left: $space;
   }
 }
 
