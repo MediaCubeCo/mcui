@@ -306,4 +306,20 @@ export default {
         }
     }
 }
+html[direction='rtl'] {
+    .mc-field-checkbox {
+        &__name-text {
+            margin-left: unset;
+            margin-right: $space-100;
+            .mc-button {
+                margin-left: unset;
+                margin-right: 1px;
+            }
+        }
+        &__footer {
+            padding-left: unset;
+            padding-right: $space-250;
+        }
+    }
+}
 </style>
