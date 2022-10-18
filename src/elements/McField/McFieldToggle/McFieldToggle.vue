@@ -226,4 +226,37 @@ export default {
         }
     }
 }
+html[direction='rtl'] {
+    .mc-field-toggle {
+        &__text {
+            margin-right: 0;
+            margin-left: $space-100;
+            &:empty {
+                margin-left: 0;
+            }
+        }
+        &--text-position-right {
+            .mc-field-toggle__text {
+                margin-left: 0;
+                margin-right: $space-100;
+            }
+        }
+
+        &__wrapper {
+            & > .mc-field-toggle__field {
+                &:checked + .mc-field-toggle__slider {
+                    &:before {
+                        transform: translateX(-$space-300);
+                    }
+                }
+            }
+
+            .mc-field-toggle__slider {
+                &::before {
+                    @include position(null, null 2px 2px null);
+                }
+            }
+        }
+    }
+}
 </style>
