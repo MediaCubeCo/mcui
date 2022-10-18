@@ -789,4 +789,71 @@ $colors: $token-colors;
         cursor: not-allowed;
     }
 }
+
+html[direction='rtl'] {
+    .mc-button {
+        &--size {
+            &-xxs {
+                .mc-button {
+                    &__prepend {
+                        margin-right: 0;
+                        margin-left: $space-50;
+                    }
+                    &__append {
+                        margin-left: 0;
+                        margin-right: $space-50;
+                    }
+                }
+            }
+            &-xs {
+                .mc-button {
+                    &__prepend {
+                        margin-right: 0;
+                        margin-left: $space-50;
+                    }
+                    &__append {
+                        margin-left: 0;
+                        margin-right: $space-50;
+                    }
+                }
+            }
+            &-s {
+                .mc-button {
+                    &__prepend {
+                        margin-right: 0;
+                        margin-left: $space-50;
+                    }
+                    &__append {
+                        margin-left: 0;
+                        margin-right: $space-50;
+                    }
+                }
+            }
+            &-m {
+                .mc-button {
+                    &__prepend {
+                        margin-right: 0;
+                        margin-left: $space-50;
+                    }
+                    &__append {
+                        margin-left: 0;
+                        margin-right: $space-50;
+                    }
+                }
+            }
+            &-l {
+                .mc-button {
+                    &__prepend {
+                        margin-right: 0;
+                        margin-left: $space-100;
+                    }
+                    &__append {
+                        margin-left: 0;
+                        margin-right: $space-100;
+                    }
+                }
+            }
+        }
+    }
+}
 </style>
