@@ -317,15 +317,21 @@ html[direction='rtl'] {
         $border-color: #dee1e9;
         $box-shadow-color: #20008c28;
         &__btn-close {
-            @include position(absolute, 24px unset unset 24px);
+            position: absolute;
+            right: unset;
+            left: 24px;
+            top: 24px;
             @media #{$media-query-m} {
-                @include position(absolute, 32px unset unset 24px);
+                top: 32px;
             }
         }
         &__btn-back {
-            @include position(absolute, 24px 24px unset unset);
+            position: absolute;
+            left: unset;
+            right: 24px;
+            top: 24px;
             @media #{$media-query-m} {
-                @include position(absolute, 32px 24px unset unset);
+                top: 32px;
             }
         }
         &.mc-modal--secondary {
