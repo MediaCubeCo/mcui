@@ -330,6 +330,7 @@ html[direction='rtl'] {
             left: unset;
             right: 24px;
             top: 24px;
+            transform: rotate(180deg);
             @media #{$media-query-m} {
                 top: 32px;
             }
