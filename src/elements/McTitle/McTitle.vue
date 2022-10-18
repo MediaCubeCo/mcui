@@ -437,6 +437,14 @@ html[direction='rtl'] {
                 margin-right: $space-50;
             }
         }
+        &--text-align {
+            &-left {
+                text-align: right;
+            }
+            &-right {
+                text-align: left;
+            }
+        }
     }
 }
 </style>
