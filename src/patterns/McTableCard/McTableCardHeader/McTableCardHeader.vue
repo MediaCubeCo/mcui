@@ -54,7 +54,7 @@ export default {
         @include layout-flex-fix();
         display: flex;
         flex-wrap: nowrap;
-        @include child-indent-right($space-300);
+        @include child-indent-right($space-200);
 
         &:empty {
             display: none;

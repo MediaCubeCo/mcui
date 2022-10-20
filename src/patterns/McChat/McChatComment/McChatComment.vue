@@ -4,16 +4,27 @@
         <mc-preview>
             <mc-avatar slot="left" size="400" rounded lazy :src="computedAvatar" />
             <mc-date slot="top" size="overline" color="dark-gray" :format="dateFormat" :value="comment.created_at" />
-            <mc-title slot="top" :weight="computedTitle.weight" :color="computedTitle.color">
-                {{ computedTitle.name }}
-            </mc-title>
-            <mc-badge v-if="commentStatus" slot="bottom" :variation="comment.status.color">
-                {{ comment.status.title }}
-            </mc-badge>
-            <mc-title v-else-if="comment.editing_title" slot="bottom">
-                {{ comment.editing_title }}
-            </mc-title>
-            <mc-title v-if="comment.content" slot="bottom" :ellipsis="false" v-html="filteredComment" />
+            <div slot="bottom" class="mc-chat-comment__title">
+                <mc-title slot="top" :weight="computedTitle.weight" :color="computedTitle.color">
+                    {{ computedTitle.name }}
+                </mc-title>
+                <mc-title v-if="comment.statusText" variation="overline" color="dark-gray">
+                    {{ comment.statusText }}
+                </mc-title>
+                <mc-badge v-if="commentStatus" :variation="comment.status.color">
+                    {{ comment.status.title }}
+                </mc-badge>
+                <mc-title v-else-if="comment.editing_title">
+                    {{ comment.editing_title }}
+                </mc-title>
+            </div>
+            <mc-title
+                v-if="comment.content"
+                slot="bottom"
+                :ellipsis="false"
+                :class="contentClasses"
+                v-html="filteredComment"
+            />
             <mc-button
                 v-if="canEdit"
                 slot="right"
@@ -119,6 +130,12 @@ export default {
         commentStatus() {
             return (this.comment.status !== null && this.comment.status !== undefined) || !this.comment.status < 0
         },
+        contentClasses() {
+            return {
+                'mc-chat-comment__content': !!this.comment.status,
+                [`mc-chat-comment__content--variation-${this.comment.status?.color}`]: !!this.comment.status?.color,
+            }
+        },
     },
     methods: {
         handleDelete() {
@@ -139,7 +156,22 @@ export default {
     display: block;
     cursor: default;
     position: relative;
-
+    &__title {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        @include child-indent-right($space-50);
+        > * {
+            margin-bottom: $space-50;
+        }
+        .mc-badge {
+            flex-shrink: 0;
+        }
+        .mc-title {
+            width: auto;
+            overflow: hidden;
+        }
+    }
     &__back {
         text-decoration: none;
         display: block;
@@ -169,9 +201,26 @@ export default {
 
     .mc-preview__bottom {
         margin-top: $space-50;
-        @include child-indent-bottom($space-50);
     }
-
+    &__content {
+        margin-top: $space-50;
+        border-radius: $radius-100;
+        padding: $space-150 $space-200;
+        &--variation {
+            @each $color, $value in $token-colors {
+                &-#{$color} {
+                    &,
+                    &-outline {
+                        @if $color == 'outline-gray' {
+                            background-color: $color-hover-gray;
+                        } @else {
+                            background-color: rgba($value, 0.1);
+                        }
+                    }
+                }
+            }
+        }
+    }
     &--editable {
         cursor: pointer;
         &:focus-within {
