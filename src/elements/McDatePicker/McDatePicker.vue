@@ -393,6 +393,10 @@ export default {
             return formattingDate(this.value)
         },
     },
+    mounted() {
+        moment.locale(this.lang !== 'ar' ? this.lang : 'en')
+        momentTz.locale(this.lang !== 'ar' ? this.lang : 'en')
+    },
     methods: {
         handleEmitDate(value) {
             const date = this.getFormattedDate(value)
