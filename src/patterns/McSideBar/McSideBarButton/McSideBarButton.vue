@@ -251,4 +251,25 @@ export default {
         }
     }
 }
+html[direction='rtl'] {
+    .mc-side-bar-button {
+        &__dot {
+            @include position(absolute, $space-100 null null 6px);
+        }
+        &.mc-button {
+            .mc-button__text {
+                margin-right: 0;
+                margin-left: $space-100;
+            }
+            .mc-button__prepend {
+                margin-right: 0;
+                margin-left: $space-100;
+            }
+            .mc-button__append {
+                margin-left: unset;
+                margin-right: auto;
+            }
+        }
+    }
+}
 </style>
