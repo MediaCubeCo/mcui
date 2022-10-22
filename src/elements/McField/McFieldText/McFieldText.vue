@@ -723,17 +723,6 @@ html[direction='rtl'] {
                 text-align: right;
             }
         }
-        &__prepend {
-            left: unset;
-            right: 0;
-            padding: $space-100 $space-100 $space-100 $space-50;
-        }
-
-        &__append {
-            right: unset;
-            left: $space-100;
-            padding: $space-100 $space-50 $space-100 0;
-        }
 
         &__char-counter {
             right: unset;
