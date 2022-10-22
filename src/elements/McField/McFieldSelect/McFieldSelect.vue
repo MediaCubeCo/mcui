@@ -806,6 +806,13 @@ html[direction='rtl'] {
                 @include child-indent-right(0);
                 @include child-indent-left-rtl($space-100);
             }
+            &__tags {
+                padding: 0 $space-100 0 $space-500;
+            }
+            &__select {
+                right: unset;
+                left: 1px;
+            }
         }
     }
 }
