@@ -1,6 +1,6 @@
 <template>
     <div class="mc-field-text" :class="classes">
-        <label :for="name" class="mc-field-text__header">
+        <label :for="name" class="mc-field-text__header" :class="{ required }">
             <!-- @slot Слот заголовка -->
             <slot name="header">
                 <mc-title v-if="title" :ellipsis="false" max-width="100%" weight="medium">{{ title }}</mc-title>
@@ -317,6 +317,10 @@ export default {
             type: Object,
             default: null,
         },
+        required: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -540,6 +544,18 @@ export default {
         &:empty {
             display: none;
         }
+        &.required {
+            * {
+                display: inline;
+                position: relative;
+            }
+            & > * {
+                &::after {
+                    content: '*';
+                    position: absolute;
+                }
+            }
+        }
     }
 
     &__inner {
@@ -698,6 +714,31 @@ export default {
 
     &__empty-tooltip {
         display: contents;
+    }
+}
+html[direction='rtl'] {
+    .mc-field-text {
+        &__header {
+            &.required {
+                text-align: right;
+            }
+        }
+        &__prepend {
+            left: unset;
+            right: 0;
+            padding: $space-100 $space-100 $space-100 $space-50;
+        }
+
+        &__append {
+            right: unset;
+            left: $space-100;
+            padding: $space-100 $space-50 $space-100 0;
+        }
+
+        &__char-counter {
+            right: unset;
+            left: $space-150;
+        }
     }
 }
 </style>

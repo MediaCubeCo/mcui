@@ -1,6 +1,6 @@
 <template>
     <div class="mc-field-select" :class="classes">
-        <div :for="name" class="mc-field-select__header">
+        <div :for="name" class="mc-field-select__header" :class="{ required }">
             <!-- @slot Слот заголовка -->
             <slot name="header">
                 <mc-title v-if="title" :ellipsis="false" max-width="100%" weight="medium">{{ title }}</mc-title>
@@ -234,6 +234,10 @@ export default {
             type: Object,
             default: null,
         },
+        required: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -392,6 +396,18 @@ $text-white: scale-color($color-white, $alpha: -10%);
 
         &:empty {
             display: none;
+        }
+        &.required {
+            * {
+                display: inline;
+                position: relative;
+            }
+            & > * {
+                &::after {
+                    content: '*';
+                    position: absolute;
+                }
+            }
         }
     }
 
@@ -750,6 +766,47 @@ $text-white: scale-color($color-white, $alpha: -10%);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+}
+html[direction='rtl'] {
+    .mc-field-select {
+        &__header {
+            &.required {
+                text-align: right;
+            }
+        }
+        &__single-label {
+            @include child-indent-right(0);
+            @include child-indent-left-rtl($space-50);
+        }
+        &__label-text {
+            padding-left: 0;
+            padding-right: $space-50;
+            &--indent-left {
+                margin-left: 0;
+                margin-right: $space-300;
+            }
+        }
+
+        .multiselect {
+            &__placeholder {
+                padding-left: 0;
+                padding-right: $space-50;
+            }
+
+            &__single {
+                padding-right: 0;
+            }
+
+            &__input {
+                padding-left: 0;
+                padding-right: $space-50;
+            }
+            &__tags-wrap {
+                @include child-indent-right(0);
+                @include child-indent-left-rtl($space-100);
+            }
+        }
     }
 }
 </style>
