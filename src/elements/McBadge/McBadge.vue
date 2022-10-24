@@ -77,7 +77,6 @@ $light-scale: 'hover-gray', 'white', 'lighter-blue', 'lighter-purple', 'toxic', 
     text-transform: uppercase;
     letter-spacing: $letter-spacing-m;
     vertical-align: middle;
-    max-width: max-content;
     border-radius: $radius-50;
     padding: 2px $space-100;
     border: 1px solid transparent;
