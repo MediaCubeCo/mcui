@@ -253,6 +253,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        isRtl: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -435,9 +439,11 @@ export default {
                         if (!parsedVal && parsedVal !== 0) return '—'
                         const format = !info[0].match('count') ? '0,0.00' : '0,0'
                         const roundedVal = Math[Math.sign(parsedVal) < 0 ? 'floor' : 'ceil'](parsedVal * 100) / 100
-                        return numeral(roundedVal)
-                            .format(format)
-                            .replace(/,/g, ' ')
+                        return this.isRtl
+                            ? roundedVal
+                            : numeral(roundedVal)
+                                  .format(format)
+                                  .replace(/,/g, ' ')
                     }
                     return null
                 }),
