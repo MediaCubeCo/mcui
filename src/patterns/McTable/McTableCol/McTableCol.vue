@@ -41,11 +41,11 @@
         </template>
         <template v-slot:footer="{ columnIndex, items }">
             <mc-title v-if="items[columnIndex]" :text-align="textAlign" weight="semi-bold">
-                &#x200E;{{ items[columnIndex] }}{{ totalAppend }}
+                {{ items[columnIndex] }}{{ totalAppend }}
             </mc-title>
             <template v-else-if="getVisibilityCommonInfo(columnIndex, items)">
                 <mc-title v-if="!provideData.canShowLoader" class="mc-table-col__title" weight="semi-bold">
-                    &#x200E;{{ firstColFooter }}
+                    {{ firstColFooter }}
                 </mc-title>
                 <span v-if="provideData.canShowLoader" ref="loader" class="mc-table-col__loader"></span>
             </template>
