@@ -89,6 +89,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        plainText: {
+            type: Boolean,
+            default: false,
+        },
     },
     render(h, { props, slots, data, listeners }) {
         let contentStyle = {}
@@ -122,6 +126,7 @@ export default {
             [`mc-title--pre-line`]: props.preLine,
             [`mc-title--nowrap`]: props.nowrap,
             'mc-title--uppercase': props.uppercase,
+            'mc-title--plain-text': props.plainText,
             ...(data.class || {}),
             ...responsivePropsClasses,
         }
@@ -355,6 +360,13 @@ export default {
     &--uppercase {
         text-transform: uppercase;
         letter-spacing: $letter-spacing-m;
+    }
+    &--plain-text {
+        #{$block-name} {
+            &__text {
+                unicode-bidi: plaintext;
+            }
+        }
     }
 
     &--color {
