@@ -66,7 +66,7 @@ $light-scale: 'hover-gray', 'white', 'lighter-blue', 'lighter-purple', 'toxic', 
 .mc-badge {
     $block-name: &;
 
-    @include ellipsis(100%, flex);
+    @include ellipsis(100%, inline-flex);
     align-items: center;
     color: $color-white;
     font-family: $font-family-main;
