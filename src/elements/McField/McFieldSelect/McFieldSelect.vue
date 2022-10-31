@@ -486,8 +486,8 @@ $text-white: scale-color($color-white, $alpha: -10%);
                 height: 0;
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
-                border-bottom: 5px solid $text-black;
-                border-top: 5px solid transparent;
+                border-bottom: 5px solid transparent;
+                border-top: 5px solid $text-black;
             }
         }
 
