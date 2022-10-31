@@ -547,7 +547,6 @@ export default {
         &.required {
             * {
                 display: inline;
-                position: relative;
             }
             & > * {
                 &::after {

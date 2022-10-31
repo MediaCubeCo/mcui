@@ -400,7 +400,6 @@ $text-white: scale-color($color-white, $alpha: -10%);
         &.required {
             * {
                 display: inline;
-                position: relative;
             }
             & > * {
                 &::after {
