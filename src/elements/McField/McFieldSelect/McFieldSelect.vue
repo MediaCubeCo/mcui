@@ -489,9 +489,6 @@ $text-white: scale-color($color-white, $alpha: -10%);
                 border-bottom: 5px solid $text-black;
                 border-top: 5px solid transparent;
             }
-
-
-        }
         }
 
         &__tags {
