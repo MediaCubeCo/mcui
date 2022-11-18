@@ -294,3 +294,68 @@
     margin-left: -$size;
   }
 }
+
+@mixin editor-default-styles() {
+  p,
+  strong,
+  em,
+  u,
+  span {
+    font-size: $font-size-200;
+    line-height: $line-height-200;
+    margin: 0;
+    &:empty {
+      display: none;
+    }
+  }
+  ol li,
+  ul li {
+    font-size: $font-size-300;
+    line-height: 28px;
+  }
+  a {
+    @include text-link();
+    text-decoration: none;
+  }
+  h1,
+  h1 * {
+    font-size: 40px !important;
+    line-height: $line-height-600;
+    margin: 0;
+  }
+  h2,
+  h2 * {
+    font-size: $font-size-600 !important;
+    line-height: $line-height-500;
+    margin: 0;
+  }
+  h3,
+  h3 * {
+    font-size: $font-size-400 !important;
+    line-height: $line-height-400;
+    margin: 0;
+  }
+  .ql {
+    &-editor {
+      padding: $space-150;
+      &.ql-blank::before {
+        left: $space-150;
+      }
+    }
+    &-align-center {
+      text-align: center;
+    }
+    &-align-right {
+      text-align: right;
+    }
+    &-align-left {
+      text-align: left;
+    }
+  }
+  img {
+    max-width: 100%;
+    max-height: 600px;
+    margin: $space-150 0;
+    border-radius: $radius-200;
+  }
+}

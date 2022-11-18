@@ -96,10 +96,9 @@
                 color="red"
                 variation="overline"
                 max-width="100%"
-                :ellipsis="false"
-            >
-                {{ errorText }}
-            </mc-title>
+                :ellipsis="false"class="mc-field-text__error-text"
+                v-html="errorText.replace(/ /gm, '<wbr /> ')"
+            />
             <br v-if="errorText" />
             <!-- @slot Слот доп. текста под инпутом -->
             <slot name="footer">
@@ -547,7 +546,6 @@ export default {
         &.required {
             * {
                 display: inline;
-                position: relative;
             }
             & > * {
                 &::after {
@@ -657,6 +655,12 @@ export default {
 
         &:empty {
             display: none;
+        }
+    }
+    &__error-text {
+        .mc-title__text {
+            white-space: nowrap;
+            word-break: break-word;
         }
     }
 

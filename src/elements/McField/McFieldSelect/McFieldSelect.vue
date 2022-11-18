@@ -400,7 +400,6 @@ $text-white: scale-color($color-white, $alpha: -10%);
         &.required {
             * {
                 display: inline;
-                position: relative;
             }
             & > * {
                 &::after {
@@ -483,7 +482,13 @@ $text-white: scale-color($color-white, $alpha: -10%);
         &__select {
             height: $size-500 - 2px;
             &::before {
-                border-color: $text-black transparent transparent;
+                direction: ltr;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-bottom: 5px solid transparent;
+                border-top: 5px solid $text-black;
             }
         }
 
