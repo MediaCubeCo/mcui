@@ -53,8 +53,15 @@ export default {
     flex-wrap: nowrap;
     max-width: 100%;
 
-    &__left {
+    & > &__left,
+    & > &__right {
         flex: 0 0 auto;
+    }
+
+    & > &__left,
+    & > &__right,
+    & > &__center > &__top,
+    & > &__center > &__bottom {
         &:empty {
             display: none;
         }
@@ -66,113 +73,107 @@ export default {
         align-self: center;
     }
 
-    &__top {
-        &:empty {
-            display: none;
-        }
-    }
-
-    &__bottom {
-        &:empty {
-            display: none;
-        }
-    }
-
-    &__right {
-        flex: 0 0 auto;
-        &:empty {
-            display: none;
-        }
-    }
-
     &--size {
         &-s {
-            #{$block-name}__left {
-                margin-right: $space-50;
-            }
-            #{$block-name}__right {
-                margin-left: $space-50;
+            & > {
+                #{$block-name}__left {
+                    margin-right: $space-50;
+                }
+                #{$block-name}__right {
+                    margin-left: $space-50;
+                }
             }
         }
         &-m {
-            #{$block-name}__left {
-                margin-right: $space-100;
-            }
-            #{$block-name}__right {
-                margin-left: $space-100;
+            & > {
+                #{$block-name}__left {
+                    margin-right: $space-100;
+                }
+                #{$block-name}__right {
+                    margin-left: $space-100;
+                }
             }
         }
         &-l {
-            #{$block-name}__left {
-                margin-right: $space-150;
-            }
-            #{$block-name}__right {
-                margin-left: $space-150;
-            }
-            #{$block-name}__bottom {
-                margin-top: $space-50;
+            & > {
+                #{$block-name}__left {
+                    margin-right: $space-150;
+                }
+                #{$block-name}__right {
+                    margin-left: $space-150;
+                }
+                #{$block-name}__center > #{$block-name}__bottom {
+                    margin-top: $space-50;
+                }
             }
         }
         &-xl {
-            #{$block-name}__left {
-                margin-right: $space-200;
-            }
-            #{$block-name}__right {
-                margin-left: $space-200;
-            }
-            #{$block-name}__bottom {
-                margin-top: $space-50;
+            & > {
+                #{$block-name}__left {
+                    margin-right: $space-200;
+                }
+                #{$block-name}__right {
+                    margin-left: $space-200;
+                }
+                #{$block-name}__center > #{$block-name}__bottom {
+                    margin-top: $space-50;
+                }
             }
         }
     }
-}
-html[direction='rtl'] {
-    .mc-preview {
-        &--size {
-            &-s {
-                .mc-preview__left {
-                    margin-right: unset;
-                    margin-left: $space-50;
-                }
-                .mc-preview__right {
-                    margin-left: unset;
-                    margin-right: $space-50;
-                }
-            }
-            &-m {
-                .mc-preview__left {
-                    margin-right: unset;
-                    margin-left: $space-100;
-                }
-                .mc-preview__right {
-                    margin-left: unset;
-                    margin-right: $space-100;
-                }
-            }
-            &-l {
-                .mc-preview__left {
-                    margin-right: unset;
-                    margin-left: $space-150;
-                }
-                .mc-preview__right {
-                    margin-left: unset;
-                    margin-right: $space-150;
-                }
-                .mc-preview__bottom {
-                    margin-top: $space-50;
-                }
-            }
-            &-xl {
-                .mc-preview__left {
-                    margin-right: unset;
-                    margin-left: $space-200;
-                }
-                .mc-preview__right {
-                    margin-right: $space-200;
-                    margin-left: unset;
-                }
-                .mc-preview__bottom {
-                    margin-top: $space-50;
+
+    @at-root {
+        html[direction='rtl'] {
+            #{$block-name} {
+                &--size {
+                    &-s {
+                        & > {
+                            #{$block-name}__left {
+                                margin-right: unset;
+                                margin-left: $space-50;
+                            }
+                            #{$block-name}__right {
+                                margin-left: unset;
+                                margin-right: $space-50;
+                            }
+                        }
+                    }
+                    &-m {
+                        & > {
+                            #{$block-name}__left {
+                                margin-right: unset;
+                                margin-left: $space-100;
+                            }
+                            #{$block-name}__right {
+                                margin-left: unset;
+                                margin-right: $space-100;
+                            }
+                        }
+                    }
+                    &-l {
+                        & > {
+                            #{$block-name}__left {
+                                margin-right: unset;
+                                margin-left: $space-150;
+                            }
+                            #{$block-name}__right {
+                                margin-left: unset;
+                                margin-right: $space-150;
+                            }
+                        }
+                    }
+                    &-xl {
+                        & > {
+                            #{$block-name}__left {
+                                margin-right: unset;
+                                margin-left: $space-200;
+                            }
+                            #{$block-name}__right {
+                                margin-left: unset;
+                                margin-right: $space-200;
+                            }
+                        }
+                    }
                 }
             }
         }
