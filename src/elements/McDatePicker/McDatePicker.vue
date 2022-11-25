@@ -25,6 +25,7 @@
                     :disabled-date="disabledDate"
                     :disabled-time="disabledTime"
                     :append-to-body="appendToBody"
+                    :clearable="clearable"
                     v-on="listeners"
                     @input="val => handleEmitDate(val)"
                     @pick="handlePickDate"
@@ -319,6 +320,17 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Показывать ли кретик очищения поля
+         * */
+        clearable: {
+            type: Boolean,
+            default: false,
+        },
+        setDefaultToday: {
+            type: Boolean,
+            default: true,
+        },
     },
 
     data() {
@@ -376,7 +388,9 @@ export default {
         prettyValue() {
             if (!this.useTimezone) {
                 if (this.isRange && this.value) return this.value.map(item => new Date(item))
-                return this.useFormat ? this.value : this.value ? new Date(this.value) : new Date()
+                return this.useFormat || (!this.setDefaultToday && !this.value) ?
+                    this.value : this.value ?
+                        new Date(this.value) : new Date()
             }
             const formattingDate = date =>
                 momentTz.tz(moment(date, 'YYYY-MM-DD HH:mm:SS')._i, this.currentTimezone).format(this.format)
