@@ -55,7 +55,6 @@
 import noTableDataIcon from '../../../assets/img/no_table_data.png'
 import _throttle from 'lodash/throttle'
 import _isEmpty from 'lodash/isEmpty'
-import numeral from 'numeral'
 
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
@@ -426,6 +425,16 @@ export default {
                 this.load()
             }
         },
+        formattedNumber(value, decimals = 2, is_rtl = false) {
+            if (value == null) return null
+
+            const sign = Math.sign(value) || 1
+            const multiplier = decimals < 1 ? 1 : 10 ** decimals
+            const roundedNumber =
+                (Math[sign < 0 ? 'floor' : 'ceil'](Math.round(Math.abs(value) * multiplier)) / multiplier) * sign
+            if (is_rtl) return roundedNumber.toFixed(decimals)
+            return String(roundedNumber.toFixed(decimals)).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
+        },
         footerMethod({ columns, data }) {
             return [
                 columns.map(column => {
@@ -437,13 +446,7 @@ export default {
                         if (!column?.params?.modifyTotal) return info[1]
                         let parsedVal = parseFloat(info[1])
                         if (!parsedVal && parsedVal !== 0) return '—'
-                        const format = !info[0].match('count') ? '0,0.00' : '0,0'
-                        const roundedVal = Math[Math.sign(parsedVal) < 0 ? 'floor' : 'ceil'](parsedVal * 100) / 100
-                        return this.isRtl
-                            ? roundedVal
-                            : numeral(roundedVal)
-                                  .format(format)
-                                  .replace(/,/g, ' ')
+                        return this.formattedNumber(parsedVal, !info[0].match('count') ? 2 : 0, this.isRtl)
                     }
                     return null
                 }),
