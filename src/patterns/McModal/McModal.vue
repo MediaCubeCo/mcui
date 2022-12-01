@@ -5,8 +5,8 @@
         :max-width="maxWidth"
         :click-to-close="clickToClose"
         class="mc-modal"
-        scrollable
         adaptive
+        scrollable
         height="auto"
         width="100%"
         @before-open="handleBeforeOpen"
@@ -14,7 +14,7 @@
         @closed="handleClosed"
         @opened="handleOpened"
     >
-        <div class="mc-modal__inner">
+        <div ref="modalInner" class="mc-modal__inner" @scroll="handleScroll">
             <div v-if="$slots.title" class="mc-modal__header">
                 <div class="mc-modal__title">
                     <!-- @slot Слот заголовка -->
@@ -25,17 +25,15 @@
                 <!-- @slot Слот контента -->
                 <slot />
             </div>
-            <div v-if="$slots.footer" class="mc-modal__control">
-                <!-- @slot Слот футера -->
-                <slot name="footer" />
-            </div>
-            <button v-if="arrowVisible" type="button" class="mc-modal__btn-back" @click.prevent="handleBack">
-                <mc-svg-icon name="arrow_leftward" class="mc-modal__icon-back" />
-            </button>
-            <button v-if="closeVisible" type="button" class="mc-modal__btn-close" @click.prevent="close">
-                <mc-svg-icon class="mc-modal__icon-close" width="24" height="24" name="close" />
-            </button>
+            <!-- @slot Слот футера -->
+            <div class="mc-modal__control"><slot name="footer" /><portal-target name="mcModalFooter" slim /></div>
         </div>
+        <button v-if="arrowVisible" type="button" class="mc-modal__btn-back" @click.prevent="handleBack">
+            <mc-svg-icon name="arrow_leftward" class="mc-modal__icon-back" />
+        </button>
+        <button v-if="closeVisible" type="button" class="mc-modal__btn-close" @click.prevent="close">
+            <mc-svg-icon class="mc-modal__icon-close" width="24" height="24" name="close" />
+        </button>
     </modal>
 </template>
 
@@ -45,8 +43,6 @@ import McButton from '../../elements/McButton/McButton'
 export default {
     name: 'McModal',
     components: { McButton, McSvgIcon },
-    status: 'ready',
-    release: '1.0.0',
     props: {
         name: {
             type: String,
@@ -82,15 +78,30 @@ export default {
             default: false,
         },
     },
+    data: () => ({
+        scrolled_top: false,
+        scrolled_bottom: false,
+    }),
+    status: 'ready',
+    release: '1.0.0',
     computed: {
         classes() {
             return {
                 'mc-modal--arrow-visible': this.arrowVisible,
                 'mc-modal--secondary': this.secondaryModal,
+                'mc-modal--scrolled-top': this.scrolled_top,
+                'mc-modal--scrolled-bottom': this.scrolled_bottom,
             }
         },
     },
     methods: {
+        handleScroll(event) {
+            this.calcIndents(event.target)
+        },
+        calcIndents(element) {
+            this.scrolled_top = element?.scrollTop > 5
+            this.scrolled_bottom = element?.scrollHeight - element?.scrollTop - element?.clientHeight > 5
+        },
         handleBeforeOpen(event) {
             /**
              * Событие перед открытием
@@ -111,6 +122,7 @@ export default {
              * @property {Object}
              */
             this.$emit('opened', event)
+            this.calcIndents(this.$refs.modalInner)
         },
         handleClosed(event) {
             /**
@@ -139,27 +151,29 @@ export default {
     $border-color: #dee1e9;
     $box-shadow-color: #20008c28;
 
-    padding: 12px 0;
+    @media #{$media-query-s} {
+        padding: 12px 0;
+    }
 
     .vm--modal {
         border-radius: $radius-200;
     }
     &__btn-close {
         @include reset-btn();
-        @include position(absolute, 24px 24px null null);
+        @include position(absolute, $space-400 $space-200 null null);
         @include close-link();
-        z-index: 1;
-        @media #{$media-query-m} {
-            @include position(absolute, 32px 24px null null);
+        z-index: $z-index-sticky;
+        @media #{$media-query-s} {
+            @include position(absolute, $space-400 $space-600 null null);
         }
     }
     &__btn-back {
         @include reset-btn();
-        @include position(absolute, 24px null null 24px);
+        @include position(absolute, $space-400 null null $space-200);
         @include close-link();
-        z-index: 1;
-        @media #{$media-query-m} {
-            @include position(absolute, 32px null null 24px);
+        z-index: $z-index-sticky;
+        @media #{$media-query-s} {
+            @include position(absolute, $space-400 null null $space-600);
         }
     }
 
@@ -231,9 +245,13 @@ export default {
 
         .v--modal-background-click {
             padding-bottom: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 100%;
+            @media #{$media-query-s} {
+                height: auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
 
         .v--modal-box {
@@ -243,7 +261,6 @@ export default {
         }
 
         &.scrollable {
-            overflow-y: auto;
             .v--modal-box {
                 margin-bottom: 0;
             }
@@ -252,6 +269,10 @@ export default {
 
     .v--modal-box {
         min-width: 320px;
+        height: 100% !important;
+        @media #{$media-query-s-down} {
+            width: 100% !important;
+        }
     }
 
     .v--modal,
@@ -263,12 +284,13 @@ export default {
     }
 
     &__header {
-        padding-bottom: $space-300;
-        position: relative;
-        padding-right: 35px;
-        padding-left: 35px;
-        @media #{$media-query-m} {
-            padding-bottom: $space-400;
+        position: sticky;
+        top: 0;
+        background-color: $color-white;
+        z-index: $z-index-sticky;
+        padding: $space-400 $space-200 $space-250;
+        @media #{$media-query-s} {
+            padding: $space-350;
         }
     }
 
@@ -280,35 +302,75 @@ export default {
         @include reset-text-indents();
     }
 
+    &__body {
+        flex-grow: 1;
+        padding: $space-50 $space-200;
+        > *:only-child {
+            min-height: 100%;
+            height: -webkit-fill-available;
+            height: -moz-available;
+        }
+        @media #{$media-query-s} {
+            padding: $space-50 $space-400;
+        }
+    }
     &__inner {
-        position: relative;
         box-shadow: 0 6px 12px rgba(110, 110, 110, 0.61);
         background-color: $color-white;
-        margin: 0 12px 0 12px;
-        border-radius: $radius-100;
-        padding: $space-300;
-        @media #{$media-query-m} {
-            padding: $space-400;
+        overflow-y: auto;
+        height: 100% !important;
+        > *:first-child {
+            padding-top: $space-400;
+        }
+        > *:last-child {
+            padding-bottom: $space-400;
+        }
+        @media #{$media-query-s-down} {
+            display: flex;
+            flex-direction: column;
+        }
+        @media #{$media-query-s} {
+            max-height: 80vh;
+            border-radius: $radius-100;
+            margin: 0 $space-150 0 $space-150;
         }
     }
 
+    &--scrolled {
+        &-top {
+            #{$block-name} {
+                &__header {
+                    border-bottom: 1px solid $color-outline-gray;
+                }
+            }
+        }
+        &-bottom {
+            #{$block-name} {
+                &__control:not(:empty) {
+                    border-top: 1px solid $color-outline-gray;
+                }
+            }
+        }
+    }
     &__control {
+        position: sticky;
+        bottom: 0;
+        z-index: $z-index-sticky;
         display: flex;
-        justify-content: flex-end;
-        padding-top: $space-300;
-        margin-left: -3px;
-        margin-right: -3px;
-        @media #{$media-query-m} {
-            padding-top: $space-400;
+        background-color: $color-white;
+        justify-content: center;
+        padding: $space-250 $space-200 $space-400;
+        @media #{$media-query-s} {
+            padding: $space-300;
         }
-
+        @media #{$media-query-s-down} {
+            .mc-button {
+                width: 100%;
+            }
+        }
         &:empty {
-            display: none;
-        }
-
-        .mc-button {
-            margin-left: 3px;
-            margin-right: 3px;
+            position: relative;
+            padding: $space-300 0 0;
         }
     }
 }
@@ -319,20 +381,20 @@ html[direction='rtl'] {
         &__btn-close {
             position: absolute;
             right: unset;
-            left: 24px;
-            top: 24px;
+            left: $space-200;
+            top: $space-400;
             @media #{$media-query-m} {
-                top: 32px;
+                left: $space-400;
             }
         }
         &__btn-back {
             position: absolute;
             left: unset;
-            right: 24px;
-            top: 24px;
+            right: $space-200;
+            top: $space-400;
             transform: rotate(180deg);
             @media #{$media-query-m} {
-                top: 32px;
+                right: $space-400;
             }
         }
         &.mc-modal--secondary {
