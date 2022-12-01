@@ -430,8 +430,7 @@ export default {
 
             const sign = Math.sign(value) || 1
             const multiplier = decimals < 1 ? 1 : 10 ** decimals
-            const roundedNumber =
-                (Math[sign < 0 ? 'floor' : 'ceil'](Math.round(Math.abs(value) * multiplier)) / multiplier) * sign
+            const roundedNumber = (Math.floor(Math.round(Math.abs(value) * multiplier)) / multiplier) * sign
             if (is_rtl) return roundedNumber.toFixed(decimals)
             return String(roundedNumber.toFixed(decimals)).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
         },
