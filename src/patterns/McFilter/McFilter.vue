@@ -547,6 +547,8 @@ export default {
                 case 'date':
                     this.handleConditionChange()
                     break
+                default:
+                    break
             }
         },
         addSimpleValue() {

@@ -129,7 +129,7 @@ export default {
                     if (filter && filter.type === 'fast') {
                         tags.push({
                             id: _XEUtils.uniqueId(),
-                            categoryName: filter.name,
+                            categoryName: filter?.name,
                             category: key,
                             type: 'fast',
                             ...filter,
@@ -152,7 +152,7 @@ export default {
                         const title = typeof value === 'object' ? `${from}${space}${to}`.toLowerCase() : value
                         tags.push({
                             id: _XEUtils.uniqueId(),
-                            categoryName: filter.name,
+                            categoryName: filter?.name,
                             title,
                             value,
                             category: key,
@@ -170,7 +170,7 @@ export default {
                             const filter = this.filters.find(f => f.value === key)
                             return {
                                 id: _XEUtils.uniqueId(),
-                                categoryName: filter.name,
+                                categoryName: filter?.name,
                                 value: key,
                                 category: key,
                                 relationKey,
@@ -190,7 +190,7 @@ export default {
                         Object.entries(categoryVal).forEach(([key, val]) => {
                             values.push({
                                 id: _XEUtils.uniqueId(),
-                                categoryName: filter.name,
+                                categoryName: filter?.name,
                                 title: val,
                                 value: key,
                                 category: categoryKey,
