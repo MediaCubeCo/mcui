@@ -14,14 +14,14 @@
         @closed="handleClosed"
         @opened="handleOpened"
     >
-        <div ref="modalInner" class="mc-modal__inner" @scroll="handleScroll">
+        <div ref="modalInner" class="mc-modal__inner">
             <div v-if="$slots.title" class="mc-modal__header">
                 <div class="mc-modal__title">
                     <!-- @slot Слот заголовка -->
                     <slot name="title" />
                 </div>
             </div>
-            <div class="mc-modal__body">
+            <div class="mc-modal__body" @scroll="handleScroll">
                 <!-- @slot Слот контента -->
                 <slot />
             </div>
@@ -77,6 +77,14 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Должен ли контент внутри модалки скроллится с фиксированной шапкой и футером
+         * Отключать, когда внутри есть селекты
+         * */
+        scrollableContent: {
+            type: Boolean,
+            default: true,
+        },
     },
     data: () => ({
         scrolled_top: false,
@@ -91,6 +99,7 @@ export default {
                 'mc-modal--secondary': this.secondaryModal,
                 'mc-modal--scrolled-top': this.scrolled_top,
                 'mc-modal--scrolled-bottom': this.scrolled_bottom,
+                'mc-modal--scrollable': this.scrollableContent,
             }
         },
     },
@@ -284,10 +293,7 @@ export default {
     }
 
     &__header {
-        position: sticky;
-        top: 0;
-        background-color: $color-white;
-        z-index: $z-index-sticky;
+        flex-shrink: 0;
         padding: $space-400 $space-200 $space-250;
         @media #{$media-query-s} {
             padding: $space-350;
@@ -303,8 +309,10 @@ export default {
     }
 
     &__body {
-        flex-grow: 1;
         padding: $space-50 $space-200;
+        flex-grow: 1;
+        min-height: 0;
+        overflow-x: hidden;
         > *:only-child {
             min-height: 100%;
             height: -webkit-fill-available;
@@ -312,12 +320,16 @@ export default {
         }
         @media #{$media-query-s} {
             padding: $space-50 $space-400;
+            overflow: visible;
         }
     }
     &__inner {
         box-shadow: 0 6px 12px rgba(110, 110, 110, 0.61);
         background-color: $color-white;
+        display: flex;
+        flex-direction: column;
         overflow-y: auto;
+        overflow-x: hidden;
         height: 100% !important;
         > *:first-child {
             padding-top: $space-400;
@@ -330,9 +342,23 @@ export default {
             flex-direction: column;
         }
         @media #{$media-query-s} {
-            max-height: 80vh;
+            overflow: visible;
             border-radius: $radius-100;
             margin: 0 $space-150 0 $space-150;
+        }
+    }
+    &--scrollable {
+        #{$block-name} {
+            &__body {
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+            &__inner {
+                overflow-x: hidden;
+                @media #{$media-query-s} {
+                    max-height: 80vh;
+                }
+            }
         }
     }
 
@@ -353,11 +379,8 @@ export default {
         }
     }
     &__control {
-        position: sticky;
-        bottom: 0;
-        z-index: $z-index-sticky;
+        flex-shrink: 0;
         display: flex;
-        background-color: $color-white;
         justify-content: center;
         padding: $space-250 $space-200 $space-400;
         @media #{$media-query-s} {
