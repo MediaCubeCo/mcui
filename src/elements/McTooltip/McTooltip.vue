@@ -85,6 +85,10 @@ export default {
             type: [Boolean, String],
             default: 'body',
         },
+        disablePointerEvents: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         tooltipClasses() {
