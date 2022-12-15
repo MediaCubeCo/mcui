@@ -8,7 +8,7 @@
         adaptive
         scrollable
         height="auto"
-        width="100%"
+        width="100%"clip.svg
         @before-open="handleBeforeOpen"
         @before-close="handleBeforeClose"
         @closed="handleClosed"
@@ -85,6 +85,15 @@ export default {
             type: Boolean,
             default: true,
         },
+        /**
+         * Выравнивание заголовка в шапке,
+         * если centered добавляются отступы слева и справа, чтобы текст не наезжал на кнопки
+         * centered || left || right
+         * */
+        headerAlign: {
+            type: String,
+            default: 'center',
+        },
     },
     data: () => ({
         scrolled_top: false,
@@ -100,6 +109,8 @@ export default {
                 'mc-modal--scrolled-top': this.scrolled_top,
                 'mc-modal--scrolled-bottom': this.scrolled_bottom,
                 'mc-modal--scrollable': this.scrollableContent,
+                [`mc-modal--header-align-${this.headerAlign}`]:
+                    (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
             }
         },
     },
@@ -144,6 +155,7 @@ export default {
             this.$modal.hide(this.name)
         },
         handleBack(event) {
+            this.calcIndents(this.$refs.modalInner)
             this.$emit('back', event)
         },
     },
@@ -357,6 +369,20 @@ export default {
                 overflow-x: hidden;
                 @media #{$media-query-s} {
                     max-height: 80vh;
+                }
+            }
+        }
+    }
+    &--header-align {
+        &-center {
+            #{$block-name} {
+                &__header {
+                    padding-left: $space-500;
+                    padding-right: $space-500;
+                    @media #{$media-query-s} {
+                        padding-left: $space-700;
+                        padding-right: $space-700;
+                    }
                 }
             }
         }
