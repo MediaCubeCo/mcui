@@ -8,7 +8,7 @@
         adaptive
         scrollable
         height="auto"
-        width="100%"clip.svg
+        width="100%"
         @before-open="handleBeforeOpen"
         @before-close="handleBeforeClose"
         @closed="handleClosed"
@@ -21,7 +21,7 @@
                     <slot name="title" />
                 </div>
             </div>
-            <div class="mc-modal__body" @scroll="handleScroll">
+            <div ref="mcModalBody" class="mc-modal__body" @scroll="handleScroll">
                 <!-- @slot Слот контента -->
                 <slot />
             </div>
@@ -114,11 +114,17 @@ export default {
             }
         },
     },
+    updated() {
+        this.calcIndents()
+    },
     methods: {
+        updateIndents() {
+            this.calcIndents()
+        },
         handleScroll(event) {
             this.calcIndents(event.target)
         },
-        calcIndents(element) {
+        calcIndents(element = this.$refs.mcModalBody) {
             this.scrolled_top = element?.scrollTop > 5
             this.scrolled_bottom = element?.scrollHeight - element?.scrollTop - element?.clientHeight > 5
         },
@@ -142,7 +148,7 @@ export default {
              * @property {Object}
              */
             this.$emit('opened', event)
-            this.calcIndents(this.$refs.modalInner)
+            this.calcIndents()
         },
         handleClosed(event) {
             /**
@@ -155,7 +161,7 @@ export default {
             this.$modal.hide(this.name)
         },
         handleBack(event) {
-            this.calcIndents(this.$refs.modalInner)
+            this.calcIndents()
             this.$emit('back', event)
         },
     },
