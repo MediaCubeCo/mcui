@@ -21,9 +21,15 @@
                     <slot name="title" />
                 </div>
             </div>
-            <div ref="mcModalBody" class="mc-modal__body" @scroll="handleScroll">
+            <div ref="mcModalBody" class="mc-modal__body">
+                <mc-infinity-loading-indicator active @loading="scrolled_top = false" @hide="scrolled_top = true" />
                 <!-- @slot Слот контента -->
                 <slot />
+                <mc-infinity-loading-indicator
+                    active
+                    @loading="scrolled_bottom = false"
+                    @hide="scrolled_bottom = true"
+                />
             </div>
             <!-- @slot Слот футера -->
             <div class="mc-modal__control"><slot name="footer" /><portal-target name="mcModalFooter" slim /></div>
@@ -40,9 +46,15 @@
 <script>
 import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
 import McButton from '../../elements/McButton/McButton'
+import McInfinityLoadingIndicator from '../../elements/McInfinityLoadingIndicator/McInfinityLoadingIndicator'
+
 export default {
     name: 'McModal',
-    components: { McButton, McSvgIcon },
+    components: {
+        McButton,
+        McSvgIcon,
+        McInfinityLoadingIndicator,
+    },
     props: {
         name: {
             type: String,
@@ -114,20 +126,7 @@ export default {
             }
         },
     },
-    updated() {
-        this.calcIndents()
-    },
     methods: {
-        updateIndents() {
-            this.calcIndents()
-        },
-        handleScroll(event) {
-            this.calcIndents(event.target)
-        },
-        calcIndents(element = this.$refs.mcModalBody) {
-            this.scrolled_top = element?.scrollTop > 5
-            this.scrolled_bottom = element?.scrollHeight - element?.scrollTop - element?.clientHeight > 5
-        },
         handleBeforeOpen(event) {
             /**
              * Событие перед открытием
@@ -148,7 +147,6 @@ export default {
              * @property {Object}
              */
             this.$emit('opened', event)
-            this.calcIndents()
         },
         handleClosed(event) {
             /**
@@ -161,7 +159,6 @@ export default {
             this.$modal.hide(this.name)
         },
         handleBack(event) {
-            this.calcIndents()
             this.$emit('back', event)
         },
     },
@@ -366,6 +363,7 @@ export default {
         }
     }
     &--scrollable {
+        overflow: hidden !important;
         #{$block-name} {
             &__body {
                 overflow-y: auto;
