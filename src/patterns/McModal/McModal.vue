@@ -414,7 +414,7 @@ export default {
         justify-content: center;
         padding: $space-250 $space-200 $space-400;
         @media #{$media-query-s} {
-            padding: $space-300;
+            padding: $space-350 $space-300 $space-300;
         }
         @media #{$media-query-s-down} {
             .mc-button {
