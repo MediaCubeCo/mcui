@@ -390,6 +390,13 @@ export default {
                 }
             }
         }
+        &-left {
+            #{$block-name} {
+                &__header {
+                    padding-bottom: $space-150;
+                }
+            }
+        }
     }
 
     &--scrolled {
