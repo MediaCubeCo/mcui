@@ -352,10 +352,14 @@ export default {
         > *:last-child {
             padding-bottom: $space-400;
         }
-        &:not(&:first-child:is(#{$block-name}__header)):before {
+        &:before {
             content: '';
             height: $space-400;
             min-height: $space-400;
+        }
+        &:has(#{$block-name}__header):before {
+            height: unset;
+            min-height: unset;
         }
         @media #{$media-query-s-down} {
             display: flex;
