@@ -343,8 +343,7 @@ export default {
         background-color: $color-white;
         display: flex;
         flex-direction: column;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden;
         height: 100% !important;
         > *:first-child {
             padding-top: $space-400;
@@ -367,6 +366,12 @@ export default {
         }
         @media #{$media-query-s} {
             overflow: visible;
+            /* прячет рандомный скроллбар при включении модалки */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            &::-webkit-scrollbar {
+                display: none;
+            }
             border-radius: $radius-100;
             margin: 0 $space-150 0 $space-150;
         }
