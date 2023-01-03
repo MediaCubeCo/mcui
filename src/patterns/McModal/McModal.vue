@@ -106,6 +106,14 @@ export default {
             type: String,
             default: 'center',
         },
+        /**
+         * Отступ от верхнего края модального окна до контента.
+         * Для "красивой" обрезки картинки при скролле в ситуациях, когда нет хедера
+         */
+        topPadding: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: () => ({
         scrolled_top: false,
@@ -121,6 +129,7 @@ export default {
                 'mc-modal--scrolled-top': this.scrolled_top,
                 'mc-modal--scrolled-bottom': this.scrolled_bottom,
                 'mc-modal--scrollable': this.scrollableContent,
+                'mc-modal--top-padding': this.topPadding,
                 [`mc-modal--header-align-${this.headerAlign}`]:
                     (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
             }
@@ -351,15 +360,6 @@ export default {
         > *:last-child {
             padding-bottom: $space-400;
         }
-        &:before {
-            content: '';
-            height: $space-400;
-            min-height: $space-400;
-        }
-        &:has(#{$block-name}__header):before {
-            height: unset;
-            min-height: unset;
-        }
         @media #{$media-query-s-down} {
             display: flex;
             flex-direction: column;
@@ -427,6 +427,13 @@ export default {
                     border-top: 1px solid $color-outline-gray;
                 }
             }
+        }
+    }
+    &--top-padding {
+        #{$block-name}__inner:before {
+            content: '';
+            height: $space-400;
+            min-height: $space-400;
         }
     }
     &__control {
