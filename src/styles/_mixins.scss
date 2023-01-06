@@ -358,4 +358,9 @@
     margin: $space-150 0;
     border-radius: $radius-200;
   }
+  blockquote {
+    border-left: $space-50 solid $color-purple !important;
+    margin: $space-zero;
+    padding-left: $space-200;
+  }
 }
