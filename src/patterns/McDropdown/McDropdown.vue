@@ -146,6 +146,14 @@ export default {
     opacity: 0;
     visibility: hidden;
     transition: opacity $duration-s, transform $duration-s;
+
+    .mc-button {
+      &:not(.nuxt-link-active):not(.mc-button--is-active):not(.mc-button--variation-red-flat) {
+        &:hover {
+          background-color: fade-out($color-purple, 0.9);
+        }
+      }
+    }
   }
 
   &--list-position-top {
