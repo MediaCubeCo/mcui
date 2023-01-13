@@ -238,6 +238,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        tabindex: {
+            type: [String, Number],
+            default: null,
+        }
     },
     data() {
         return {
@@ -262,6 +266,7 @@ export default {
                 placeholder: this.placeholder,
                 disabled: this.disabled,
                 internalSearch: this.internalSearch,
+                tabindex: this.tabindex,
                 ...(this.groupKeys ? { groupLabel: this.groupKeys.label } : {}),
                 ...(this.groupKeys ? { groupValues: this.groupKeys.values } : {}),
             }
