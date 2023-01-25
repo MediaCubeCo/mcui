@@ -266,7 +266,7 @@ export default {
                 placeholder: this.placeholder,
                 disabled: this.disabled,
                 internalSearch: this.internalSearch,
-                tabindex: this.tabindex,
+                tabindex: +this.tabindex,
                 ...(this.groupKeys ? { groupLabel: this.groupKeys.label } : {}),
                 ...(this.groupKeys ? { groupValues: this.groupKeys.values } : {}),
             }
