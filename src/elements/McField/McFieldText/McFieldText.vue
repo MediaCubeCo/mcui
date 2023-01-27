@@ -346,7 +346,7 @@ export default {
                 'mc-field-text--textarea-autosize': this.isTextareaAutosize,
                 'mc-field-text--disabled': this.disabled,
                 'mc-field-text--copy': this.copy,
-                'mc-field-text--rtl': this.locale === 'ar',
+                'mc-field-text--rtl': ['ar'].includes(this.locale),
             }
         },
 

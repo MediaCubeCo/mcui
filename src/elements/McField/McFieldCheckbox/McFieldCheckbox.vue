@@ -159,7 +159,7 @@ export default {
                 'mc-field-checkbox--disabled': this.disabled,
                 'mc-field-checkbox--empty': !this.mainText && !this.$slots.default,
                 [`mc-field-checkbox--size-${this.checkboxSize}`]: !!this.checkboxSize,
-                'mc-field-checkbox--rtl': this.locale === 'ar',
+                'mc-field-checkbox--rtl': ['ar'].includes(this.locale),
             }
         },
         inputProps() {
