@@ -1,4 +1,5 @@
 .toasted-container {
+  $toasted-container-name: &;
   z-index: $z-index-toasted !important;
   .toasted {
     &.mc-toast {
@@ -33,7 +34,7 @@
             margin-left: $space-600;
           }
           &:last-child {
-            margin-right: -$space-300;
+            margin-right: -$space-300; // TODO: refactor negative margin
           }
         }
       }
@@ -42,6 +43,41 @@
         @include size($space-300);
         font-size: 24px;
         margin-right: $space-150;
+      }
+    }
+  }
+  @at-root {
+    html[direction="rtl"] {
+      #{$toasted-container-name} {
+        .toasted {
+          padding: $space-100 $space-150 $space-100 $space-400;
+          &.mc-toast {
+            &--primary {
+              .action {
+                &:last-child {
+                  margin-right: unset;
+                  margin-left: -$space-300; // TODO: refactor negative margin
+                }
+                &:first-of-type {
+                  margin-left: unset;
+                  margin-right: $space-600;
+                }
+                &:not(:last-child) {
+                  margin-right: unset;
+                  margin-left: $space-50;
+                }
+                &:first-of-type:last-child {
+                  margin-left: -$space-300; // TODO: refactor negative margin
+                }
+              }
+            }
+            .las,
+            i {
+              margin-right: unset;
+              margin-left: $space-150;
+            }
+          }
+        }
       }
     }
   }

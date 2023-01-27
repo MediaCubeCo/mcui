@@ -96,7 +96,8 @@
                 color="red"
                 variation="overline"
                 max-width="100%"
-                :ellipsis="false"class="mc-field-text__error-text"
+                :ellipsis="false"
+                class="mc-field-text__error-text"
                 v-html="errorText.replace(/ /gm, '<wbr /> ')"
             />
             <br v-if="errorText" />
@@ -320,6 +321,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Для какого языка поле ввода
+         */
+        locale: {
+            type: String,
+            default: null,
+        },
     },
 
     data() {
@@ -338,6 +346,7 @@ export default {
                 'mc-field-text--textarea-autosize': this.isTextareaAutosize,
                 'mc-field-text--disabled': this.disabled,
                 'mc-field-text--copy': this.copy,
+                'mc-field-text--rtl': ['ar'].includes(this.locale),
             }
         },
 
@@ -714,6 +723,10 @@ export default {
                 border-color: $color-outline-gray;
             }
         }
+    }
+
+    &--rtl {
+        direction: rtl;
     }
 
     &__empty-tooltip {
