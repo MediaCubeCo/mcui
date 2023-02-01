@@ -781,7 +781,7 @@ export default {
             & > .mc-tooltip-target {
                 .mc-chip {
                     cursor: pointer;
-                    margin: ($space-100 / 2) ($space-50 / 2);
+                    margin: calc(#{$space-100} / 2) calc(#{$space-50} / 2);
                     &:hover {
                         background-color: $color-outline-gray;
                     }

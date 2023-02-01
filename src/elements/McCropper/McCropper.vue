@@ -9,6 +9,7 @@
             :initial-aspect-ratio="1 / 1"
             :highlight="false"
             :guides="false"
+            :zoomable="zoomable"
             :view-mode="2"
             :src="imgSrc"
         />
@@ -33,6 +34,10 @@ export default {
         imgSrc: {
             type: [String, Object],
             default: null,
+        },
+        zoomable: {
+            type: Boolean,
+            default: true,
         },
     },
     data() {
