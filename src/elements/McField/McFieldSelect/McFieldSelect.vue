@@ -9,7 +9,18 @@
         <div class="mc-field-select__main">
             <multi-select v-bind="tagBind" @input="handleChange" @tag="handleTag" @search-change="handleSearchChange">
                 <template slot="singleLabel" slot-scope="{ option }">
-                    <div class="mc-field-select__single-label">
+                    <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
+                        <mc-svg-icon slot="left" :name="option.icon" size="400" />
+                        <mc-title slot="top" weight="semi-bold">
+                            {{ option.name }}
+                        </mc-title>
+                        <!-- Слот для замены стандартной стрелки при выведенном превью -->
+                        <slot slot="right" name="arrow" />
+                        <mc-title slot="bottom" color="gray">
+                            {{ option.text }}
+                        </mc-title>
+                    </mc-preview>
+                    <div v-else class="mc-field-select__single-label">
                         <div v-if="hasPrepend" class="mc-field-select__prepend">
                             <mc-avatar v-if="avatar" :src="avatar" />
                             <mc-svg-icon v-else :name="icon" />
@@ -23,8 +34,18 @@
                     </div>
                 </template>
 
-                <template v-if="optionsTooltip" slot="option" slot-scope="{ option }">
+                <template v-if="optionsTooltip || optionWithPreview" slot="option" slot-scope="{ option }">
+                    <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
+                        <mc-svg-icon slot="left" :name="option.icon" size="400" />
+                        <mc-title slot="top" weight="semi-bold">
+                            {{ option.name }}
+                        </mc-title>
+                        <mc-title slot="bottom" color="gray">
+                            {{ option.text }}
+                        </mc-title>
+                    </mc-preview>
                     <mc-tooltip
+                        v-else
                         class="mc-field-select__options-tooltip-target"
                         max-width="m"
                         color="black"
@@ -69,9 +90,10 @@ import McTitle from '../../McTitle/McTitle'
 import McTooltip from '../../McTooltip/McTooltip'
 import McAvatar from '../../McAvatar/McAvatar'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
+import McPreview from '../../../patterns/McPreview/McPreview'
 export default {
     name: 'McFieldSelect',
-    components: { McSvgIcon, McAvatar, McTitle, McTooltip, MultiSelect },
+    components: { McSvgIcon, McAvatar, McTitle, McTooltip, MultiSelect, McPreview },
     props: {
         /**
          *  Заголовок поля:
@@ -93,6 +115,14 @@ export default {
         /**
          *  Массив элементов
          *  выпадающего списка
+         *  [
+         *      {
+         *          name: String,
+         *          value: String | Number,
+         *          text: String - доступен, если optionWithPreview=true
+         *          icon: String - доступен, если optionWithPreview=true
+         *      }
+         *  ]
          */
         options: {
             type: Array,
@@ -238,6 +268,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         *  Если айтемам в селекте нужны превью с иконками и описанием
+         */
+        optionWithPreview: {
+            type: Boolean,
+            default: false,
+        },
         tabindex: {
             type: [String, Number],
             default: null,
@@ -288,6 +325,7 @@ export default {
                 'mc-field-select--disabled': this.disabled,
                 [`mc-field-select--bg-${this.backgroundColor}`]: this.backgroundColor,
                 'mc-field-select--is-empty-options-list': this.isEmptyOptionsList,
+                'mc-field-select--with-preview': this.optionWithPreview,
             }
         },
         _value() {
@@ -768,6 +806,33 @@ $text-white: scale-color($color-white, $alpha: -10%);
                         border-color: $color-outline-gray transparent transparent;
                     }
                 }
+            }
+        }
+    }
+
+    &--with-preview {
+        .mc-preview {
+            align-items: center;
+        }
+        .multiselect {
+            &__content {
+                padding: 0;
+            }
+            &__select {
+                display: none;
+            }
+            &__single {
+                margin: 0;
+            }
+            &__tags {
+                padding: $space-200 $space-150;
+                cursor: pointer;
+                border-color: $color-outline-light;
+            }
+            &__option,
+            &__content-wrapper,
+            &__tags {
+                border-radius: $radius-200 !important;
             }
         }
     }
