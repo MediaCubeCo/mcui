@@ -203,7 +203,7 @@ export default {
             margin: 6px;
             padding: 0 !important;
             width: $size-150;
-            min-height: $size-150;
+            height: $size-150;
         }
     }
     &.mc-button {
