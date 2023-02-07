@@ -200,8 +200,10 @@ export default {
     }
     &__chip {
         &.indicator {
-            width: $size-200;
-            min-height: $size-200;
+            margin: 6px;
+            padding: 0 !important;
+            width: $size-150;
+            min-height: $size-150;
         }
     }
     &.mc-button {
