@@ -140,11 +140,6 @@ export default {
             }
         },
     },
-    mounted() {
-        setTimeout(() => {
-            this.is_observer_active = true
-        }, 100)
-    },
     methods: {
         handleBeforeOpen(event) {
             /**
@@ -159,13 +154,16 @@ export default {
              * @property {Object}
              */
             this.$emit('beforeClose', event)
+            this.is_observer_active = false
         },
         handleOpened(event) {
             /**
              * Событие после открытия
              * @property {Object}
              */
-            this.$emit('opened', event)
+            this.$nextTick(() => {
+                this.is_observer_active = true
+            })
         },
         handleClosed(event) {
             /**
