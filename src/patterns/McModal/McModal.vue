@@ -141,9 +141,9 @@ export default {
         },
     },
     mounted() {
-        this.$nextTick(() => {
+        setTimeout(() => {
             this.is_observer_active = true
-        })
+        }, 100)
     },
     methods: {
         handleBeforeOpen(event) {
