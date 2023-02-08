@@ -22,10 +22,16 @@
                 </div>
             </div>
             <div ref="mcModalBody" class="mc-modal__body">
-                <mc-infinity-loading-indicator active @loading="scrolled_top = false" @hide="scrolled_top = true" />
+                <mc-infinity-loading-indicator
+                    v-if="is_observer_active"
+                    active
+                    @loading="scrolled_top = false"
+                    @hide="scrolled_top = true"
+                />
                 <!-- @slot Слот контента -->
                 <slot />
                 <mc-infinity-loading-indicator
+                    v-if="is_observer_active"
                     active
                     @loading="scrolled_bottom = false"
                     @hide="scrolled_bottom = true"
@@ -45,13 +51,11 @@
 
 <script>
 import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
-import McButton from '../../elements/McButton/McButton'
 import McInfinityLoadingIndicator from '../../elements/McInfinityLoadingIndicator/McInfinityLoadingIndicator'
 
 export default {
     name: 'McModal',
     components: {
-        McButton,
         McSvgIcon,
         McInfinityLoadingIndicator,
     },
@@ -116,6 +120,7 @@ export default {
         },
     },
     data: () => ({
+        is_observer_active: false,
         scrolled_top: false,
         scrolled_bottom: false,
     }),
@@ -134,6 +139,11 @@ export default {
                     (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
             }
         },
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.is_observer_active = true
+        })
     },
     methods: {
         handleBeforeOpen(event) {
