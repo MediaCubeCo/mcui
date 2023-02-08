@@ -22,20 +22,8 @@
                 </div>
             </div>
             <div ref="mcModalBody" class="mc-modal__body">
-                <mc-infinity-loading-indicator
-                    v-if="is_observer_active"
-                    active
-                    @loading="scrolled_top = false"
-                    @hide="scrolled_top = true"
-                />
                 <!-- @slot Слот контента -->
                 <slot />
-                <mc-infinity-loading-indicator
-                    v-if="is_observer_active"
-                    active
-                    @loading="scrolled_bottom = false"
-                    @hide="scrolled_bottom = true"
-                />
             </div>
             <!-- @slot Слот футера -->
             <div class="mc-modal__control"><slot name="footer" /><portal-target name="mcModalFooter" slim /></div>
@@ -51,13 +39,11 @@
 
 <script>
 import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
-import McInfinityLoadingIndicator from '../../elements/McInfinityLoadingIndicator/McInfinityLoadingIndicator'
 
 export default {
     name: 'McModal',
     components: {
         McSvgIcon,
-        McInfinityLoadingIndicator,
     },
     props: {
         name: {
@@ -119,13 +105,13 @@ export default {
             default: false,
         },
     },
-    data: () => ({
-        is_observer_active: false,
-        scrolled_top: false,
-        scrolled_bottom: false,
-    }),
     status: 'ready',
     release: '1.0.0',
+    data: () => ({
+        scrolled_top: false,
+        scrolled_bottom: false,
+        resize_observer: null,
+    }),
     computed: {
         classes() {
             return {
@@ -154,16 +140,23 @@ export default {
              * @property {Object}
              */
             this.$emit('beforeClose', event)
-            this.is_observer_active = false
+
+            this.resize_observer?.unobserve(this.$refs.mcModalBody)
+            this.$refs.mcModalBody.removeEventListener('scroll', this.calculateSeparators)
         },
         handleOpened(event) {
+            this.$refs.mcModalBody.addEventListener('scroll', this.calculateSeparators, {
+                passive: true,
+            })
+            this.resize_observer = new ResizeObserver(this.calculateSeparators)
+            this.resize_observer?.observe(this.$refs.mcModalBody)
+            this.calculateSeparators()
+
             /**
              * Событие после открытия
              * @property {Object}
              */
-            this.$nextTick(() => {
-                this.is_observer_active = true
-            })
+            this.$emit('opened', event)
         },
         handleClosed(event) {
             /**
@@ -177,6 +170,13 @@ export default {
         },
         handleBack(event) {
             this.$emit('back', event)
+        },
+        calculateSeparators() {
+            const { scrollTop, scrollHeight, clientHeight } = this.$refs.mcModalBody
+            // Сепаратор появится если высота скролла будет > 2px
+            const offset = 2
+            this.scrolled_top = scrollTop > offset
+            this.scrolled_bottom = scrollTop + clientHeight < scrollHeight - offset
         },
     },
 }
