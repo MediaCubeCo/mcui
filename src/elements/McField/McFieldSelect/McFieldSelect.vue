@@ -11,9 +11,7 @@
                 <template slot="singleLabel" slot-scope="{ option }">
                     <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
                         <mc-svg-icon slot="left" :name="option.icon" size="400" />
-                        <mc-title slot="top" weight="semi-bold">
-                            {{ option.name }}
-                        </mc-title>
+                        <mc-title slot="top" weight="semi-bold" v-html="option.name" />
                         <!-- Слот для замены стандартной стрелки при выведенном превью -->
                         <slot slot="right" name="arrow" />
                         <mc-title slot="bottom" color="gray">
@@ -37,9 +35,7 @@
                 <template v-if="optionsTooltip || optionWithPreview" slot="option" slot-scope="{ option }">
                     <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
                         <mc-svg-icon slot="left" :name="option.icon" size="400" />
-                        <mc-title slot="top" weight="semi-bold">
-                            {{ option.name }}
-                        </mc-title>
+                        <mc-title slot="top" weight="semi-bold" v-html="option.name" />
                         <mc-title slot="bottom" color="gray">
                             {{ option.text }}
                         </mc-title>
