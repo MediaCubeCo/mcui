@@ -12,12 +12,14 @@
             :zoomable="zoomable"
             :view-mode="2"
             :src="imgSrc"
+            @ready="$emit('ready')"
         />
     </section>
 </template>
 
 <script>
 const VueCropper = () => import('vue-cropperjs')
+import 'cropperjs/dist/cropper.css';
 
 export default {
     name: 'McCropper',
