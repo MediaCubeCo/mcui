@@ -148,7 +148,7 @@ export default {
             this.$refs.mcModalBody.addEventListener('scroll', this.calculateSeparators, {
                 passive: true,
             })
-            this.resize_observer = new ResizeObserver(this.calculateSeparators)
+            this.resize_observer = new ResizeObserver(() => this.calculateSeparators(true))
             this.resize_observer?.observe(this.$refs.mcModalBody)
             this.calculateSeparators()
 
@@ -171,12 +171,21 @@ export default {
         handleBack(event) {
             this.$emit('back', event)
         },
-        calculateSeparators() {
-            const { scrollTop, scrollHeight, clientHeight } = this.$refs.mcModalBody
-            // Сепаратор появится если высота скролла будет > 2px
-            const offset = 2
-            this.scrolled_top = scrollTop > offset
-            this.scrolled_bottom = scrollTop + clientHeight < scrollHeight - offset
+        /**
+         * Устанавливаем сепараторы, если есть скролл
+         * @param {Boolean} resized - если метод вызван в ResizeObserver -- отложенный пересчет
+         */
+        calculateSeparators(resized = false) {
+            setTimeout(
+                () => {
+                    const { scrollTop, scrollHeight, clientHeight } = this.$refs.mcModalBody || {}
+                    // Сепаратор появится если высота скролла будет > 2px
+                    const offset = 2
+                    this.scrolled_top = scrollTop > offset
+                    this.scrolled_bottom = scrollTop + clientHeight < scrollHeight - offset
+                },
+                resized ? 300 : 0,
+            )
         },
     },
 }
@@ -347,8 +356,6 @@ export default {
         overflow-x: hidden;
         > *:only-child {
             min-height: 100%;
-            height: -webkit-fill-available;
-            height: -moz-available;
         }
         @media #{$media-query-s} {
             padding: $space-50 $space-400;
@@ -367,10 +374,6 @@ export default {
         }
         > *:last-child {
             padding-bottom: $space-400;
-        }
-        @media #{$media-query-s-down} {
-            display: flex;
-            flex-direction: column;
         }
         @media #{$media-query-s} {
             overflow: visible;
@@ -452,9 +455,12 @@ export default {
         @media #{$media-query-s} {
             padding: $space-350 $space-300 $space-300;
         }
-        @media #{$media-query-s-down} {
+        .mc-button {
+            width: 100%;
+        }
+        @media #{$media-query-s} {
             .mc-button {
-                width: 100%;
+                width: unset;
             }
         }
         &:empty {
