@@ -88,6 +88,13 @@ export default {
             default: true,
         },
         /**
+         * Показывать сепараторы у хедера и футера при скролле.
+         */
+        separators: {
+            type: Boolean,
+            default: true,
+        },
+        /**
          * Выравнивание заголовка в шапке,
          * если centered добавляются отступы слева и справа, чтобы текст не наезжал на кнопки
          * centered || left || right
@@ -145,12 +152,14 @@ export default {
             this.$refs.mcModalBody.removeEventListener('scroll', this.calculateSeparators)
         },
         handleOpened(event) {
-            this.$refs.mcModalBody.addEventListener('scroll', this.calculateSeparators, {
-                passive: true,
-            })
-            this.resize_observer = new ResizeObserver(() => this.calculateSeparators(true))
-            this.resize_observer?.observe(this.$refs.mcModalBody)
-            this.calculateSeparators()
+            if (this.separators) {
+                this.$refs.mcModalBody.addEventListener('scroll', this.calculateSeparators, {
+                    passive: true,
+                })
+                this.resize_observer = new ResizeObserver(() => this.calculateSeparators(true))
+                this.resize_observer?.observe(this.$refs.mcModalBody)
+                this.calculateSeparators()
+            }
 
             /**
              * Событие после открытия
