@@ -292,6 +292,15 @@ export default {
         },
 
         /**
+         * Tooltip для кнопка "Скрыть пароль", если не указывать, то будет аналогичен "показать"
+         *
+         */
+        passwordHideTooltip: {
+            type: String,
+            default: null,
+        },
+
+        /**
          * Очищаем данные от маски на выходе
          */
         clearOutput: {
@@ -414,8 +423,12 @@ export default {
             }
         },
 
+        isPasswordType() {
+            return this.prettyType === 'password'
+        },
+
         passwordIcon() {
-            return this.prettyType === 'password' ? 'visibility' : 'visibility_off'
+            return this.isPasswordType ? 'visibility' : 'visibility_off'
         },
 
         charCounter() {
@@ -458,7 +471,9 @@ export default {
             return this.passwordTooltip
                 ? {
                       is: 'mc-tooltip',
-                      content: this.passwordTooltip,
+                      content: this.isPasswordType
+                          ? this.passwordTooltip
+                          : this.passwordHideTooltip || this.passwordTooltip,
                       placement: 'top',
                       size: 's',
                   }
@@ -532,7 +547,7 @@ export default {
             this.$emit('copy', value)
         },
         togglePasswordVisibility() {
-            this.prettyType = this.prettyType === 'password' ? 'text' : 'password'
+            this.prettyType = this.isPasswordType ? 'text' : 'password'
         },
     },
 }
