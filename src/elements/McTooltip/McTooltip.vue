@@ -82,8 +82,7 @@ export default {
          *  В каком контенере отображать
          */
         container: {
-            type: [Boolean, String],
-            default: 'body',
+            default: 'body', //Boolean, String, HTMLElement,
         },
         disablePointerEvents: {
             type: Boolean,
