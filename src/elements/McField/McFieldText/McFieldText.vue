@@ -98,7 +98,7 @@
                 max-width="100%"
                 :ellipsis="false"
                 class="mc-field-text__error-text"
-                v-html="errorText.replace(/ /gm, '<wbr /> ')"
+                v-html="errorText.replace(/-/gm, '&#x2011;')"
             />
             <br v-if="errorText" />
             <!-- @slot Слот доп. текста под инпутом -->
@@ -679,12 +679,6 @@ export default {
 
         &:empty {
             display: none;
-        }
-    }
-    &__error-text {
-        .mc-title__text {
-            white-space: nowrap;
-            word-break: break-word;
         }
     }
 
