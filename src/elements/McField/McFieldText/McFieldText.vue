@@ -475,6 +475,7 @@ export default {
                           ? this.passwordTooltip
                           : this.passwordHideTooltip || this.passwordTooltip,
                       placement: 'top',
+                      trigger: 'hover focus click',
                       size: 's',
                   }
                 : {
@@ -681,7 +682,7 @@ export default {
             display: none;
         }
     }
-
+    
     &--error {
         #{$block-name} {
             &__input {
