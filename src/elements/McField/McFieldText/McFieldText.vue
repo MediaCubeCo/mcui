@@ -98,7 +98,7 @@
                 max-width="100%"
                 :ellipsis="false"
                 class="mc-field-text__error-text"
-                v-html="errorText.replace(/-/gm, '&#x2011;')"
+                v-html="errorText.replace(/ /gm, '<wbr /> ')"
             />
             <br v-if="errorText" />
             <!-- @slot Слот доп. текста под инпутом -->
@@ -475,6 +475,7 @@ export default {
                           ? this.passwordTooltip
                           : this.passwordHideTooltip || this.passwordTooltip,
                       placement: 'top',
+                      trigger: 'hover focus click',
                       size: 's',
                   }
                 : {
@@ -679,6 +680,12 @@ export default {
 
         &:empty {
             display: none;
+        }
+    }
+    &__error-text {
+        .mc-title__text {
+            white-space: nowrap;
+            word-break: break-word;
         }
     }
 
