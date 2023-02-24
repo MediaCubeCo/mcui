@@ -134,6 +134,12 @@ export default {
                         },
                         directives,
                         key: props.src,
+                        on: {
+                            error(e) {
+                                if (!e.target) return
+                                e.target.src = defaultImage
+                            },
+                        },
                     }),
                 ],
             )
