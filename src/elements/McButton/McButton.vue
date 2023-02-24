@@ -528,8 +528,10 @@ $colors: $token-colors;
             @if $color == 'white' or $color == 'yellow' {
                 background-color: $value;
 
-                &:hover {
-                    background-color: fade-out($value, 1 - $opacity-hover);
+                @media #{$media-desktop} {
+                    &:hover {
+                        background-color: fade-out($value, 1 - $opacity-hover);
+                    }
                 }
 
                 &:active {
@@ -539,8 +541,10 @@ $colors: $token-colors;
                 &-flat {
                     color: $value;
 
-                    &:hover {
-                        opacity: $opacity-hover;
+                    @media #{$media-desktop} {
+                        &:hover {
+                            opacity: $opacity-hover;
+                        }
                     }
 
                     &:active {
@@ -559,8 +563,10 @@ $colors: $token-colors;
                         line-height: $line-height-250;
                     }
 
-                    &:hover {
-                        color: darken($value, 12%);
+                    @media #{$media-desktop} {
+                        &:hover {
+                            color: darken($value, 12%);
+                        }
                     }
 
                     &:active {
@@ -585,8 +591,10 @@ $colors: $token-colors;
                     color: $color-white;
                 }
 
-                &:hover {
-                    background-color: darken($value, 10%);
+                @media #{$media-desktop} {
+                    &:hover {
+                        background-color: darken($value, 10%);
+                    }
                 }
 
                 &:active {
@@ -604,8 +612,10 @@ $colors: $token-colors;
                 background-color: fade-out($value, 0.9);
                 color: $value;
 
-                &:hover {
-                    background-color: fade-out($value, 0.8);
+                @media #{$media-desktop} {
+                    &:hover {
+                        background-color: fade-out($value, 0.8);
+                    }
                 }
 
                 &:active {
@@ -623,9 +633,11 @@ $colors: $token-colors;
                 border-color: fade-out($value, 0.6);
                 color: $value;
 
-                &:hover {
-                    background-color: fade-out($value, 0.8);
-                    border-color: fade-out($value, 1);
+                @media #{$media-desktop} {
+                    &:hover {
+                        background-color: fade-out($value, 0.8);
+                        border-color: fade-out($value, 1);
+                    }
                 }
 
                 &:active {
@@ -643,8 +655,10 @@ $colors: $token-colors;
             &-flat {
                 color: $value;
 
-                &:hover {
-                    background-color: fade-out($value, 0.9);
+                @media #{$media-desktop} {
+                    &:hover {
+                        background-color: fade-out($value, 0.9);
+                    }
                 }
 
                 &:active {
@@ -669,8 +683,10 @@ $colors: $token-colors;
                     line-height: $line-height-250;
                 }
 
-                &:hover {
-                    color: darken($value, 12%);
+                @media #{$media-desktop} {
+                    &:hover {
+                        color: darken($value, 12%);
+                    }
                 }
 
                 &:active {
@@ -689,8 +705,10 @@ $colors: $token-colors;
         }
 
         &--secondary-color-#{$color} {
-            &:hover {
-                color: $value;
+            @media #{$media-desktop} {
+                &:hover {
+                    color: $value;
+                }
             }
 
             &:active {
