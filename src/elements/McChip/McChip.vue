@@ -69,7 +69,7 @@ export default {
             default: null,
         },
         /**
-         *  Размер: m, s
+         *  Размер: m, s, xs
          *
          */
         size: {
@@ -130,6 +130,13 @@ export default {
             height: $size-300;
             padding-left: $space-50;
             padding-right: $space-50;
+        }
+        &-xs {
+            height: $space-200;
+            padding-left: $space-50;
+            padding-right: $space-50;
+            font-size: $font-size-100;
+            line-height: $line-height-150;
         }
     }
 
