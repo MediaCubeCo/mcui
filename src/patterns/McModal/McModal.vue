@@ -487,8 +487,8 @@ html[direction='rtl'] {
             right: unset;
             left: $space-200;
             top: $space-400;
-            @media #{$media-query-m} {
-                left: $space-400;
+            @media #{$media-query-s} {
+                left: $space-600;
             }
         }
         &__btn-back {
