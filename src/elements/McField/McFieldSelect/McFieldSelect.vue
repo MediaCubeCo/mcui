@@ -885,6 +885,16 @@ html[direction='rtl'] {
                 left: 1px;
             }
         }
+        &--with-preview {
+            .mc-preview {
+                align-items: center;
+            }
+            .multiselect {
+                &__tags {
+                    padding: $space-200 $space-150;
+                }
+            }
+        }
     }
 }
 </style>
