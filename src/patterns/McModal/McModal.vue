@@ -156,7 +156,7 @@ export default {
                 this.$refs.mcModalBody.addEventListener('scroll', this.calculateSeparators, {
                     passive: true,
                 })
-                this.resize_observer = new ResizeObserver(() => this.calculateSeparators(true))
+                this.resize_observer = new ResizeObserver(() => this.calculateSeparators())
                 this.resize_observer?.observe(this.$refs.mcModalBody)
                 this.calculateSeparators()
             }
@@ -182,9 +182,14 @@ export default {
         },
         /**
          * Устанавливаем сепараторы, если есть скролл
-         * @param {Boolean} resized - если метод вызван в ResizeObserver -- отложенный пересчет
+         * @param {Boolean} scrolled - если метод вызван скроллом
          */
-        calculateSeparators(resized = false) {
+        calculateSeparators(scrolled = true) {
+            if (!scrolled) {
+                this.scrolled_top = false
+                this.scrolled_bottom = false
+            }
+
             setTimeout(
                 () => {
                     const { scrollTop, scrollHeight, clientHeight } = this.$refs.mcModalBody || {}
@@ -193,7 +198,7 @@ export default {
                     this.scrolled_top = scrollTop > offset
                     this.scrolled_bottom = scrollTop + clientHeight < scrollHeight - offset
                 },
-                resized ? 300 : 0,
+                scrolled ? 0 : 300,
             )
         },
     },
