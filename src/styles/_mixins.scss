@@ -16,16 +16,16 @@
   @include responsive-font(5vw, 35px, 150px, 50px);
 */
 @mixin responsive-font($responsive, $min, $max: false, $fallback: false) {
-  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+  $responsive-unitless: calc(#{$responsive} / (#{$responsive} - #{$responsive} + 1));
   $dimension: if(unit($responsive) == "vh", "height", "width");
-  $min-breakpoint: $min / $responsive-unitless * 100;
+  $min-breakpoint: calc(#{$min} / #{$responsive}-unitless * 100);
 
   @media (max-#{$dimension}: #{$min-breakpoint}) {
     font-size: $min;
   }
 
   @if $max {
-    $max-breakpoint: $max / $responsive-unitless * 100;
+    $max-breakpoint: calc(#{$max} / #{$responsive-unitless} * 100);
 
     @media (min-#{$dimension}: #{$max-breakpoint}) {
       font-size: $max;
@@ -98,7 +98,7 @@
 */
 
 @mixin responsive-ratio($x, $y, $pseudo: false) {
-  $padding: unquote(($y / $x) * 100 + "%");
+  $padding: unquote(calc(calc(#{$y} / #{$x}) * 100) + "%");
 
   @if $pseudo {
     &::before {
@@ -276,12 +276,12 @@
     border-left: $size solid transparent;
     border-right: $size solid transparent;
     border-top: $size solid $color;
-    margin-top: 0 - round($size / 2.5);
+    margin-top: calc(0 - round(calc(#{$size} / 2.5)));
   } @else if $direction == up {
     border-left: $size solid transparent;
     border-right: $size solid transparent;
     border-bottom: $size solid $color;
-    margin-bottom: 0 - round($size / 2.5);
+    margin-bottom: calc(0 - round(calc(#{$size} / 2.5)));
   } @else if $direction == right {
     border-top: $size solid transparent;
     border-bottom: $size solid transparent;

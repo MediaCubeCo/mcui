@@ -7,14 +7,21 @@
             </slot>
         </div>
         <mc-field-radio-button
-           v-for="radio in computedOptions"
-           v-bind="radio"
-           :key="radio.id"
-           :name="name"
-           @input="handleInput"
+            v-for="radio in computedOptions"
+            :key="radio.id"
+            v-bind="radio"
+            :name="name"
+            @input="handleInput"
         />
-        <div class="mc-field-radio-group__footer" v-if="errorText || helpText || $slots.footer">
-            <mc-title v-if="errorText" tag-name="div" color="red" variation="overline" max-width="100%" :ellipsis="false">
+        <div v-if="errorText || helpText || $slots.footer" class="mc-field-radio-group__footer">
+            <mc-title
+                v-if="errorText"
+                tag-name="div"
+                color="red"
+                variation="overline"
+                max-width="100%"
+                :ellipsis="false"
+            >
                 {{ errorText }}
             </mc-title>
             <br v-if="errorText" />
@@ -29,124 +36,124 @@
 </template>
 
 <script>
-  import _XEUtils from 'xe-utils'
-  import McFieldRadioButton from "../McFieldRadioButton/McFieldRadioButton"
-  import McTitle from "../../../McTitle/McTitle"
-  export default {
-    name: "McFieldRadioGroup",
+import _XEUtils from 'xe-utils'
+import McFieldRadioButton from '../McFieldRadioButton/McFieldRadioButton'
+import McTitle from '../../../McTitle/McTitle'
+export default {
+    name: 'McFieldRadioGroup',
     components: { McFieldRadioButton, McTitle },
     props: {
-      /**
-       *  Значение
-       */
-      value: {
-        default: null,
-      },
-      /**
-       *  Объект или массив данных
-       */
-      options: {
-        type: Array,
-        default: () => [],
-      },
-      /**
-       *  Заголовок:
-       *
-       */
-      title: {
-        type: String,
-        default: "",
-      },
-      /**
-       *  Вспомогательный текст под инпутом:
-       *
-       */
-      helpText: {
-        type: String,
-        default: "",
-      },
-      /**
-       *  Ошибки
-       *
-       */
-      errors: {
-        type: Array,
-        default: () => [],
-      },
-      /**
-       *  Выбранное значение по умолчанию
-       */
-      defaultValue: {
-        type: [String, Number],
-        default: ''
-      },
-      /**
-       *  Name
-       */
-      name: {
-        type: String,
-        required: true,
-      },
-      /**
-       *  Отключенное состояние
-       *  всего списка
-       */
-      disabled: {
-        type: Boolean,
-        default: false,
-      },
-      /**
-       *  Добавление пользовательского
-       *  класса к radio
-       */
-      radioClassName: {
-        type: String,
-        default: '',
-      },
-      /**
-       *  Направление списка
-       *  `column`, `row`
-       */
-      direction: {
-        type: String,
-        default: 'column',
-      }
+        /**
+         *  Значение
+         */
+        value: {
+            default: null,
+        },
+        /**
+         *  Объект или массив данных
+         */
+        options: {
+            type: Array,
+            default: () => [],
+        },
+        /**
+         *  Заголовок:
+         *
+         */
+        title: {
+            type: String,
+            default: '',
+        },
+        /**
+         *  Вспомогательный текст под инпутом:
+         *
+         */
+        helpText: {
+            type: String,
+            default: '',
+        },
+        /**
+         *  Ошибки
+         *
+         */
+        errors: {
+            type: Array,
+            default: () => [],
+        },
+        /**
+         *  Выбранное значение по умолчанию
+         */
+        defaultValue: {
+            type: [String, Number],
+            default: '',
+        },
+        /**
+         *  Name
+         */
+        name: {
+            type: String,
+            required: true,
+        },
+        /**
+         *  Отключенное состояние
+         *  всего списка
+         */
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+        /**
+         *  Добавление пользовательского
+         *  класса к radio
+         */
+        radioClassName: {
+            type: String,
+            default: '',
+        },
+        /**
+         *  Направление списка
+         *  `column`, `row`
+         */
+        direction: {
+            type: String,
+            default: 'column',
+        },
     },
     computed: {
-      computedOptions() {
-        if(!this.options.length) return []
-        return this.options.map(o => {
-          const optionData = typeof o === 'object' ? o : { label: o, value: o }
-          return {
-            id: _XEUtils.uniqueId(),
-            ...optionData,
-            disabled: this.disabled || optionData.disabled,
-            'checked-default': optionData.value === this.defaultValue,
-            class: this.radioClassName,
-          }
-        })
-      },
-      classes() {
-        return {
-            [`mc-field-radio-group--direction-${this.direction}`]: this.direction,
-        }
-      },
-      errorText() {
-        if (this.errors === null || !this.errors.length) return null
-        return this.errors.join(", ")
-      },
+        computedOptions() {
+            if (!this.options.length) return []
+            return this.options.map(o => {
+                const optionData = typeof o === 'object' ? o : { label: o, value: o }
+                return {
+                    id: _XEUtils.uniqueId(),
+                    ...optionData,
+                    disabled: this.disabled || optionData.disabled,
+                    'checked-default': optionData.value === this.defaultValue,
+                    class: this.radioClassName,
+                }
+            })
+        },
+        classes() {
+            return {
+                [`mc-field-radio-group--direction-${this.direction}`]: this.direction,
+            }
+        },
+        errorText() {
+            if (this.errors === null || !this.errors.length) return null
+            return this.errors.join(', ')
+        },
     },
     methods: {
-      handleInput(e) {
-        this.$emit('input', e.target.value)
-        /**
-         * Событие по смене выбора
-         * @property {event}
-         */
-        this.$emit('change', e)
-      },
+        handleInput(e) {
+            this.$emit('input', e.target.value)
+            /**
+             * Событие по смене выбора
+             * @property {event}
+             */
+            this.$emit('change', e)
+        },
     },
-  }
+}
 </script>
 
 <style lang="scss">
@@ -172,7 +179,6 @@
         }
     }
 
-
     &--direction {
         &-column {
             @include child-indent-bottom($space-100);
@@ -184,6 +190,5 @@
             @include child-indent-right($space-100);
         }
     }
-
 }
 </style>

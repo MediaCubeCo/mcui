@@ -5,13 +5,13 @@
 </template>
 
 <script>
-  /**
-   * Это служебный компонент, для отображения
-   * документации по глобальным стилям
-   */
-  export default {
-    name: "GlobalStyles",
-  }
+/**
+ * Это служебный компонент, для отображения
+ * документации по глобальным стилям
+ */
+export default {
+    name: 'GlobalStyles',
+}
 </script>
 
 <style lang="scss">

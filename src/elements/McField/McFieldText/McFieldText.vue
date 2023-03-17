@@ -54,7 +54,7 @@
                 <div
                     v-if="$slots.append || copy || isPassword"
                     class="mc-field-text__append"
-                    :class="{ 'mc-field-text__append--indent-bottom': this.hasCharCounter }"
+                    :class="{ 'mc-field-text__append--indent-bottom': hasCharCounter }"
                 >
                     <!-- @slot Слот в конце инпута -->
                     <slot name="append" />
@@ -120,7 +120,6 @@ import TextareaAutosize from 'vue-textarea-autosize/src/components/TextareaAutos
 import McTitle from '../../McTitle/McTitle'
 import McButton from '../../McButton/McButton'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
-import McTooltip from '../../McTooltip/McTooltip'
 
 export default {
     name: 'McFieldText',
@@ -129,7 +128,6 @@ export default {
         McTitle,
         McSvgIcon,
         TextareaAutosize,
-        McTooltip,
         'imask-input': IMaskComponent,
     },
     props: {
@@ -682,7 +680,7 @@ export default {
             display: none;
         }
     }
-    
+
     &--error {
         #{$block-name} {
             &__input {

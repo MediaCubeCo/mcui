@@ -274,7 +274,7 @@ export default {
         tabindex: {
             type: [String, Number],
             default: null,
-        }
+        },
     },
     data() {
         return {

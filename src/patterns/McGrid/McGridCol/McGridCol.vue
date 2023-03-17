@@ -118,20 +118,20 @@ export default {
     @mixin generate-col($viewport: '') {
         @for $i from 1 through $cols {
             &--span#{$viewport}-#{$i} {
-                flex: 0 0 percentage($i / $cols);
-                max-width: percentage($i / $cols);
+                flex: 0 0 calc((#{$i} / #{$cols}) * 100%);
+                max-width: calc((#{$i} / #{$cols}) * 100%);
             }
 
             &--push#{$viewport}-#{$i} {
-                left: percentage($i / $cols);
+                left: calc((#{$i} / #{$cols}) * 100%);
             }
 
             &--pull#{$viewport}-#{$i} {
-                right: percentage($i / $cols);
+                right: calc((#{$i} / #{$cols}) * 100%);
             }
 
             &--offset#{$viewport}-#{$i} {
-                margin-left: percentage($i / $cols);
+                margin-left: calc((#{$i} / #{$cols}) * 100%);
             }
 
             &--order#{$viewport}-#{$i} {
