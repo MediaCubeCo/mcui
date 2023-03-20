@@ -533,9 +533,18 @@ export default {
         },
         getAmountFormat(value) {
             const prepared_value = this.formattedToNumber(value)
-            return String(prepared_value)
+            const has_dot = !!String(prepared_value)?.match(/\./)
+
+            const [whole, fract] = String(prepared_value)
                 .replace(/[^\d\.]/g, '')
                 .replace(/\B(?=(?:\d{3})+(?!\d))/g, ' ')
+                .split('.')
+
+            const formatted_values = [whole, fract?.replace(/ /gm, '') || '']
+            if (has_dot) {
+                return formatted_values.join('.')
+            }
+            return formatted_values.filter(v => !!v).join('.')
         },
         handleInput(value) {
             /**
