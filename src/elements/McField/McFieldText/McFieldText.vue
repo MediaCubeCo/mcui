@@ -138,6 +138,7 @@ export default {
          *
          * кастомный num - разрешает ввод только цифр и дробных чисел, без ислчений ввиде буквы 'E'
          * кастомный int - разрешает ввод только целочисленных значений
+         * кастомный amount_format - форматирует ввод числовых данных разделяя на разряды(1 000 000)
          * date - добавляет placeholder, маску и ограничения ввода
          */
         type: {
@@ -372,6 +373,9 @@ export default {
         isPassword() {
             return this.type === 'password'
         },
+        isAmountFormat() {
+            return this.type === 'amount_format'
+        },
 
         hasCharCounter() {
             return this.maxLength && (this.isTextarea || this.isTextareaAutosize)
@@ -407,12 +411,18 @@ export default {
             }
         },
 
+        computedValue() {
+            if (this.isAmountFormat) {
+                return this.getAmountFormat(this.value)
+            } else return this.value
+        },
+
         inputAttrs() {
             return {
                 class: 'mc-field-text__input',
                 style: this.inputStyles,
                 placeholder: this.placeholder,
-                value: this.value,
+                value: this.computedValue,
                 disabled: this.disabled,
                 name: this.name,
                 id: this.name,
@@ -490,17 +500,42 @@ export default {
     methods: {
         prepareHandleInput(e) {
             let value = e.target.value
-            if (this.type === 'num') {
-                const [first] = /-?\d*[\.]?\d*/.exec(String(e.target.value)) || []
-                value = first
-                e.target.value = first
+
+            switch (this.type) {
+                case 'num':
+                    const [num] = /-?\d*[\.]?\d*/.exec(String(e.target.value)) || []
+                    value = num
+                    e.target.value = num
+                    break
+                case 'int':
+                    const [int] = /-?\d*/.exec(String(e.target.value)) || []
+                    value = int
+                    e.target.value = int
+                    break
+                case 'amount_format':
+                    const prepared_value = this.formattedToNumber(e.target.value)
+                    value = prepared_value ? parseFloat(prepared_value) : null
+                    e.target.value = this.getAmountFormat(prepared_value)
+                    break
             }
-            if (this.type === 'int') {
-                const [first] = /-?\d*/.exec(String(e.target.value)) || []
-                value = first
-                e.target.value = first
-            }
+
             this.handleInput(value)
+        },
+        formattedToNumber(value) {
+            const [first] =
+                /\d*[\.]?\d*/.exec(
+                    String(value)
+                        ?.replace(/ /gm, '')
+                        ?.trim(),
+                ) || []
+
+            return first
+        },
+        getAmountFormat(value) {
+            const prepared_value = this.formattedToNumber(value)
+            return String(prepared_value)
+                .replace(/[^\d\.]/g, '')
+                .replace(/\B(?=(?:\d{3})+(?!\d))/g, ' ')
         },
         handleInput(value) {
             /**
