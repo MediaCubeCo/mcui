@@ -336,6 +336,14 @@ export default {
             type: String,
             default: null,
         },
+        /**
+         * Мобильное ли разрешение
+         * (Используется для триггера тултипа в кнопке с паролем)
+         */
+        isMobile: {
+            type: Boolean,
+            default: false,
+        }
     },
 
     data() {
@@ -483,7 +491,7 @@ export default {
                           ? this.passwordTooltip
                           : this.passwordHideTooltip || this.passwordTooltip,
                       placement: 'top',
-                      trigger: 'hover focus click',
+                      trigger: this.isMobile ? 'focus click' : 'hover focus',
                       size: 's',
                   }
                 : {
