@@ -412,9 +412,15 @@ export default {
         },
 
         computedValue() {
-            if (this.isAmountFormat) {
+            if (this.isAmountFormat && !this.isRtl) {
                 return this.getAmountFormat(this.value)
             } else return this.value
+        },
+        isRtl() {
+            return (
+                document.querySelector('html').getAttribute('dir') === 'rtl' ||
+                document.querySelector('html').getAttribute('direction') === 'rtl'
+            )
         },
 
         inputAttrs() {
@@ -513,9 +519,17 @@ export default {
                     e.target.value = int
                     break
                 case 'amount_format':
+                    const cursor_position = this.getCaretPos(e.target)?.start
+
                     const prepared_value = this.formattedToNumber(e.target.value)
                     value = prepared_value ? parseFloat(prepared_value) : null
-                    e.target.value = this.getAmountFormat(prepared_value)
+                    e.target.value = this.isRtl ? value : this.getAmountFormat(prepared_value)
+
+                    if (!this.isRtl) {
+                        const space_length =
+                            e.target.value?.slice(0, cursor_position).replace(/[^ ]/gm, '')?.length || 0
+                        this.setCaretPos(e.target, cursor_position + space_length, cursor_position + space_length)
+                    }
                     break
             }
 
@@ -530,6 +544,38 @@ export default {
                 ) || []
 
             return first
+        },
+        setCaretPos(ctrl, start, end) {
+            // IE >= 9 and other browsers
+            if (ctrl.setSelectionRange) {
+                ctrl.focus()
+                ctrl.setSelectionRange(start, end)
+            }
+            // IE < 9
+            else if (ctrl.createTextRange) {
+                let range = ctrl.createTextRange()
+                range.collapse(true)
+                range.moveEnd('character', end)
+                range.moveStart('character', start)
+                range.select()
+            }
+        },
+        getCaretPos(ctrl) {
+            // IE < 9 Support
+            if (document.selection) {
+                ctrl.focus()
+                let range = document.selection.createRange()
+                let rangelen = range.text.length
+                range.moveStart('character', -ctrl.value.length)
+                let start = range.text.length - rangelen
+                return { start: start, end: start + rangelen }
+            }
+            // IE >=9 and other browsers
+            else if (ctrl.selectionStart || ctrl.selectionStart == '0') {
+                return { start: ctrl.selectionStart, end: ctrl.selectionEnd }
+            } else {
+                return { start: 0, end: 0 }
+            }
         },
         getAmountFormat(value) {
             const formatted_number = this.formattedToNumber(value)
