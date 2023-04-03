@@ -44,6 +44,7 @@ export default {
         return h(
             'div',
             {
+                ref: data.ref,
                 class: classes,
                 style,
             },
@@ -51,6 +52,7 @@ export default {
                 h(
                     'div',
                     {
+                        ref: 'body',
                         class: 'mc-stack__body',
                     },
                     items,
@@ -59,6 +61,7 @@ export default {
                     ? h(
                           'div',
                           {
+                              ref: 'counter',
                               class: 'mc-stack__counter',
                           },
                           [`+${more}`],
