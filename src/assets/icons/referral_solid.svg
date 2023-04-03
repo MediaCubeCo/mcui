@@ -1,7 +1,7 @@
-<svg data-token-name="referral" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="7.5" cy="12" r="3" fill="none" />
-    <circle cx="16.4004" cy="4.6" r="3" fill="none" />
-    <circle cx="16.4004" cy="19.5" r="3" fill="none" />
+<svg data-token-name="referral_solid" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="7.5" cy="12" r="3" fill="currentColor" />
+    <circle cx="16.4004" cy="4.6" r="3" fill="currentColor" />
+    <circle cx="16.4004" cy="19.5" r="3" fill="currentColor" />
     <path d="M14.5833 6.36688L9.41602 10.1893" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M18.2421 2.74834C19.252 3.74613 19.252 5.36388 18.2421 6.36166C17.2321 7.35946 15.5946 7.35946 14.5846 6.36166C13.5747 5.36387 13.5747 3.74613 14.5846 2.74834C15.5946 1.75055 17.2321 1.75055 18.2421 2.74834" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M14.5833 17.6331L9.41602 13.8106" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
