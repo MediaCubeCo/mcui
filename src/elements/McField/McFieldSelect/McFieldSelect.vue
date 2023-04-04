@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-field-select" :class="classes">
+    <div class="mc-field-select" :class="classes" :style="styles">
         <div :for="name" class="mc-field-select__header" :class="{ required }">
             <!-- @slot Слот заголовка -->
             <slot name="header">
@@ -275,6 +275,13 @@ export default {
             type: [String, Number],
             default: null,
         },
+        /**
+         * Если нужно ограничить максимальную высоту блока с выбранными элементами
+         */
+        maxHeight: {
+            type: String,
+            default: null,
+        },
     },
     data() {
         return {
@@ -322,6 +329,12 @@ export default {
                 [`mc-field-select--bg-${this.backgroundColor}`]: this.backgroundColor,
                 'mc-field-select--is-empty-options-list': this.isEmptyOptionsList,
                 'mc-field-select--with-preview': this.optionWithPreview,
+                'mc-field-select--max-height': this.maxHeight,
+            }
+        },
+        styles() {
+            return {
+                '--max-height': this.maxHeight,
             }
         },
         _value() {
@@ -829,6 +842,15 @@ $text-white: scale-color($color-white, $alpha: -10%);
             &__content-wrapper,
             &__tags {
                 border-radius: $radius-200 !important;
+            }
+        }
+    }
+
+    &--max-height {
+        .multiselect {
+            &__tags {
+                max-height: var(--max-height);
+                overflow-y: auto;
             }
         }
     }
