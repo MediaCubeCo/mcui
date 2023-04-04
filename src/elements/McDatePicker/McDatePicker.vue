@@ -388,9 +388,11 @@ export default {
         prettyValue() {
             if (!this.useTimezone) {
                 if (this.isRange && this.value) return this.value.map(item => new Date(item))
-                return this.useFormat || (!this.setDefaultToday && !this.value) ?
-                    this.value : this.value ?
-                        new Date(this.value) : new Date()
+                return this.useFormat || (!this.setDefaultToday && !this.value)
+                    ? this.value
+                    : this.value
+                    ? new Date(this.value)
+                    : new Date()
             }
             const formattingDate = date =>
                 momentTz.tz(moment(date, 'YYYY-MM-DD HH:mm:SS')._i, this.currentTimezone).format(this.format)
@@ -783,6 +785,12 @@ export default {
             &.today {
                 color: $color-purple;
             }
+        }
+    }
+
+    .mx-time-column {
+        .mx-time-list::after {
+            height: 0;
         }
     }
 
