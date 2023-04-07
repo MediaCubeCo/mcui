@@ -136,6 +136,7 @@ import 'vue2-datepicker/locale/es'
 import McTitle from '../McTitle/McTitle'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
 import McButton from '../McButton/McButton'
+import fieldErrors from '../../mixins/fieldErrors'
 
 export default {
     name: 'McDatePicker',
@@ -145,6 +146,7 @@ export default {
         DatePicker,
         McButton,
     },
+    mixins: [fieldErrors],
     props: {
         /**
          *  Тип датапикера date|datetime|year|month|time|week
@@ -356,11 +358,6 @@ export default {
             }
         },
 
-        errorText() {
-            if (!this.errors || !this.errors.length) return ''
-            return this.errors.join(', ')
-        },
-
         listeners() {
             return _omit(this.$listeners, 'input')
         },
@@ -414,6 +411,7 @@ export default {
     methods: {
         handleEmitDate(value) {
             const date = this.getFormattedDate(value)
+            this.toggleErrorVisible()
             /**
              * Событие инпута
              * @property {string}
