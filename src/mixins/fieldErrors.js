@@ -7,7 +7,7 @@
 
 export default {
     data: () => ({
-        is_error_visible: true,
+        is_error_visible: false,
     }),
     computed: {
         errorText() {
