@@ -26,6 +26,8 @@ body,
 *:before,
 *:after {
   box-sizing: inherit;
+  // убирает превращение х в знак умножения между цифр
+  font-variant-ligatures: none !important;
 }
 
 body {
