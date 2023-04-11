@@ -111,6 +111,14 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Вариация модалки default || info
+         * info модалки имеют меньшие размеры паддингов
+         * */
+        variation: {
+            type: String,
+            default: 'default',
+        },
     },
     status: 'ready',
     release: '1.0.0',
@@ -128,6 +136,7 @@ export default {
                 'mc-modal--scrolled-bottom': this.scrolled_bottom,
                 'mc-modal--scrollable': this.scrollableContent,
                 'mc-modal--top-padding': this.topPadding,
+                [`mc-modal--variation-${this.variation}`]: !!this.variation,
                 [`mc-modal--header-align-${this.headerAlign}`]:
                     (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
             }
@@ -480,6 +489,35 @@ export default {
         &:empty {
             position: relative;
             padding: $space-300 0 0;
+        }
+    }
+    &--variation {
+        &-info {
+            #{$block-name} {
+                &__header {
+                    @media #{$media-query-s} {
+                        padding: $space-300 $space-300 $space-150;
+                    }
+                }
+                &__inner {
+                    & > *:first-child {
+                        @media #{$media-query-s} {
+                            padding-top: $space-300;
+                        }
+                    }
+                    & > *:last-child {
+                        @media #{$media-query-s} {
+                            padding-bottom: $space-300;
+                        }
+                    }
+                }
+                &__body {
+                    @media #{$media-query-s} {
+                        padding-left: $space-300;
+                        padding-right: $space-300;
+                    }
+                }
+            }
         }
     }
 }
