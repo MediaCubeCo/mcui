@@ -224,7 +224,9 @@ export default {
         align-items: center;
     }
     &__right {
-        display: none;
+        display: flex;
+        opacity: 0;
+        pointer-events: none;
         align-items: center;
         flex-wrap: nowrap;
         @include position(absolute, 0 $space-200 0 null);
@@ -261,7 +263,8 @@ export default {
     }
     &.row--hover {
         .mc-table-col__right {
-            display: flex;
+            opacity: 1;
+            pointer-events: unset;
         }
         @include col-right-color($vxe-table-row-hover-background-color);
         &.row--current {
