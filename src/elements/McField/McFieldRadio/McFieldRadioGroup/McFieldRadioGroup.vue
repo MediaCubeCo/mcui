@@ -39,9 +39,11 @@
 import _XEUtils from 'xe-utils'
 import McFieldRadioButton from '../McFieldRadioButton/McFieldRadioButton'
 import McTitle from '../../../McTitle/McTitle'
+import fieldErrors from '../../../../mixins/fieldErrors'
 export default {
     name: 'McFieldRadioGroup',
     components: { McFieldRadioButton, McTitle },
+    mixins: [fieldErrors],
     props: {
         /**
          *  Значение
@@ -138,13 +140,10 @@ export default {
                 [`mc-field-radio-group--direction-${this.direction}`]: this.direction,
             }
         },
-        errorText() {
-            if (this.errors === null || !this.errors.length) return null
-            return this.errors.join(', ')
-        },
     },
     methods: {
         handleInput(e) {
+            this.toggleErrorVisible()
             this.$emit('input', e.target.value)
             /**
              * Событие по смене выбора

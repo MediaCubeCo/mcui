@@ -120,6 +120,8 @@ import TextareaAutosize from 'vue-textarea-autosize/src/components/TextareaAutos
 import McTitle from '../../McTitle/McTitle'
 import McButton from '../../McButton/McButton'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
+import McTooltip from '../../McTooltip/McTooltip'
+import fieldErrors from '../../../mixins/fieldErrors'
 
 export default {
     name: 'McFieldText',
@@ -127,9 +129,11 @@ export default {
         McButton,
         McTitle,
         McSvgIcon,
+        McTooltip,
         TextareaAutosize,
         'imask-input': IMaskComponent,
     },
+    mixins: [fieldErrors],
     props: {
         /**
          *  Тип:
@@ -465,11 +469,6 @@ export default {
             return this.maxLength < this.charCounter ? 'red' : 'dark-gray'
         },
 
-        errorText() {
-            if (this.errors === null || !this.errors.length) return null
-            return this.errors.join(', ')
-        },
-
         inputStyles() {
             const space = parseInt(getTokenValue('$space-150'))
             let bottomStyle = {}
@@ -601,6 +600,7 @@ export default {
             return formatted_values.filter(v => !!v).join('.')
         },
         handleInput(value) {
+            this.toggleErrorVisible()
             /**
              * Событие инпута
              * @property {string}

@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-field-select" :class="classes">
+    <div class="mc-field-select" :class="classes" :style="styles">
         <div :for="name" class="mc-field-select__header" :class="{ required }">
             <!-- @slot Слот заголовка -->
             <slot name="header">
@@ -87,9 +87,11 @@ import McTooltip from '../../McTooltip/McTooltip'
 import McAvatar from '../../McAvatar/McAvatar'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
 import McPreview from '../../../patterns/McPreview/McPreview'
+import fieldErrors from '../../../mixins/fieldErrors'
 export default {
     name: 'McFieldSelect',
     components: { McSvgIcon, McAvatar, McTitle, McTooltip, MultiSelect, McPreview },
+    mixins: [fieldErrors],
     props: {
         /**
          *  Заголовок поля:
@@ -275,6 +277,13 @@ export default {
             type: [String, Number],
             default: null,
         },
+        /**
+         * Если нужно ограничить максимальную высоту блока с выбранными элементами
+         */
+        maxHeight: {
+            type: String,
+            default: null,
+        },
     },
     data() {
         return {
@@ -322,6 +331,12 @@ export default {
                 [`mc-field-select--bg-${this.backgroundColor}`]: this.backgroundColor,
                 'mc-field-select--is-empty-options-list': this.isEmptyOptionsList,
                 'mc-field-select--with-preview': this.optionWithPreview,
+                'mc-field-select--max-height': this.maxHeight,
+            }
+        },
+        styles() {
+            return {
+                '--max-height': this.maxHeight,
             }
         },
         _value() {
@@ -352,10 +367,6 @@ export default {
             return this.options.find(o => o.value == this.value)
         },
 
-        errorText() {
-            if (this.errors === null || !this.errors.length) return null
-            return this.errors.join(', ')
-        },
         isEmptyOptionsList() {
             if ((this.hideSelected && !this.searchValue) || !this.computedOptions.length) {
                 if (this.multiple) {
@@ -406,6 +417,7 @@ export default {
         },
 
         emitInput(value) {
+            this.toggleErrorVisible()
             /**
              * Событие инпута (выбранное значение)
              * @property {array, number}
@@ -829,6 +841,15 @@ $text-white: scale-color($color-white, $alpha: -10%);
             &__content-wrapper,
             &__tags {
                 border-radius: $radius-200 !important;
+            }
+        }
+    }
+
+    &--max-height {
+        .multiselect {
+            &__tags {
+                max-height: var(--max-height);
+                overflow-y: auto;
             }
         }
     }

@@ -136,6 +136,7 @@ import 'vue2-datepicker/locale/es'
 import McTitle from '../McTitle/McTitle'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
 import McButton from '../McButton/McButton'
+import fieldErrors from '../../mixins/fieldErrors'
 
 export default {
     name: 'McDatePicker',
@@ -145,6 +146,7 @@ export default {
         DatePicker,
         McButton,
     },
+    mixins: [fieldErrors],
     props: {
         /**
          *  Тип датапикера date|datetime|year|month|time|week
@@ -356,11 +358,6 @@ export default {
             }
         },
 
-        errorText() {
-            if (!this.errors || !this.errors.length) return ''
-            return this.errors.join(', ')
-        },
-
         listeners() {
             return _omit(this.$listeners, 'input')
         },
@@ -388,9 +385,11 @@ export default {
         prettyValue() {
             if (!this.useTimezone) {
                 if (this.isRange && this.value) return this.value.map(item => new Date(item))
-                return this.useFormat || (!this.setDefaultToday && !this.value) ?
-                    this.value : this.value ?
-                        new Date(this.value) : new Date()
+                return this.useFormat || (!this.setDefaultToday && !this.value)
+                    ? this.value
+                    : this.value
+                    ? new Date(this.value)
+                    : new Date()
             }
             const formattingDate = date =>
                 momentTz.tz(moment(date, 'YYYY-MM-DD HH:mm:SS')._i, this.currentTimezone).format(this.format)
@@ -414,6 +413,7 @@ export default {
     methods: {
         handleEmitDate(value) {
             const date = this.getFormattedDate(value)
+            this.toggleErrorVisible()
             /**
              * Событие инпута
              * @property {string}
@@ -783,6 +783,12 @@ export default {
             &.today {
                 color: $color-purple;
             }
+        }
+    }
+
+    .mx-time-column {
+        .mx-time-list::after {
+            height: 0;
         }
     }
 

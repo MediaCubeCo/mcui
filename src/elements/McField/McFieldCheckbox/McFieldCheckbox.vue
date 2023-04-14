@@ -50,9 +50,11 @@
 <script>
 import McTitle from '../../McTitle/McTitle'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
+import fieldErrors from '../../../mixins/fieldErrors'
 export default {
     name: 'McFieldCheckbox',
     components: { McTitle, McSvgIcon },
+    mixins: [fieldErrors],
     props: {
         /**
          *  Значение
@@ -172,10 +174,6 @@ export default {
                 class: 'mc-field-checkbox__input',
             }
         },
-        errorText() {
-            if (this.errors == null || this.errors.length === 0) return null
-            return this.errors.join(', ')
-        },
         isChecked() {
             return this.multiple && this.value
                 ? this.value.includes(this.checkedValue)
@@ -184,6 +182,7 @@ export default {
     },
     methods: {
         handleChange(e) {
+            this.toggleErrorVisible()
             /**
              * Событие инпута
              * @property {boolean}
