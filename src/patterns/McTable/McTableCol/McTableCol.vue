@@ -119,9 +119,11 @@ export default {
             return this.$attrs['total-append'] || ''
         },
         isSortable() {
+            // eslint-disable-next-line no-prototype-builtins
             return this.$attrs.hasOwnProperty('sortable') && this.$attrs.sortable !== false
         },
         ellipsis() {
+            // eslint-disable-next-line no-prototype-builtins
             if (!this.$attrs.hasOwnProperty('show-overflow')) return true
             return this.$attrs['show-overflow'] !== false
         },

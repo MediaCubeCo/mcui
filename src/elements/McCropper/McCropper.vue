@@ -19,7 +19,7 @@
 
 <script>
 const VueCropper = () => import('vue-cropperjs')
-import 'cropperjs/dist/cropper.css';
+import 'cropperjs/dist/cropper.css'
 
 export default {
     name: 'McCropper',

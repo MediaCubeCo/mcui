@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import McButton from '../../elements/McButton/McButton'
 import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
 import McTitle from '../../elements/McTitle/McTitle'
 /**
@@ -37,7 +36,6 @@ import McTitle from '../../elements/McTitle/McTitle'
 export default {
     name: 'McDrawer',
     components: {
-        McButton,
         McSvgIcon,
         McTitle,
     },

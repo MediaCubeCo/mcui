@@ -6,11 +6,8 @@
 </template>
 
 <script>
-import McGridCol from '../McGridCol/McGridCol'
-
 export default {
     name: 'McGridRow',
-    components: { McGridCol },
     provide() {
         const provideData = {}
         const properties = ['gutterX', 'gutterY']
