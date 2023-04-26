@@ -120,6 +120,7 @@ import TextareaAutosize from 'vue-textarea-autosize/src/components/TextareaAutos
 import McTitle from '../../McTitle/McTitle'
 import McButton from '../../McButton/McButton'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
+import McTooltip from '../../McTooltip/McTooltip'
 import fieldErrors from '../../../mixins/fieldErrors'
 
 export default {
@@ -128,6 +129,7 @@ export default {
         McButton,
         McTitle,
         McSvgIcon,
+        McTooltip,
         TextareaAutosize,
         'imask-input': IMaskComponent,
     },
