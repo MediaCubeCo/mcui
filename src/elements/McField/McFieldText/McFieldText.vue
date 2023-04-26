@@ -529,8 +529,9 @@ export default {
             let value = e.target.value
             switch (this.type) {
                 case 'num':
-                    value = this.this.setDecimalsLimit(num)
-                    const [num] = /-?\d*[\.]?\d*/.exec(String(value)) || []
+                    let [num] = /-?\d*[\.]?\d*/.exec(String(value)) || []
+                    num = this.setDecimalsLimit(num)
+                    value = num
                     e.target.value = num
                     break
                 case 'int':
