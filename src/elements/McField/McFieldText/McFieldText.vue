@@ -346,6 +346,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Свойство на ограничение количества символов после точки для числовых типов (num || amount_format)
+         */
+        maxDecimals: {
+            type: Number,
+            default: null,
+        },
     },
 
     data() {
@@ -509,13 +516,21 @@ export default {
     },
 
     methods: {
+        setDecimalsLimit(val) {
+            if (val && this.maxDecimals) {
+                const [integerPart, decimalPart] = val.split('.')
+                if(decimalPart?.length > this.maxDecimals) {
+                    return `${integerPart}.${decimalPart.slice(0, this.maxDecimals)}`
+                }
+            }
+            return val
+        },
         prepareHandleInput(e) {
             let value = e.target.value
-
             switch (this.type) {
                 case 'num':
-                    const [num] = /-?\d*[\.]?\d*/.exec(String(e.target.value)) || []
-                    value = num
+                    value = this.this.setDecimalsLimit(num)
+                    const [num] = /-?\d*[\.]?\d*/.exec(String(value)) || []
                     e.target.value = num
                     break
                 case 'int':
@@ -524,9 +539,10 @@ export default {
                     e.target.value = int
                     break
                 case 'amount_format':
+                    value = this.setDecimalsLimit(value)
                     const cursor_position = this.getCaretPos(e.target)?.start
 
-                    const prepared_value = this.formattedToNumber(e.target.value)
+                    const prepared_value = this.formattedToNumber(value)
                     value = prepared_value ? parseFloat(prepared_value) : null
                     e.target.value = this.isRtl ? value : this.getAmountFormat(prepared_value)
 
