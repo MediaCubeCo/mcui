@@ -246,6 +246,7 @@ export default {
         @extend .mc-table-col__right;
         display: flex;
         opacity: 1;
+        pointer-events: unset;
     }
 }
 
