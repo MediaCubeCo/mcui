@@ -245,6 +245,7 @@ export default {
     &__header-right {
         @extend .mc-table-col__right;
         display: flex;
+        opacity: 1;
     }
 }
 
