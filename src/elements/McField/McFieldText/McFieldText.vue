@@ -121,6 +121,7 @@ import McTitle from '../../McTitle/McTitle'
 import McButton from '../../McButton/McButton'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
 import fieldErrors from '../../../mixins/fieldErrors'
+import McTooltip from '../../McTooltip/McTooltip'
 
 export default {
     name: 'McFieldText',
@@ -129,6 +130,8 @@ export default {
         McTitle,
         McSvgIcon,
         TextareaAutosize,
+        // eslint-disable-next-line vue/no-unused-components
+        McTooltip, //Используется через component :is
         'imask-input': IMaskComponent,
     },
     mixins: [fieldErrors],
@@ -519,7 +522,7 @@ export default {
         setDecimalsLimit(val) {
             if (val && this.maxDecimals) {
                 const [integerPart, decimalPart] = val.split('.')
-                if(decimalPart?.length > this.maxDecimals) {
+                if (decimalPart?.length > this.maxDecimals) {
                     return `${integerPart}.${decimalPart.slice(0, this.maxDecimals)}`
                 }
             }
