@@ -174,6 +174,7 @@ export default {
         }
     }
     &__percent {
+        flex-shrink: 0;
         &--monospace {
             font-feature-settings: 'tnum';
             font-variant-numeric: tabular-nums;
