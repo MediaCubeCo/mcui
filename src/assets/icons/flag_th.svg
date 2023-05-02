@@ -1,0 +1,12 @@
+<svg data-token-name="flag_th" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_10299_49710)">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 4H22V19H2V4Z" fill="#F4F5F8" />
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 9.07812H22V14.0781H2V9.07812Z" fill="#2D2A4A" />
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 4H22V6.57812H2V4ZM2 16.5H22V19H2V16.5Z" fill="#A51931" />
+    </g>
+    <defs>
+        <clipPath id="clip0_10299_49710">
+            <rect width="20" height="15" fill="white" transform="translate(2 4)" />
+        </clipPath>
+    </defs>
+</svg>
