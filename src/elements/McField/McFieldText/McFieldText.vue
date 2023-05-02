@@ -547,15 +547,11 @@ export default {
                     const cursor_position = this.getCaretPos(e.target)?.start
                     const prepared_value = this.formattedToNumber(value)
 
-                    if (!this.isRtl) {
-                        value = prepared_value ? parseFloat(prepared_value) : null
-                        e.target.value = this.getAmountFormat(prepared_value)
-                        const space_length =
-                            e.target.value?.slice(0, cursor_position).replace(/[^ ]/gm, '')?.length || 0
-                        this.setCaretPos(e.target, cursor_position + space_length, cursor_position + space_length)
-                    } else {
-                        e.target.value = prepared_value
-                    }
+                    value = prepared_value ? parseFloat(prepared_value) : null
+                    const formatted_value = this.getAmountFormat(prepared_value)
+                    e.target.value = this.isRtl ? formatted_value.replace(/ /gm, '') : formatted_value
+                    const space_length = e.target.value?.slice(0, cursor_position).replace(/[^ ]/gm, '')?.length || 0
+                    this.setCaretPos(e.target, cursor_position + space_length, cursor_position + space_length)
                     break
             }
 
