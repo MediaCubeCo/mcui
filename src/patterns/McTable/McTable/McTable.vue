@@ -227,7 +227,7 @@ export default {
          */
         rowsToStartLoad: {
             type: Number,
-            default: 0,
+            default: 4,
         },
         /**
          *  Путь до изображения
