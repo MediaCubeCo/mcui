@@ -1,8 +1,5 @@
 <template>
-    <div
-        v-tooltip="{ content, placement, classes: tooltipClasses, trigger, show, container }"
-        class="mc-tooltip-target"
-    >
+    <div v-tooltip="tooltipProps" class="mc-tooltip-target">
         <!-- @slot Слот для элемента, у которого будет всплывать тултип -->
         <slot />
     </div>
@@ -88,16 +85,38 @@ export default {
             type: Boolean,
             default: false,
         },
+        maxLines: {
+            type: Number,
+            default: null,
+        },
     },
     computed: {
+        tooltipProps() {
+            return {
+                content: this.content,
+                placement: this.placement,
+                classes: this.tooltipClasses,
+                trigger: this.trigger,
+                show: this.show,
+                container: this.container,
+                template: `<div class="tooltip" style="${this.tooltipVariables}" role="tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner test-class"><div class="tooltip-inner__content"></div></div> </div>`,
+                innerSelector: '.tooltip-inner__content',
+            }
+        },
         tooltipClasses() {
             return [
                 'mc-tooltip',
                 `mc-tooltip--color-${this.color}`,
                 `mc-tooltip--width-${this.maxWidth}`,
                 `mc-tooltip--size-${this.size}`,
+                this.maxLines ? 'mc-tooltip--lines-limit' : '',
                 this.arrowDisabled ? 'mc-tooltip--arrow-disabled' : '',
             ]
+        },
+        tooltipVariables() {
+            const variables = [this.maxLines && `--tooltip-content-max-lines: ${this.maxLines}`].filter(i => i)
+
+            return variables.join(' ')
         },
     },
 }
@@ -118,13 +137,16 @@ export default {
         .tooltip-inner {
             @include inset-squish-space($space-300);
             background: $color-black;
-            color: $color-white;
             border-radius: $radius-100;
-            font-family: $font-family-main;
-            line-height: $line-height-250;
-            font-size: $font-size-300;
             box-shadow: $shadow-s;
             padding: $space-100 $space-150;
+
+            &__content {
+                color: $color-white;
+                font-family: $font-family-main;
+                line-height: $line-height-250;
+                font-size: $font-size-300;
+            }
         }
 
         .tooltip-arrow {
@@ -238,7 +260,10 @@ export default {
             &.tooltip {
                 .tooltip-inner {
                     @include inset-squish-space($space-200);
-                    font-size: $font-size-200;
+
+                    &__content {
+                        font-size: $font-size-200;
+                    }
                 }
             }
         }
@@ -246,7 +271,24 @@ export default {
             &.tooltip {
                 .tooltip-inner {
                     @include inset-squish-space($space-300);
-                    font-size: $font-size-300;
+
+                    &__content {
+                        font-size: $font-size-300;
+                    }
+                }
+            }
+        }
+    }
+
+    &--lines-limit {
+        &.tooltip {
+            .tooltip-inner {
+                &__content {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: var(--tooltip-content-max-lines);
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
         }
