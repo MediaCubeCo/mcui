@@ -559,7 +559,7 @@ export default {
         },
         formattedToNumber(value) {
             const [first] =
-                /\d*[\.]?\d*/.exec(
+                /-?\d*[\.]?\d*/.exec(
                     String(value)
                         ?.replace(/ /gm, '')
                         ?.trim(),
@@ -604,7 +604,7 @@ export default {
             const has_fraction = !!String(formatted_number)?.match(/\./)
 
             const [int, fraction] = String(formatted_number)
-                .replace(/[^\d\.]/g, '')
+                .replace(/[^\d\.-]/g, '')
                 .replace(/\B(?=(?:\d{3})+(?!\d))/g, ' ')
                 .split('.')
 
