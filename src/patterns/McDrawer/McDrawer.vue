@@ -3,7 +3,7 @@
         <div v-if="$slots.title || title" class="mc-drawer__header">
             <!-- @slot Слот заголовка -->
             <slot name="title">
-                <mc-title variation="subtitle" :ellipsis="false" weight="semi-bold">
+                <mc-title variation="subtitle" :ellipsis="titleEllipsis" weight="semi-bold">
                     {{ title }}
                 </mc-title>
             </slot>
@@ -46,6 +46,10 @@ export default {
         title: {
             type: String,
             default: '',
+        },
+        titleEllipsis: {
+            type: Boolean,
+            default: false,
         },
         /**
          * Нужна ли кнопка
