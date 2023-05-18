@@ -67,12 +67,22 @@ export default {
         tabindex: {
             type: [String, Number],
         },
+        /**
+         * Вариант активного состояния - circle || checkmark
+         * circle - внутри круг
+         * checkmark - внутри галочка
+         * */
+        activeVariation: {
+            type: String,
+            default: 'circle',
+        },
     },
     computed: {
         classes() {
             return {
                 'mc-field-radio-button--disabled': this.disabled,
                 'mc-field-radio-button--empty': !this.label && !this.$slots.default,
+                [`mc-field-radio-button--active-${this.activeVariation}`]: !!this.activeVariation,
             }
         },
         inputProps() {
@@ -152,6 +162,25 @@ export default {
             }
             &::after {
                 background-color: $color-purple;
+            }
+        }
+    }
+
+    &--active {
+        &-checkmark {
+            #{$block-name} {
+                &__icon {
+                    &:after {
+                        content: '✓';
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-weight: $font-weight-bold;
+                        color: $color-white;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
             }
         }
     }
