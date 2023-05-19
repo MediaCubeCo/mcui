@@ -851,6 +851,10 @@ $text-white: scale-color($color-white, $alpha: -10%);
                 max-height: var(--max-height);
                 overflow-y: auto;
             }
+            // Фиксит баг, когда пропадает стрелка на iPhone при установленной максимальной высоте блока
+            &__select {
+                z-index: 1;
+            }
         }
     }
 
