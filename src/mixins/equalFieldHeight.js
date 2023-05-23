@@ -10,7 +10,7 @@ export default {
                 elem.style.minHeight = `${height}px`
             }
         },
-        // Принимает ссылку на элемент инпута
+        // Принимает ссылку на элемент инпута и проверяет высоту соседнего инпута или же, если элемент в обертке, то соседа родителя
         calcEqualHeaderHeight(elemRef) {
             const nextElem = elemRef?.nextElementSibling || elemRef?.parentElement?.nextElementSibling,
                 elemTitle = elemRef?.querySelector('.mc-title'),
