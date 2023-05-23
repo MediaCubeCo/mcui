@@ -286,11 +286,11 @@ export default {
             default: null,
         },
         /**
-         * Нужно ли проверять высоту соседнего элемента и устанавливать общую
+         * Количество соседей, для которых надо установить общую высоту
          * */
-        checkNextElemHeight: {
-            type: Boolean,
-            default: false,
+        neighborFieldsAmount: {
+            type: [Number, String],
+            default: null,
         },
     },
     data() {
@@ -391,7 +391,7 @@ export default {
         },
     },
     mounted() {
-        this.checkNextElemHeight && this.calcEqualHeaderHeight(this.$refs.field)
+        this.neighborFieldsAmount && this.calcEqualHeaderHeight(this.$refs.field, this.neighborFieldsAmount)
     },
     methods: {
         handleChange(value) {

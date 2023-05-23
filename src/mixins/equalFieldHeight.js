@@ -11,16 +11,28 @@ export default {
             }
         },
         // Принимает ссылку на элемент инпута и проверяет высоту соседнего инпута или же, если элемент в обертке, то соседа родителя
-        calcEqualHeaderHeight(elemRef) {
-            const nextElem = elemRef?.nextElementSibling || elemRef?.parentElement?.nextElementSibling,
-                elemTitle = elemRef?.querySelector('.mc-title'),
-                nextElemTitle = nextElem?.querySelector('.mc-title'),
-                firstTitleHeight = elemTitle?.clientHeight,
-                nextTitleHeight = nextElemTitle?.clientHeight,
-                highestHeight = firstTitleHeight > nextTitleHeight ? firstTitleHeight : nextTitleHeight
+        // Передаем количество соседей для цикла
+        calcEqualHeaderHeight(elemRef, neighborsAmount) {
+            const elemTitle = elemRef?.querySelector('.mc-title'),
+                neighbors = [{
+                    titleElem: elemTitle,
+                    titleHeight: elemTitle?.clientHeight,
+                }]
+            let nextElem
+            for(let index = 0; index < neighborsAmount; index++) {
+                const elem = nextElem || elemRef
+                nextElem = elem?.nextElementSibling || elem?.parentElement?.nextElementSibling
+                const titleElem = nextElem?.querySelector('.mc-title')
+                neighbors.push({
+                    titleElem,
+                    titleHeight: titleElem?.clientHeight,
+                })
+            }
+            const highestHeight = Math.max(...neighbors.map(neighbor => neighbor.titleHeight))
 
-            this.setElemMinHeight(elemTitle, highestHeight)
-            this.setElemMinHeight(nextElemTitle, highestHeight)
-        }
+            neighbors.forEach(neighbor => {
+                this.setElemMinHeight(neighbor.titleElem, highestHeight)
+            })
+        },
     }
 }
