@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-field-text" :class="classes">
+    <div class="mc-field-text" :class="classes" ref="field">
         <label :for="name" class="mc-field-text__header" :class="{ required }">
             <!-- @slot Слот заголовка -->
             <slot name="header">
@@ -122,6 +122,7 @@ import McButton from '../../McButton/McButton'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
 import fieldErrors from '../../../mixins/fieldErrors'
 import McTooltip from '../../McTooltip/McTooltip'
+import equalFieldHeight from '../../../mixins/equalFieldHeight'
 
 export default {
     name: 'McFieldText',
@@ -134,7 +135,7 @@ export default {
         McTooltip, //Используется через component :is
         'imask-input': IMaskComponent,
     },
-    mixins: [fieldErrors],
+    mixins: [fieldErrors, equalFieldHeight],
     props: {
         /**
          *  Тип:
@@ -356,6 +357,13 @@ export default {
             type: Number,
             default: null,
         },
+        /**
+         * Нужно ли проверять высоту соседнего элемента и устанавливать общую
+         * */
+        checkNextElemHeight: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -516,6 +524,7 @@ export default {
 
     mounted() {
         this.calculatePadding()
+        this.checkNextElemHeight && this.calcEqualHeaderHeight(this.$refs.field)
     },
 
     methods: {
