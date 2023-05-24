@@ -27,26 +27,29 @@ export default {
         calcNeighbors() {
             const neighbors = []
             // берем обертку родителя, чтобы учесть кейсы, когда элемент внутри элемента обертки
-            const wrapper = this.$refs?.field?.parentElement?.parentElement
-            if (wrapper) {
-                const elementTop = this.$refs?.field?.getBoundingClientRect()?.top
+            const field = this.$refs.field
+            if (field && field.parentElement.parentElement) {
+                const elementTop = field.getBoundingClientRect().top
                 this.elements.forEach(elem => {
-                    const selectedElements = wrapper.querySelectorAll(elem)
-                    selectedElements?.forEach(selectedElem => {
+                    const selectedElements = field.parentElement.parentElement.querySelectorAll(elem)
+                    selectedElements.forEach(selectedElem => {
                         // проходимся по элементам, если находятся на одной высоте, то закидываем в массив соседей
-                        selectedElem?.getBoundingClientRect()?.top === elementTop && neighbors.push(selectedElem)
+                        selectedElem &&
+                            selectedElem.getBoundingClientRect().top === elementTop &&
+                            neighbors.push(selectedElem)
                     })
                 })
-                this.calcEqualHeaderHeight(this.$refs.field, neighbors)
+                this.calcEqualHeaderHeight(field, neighbors)
             }
         },
         // Принимает ссылку на элемент инпута и массив соседей и вычисляем максимальную высоту заголовка
         calcEqualHeaderHeight(elemRef, neighbors) {
-            const elemTitle = elemRef?.querySelector('.mc-title'),
+            const elemTitle = elemRef.querySelector('.mc-title'),
                 neighborsTops = []
 
             neighbors.forEach(neighbor => {
-                neighborsTops.push(neighbor.querySelector('.mc-title__text')?.clientHeight)
+                const text = neighbor.querySelector('.mc-title__text')
+                text && neighborsTops.push(text.clientHeight)
             })
             const highestHeight = Math.max(...neighborsTops)
 
