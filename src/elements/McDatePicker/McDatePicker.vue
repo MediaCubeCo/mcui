@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-date-picker" :class="classes">
+    <div class="mc-date-picker" :class="classes" ref="field">
         <label :for="name" class="mc-date-picker__header">
             <!-- @slot Слот для заголовка над инпутом -->
             <slot name="title">
@@ -137,6 +137,7 @@ import McTitle from '../McTitle/McTitle'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
 import McButton from '../McButton/McButton'
 import fieldErrors from '../../mixins/fieldErrors'
+import equalFieldHeight from '../../mixins/equalFieldHeight'
 
 export default {
     name: 'McDatePicker',
@@ -146,7 +147,7 @@ export default {
         DatePicker,
         McButton,
     },
-    mixins: [fieldErrors],
+    mixins: [fieldErrors, equalFieldHeight],
     props: {
         /**
          *  Тип датапикера date|datetime|year|month|time|week

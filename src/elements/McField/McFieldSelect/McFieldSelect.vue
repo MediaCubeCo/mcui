@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-field-select" :class="classes" :style="styles">
+    <div class="mc-field-select" :class="classes" :style="styles" ref="field">
         <div :for="name" class="mc-field-select__header" :class="{ required }">
             <!-- @slot Слот заголовка -->
             <slot name="header">
@@ -88,10 +88,11 @@ import McAvatar from '../../McAvatar/McAvatar'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
 import McPreview from '../../../patterns/McPreview/McPreview'
 import fieldErrors from '../../../mixins/fieldErrors'
+import equalFieldHeight from '../../../mixins/equalFieldHeight'
 export default {
     name: 'McFieldSelect',
     components: { McSvgIcon, McAvatar, McTitle, McTooltip, MultiSelect, McPreview },
-    mixins: [fieldErrors],
+    mixins: [fieldErrors, equalFieldHeight],
     props: {
         /**
          *  Заголовок поля:
