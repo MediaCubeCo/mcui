@@ -173,23 +173,23 @@
   }
 }
 
-@mixin default-link($main-color: $color-black, $second-color: $color-purple) {
-  color: $main-color;
+@mixin default-link($main-color: $color-black, $second-color: $color-purple, $is-important: false) {
+  color: $main-color if($is-important, !important, null);
   &:hover,
   &:focus {
-    color: $second-color;
+    color: $second-color if($is-important, !important, null);
   }
 
   &:active {
-    color: darken($second-color, 8%);
+    color: darken($second-color, 8%) if($is-important, !important, null);
   }
 }
 
 @mixin delete-link() {
   @include default-link($color-black, $color-red);
 }
-@mixin text-link() {
-  @include default-link($color-purple, $color-hover-purple);
+@mixin text-link($is-important: false) {
+  @include default-link($color-purple, $color-hover-purple, $is-important);
 }
 @mixin close-link() {
   @include default-link($color-gray, $color-black);
@@ -314,7 +314,7 @@
     line-height: 28px;
   }
   a {
-    @include text-link();
+    @include text-link(true);
     text-decoration: none;
   }
   h1,
