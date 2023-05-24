@@ -1,4 +1,17 @@
 export default {
+    /** Миксин для выравнивания высоты заголовка соседних инпутов, работает для элементов ниже
+     * для добавления нового, надо добавить на сам элемент ref=field + включить в массив elements
+     */
+    data: () => ({
+        elements: ['.mc-field-text', '.mc-field-select', '.mc-date-picker'],
+    }),
+    mounted() {
+        this.calcNeighbors()
+        window.addEventListener('resize', this.calcNeighbors)
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.calcNeighbors)
+    },
     /**
      * Миксин для высчета высоты соседнего элемента инпута, чтобы не прыгала высота заголовка при большой строке
      * функции считают максимальную высоту mc-title и устанавливают min-height равную большему значению
@@ -10,29 +23,34 @@ export default {
                 elem.style.minHeight = `${height}px`
             }
         },
-        // Принимает ссылку на элемент инпута и проверяет высоту соседнего инпута или же, если элемент в обертке, то соседа родителя
-        // Передаем количество соседей для цикла
-        calcEqualHeaderHeight(elemRef, neighborsAmount) {
-            const elemTitle = elemRef?.querySelector('.mc-title'),
-                neighbors = [{
-                    titleElem: elemTitle,
-                    titleHeight: elemTitle?.clientHeight,
-                }]
-            let nextElem
-            for(let index = 0; index < neighborsAmount; index++) {
-                const elem = nextElem || elemRef
-                nextElem = elem?.nextElementSibling || elem?.parentElement?.nextElementSibling
-                const titleElem = nextElem?.querySelector('.mc-title')
-                neighbors.push({
-                    titleElem,
-                    titleHeight: titleElem?.clientHeight,
+        // считаем количество соседей инпута и выравниваем высоту по максимальному
+        calcNeighbors() {
+            const neighbors = []
+            // берем обертку родителя, чтобы учесть кейсы, когда элемент внутри элемента обертки
+            const wrapper = this.$refs?.field?.parentElement?.parentElement
+            if (wrapper) {
+                const elementTop = this.$refs?.field?.getBoundingClientRect()?.top
+                this.elements.forEach(elem => {
+                    const selectedElements = wrapper.querySelectorAll(elem)
+                    selectedElements?.forEach(selectedElem => {
+                        // проходимся по элементам, если находятся на одной высоте, то закидываем в массив соседей
+                        selectedElem?.getBoundingClientRect()?.top === elementTop && neighbors.push(selectedElem)
+                    })
                 })
+                this.calcEqualHeaderHeight(this.$refs.field, neighbors)
             }
-            const highestHeight = Math.max(...neighbors.map(neighbor => neighbor.titleHeight))
+        },
+        // Принимает ссылку на элемент инпута и массив соседей и вычисляем максимальную высоту заголовка
+        calcEqualHeaderHeight(elemRef, neighbors) {
+            const elemTitle = elemRef?.querySelector('.mc-title'),
+                neighborsTops = []
 
             neighbors.forEach(neighbor => {
-                this.setElemMinHeight(neighbor.titleElem, highestHeight)
+                neighborsTops.push(neighbor.querySelector('.mc-title__text')?.clientHeight)
             })
+            const highestHeight = Math.max(...neighborsTops)
+
+            this.setElemMinHeight(elemTitle, highestHeight)
         },
-    }
+    },
 }

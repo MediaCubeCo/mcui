@@ -285,13 +285,6 @@ export default {
             type: String,
             default: null,
         },
-        /**
-         * Количество соседей, для которых надо установить общую высоту
-         * */
-        neighborFieldsAmount: {
-            type: [Number, String],
-            default: null,
-        },
     },
     data() {
         return {
@@ -389,9 +382,6 @@ export default {
         hasPrepend() {
             return this.avatar || this.icon
         },
-    },
-    mounted() {
-        this.neighborFieldsAmount && this.calcEqualHeaderHeight(this.$refs.field, this.neighborFieldsAmount)
     },
     methods: {
         handleChange(value) {
