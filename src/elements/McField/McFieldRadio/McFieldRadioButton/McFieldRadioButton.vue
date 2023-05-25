@@ -176,6 +176,8 @@ export default {
                         justify-content: center;
                         align-items: center;
                         font-weight: $font-weight-bold;
+                        // Для выравнивания иконки по центру кнопки
+                        line-height: 100%;
                         color: $color-white;
                         width: 100%;
                         height: 100%;
