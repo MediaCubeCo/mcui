@@ -669,11 +669,8 @@ export default {
         .vxe-header--column {
             .vxe-cell--title {
                 .mc-title__text {
-                    white-space: pre-line;
+                    white-space: normal;
                     word-break: break-word;
-                    &:first-line {
-                        line-height: 0;
-                    }
                 }
             }
         }
