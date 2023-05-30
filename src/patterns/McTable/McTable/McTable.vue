@@ -671,9 +671,6 @@ export default {
                 .mc-title__text {
                     white-space: pre-line;
                     word-break: break-word;
-                    &:first-line {
-                        line-height: 0;
-                    }
                 }
             }
         }
