@@ -29,9 +29,9 @@
                     />{{
                         $attrs.type === 'seq' ? '#' : column.title
                     }}<div slot="icon-append" class="mc-table-col__header-append">
-                    <!-- @slot Слот для вставки в конец после заголовка столбца -->
-                    <slot name="header-append" />
-                </div>
+                        <!-- @slot Слот для вставки в конец после заголовка столбца -->
+                        <slot name="header-append" />
+                    </div>
                 </mc-title>
                 <div v-if="$scopedSlots['header-right'] || headerRight" class="mc-table-col__header-right">
                     <!-- @slot Слот справа в ячейке хедера (абсолютно спозиционированный, с бэкграундом) -->
