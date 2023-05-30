@@ -3,9 +3,13 @@
         <template v-slot="{ row, rowIndex }">
             <!-- @slot Слот для mc-table-col -->
             <slot :row="row">
-                <mc-title :text-align="textAlign" :ellipsis="ellipsis" weight="normal" class="mc-table-col__title">
-                    {{ $attrs.type === 'seq' ? rowIndex + 1 : row[defaultTitle] }}
-                </mc-title>
+                <mc-title
+                    :text-align="textAlign"
+                    :ellipsis="ellipsis"
+                    weight="normal"
+                    class="mc-table-col__title"
+                    v-html="$attrs.type === 'seq' ? rowIndex + 1 : row[defaultTitle]"
+                />
             </slot>
             <div v-if="$scopedSlots.right" class="mc-table-col__right">
                 <!-- @slot Слот справа в ячейке (абсолютно спозиционированный, с бэкграундом) -->
@@ -22,12 +26,12 @@
                         :name="getSortIcon(column)"
                         :color="getSortColor(column)"
                         size="200"
-                    />
-                    {{ $attrs.type === 'seq' ? '#' : column.title }}
-                    <div slot="icon-append" class="mc-table-col__header-append">
-                        <!-- @slot Слот для вставки в конец после заголовка столбца -->
-                        <slot name="header-append" />
-                    </div>
+                    />{{
+                        $attrs.type === 'seq' ? '#' : column.title
+                    }}<div slot="icon-append" class="mc-table-col__header-append">
+                    <!-- @slot Слот для вставки в конец после заголовка столбца -->
+                    <slot name="header-append" />
+                </div>
                 </mc-title>
                 <div v-if="$scopedSlots['header-right'] || headerRight" class="mc-table-col__header-right">
                     <!-- @slot Слот справа в ячейке хедера (абсолютно спозиционированный, с бэкграундом) -->

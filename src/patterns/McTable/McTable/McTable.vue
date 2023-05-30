@@ -671,15 +671,6 @@ export default {
                 .mc-title__text {
                     white-space: pre-line;
                     word-break: break-word;
-                    //  before - для firefox-а сохраняет логику работы pre-line и фиксит появления пустой строки в тайтле
-                    &:first-line {
-                        line-height: 0;
-                    }
-                    &:before {
-                        content: '';
-                        display: block;
-                        margin: -1em 0;
-                    }
                 }
             }
         }
