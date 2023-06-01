@@ -38,6 +38,9 @@ $color-ultraviolet: #C41CFD; /* Статус данных */
 $color-pinkish: #F073B1; /* Статус данных */
 $color-azure: #0A85C2; /* Статус данных */
 
+$color-turquoise: #4EA9A2; /* Нотификации вверху страницы */
+$color-darken-turquoise: #2F8C99; /* Кастомные тултипы */
+
 $color-transparent: transparent; /* Прозрачный фон */
 
 $token-colors: (
@@ -68,5 +71,6 @@ $token-colors: (
         "ultraviolet": $color-ultraviolet,
         "pinkish": $color-pinkish,
         "azure": $color-azure,
+        "turquoise": $color-turquoise,
         "transparent": $color-transparent,
 );
