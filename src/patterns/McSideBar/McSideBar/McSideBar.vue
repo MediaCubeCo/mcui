@@ -18,10 +18,8 @@
                         :menu-main="menuMain"
                         :menu-additional="menuAdditional"
                         :chatra-config="chatraConfig"
-                        :userback-config="userbackConfig"
                         :user="user"
                         :compact="prettyCompact"
-                        @handlerUserbackClick="$emit('userbackClick')"
                         @handlerChatraClick="$emit('chatraClick')"
                         @open-side-bar="openSideBar"
                     />
@@ -132,14 +130,6 @@ export default {
          *
          */
         chatraConfig: {
-            type: Object,
-            default: null,
-        },
-        /**
-         *  Userback Config
-         *
-         */
-        userbackConfig: {
             type: Object,
             default: null,
         },

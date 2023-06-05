@@ -63,7 +63,7 @@
             </div>
         </div>
         <mc-separator
-            v-if="chatraConfig || userbackConfig"
+            v-if="chatraConfig"
             color="dark-gray"
             indent-top="150"
             indent-bottom="150"
@@ -77,14 +77,6 @@
             :compact="compact"
             with-tooltip
             @click="$emit('handlerChatraClick')"
-        />
-        <mc-side-bar-button
-            v-if="userbackConfig"
-            icon="bug_report"
-            :title="userbackConfig.title"
-            :compact="compact"
-            with-tooltip
-            @click="$emit('handlerUserbackClick')"
         />
     </div>
 </template>
@@ -154,14 +146,6 @@ export default {
             default: null,
         },
         /**
-         *  Userback Config
-         *
-         */
-        userbackConfig: {
-            type: Object,
-            default: null,
-        },
-        /**
          *  Данные пользователя
          *
          */
@@ -179,7 +163,6 @@ export default {
     },
     data() {
         return {
-            menuUserbackIsOpen: false,
             preparedMainMenu: [],
         }
     },
