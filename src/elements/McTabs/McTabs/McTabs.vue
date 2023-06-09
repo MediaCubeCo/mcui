@@ -431,6 +431,8 @@ export default {
         display: flex;
         flex-wrap: nowrap;
         overflow-x: auto;
+        overflow-y: hidden;
+        height: $space-350;
         @include border();
     }
 
