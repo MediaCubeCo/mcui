@@ -497,7 +497,23 @@ export default {
         toggleColumns(val) {
             if (val) {
                 const columns = this.$refs.xTable.getColumns()
-                const hideColumns = columns.filter(col => col.fixed !== 'left')
+                let fixedColNeigbhorIndex
+                const hideColumns = columns.filter((col, i) => {
+                    const isFixedCol = col.fixed === 'left'
+                    /**
+                     * Скрываем все столбцы кроме фиксированного и его соседа, чтобы не было рассинхрона при выходе из карточки
+                     * т.к. когда остается 1 столбец, то фикс - размаунтится, а потом при выходе из карточки перерендеривается
+                     * и скроллит в самый верх
+                     * */
+                    if (isFixedCol) fixedColNeigbhorIndex = i + 1
+                    switch (true) {
+                        case i === fixedColNeigbhorIndex:
+                            return
+                        default:
+                            return !isFixedCol
+                    }
+                    return !isFixedCol
+                })
                 hideColumns.forEach(col => (col.visible = false))
                 this.$refs.xTable.refreshColumn()
             } else {
