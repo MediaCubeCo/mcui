@@ -13,6 +13,7 @@
                         v-if="title"
                         :color="variation"
                         :ellipsis="false"
+                        max-width="100%"
                         weight="semi-bold"
                         class="mc-notification__title"
                     >
