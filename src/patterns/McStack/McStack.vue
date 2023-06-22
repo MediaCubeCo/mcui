@@ -99,7 +99,7 @@ export default {
         overflow: hidden;
         display: flex;
         flex-wrap: nowrap;
-        flex-direction: row-reverse;
+        flex-direction: row;
 
         > * {
             &:not(:first-child) {
@@ -110,9 +110,10 @@ export default {
     }
 
     &__counter {
+        position: sticky;
+        right: 0;
         margin-left: $space-50;
         flex: 0 0 auto;
-
         color: $color-gray;
         font-family: $font-family-main;
         font-size: $font-size-200;
