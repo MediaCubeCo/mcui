@@ -85,11 +85,9 @@ export default {
 
     &--collapsed {
         #{$block-name}__body {
+            @include child-indent-right(-$space-200);
             > * {
                 border: 2px solid $color-white;
-                &:not(:first-child) {
-                    margin-right: -$space-200;
-                }
             }
         }
     }
@@ -100,11 +98,8 @@ export default {
         display: flex;
         flex-wrap: nowrap;
         flex-direction: row;
-
+        @include child-indent-right($space-150);
         > * {
-            &:not(:first-child) {
-                margin-right: $space-150;
-            }
             justify-content: center;
         }
     }
