@@ -51,6 +51,7 @@
                     variation="black-flat"
                     :href="menuAppsItem.href"
                     :to="menuAppsItem.to"
+                    :target="menuAppsItem.target"
                     :is-active="menuAppsItem.isActive"
                     :exact="menuAppsItem.exact"
                 >
