@@ -1,0 +1,13 @@
+<svg data-token-name="hand_money" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_10494_49603)">
+<path d="M12.9813 14H20.5C20.8978 14 21.2794 13.842 21.5607 13.5607C21.842 13.2794 22 12.8978 22 12.5V6.5C22 6.10218 21.842 5.72064 21.5607 5.43934C21.2794 5.15804 20.8978 5 20.5 5H10.5C10.1022 5 9.72064 5.15804 9.43934 5.43934C9.15804 5.72064 9 6.10218 9 6.5V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14.4395 8.43949C14.7212 8.16041 15.1019 8.00425 15.4985 8.00518C15.895 8.00612 16.2751 8.16406 16.5555 8.44446C16.8359 8.72486 16.9938 9.1049 16.9948 9.50145C16.9957 9.898 16.8395 10.2788 16.5605 10.5605" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9 8H6.70819C6.24246 7.99999 5.78313 8.10842 5.36658 8.31671L4.78137 8.60931C4.27108 8.86444 3.84413 9.25979 3.5506 9.749L2 12.3333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3 21L8.76187 18.918C9.56607 18.6274 10.256 18.0867 10.7304 17.3753L13.7233 12.8873C13.9344 12.5708 14.0293 12.1908 13.9918 11.8122C13.9543 11.4335 13.7868 11.0796 13.5178 10.8105C13.2092 10.5019 12.7907 10.3285 12.3542 10.3285C11.9178 10.3285 11.4992 10.5018 11.1906 10.8103L9 13H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_10494_49603">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>
