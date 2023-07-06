@@ -23,6 +23,7 @@ Object.keys(tokenColors).forEach(c => {
     const colorVariations = {
         [c]: c,
         [`${c}-invert`]: `${c}-invert`,
+        [`${c}-outline`]: `${c}-outline`,
     }
     variations = {
         ...variations,
@@ -30,10 +31,7 @@ Object.keys(tokenColors).forEach(c => {
     }
 })
 
-const sizes = {
-    s: 's',
-    m: 'm',
-}
+const sizes = ['xs', 's', 'm'].map(s => [s, `${s}-compact`]).flat()
 
 const getUniqueProps = key => {
     return {

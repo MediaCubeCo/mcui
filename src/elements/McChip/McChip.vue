@@ -69,8 +69,8 @@ export default {
             default: null,
         },
         /**
-         *  Размер: m, s, xs
-         *
+         *  Размер
+         *  m, m-compact, s, s-compact, xs, xs-compact
          */
         size: {
             type: String,
@@ -121,22 +121,38 @@ export default {
     }
 
     &--size {
+        @mixin padding-x($space, $space-compact) {
+            padding-right: $space;
+            padding-left: $space;
+            &-compact {
+                padding-right: $space-compact;
+                padding-left: $space-compact;
+            }
+        }
+
         &-m {
-            height: $size-400;
-            padding-left: $space-100;
-            padding-right: $space-100;
+            &,
+            &-compact {
+                height: $size-400;
+            }
+            @include padding-x($space-100, $space-50);
         }
         &-s {
-            height: $size-300;
-            padding-left: $space-50;
-            padding-right: $space-50;
+            &,
+            &-compact {
+                height: $size-300;
+            }
+            @include padding-x($space-100, $space-50);
         }
         &-xs {
-            height: $space-200;
-            padding-left: $space-50;
-            padding-right: $space-50;
-            font-size: $font-size-100;
-            line-height: $line-height-150;
+            &,
+            &-compact {
+                height: $space-200;
+                font-size: $font-size-100;
+                line-height: $line-height-150;
+            }
+
+            @include padding-x($space-50, 0);
         }
     }
 
