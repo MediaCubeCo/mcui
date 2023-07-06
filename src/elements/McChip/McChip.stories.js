@@ -23,6 +23,7 @@ Object.keys(tokenColors).forEach(c => {
     const colorVariations = {
         [c]: c,
         [`${c}-invert`]: `${c}-invert`,
+        [`${c}-outline`]: `${c}-outline`,
     }
     variations = {
         ...variations,
@@ -31,6 +32,7 @@ Object.keys(tokenColors).forEach(c => {
 })
 
 const sizes = {
+    xs: 'xs',
     s: 's',
     m: 'm',
 }
