@@ -31,11 +31,7 @@ Object.keys(tokenColors).forEach(c => {
     }
 })
 
-const sizes = {
-    xs: 'xs',
-    s: 's',
-    m: 'm',
-}
+const sizes = ['xs', 's', 'm'].map(s => [s, `${s}-compact`]).flat()
 
 const getUniqueProps = key => {
     return {
