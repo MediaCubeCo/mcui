@@ -1,6 +1,6 @@
 <template>
     <div class="mc-stack" ref="stack">
-        <div class="mc-stack__body" ref="body">
+        <div v-show="loaded" class="mc-stack__body" ref="body">
             <slot />
         </div>
         <div v-if="more" class="mc-stack__counter" ref="counter">
@@ -31,6 +31,7 @@ export default {
     data: () => ({
         children: null,
         more: 0,
+        loaded: false,
         custom_limit: 0,
     }),
     computed: {
@@ -56,14 +57,15 @@ export default {
     methods: {
         init() {
             if (this.isAutoLimit) {
-                this.calcLimit()
                 window.addEventListener('resize', this.calcLimit)
+                // setTimeout из-за случаев, когда элемент рендерится с 0 шириной, а потом она устанавливается динамически
+                setTimeout(() => this.calcLimit(), 1)
             } else {
                 this.toggleChilds(true, this.limit)
             }
         },
-        calcLimit() {
-            this.toggleChilds()
+        calcLimit(showAll, limit) {
+            if(showAll) this.toggleChilds()
             this.custom_limit = Infinity
             let childWidth = 0
             // ширина родителя без учета счетчика
@@ -77,7 +79,8 @@ export default {
                     break
                 }
             }
-            this.toggleChilds(true, this.custom_limit)
+            // Сравниваем переданный лимит с заново выставленным, если они не равны, то ререндерим потомков
+            if (this.custom_limit !== limit) this.toggleChilds(true, this.custom_limit)
         },
         setStyles(elem, opacity = 1, visibility = 'visible', position = 'initial') {
             elem.style.opacity = opacity
@@ -85,6 +88,7 @@ export default {
             elem.style.position = position
         },
         toggleChilds(hide, limit = 0) {
+            this.loaded = true
             this.more = 0
             this.children = this.$refs.body.children
             let elementsLimit = hide ? (limit - 1) : this.children.length
@@ -95,6 +99,8 @@ export default {
                     this.more++
                 }
             }
+            // Передаем в $nextTick лимит для пересчета, т.к. рендерится counter, который занимает доп место и обрезает элементы
+            if (hide && this.isAutoLimit) this.$nextTick(() => this.calcLimit(false, limit))
         },
     },
 }
