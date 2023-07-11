@@ -25,6 +25,9 @@
                 :class="contentClasses"
                 v-html="filteredComment"
             />
+            <mc-title v-if="comment.message" slot="bottom" :ellipsis="false" class="mc-chat-comment__message">
+                {{ comment.message }}
+            </mc-title>
             <mc-button
                 v-if="canEdit"
                 slot="right"
@@ -220,6 +223,12 @@ export default {
                 }
             }
         }
+    }
+    &__message {
+        margin-top: $space-100;
+        padding: $space-150 $space-200;
+        border-radius: $radius-100;
+        background-color: $color-hover-gray;
     }
     &--editable {
         cursor: pointer;
