@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-field-text" :class="classes" ref="field">
+    <div ref="field" class="mc-field-text" :class="classes">
         <label :for="name" class="mc-field-text__header" :class="{ required }">
             <!-- @slot Слот заголовка -->
             <slot name="header">
@@ -548,7 +548,14 @@ export default {
                     const cursor_position = this.getCaretPos(e.target)?.start
                     const prepared_value = this.formattedToNumber(value)
 
-                    value = prepared_value ? parseFloat(prepared_value) || prepared_value : null
+                    const float_value = parseFloat(prepared_value)
+                    const without_spaces_value = prepared_value.replace(/ /gm, '')
+
+                    value = prepared_value
+                        ? String(float_value) === without_spaces_value
+                            ? float_value
+                            : without_spaces_value || float_value || prepared_value
+                        : null
                     const formatted_value = this.getAmountFormat(prepared_value)
                     e.target.value = this.isRtl ? formatted_value.replace(/ /gm, '') : formatted_value
                     const space_length = e.target.value?.slice(0, cursor_position).replace(/[^ ]/gm, '')?.length || 0
