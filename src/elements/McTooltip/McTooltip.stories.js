@@ -7,9 +7,11 @@ import { getTokensByType } from '../../utils/getTokens'
 
 const wrapper = () => {
     return {
-        template: `<div style="display: flex; align-items: center; justify-content: center; height: 200px;">
-        <story />
-    </div>`,
+        template: `
+            <div style="display: flex; align-items: center; justify-content: center; height: 200px;">
+                <story />
+            </div>
+        `,
     }
 }
 
@@ -93,7 +95,7 @@ const getUniqueProps = key => {
             default: text('container', 'body', key),
         },
         maxLines: {
-            default: number('maxLines', null, {}, key)
+            default: number('maxLines', null, {}, key),
         },
     }
 }
@@ -103,8 +105,8 @@ const getCommonTags = ctx => {
         content: ctx.content,
         placement: ctx.placement,
         color: ctx.color,
-        'max-width': ctx.maxWidth,
-        'arrow-disabled': ctx.arrowDisabled,
+        maxWidth: ctx.maxWidth,
+        arrowDisabled: ctx.arrowDisabled,
         size: ctx.size,
         trigger: ctx.trigger,
         show: ctx.show,
@@ -118,7 +120,10 @@ const actionsData = {
 }
 
 export const Default = () => ({
-    components: { McTooltip, McButton },
+    components: {
+        McTooltip,
+        McButton,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -128,7 +133,9 @@ export const Default = () => ({
         ...getUniqueProps('default'),
     },
     methods: actionsData,
-    template: `<mc-tooltip v-bind="tagBind">
-      <mc-button @click="handleClick"> Tooltip </mc-button>
-  </mc-tooltip>`,
+    template: `
+        <mc-tooltip v-bind="tagBind">
+            <mc-button @click="handleClick"> Tooltip </mc-button>
+        </mc-tooltip>
+    `,
 })

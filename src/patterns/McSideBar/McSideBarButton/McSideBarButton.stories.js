@@ -2,7 +2,9 @@ import { text, boolean, object, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 
 import McSideBarButton from './McSideBarButton'
-import {BUTTON_VARIATIONS, COLORS, SVG_ICONS} from '../../../helpers/storybook_consts'
+import { SVG_ICONS } from '../../../helpers/storybookVariables'
+import { getTokensByType } from '../../../utils/getTokens'
+import { setVariationsByColor } from '../../../helpers/storybookFunctions'
 
 const wrapper = () => {
     return {
@@ -11,6 +13,10 @@ const wrapper = () => {
     </div>`,
     }
 }
+
+const colors = getTokensByType('color')
+const variants = setVariationsByColor(['flat', 'invert', 'outline', 'link'])
+
 
 export default {
     title: 'patterns/McSideBar/McSideBarButton',
@@ -49,10 +55,10 @@ const getUniqueProps = key => {
             default: text('info', '1234', key),
         },
         variation: {
-            default: select('variation', BUTTON_VARIATIONS, null, key),
+            default: select('variation', variants, null, key),
         },
         secondaryColor: {
-            default: select('secondaryColor', COLORS, null, key),
+            default: select('secondaryColor', colors, null, key),
         },
         exact: {
             default: boolean('exact', false, key),
@@ -100,7 +106,9 @@ const actionsData = {
 }
 
 export const Default = () => ({
-    components: { McSideBarButton },
+    components: {
+        McSideBarButton,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)

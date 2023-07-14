@@ -1,4 +1,4 @@
-import { text, select, boolean, object } from '@storybook/addon-knobs'
+import { text, number, select, boolean, object } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 
 import McTable from './McTable'
@@ -85,6 +85,9 @@ const getUniqueProps = key => {
         nativeSort: {
             default: boolean('nativeSort', true, key),
         },
+        sortLoading: {
+            default: boolean('sortLoading', false, key),
+        },
         size: {
             default: select('size', sizes, 'small', key),
         },
@@ -103,6 +106,24 @@ const getUniqueProps = key => {
         monoFont: {
             default: boolean('monoFont', false, key),
         },
+        scrollY: {
+            default: number('scrollY', 0, {}, key),
+        },
+        rowsToStartLoad: {
+            default: number('rowsToStartLoad', 4, {}, key),
+        },
+        skeletonLoad: {
+            default: boolean('skeletonLoad', false, key),
+        },
+        noDataIconSrc: {
+            default: text('noDataIconSrc', 'https://static.thenounproject.com/png/4143644-200.png', key),
+        },
+        removeItems: {
+            default: boolean('removeItems', false, key),
+        },
+        isRtl: {
+            default: boolean('isRtl', false, key),
+        },
     }
 }
 
@@ -113,15 +134,21 @@ const getCommonTags = ctx => {
         scrollable: ctx.scrollable,
         stripe: ctx.stripe,
         border: ctx.border,
-        'component-tag': ctx.componentTag,
+        sortLoading: ctx.sortLoading,
+        scrollY: ctx.scrollY,
+        noDataIconSrc: ctx.noDataIconSrc,
+        rowsToStartLoad: ctx.rowsToStartLoad,
+        skeletonLoad: ctx.skeletonLoad,
+        isRtl: ctx.isRtl,
+        componentTag: ctx.componentTag,
         items: ctx.items,
         hasMore: ctx.hasMore,
         loading: ctx.loading,
         contextMenu: ctx.contextMenu,
         placeholders: ctx.placeholders,
-        'cell-class-name': ctx.handleCellClassName,
-        'checkbox-config': ctx.checkboxConfig,
-        'native-sort': ctx.nativeSort,
+        cellClassName: ctx.handleCellClassName,
+        checkboxConfig: ctx.checkboxConfig,
+        nativeSort: ctx.nativeSort,
         footerInfo: ctx.footerInfo,
         totalFooter: ctx.totalFooter,
         headerBreakWord: ctx.headerBreakWord,
@@ -177,7 +204,7 @@ export const Default = () => ({
             return getCommonTags(this)
         },
         items() {
-            return body
+            return !this.removeItems ? body
                 .map(item => {
                     return {
                         ...item,
@@ -200,7 +227,7 @@ export const Default = () => ({
                             : null,
                     }
                 })
-                .slice(0, 50)
+                .slice(0, 50) : []
         },
     },
     props: {
@@ -209,101 +236,103 @@ export const Default = () => ({
     methods: {
         ...actionsData,
         handleCellClassName() {
-            return '' //"mc-table-col--border-bottom"
+            return '' //'mc-table-col--border-bottom'
         },
         sortNameMethod(a, b) {
             return a - b
         },
     },
-    template: `<mc-table
-        ref="table"
-        v-bind="tagBind"
-        @checkbox-change="handleCheckboxChange"
-        @load="handleLoad"
-        @sort-change="handleSorted"
-        @cell-click="cellClickEvent"
-    >
-        <mc-table-col type="seq" min-width="60" fixed="left" align="right" has-border />
-        <mc-table-col :show-overflow="false" type="checkbox" fixed="left" width="25" />
-        <mc-table-col field="title" title="Канал" width="248" fixed="left" has-border :headerRight="total">
-            <template v-slot="{ row }">
-              <mc-preview>
-                <mc-avatar slot="left" border-color="purple" dot-color="orange" lazy :src="row.avatar" />
-                <mc-title slot="top"> {{ row.title }} </mc-title>
-                <mc-title slot="bottom" color="gray" variation="overline"> {{ row.youtube_id }} </mc-title>
-              </mc-preview>
-            </template>
-            <template v-slot:right="{ row }">
-                <mc-button style="margin-right: 4px;" variation="purple-link" size="xs-compact" @click.stop="handleBtnClick">
-                    <mc-svg-icon slot="icon-append" name="edit" />
-                </mc-button>
-                <mc-button variation="purple-link" size="xs-compact" @click.stop="handleBtnClick">
-                    <mc-svg-icon slot="icon-append" name="delete" />
-                </mc-button>
-            </template>
-        </mc-table-col>
-
-        <mc-table-col field="user" title="Пользователь" min-width="200">
-            <template v-slot="{ row }">
-                <mc-title v-if="row.id%2">Почтальон Печкин</mc-title>
-                <mc-title v-else style="width: auto; max-width: 101%;">Клён кудрявый лист резной</mc-title>
-            </template>
-        </mc-table-col>
-
-        <mc-table-col
-            field="views_count"
-            title="Просмотры"
-            min-width="130"
-            align="right"
-            sortable
-            :sortMethod="sortNameMethod"
-        />
-
-        <mc-table-col field="roles" title="Роль (здесь уточнение)" width="120">
-            <template v-slot="{ row }">
-                <mc-chip variation="gray-invert" size="s" :counter="'+'+(row.roles.length - 1)">
-                    {{ row.roles[0] }}
-                </mc-chip>
-            </template>
-        </mc-table-col>
-
-        <mc-table-col field="channels" title="Канал" width="120" sortable>
-            <template v-slot="{ row }">
-                <mc-stack :limit="3" collapsed>
-                    <mc-avatar rounded lazy size="300" />
-                    <mc-avatar rounded lazy size="300" />
-                    <mc-avatar rounded lazy size="300" />
-                    <mc-avatar v-if="row.id%3" rounded lazy size="300" />
-                    <mc-avatar v-if="row.id%2" rounded lazy size="300" />
-                </mc-stack>
-            </template>
-        </mc-table-col>
-
-        <mc-table-col field="status" title="Статус" min-width="150">
-            <template v-slot="{ row }">
-                <mc-badge variation="red">Отклонен</mc-badge>
-            </template>
-        </mc-table-col>
-
-        <mc-table-col field="owner" title="Владелец" width="150">
-            <template v-slot="{ row }">
-                <div style="display: flex; align-items: center; height: 100%;">
-                    <mc-field-text :name="row.id + ''" placeholder="Владелец" />
-                </div>
-            </template>
-        </mc-table-col>
-
-        <mc-table-col field="action" title="Действие" width="143" fixed="right">
-            <template v-slot="{ row }">
-                <mc-grid-row justify="right" :wrap="false" align="middle" :gutter-x="5">
-                    <mc-grid-col>
-                        <mc-button size="xs" @click.stop="handleBtnClick">Да</mc-button>
-                    </mc-grid-col>
-                    <mc-grid-col>
-                        <mc-button variation="red" size="xs" @click.stop="handleBtnClick">Нет</mc-button>
-                    </mc-grid-col>
-                </mc-grid-row>
-            </template>
-        </mc-table-col>
-    </mc-table>`,
+    template: `
+        <mc-table
+            ref="table"
+            v-bind="tagBind"
+            @checkbox-change="handleCheckboxChange"
+            @load="handleLoad"
+            @sort-change="handleSorted"
+            @cell-click="cellClickEvent"
+        >
+            <mc-table-col type="seq" min-width="60" fixed="left" align="right" has-border />
+            <mc-table-col :show-overflow="false" type="checkbox" fixed="left" width="25" />
+            <mc-table-col field="title" title="Канал" width="248" fixed="left" has-border :headerRight="total">
+                <template v-slot="{ row }">
+                    <mc-preview>
+                        <mc-avatar slot="left" border-color="purple" dot-color="orange" lazy :src="row.avatar" />
+                        <mc-title slot="top"> {{ row.title }} </mc-title>
+                        <mc-title slot="bottom" color="gray" variation="overline"> {{ row.youtube_id }} </mc-title>
+                    </mc-preview>
+                </template>
+                <template v-slot:right="{ row }">
+                    <mc-button style="margin-right: 4px;" variation="purple-link" size="xs-compact" @click.stop="handleBtnClick">
+                        <mc-svg-icon slot="icon-append" name="edit" />
+                    </mc-button>
+                    <mc-button variation="purple-link" size="xs-compact" @click.stop="handleBtnClick">
+                        <mc-svg-icon slot="icon-append" name="delete" />
+                    </mc-button>
+                </template>
+            </mc-table-col>
+    
+            <mc-table-col field="user" title="Пользователь" min-width="200">
+                <template v-slot="{ row }">
+                    <mc-title v-if="row.id%2">Почтальон Печкин</mc-title>
+                    <mc-title v-else style="width: auto; max-width: 101%;">Клён кудрявый лист резной</mc-title>
+                </template>
+            </mc-table-col>
+    
+            <mc-table-col
+                field="views_count"
+                title="Просмотры"
+                min-width="130"
+                align="right"
+                sortable
+                :sortMethod="sortNameMethod"
+            />
+    
+            <mc-table-col field="roles" title="Роль (здесь уточнение)" width="120">
+                <template v-slot="{ row }">
+                    <mc-chip variation="gray-invert" size="s" :counter="'+'+(row.roles.length - 1)">
+                        {{ row.roles[0] }}
+                    </mc-chip>
+                </template>
+            </mc-table-col>
+    
+            <mc-table-col field="channels" title="Канал" width="120" sortable>
+                <template v-slot="{ row }">
+                    <mc-stack :limit="3" collapsed>
+                        <mc-avatar rounded lazy size="300" />
+                        <mc-avatar rounded lazy size="300" />
+                        <mc-avatar rounded lazy size="300" />
+                        <mc-avatar v-if="row.id%3" rounded lazy size="300" />
+                        <mc-avatar v-if="row.id%2" rounded lazy size="300" />
+                    </mc-stack>
+                </template>
+            </mc-table-col>
+    
+            <mc-table-col field="status" title="Статус" min-width="150">
+                <template v-slot="{ row }">
+                    <mc-badge variation="red">Отклонен</mc-badge>
+                </template>
+            </mc-table-col>
+    
+            <mc-table-col field="owner" title="Владелец" width="150">
+                <template v-slot="{ row }">
+                    <div style="display: flex; align-items: center; height: 100%;">
+                        <mc-field-text :name="row.id + ''" placeholder="Владелец" />
+                    </div>
+                </template>
+            </mc-table-col>
+    
+            <mc-table-col field="action" title="Действие" width="143" fixed="right">
+                <template v-slot="{ row }">
+                    <mc-grid-row justify="right" :wrap="false" align="middle" :gutter-x="5">
+                        <mc-grid-col>
+                            <mc-button size="xs" @click.stop="handleBtnClick">Да</mc-button>
+                        </mc-grid-col>
+                        <mc-grid-col>
+                            <mc-button variation="red" size="xs" @click.stop="handleBtnClick">Нет</mc-button>
+                        </mc-grid-col>
+                    </mc-grid-row>
+                </template>
+            </mc-table-col>
+        </mc-table>
+    `,
 })

@@ -1,12 +1,12 @@
 import { text, select, boolean, array } from '@storybook/addon-knobs'
 import categories from '../../../mocks/categories'
-import svgIcons from '../../../utils/load-icons'
 
 import McFieldSelect from './McFieldSelect'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
 import McTitle from '../../McTitle/McTitle'
 import McTooltip from '../../McTooltip/McTooltip'
 import { action } from '@storybook/addon-actions'
+import { SVG_ICONS } from '../../../helpers/storybookVariables'
 import { getTokensByType } from '../../../utils/getTokens'
 
 export default {
@@ -21,9 +21,7 @@ export default {
     },
 }
 
-const mappedCategories = categories.map(c => ({ name: c.title, value: c.id }))
-const mappedCategoriesWithPreview = categories.map(c => ({ name: c.title, value: c.id, icon: 'bitcoin', text: 'test' }))
-const iconNames = svgIcons.map(icon => icon.name.slice(2, -4))
+const mappedCategories = categories.map(c => ({ name: c.title, value: c.id, icon: 'bitcoin', text: 'test' }))
 const colors = getTokensByType('color')
 
 const directions = {
@@ -78,22 +76,22 @@ const getUniqueProps = key => {
 const getCommonTags = ctx => {
     return {
         title: ctx.title,
-        'help-text': ctx.helpText,
+        helpText: ctx.helpText,
         options: ctx.options,
         searchable: ctx.searchable,
-        'hide-selected': ctx.hideSelected,
-        'allow-empty': ctx.allowEmpty,
+        hideSelected: ctx.hideSelected,
+        allowEmpty: ctx.allowEmpty,
         disabled: ctx.disabled,
-        'background-color': ctx.backgroundColor,
+        backgroundColor: ctx.backgroundColor,
         placeholder: ctx.placeholder,
-        'open-direction': ctx.openDirection,
-        'show-labels': ctx.showLabels,
-        'internal-search': ctx.internalSearch,
+        openDirection: ctx.openDirection,
+        showLabels: ctx.showLabels,
+        internalSearch: ctx.internalSearch,
         errors: ctx.errors,
         name: ctx.name,
         required: ctx.required,
         maxHeight: ctx.maxHeight,
-        'options-tooltip': ctx.optionsTooltip,
+        optionsTooltip: ctx.optionsTooltip,
     }
 }
 
@@ -105,7 +103,12 @@ const actionsData = {
 }
 
 export const Multiple = () => ({
-    components: { McFieldSelect, McTooltip, McSvgIcon, McTitle },
+    components: {
+        McFieldSelect,
+        McTooltip,
+        McSvgIcon,
+        McTitle,
+    },
     data() {
         return {
             categoriesModel: [],
@@ -142,25 +145,32 @@ export const Multiple = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-field-select 
-      v-bind="tagBind"
-      v-model="categoriesModel"
-      @input="handleInput" 
-      @original-input="handleOriginalInput" 
-      @tag="handleTag"
-      @search-change="handleSearchChange"
-  >
-      <mc-title variation="subtitle" slot="header">
-          {{header}}
-          <mc-tooltip slot="icon-append" content="Lorem ipsum dolor sit amet" placement="top" size="s">
-              <mc-svg-icon name="help" color="dark-gray" />
-          </mc-tooltip>
-      </mc-title>
-  </mc-field-select>`,
+    template: `
+        <mc-field-select 
+            v-bind="tagBind"
+            v-model="categoriesModel"
+            @input="handleInput" 
+            @original-input="handleOriginalInput" 
+            @tag="handleTag"
+            @search-change="handleSearchChange"
+        >
+            <mc-title variation="subtitle" slot="header">
+                {{header}}
+                <mc-tooltip slot="icon-append" content="Lorem ipsum dolor sit amet" placement="top" size="s">
+                    <mc-svg-icon name="help" color="dark-gray" />
+                </mc-tooltip>
+            </mc-title>
+        </mc-field-select>
+    `,
 })
 
 export const Single = () => ({
-    components: { McFieldSelect, McTooltip, McSvgIcon, McTitle },
+    components: {
+        McFieldSelect,
+        McTooltip,
+        McSvgIcon,
+        McTitle,
+    },
     data() {
         return {
             categoriesModel: [],
@@ -184,20 +194,27 @@ export const Single = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-field-select 
-      v-bind="tagBind"
-      v-model="categoriesModel"
-      @input="handleInput" 
-      @original-input="handleOriginalInput" 
-  />`,
+    template: `
+        <mc-field-select 
+            v-bind="tagBind"
+            v-model="categoriesModel"
+            @input="handleInput" 
+            @original-input="handleOriginalInput" 
+        />
+    `,
 })
 
 export const optionsWithPreview = () => ({
-    components: { McFieldSelect, McTooltip, McSvgIcon, McTitle },
+    components: {
+        McFieldSelect,
+        McTooltip,
+        McSvgIcon,
+        McTitle,
+    },
     data() {
         return {
             categoriesModel: [],
-            options: mappedCategoriesWithPreview,
+            options: mappedCategories,
         }
     },
     computed: {
@@ -218,17 +235,24 @@ export const optionsWithPreview = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-field-select 
-      v-bind="tagBind"
-      v-model="categoriesModel"
-      @input="handleInput" 
-      @original-input="handleOriginalInput" 
-  />`,
+    template: `
+        <mc-field-select 
+            v-bind="tagBind"
+            v-model="categoriesModel"
+            @input="handleInput" 
+            @original-input="handleOriginalInput" 
+        />
+    `,
 })
 
 
 export const Grouped = () => ({
-    components: { McFieldSelect, McTooltip, McSvgIcon, McTitle },
+    components: {
+        McFieldSelect,
+        McTooltip,
+        McSvgIcon,
+        McTitle,
+    },
     data() {
         return {
             categoriesModel: [],
@@ -262,16 +286,23 @@ export const Grouped = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-field-select 
-      v-bind="tagBind"
-      v-model="categoriesModel"
-      @input="handleInput" 
-      @original-input="handleOriginalInput" 
-  />`,
+    template: `
+        <mc-field-select 
+            v-bind="tagBind"
+            v-model="categoriesModel"
+            @input="handleInput" 
+            @original-input="handleOriginalInput"
+        />
+    `,
 })
 
 export const WithPrepend = () => ({
-    components: { McFieldSelect, McTooltip, McSvgIcon, McTitle },
+    components: {
+        McFieldSelect,
+        McTooltip,
+        McSvgIcon,
+        McTitle,
+    },
     data() {
         return {
             categoriesModel: 3,
@@ -296,7 +327,7 @@ export const WithPrepend = () => ({
             default: text('avatar', 'https://avatars3.githubusercontent.com/u/43079603?s=460&v=4', 'WithPrepend'),
         },
         icon: {
-            default: select('icon', iconNames, 'account_circle', 'WithPrepend'),
+            default: select('icon', SVG_ICONS, 'account_circle', 'WithPrepend'),
         },
         backgroundColor: {
             default: select('backgroundColor', colors, 'azure', 'WithPrepend'),
@@ -306,10 +337,12 @@ export const WithPrepend = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-field-select 
-      v-bind="tagBind"
-      v-model="categoriesModel"
-      @input="handleInput" 
-      @original-input="handleOriginalInput" 
-  />`,
+    template: `
+        <mc-field-select 
+            v-bind="tagBind"
+            v-model="categoriesModel"
+            @input="handleInput" 
+            @original-input="handleOriginalInput"
+        />
+    `,
 })

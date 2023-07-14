@@ -1,4 +1,4 @@
-import {boolean, text} from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 
 import McCropper from './McCropper'
 
@@ -33,7 +33,9 @@ const getCommonTags = ctx => {
 }
 
 export const Default = () => ({
-    components: { McCropper },
+    components: {
+        McCropper,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -42,13 +44,17 @@ export const Default = () => ({
     props: {
         ...getUniqueProps('default'),
     },
-    template: `<div style="max-width: 100px;">
-        <mc-cropper v-bind="tagBind" />
-    </div>`,
+    template: `
+        <div style="max-width: 100px;">
+            <mc-cropper v-bind="tagBind" />
+        </div>
+    `,
 })
 
 export const notZoomable = () => ({
-    components: { McCropper },
+    components: {
+        McCropper,
+    },
     computed: {
         tagBind() {
             return {
@@ -60,7 +66,9 @@ export const notZoomable = () => ({
     props: {
         ...getUniqueProps('not-zoomable'),
     },
-    template: `<div style="max-width: 100px;">
-        <mc-cropper v-bind="tagBind" />
-    </div>`,
+    template: `
+        <div style="max-width: 100px;">
+            <mc-cropper v-bind="tagBind" />
+        </div>
+    `,
 })

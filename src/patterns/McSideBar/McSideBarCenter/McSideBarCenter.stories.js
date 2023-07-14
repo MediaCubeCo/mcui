@@ -7,16 +7,20 @@ import McSideBarButton from '../McSideBarButton/McSideBarButton'
 
 const wrapper = () => {
     return {
-        template: `<div style="background-color: #202427; width: 216px;">
-        <story />
-    </div>`,
+        template: `
+            <div style="background-color: #202427; width: 216px;">
+                <story />
+            </div>
+        `,
     }
 }
 
 export default {
     title: 'Patterns/McSideBar/McSideBarCenter',
     component: McSideBarCenter,
-    subcomponents: { McSideBarButton },
+    subcomponents: {
+        McSideBarButton,
+    },
     parameters: {
         componentSubtitle: 'Status: In progress',
         design: {
@@ -46,33 +50,21 @@ const getCommonTags = ctx => {
         title: ctx.title,
         menuMain: ctx.menuMain,
         chatraConfig: ctx.chatraConfig,
-        userbackConfig: ctx.userbackConfig,
         user: ctx.user,
         compact: ctx.compact,
     }
 }
 
 export const Default = () => ({
-    components: { McSideBarCenter },
+    components: {
+        McSideBarCenter,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
         },
         menuMain() {
             return menuMain
-        },
-        userbackConfig() {
-            return {
-                title: 'Found a mistake?',
-                token: '8681|15392|h5ECyqaZJTTOk6kDQJmgij6b7db2iXwCuwM21iQ6HIcautJRR2',
-                // more info https://help.userback.io/hc/en-us/articles/115005681028-Javascript-API
-                settings: {
-                    lang: 'en',
-                    main_button_text: 'submit',
-                    rating_help_message: 'rate',
-                },
-                categories: 'Admin',
-            }
         },
         user() {
             return {

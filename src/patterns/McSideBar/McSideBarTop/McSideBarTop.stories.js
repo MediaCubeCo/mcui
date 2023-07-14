@@ -1,13 +1,15 @@
 import {text, boolean, select} from '@storybook/addon-knobs'
 import McSideBarTop from '../McSideBarTop/McSideBarTop'
 import menuApps from '../../../mocks/menuApps'
-import {SVG_ICONS, TITLE_VARIATION} from '../../../helpers/storybook_consts'
+import { SVG_ICONS, TITLE_VARIATION } from '../../../helpers/storybookVariables'
 
 const wrapper = () => {
     return {
-        template: `<div style="background-color: #202427; width: 216px;">
-        <story />
-    </div>`,
+        template: `
+            <div style="background-color: #202427; width: 216px;">
+                <story />
+            </div>
+        `,
     }
 }
 

@@ -1,4 +1,4 @@
-import { number, boolean } from '@storybook/addon-knobs'
+import { text, boolean } from '@storybook/addon-knobs'
 import categories from '../../mocks/categories'
 import body from '../../mocks/tableInfusersBody'
 
@@ -11,17 +11,13 @@ export default {
     component: McStack,
     parameters: {
         componentSubtitle: 'Status: Ready',
-        // design: {
-        //   type: 'figma',
-        //   url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=108%3A322',
-        // },
     },
 }
 
 const getUniqueProps = key => {
     return {
         limit: {
-            default: number('limit', 4, {}, key),
+            default: text('limit', '4', key),
         },
     }
 }
@@ -34,7 +30,10 @@ const getCommonTags = ctx => {
 }
 
 export const Default = () => ({
-    components: { McStack, McAvatar },
+    components: {
+        McStack,
+        McAvatar,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -49,6 +48,9 @@ export const Default = () => ({
                 })
                 .slice(0, 9)
         },
+        stackKey() {
+            return `stack-key-${this.limit || 0}`
+        },
     },
     props: {
         ...getUniqueProps('default'),
@@ -57,14 +59,21 @@ export const Default = () => ({
         },
     },
     // methods: actionsData,
-    template: `<mc-stack v-bind="tagBind">
-      <mc-avatar src="https://avatars3.githubusercontent.com/u/43079603?s=460&v=4" rounded lazy size="400" />
-      <mc-avatar v-for="item in items" :key="item.id" rounded lazy size="400" :src="item.src" />
-  </mc-stack>`,
+    template: `
+        <template>
+            <mc-stack :key="stackKey" v-bind="tagBind">
+                <mc-avatar src="https://avatars3.githubusercontent.com/u/43079603?s=460&v=4" rounded lazy size="400" />
+                <mc-avatar v-for="item in items" :key="item.id" rounded lazy size="400" :src="item.src" />
+            </mc-stack>
+        </template>
+    `,
 })
 
 export const WithChips = () => ({
-    components: { McStack, McChip },
+    components: {
+        McStack,
+        McChip,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -80,9 +89,36 @@ export const WithChips = () => ({
         },
     },
     // methods: actionsData,
-    template: `<mc-stack v-bind="tagBind">
-      <mc-chip v-for="category in computedCategories" :key="category.id" style="width: 150px;" variation="purple">
-          {{ category.title }}
-      </mc-chip>
-  </mc-stack>`,
+    template: `
+        <mc-stack v-bind="tagBind">
+            <mc-chip v-for="category in computedCategories" :key="category.id" style="width: 150px;" variation="purple">
+                {{ category.title }}
+            </mc-chip>
+        </mc-stack>
+    `,
+})
+
+export const WithAutoLimit = () => ({
+    components: {
+        McStack,
+        McChip,
+    },
+    computed: {
+        tagBind() {
+            return {
+                limit: 'auto',
+            }
+        },
+        computedCategories() {
+            return categories
+        },
+    },
+    // methods: actionsData,
+    template: `
+        <mc-stack v-bind="tagBind">
+            <mc-chip v-for="category in computedCategories" :key="category.id" style="width: 150px;" variation="purple">
+                {{ category.title }}
+            </mc-chip>
+        </mc-stack>
+    `,
 })

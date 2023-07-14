@@ -1,6 +1,5 @@
 import { text, select, boolean } from '@storybook/addon-knobs'
 import { getTokensByType } from '../../utils/getTokens'
-import svgIcons from '../../utils/load-icons'
 
 import McNotification from './McNotification'
 import McTitle from '../McTitle/McTitle'
@@ -8,9 +7,9 @@ import McSvgIcon from '../McSvgIcon/McSvgIcon'
 import McButton from '../McButton/McButton'
 import McGridRow from '../../patterns/McGrid/McGridRow/McGridRow'
 import McGridCol from '../../patterns/McGrid/McGridCol/McGridCol'
+import { SVG_ICONS } from '../../helpers/storybookVariables'
 
 const tokenColors = getTokensByType('color')
-const icons = svgIcons.map(icon => icon.name.slice(2, -4))
 
 export default {
     title: 'Elements/McNotification',
@@ -37,7 +36,7 @@ const getUniqueProps = key => {
             default: select('variation', tokenColors, 'purple', key),
         },
         iconName: {
-            default: select('iconName', icons, 'info', key),
+            default: select('iconName', SVG_ICONS, 'info', key),
         },
         title: {
             default: text('title', 'Test title', key),
@@ -82,7 +81,14 @@ export const Default = () => ({
 
 // mc-notification with slots
 export const WithSlots = () => ({
-    components: { McNotification, McTitle, McSvgIcon, McButton, McGridRow, McGridCol },
+    components: {
+        McNotification,
+        McTitle,
+        McSvgIcon,
+        McButton,
+        McGridRow,
+        McGridCol,
+    },
     computed: {
         tagBind() {
             return {
@@ -103,23 +109,23 @@ export const WithSlots = () => ({
         },
     },
     template: `
-      <mc-notification v-bind="tagBind">
-        <mc-title v-if="hasHeader" slot="header" variation="subtitle" color="red">Title in Slot</mc-title>
-        <mc-svg-icon v-if="hasLeft" name="obs" color="red" slot="left" />
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-        Dolor eius expedita harum ipsam magnam minima mollitia, natus 
-        soluta temporibus veritatis! Cumque ea eaque excepturi laudantium 
-        quaerat, quidem reprehenderit soluta voluptates.
-        <div v-if="hasRight" slot="right">
-            <mc-grid-row :gutter-x="4">
-              <mc-grid-col>
-                <mc-button variation="green">One</mc-button>
-              </mc-grid-col>
-              <mc-grid-col>
-                <mc-button variation="red">two</mc-button>
-              </mc-grid-col>
-            </mc-grid-row>
-        </div>
-      </mc-notification>
+        <mc-notification v-bind="tagBind">
+            <mc-title v-if="hasHeader" slot="header" variation="subtitle" color="red">Title in Slot</mc-title>
+            <mc-svg-icon v-if="hasLeft" name="obs" color="red" slot="left" />
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+            Dolor eius expedita harum ipsam magnam minima mollitia, natus 
+            soluta temporibus veritatis! Cumque ea eaque excepturi laudantium 
+            quaerat, quidem reprehenderit soluta voluptates.
+            <div v-if="hasRight" slot="right">
+                <mc-grid-row :gutter-x="4">
+                    <mc-grid-col>
+                        <mc-button variation="green">One</mc-button>
+                    </mc-grid-col>
+                    <mc-grid-col>
+                        <mc-button variation="red">two</mc-button>
+                    </mc-grid-col>
+                </mc-grid-row>
+            </div>
+        </mc-notification>
     `,
 })

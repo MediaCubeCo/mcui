@@ -9,12 +9,16 @@ import McButton from '../../elements/McButton/McButton'
 import McTitle from '../../elements/McTitle/McTitle'
 import McFieldText from '../../elements/McField/McFieldText/McFieldText'
 
-import { comments, extraComments } from '../../mocks/chatComments'
+import { comments } from '../../mocks/chatComments'
 
 export default {
     title: 'Patterns/McChat/McChat',
     component: McChat,
-    subcomponents: { McDrawer, McChatForm, McChatComment },
+    subcomponents: {
+        McDrawer,
+        McChatForm,
+        McChatComment,
+    },
     parameters: {
         componentSubtitle: 'Status: Ready',
         design: {
@@ -24,18 +28,20 @@ export default {
     },
 }
 
-const getCommonTags = ctx => {
-    return {}
-}
 
 export const Default = () => ({
-    components: { McChat, McRoot, McButton, McTitle, McFieldText },
+    components: {
+        McChat,
+        McRoot,
+        McButton,
+        McTitle,
+        McFieldText,
+    },
     data() {
         return {
             value: '',
             comments: comments,
             name: 'Kirill Sushko',
-            loaded: false,
         }
     },
     props: {
@@ -80,19 +86,12 @@ export const Default = () => ({
         this.$bus.on('chat-input', this.updateChatInput)
         this.$bus.on('chat-submit', this.onChatSubmit)
         this.$bus.on('chat-delete', this.onCommentDelete)
-        this.$bus.on('chat-loading', this.onChatLoading)
     },
 
     beforeDestroy() {
         this.$bus.off('chat-input', this.updateChatInput)
         this.$bus.off('chat-submit', this.onChatSubmit)
         this.$bus.off('chat-delete', this.onCommentDelete)
-        this.$bus.off('chat-loading', this.onChatLoading)
-    },
-    computed: {
-        tagBind() {
-            return getCommonTags(this)
-        },
     },
     methods: {
         showChat() {
@@ -136,15 +135,13 @@ export const Default = () => ({
             this.comments.push(comment)
             this.value = ''
         },
-        onChatLoading() {
-            if(!this.loaded) this.comments.push(...extraComments)
-            this.loaded = true
-        },
         onCommentDelete(id) {
             console.log('onCommentDelete', id)
         },
     },
-    template: `<mc-root>
-    <mc-button @click.prevent="showChat">Show Chat</mc-button>
-  </mc-root>`,
+    template: `
+        <mc-root>
+            <mc-button @click.prevent="showChat">Show Chat</mc-button>
+        </mc-root>
+    `,
 })

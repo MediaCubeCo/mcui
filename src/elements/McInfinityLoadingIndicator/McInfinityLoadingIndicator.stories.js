@@ -25,7 +25,9 @@ export const Default = () => ({
             text: 'Прокрутите вниз',
         }
     },
-    components: { McInfinityLoadingIndicator },
+    components: {
+        McInfinityLoadingIndicator,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -40,16 +42,18 @@ export const Default = () => ({
             default: boolean('active', true, 'default'),
         },
     },
-    template: `<div>
-        <div style="height: 2000px; background-color: rgba(255, 127, 80, 0.2)">
-            <div style="position: sticky; top: 20px; font-size: 20px">{{ text }}</div>
+    template: `
+        <div>
+            <div style="height: 2000px; background-color: rgba(255, 127, 80, 0.2)">
+                <div style="position: sticky; top: 20px; font-size: 20px">{{ text }}</div>
+            </div>
+            <mc-infinity-loading-indicator 
+                v-bind="tagBind"
+                @loading="text = 'Событие появления индикатора'"
+                @hide="text = 'Прокрутите вниз'" 
+            />
         </div>
-        <mc-infinity-loading-indicator 
-            v-bind="tagBind"
-            @loading="text = 'Событие появления индикатора'"
-            @hide="text = 'Прокрутите вниз'" 
-        />
-    </div>`,
+    `,
 })
 
 export const CustomRoot = () => ({
@@ -58,7 +62,9 @@ export const CustomRoot = () => ({
             text: 'Прокрутите вниз',
         }
     },
-    components: { McInfinityLoadingIndicator },
+    components: {
+        McInfinityLoadingIndicator,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -68,7 +74,6 @@ export const CustomRoot = () => ({
         overlap: {
             default: number('overlap', 100, {}, 'custom-root'),
         },
-
         active: {
             default: boolean('active', true, 'custom-root'),
         },
@@ -76,14 +81,16 @@ export const CustomRoot = () => ({
             default: text('root', '.placement', 'custom-root'),
         },
     },
-    template: `<div class="placement" style="overflow-y: auto; height: 100vh">
-        <div style="height: 2000px; background-color: rgba(255, 127, 80, 0.2)">
-            <div style="position: sticky; top: 20px; font-size: 20px">{{ text }}</div>
+    template: `
+        <div class="placement" style="overflow-y: auto; height: 100vh">
+            <div style="height: 2000px; background-color: rgba(255, 127, 80, 0.2)">
+                <div style="position: sticky; top: 20px; font-size: 20px">{{ text }}</div>
+            </div>
+            <mc-infinity-loading-indicator 
+                v-bind="tagBind"
+                @loading="text = 'Событие появления индикатора'"
+                @hide="text = 'Прокрутите вниз'" 
+           />
         </div>
-        <mc-infinity-loading-indicator 
-            v-bind="tagBind"
-            @loading="text = 'Событие появления индикатора'"
-            @hide="text = 'Прокрутите вниз'" 
-        />
-    </div>`,
+    `,
 })

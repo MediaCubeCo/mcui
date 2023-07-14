@@ -1,41 +1,41 @@
 import McGridCol from './McGridCol'
 import McGridRow from '../McGridRow/McGridRow'
-import {text, boolean, number} from "@storybook/addon-knobs"
+import { text, boolean, number } from '@storybook/addon-knobs'
 
 export default {
-  title: 'Patterns/McGrid/McGridCol',
-  component: McGridCol,
-  parameters: {
-    componentSubtitle: 'Status: Ready, Смотреть McGridRow',
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=145%3A0',
+    title: 'Patterns/McGrid/McGridCol',
+    component: McGridCol,
+    parameters: {
+        componentSubtitle: 'Status: Ready, Смотреть McGridRow',
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=145%3A0',
+        },
     },
-  },
 }
 
 const getUniqueProps = key => {
     return {
         span1: {
-            default: number('span1', 4, {}, key)
+            default: number('span1', 4, {}, key),
         },
         span2: {
-            default: number('span2', 4, {}, key)
+            default: number('span2', 4, {}, key),
         },
         spanM1: {
-            default: number('spanM1', 4, {}, key)
+            default: number('spanM1', 4, {}, key),
         },
         order1: {
-            default: number('order1', 0, {}, key)
+            default: number('order1', 0, {}, key),
         },
         offset1: {
-            default: number('offset1', 0, {}, key)
+            default: number('offset1', 0, {}, key),
         },
         push1: {
-            default: number('push1', 0, {}, key)
+            default: number('push1', 0, {}, key),
         },
         pull1: {
-            default: number('pull1', 0, {}, key)
+            default: number('pull1', 0, {}, key),
         },
         stretchSelf1: {
             default: boolean('stretchSelf (work without span)', false, key),
@@ -60,7 +60,10 @@ const getCommonTags = ctx => {
 }
 
 export const Default = () => ({
-    components: { McGridRow, McGridCol },
+    components: {
+        McGridRow,
+        McGridCol,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -69,9 +72,11 @@ export const Default = () => ({
     props: {
         ...getUniqueProps('default'),
     },
-    template: `<mc-grid-row>
-      <mc-grid-col v-bind="tagBind"><div style="background: #e74c3c">1</div></mc-grid-col>
-      <mc-grid-col :span="span2"><div style="background: #1abc9c">2</div></mc-grid-col>
-  </mc-grid-row>`,
+    template: `
+        <mc-grid-row>
+            <mc-grid-col v-bind="tagBind"><div style="background: #e74c3c">1</div></mc-grid-col>
+            <mc-grid-col :span="span2"><div style="background: #1abc9c">2</div></mc-grid-col>
+        </mc-grid-row>
+    `,
 })
 

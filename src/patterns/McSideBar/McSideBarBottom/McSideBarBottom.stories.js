@@ -7,18 +7,20 @@ import McSideBarButton from '../McSideBarButton/McSideBarButton'
 
 const wrapper = () => {
     return {
-        template: `<div 
-            style="display: flex; flex-direction: column; height: 600px; background-color: #202427; width: 216px;"
-        >
-        <story />
-    </div>`,
+        template: `
+            <div style="display: flex; flex-direction: column; height: 600px; background-color: #202427; width: 216px;">
+                <story />
+            </div>
+        `,
     }
 }
 
 export default {
     title: 'Patterns/McSideBar/McSideBarBottom',
     component: McSideBarBottom,
-    subcomponents: { McSideBarButton },
+    subcomponents: {
+        McSideBarButton,
+    },
     parameters: {
         componentSubtitle: 'Status: In progress',
         design: {
@@ -73,11 +75,13 @@ export const Default = () => ({
         ...getUniqueProps('default'),
     },
     methods: actionsData,
-    template: `<mc-side-bar-bottom v-bind="tagBind" @toggle-size="handleToggleSize">
-        <template v-if="bottomMessage" slot="bottom-message">
-            <mc-title color="white">
-                {{ bottomMessage }}
-            </mc-title>
-        </template>
-    </mc-side-bar-bottom>`,
+    template: `
+        <mc-side-bar-bottom v-bind="tagBind" @toggle-size="handleToggleSize">
+            <template v-if="bottomMessage" slot="bottom-message">
+                <mc-title color="white">
+                    {{ bottomMessage }}
+                </mc-title>
+            </template>
+        </mc-side-bar-bottom>
+    `,
 })

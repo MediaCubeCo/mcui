@@ -1,6 +1,6 @@
 import { text, boolean, array, number, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { LANGS } from '../../../helpers/storybook_consts'
+import { LANGS } from '../../../helpers/storybookVariables'
 
 import McFieldCheckbox from './McFieldCheckbox'
 import { getTokenGroup } from '../../../utils/getTokens'
@@ -27,11 +27,11 @@ const getUniqueProps = key => {
             default: number('tabindex', null, {}, key),
         },
         checkboxSize: {
-            default: select('checkboxSize', sizes, '200', key)
+            default: select('checkboxSize', sizes, '200', key),
         },
         locale: {
-            default: select('locale', LANGS, 'en', key)
-        }
+            default: select('locale', LANGS, 'en', key),
+        },
     }
 }
 
@@ -55,7 +55,9 @@ const actionsData = {
 
 // mc-field-checkbox default
 export const Default = () => ({
-    components: { McFieldCheckbox },
+    components: {
+        McFieldCheckbox,
+    },
     data() {
         return {
             value: null,
@@ -97,7 +99,9 @@ export const Default = () => ({
 
 // mc-field-checkbox with custom values
 export const WithCustomValues = () => ({
-    components: { McFieldCheckbox },
+    components: {
+        McFieldCheckbox,
+    },
     data() {
         return {
             value: 'checked',
@@ -141,7 +145,9 @@ export const WithCustomValues = () => ({
 })
 
 export const multipleCheckboxes = () => ({
-    components: { McFieldCheckbox },
+    components: {
+        McFieldCheckbox,
+    },
     data() {
         return {
             value: 'checked',

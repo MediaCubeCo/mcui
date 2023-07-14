@@ -6,7 +6,7 @@ import McButton from '../../McButton/McButton'
 import McTitle from '../../McTitle/McTitle'
 import McTooltip from '../../McTooltip/McTooltip'
 import { action } from '@storybook/addon-actions'
-import {LANGS} from '../../../helpers/storybook_consts'
+import { LANGS } from '../../../helpers/storybookVariables'
 
 export default {
     title: 'Elements/McField/McFieldText',
@@ -23,7 +23,7 @@ export default {
 const types = {
     text: 'text',
     textarea: 'textarea',
-    'textarea-autosize': 'textarea-autosize',
+    textareaAutosize: 'textarea-autosize',
     password: 'password',
     email: 'email',
     num: 'num',
@@ -99,16 +99,16 @@ const getCommonTags = ctx => {
     return {
         type: ctx.type,
         title: ctx.title,
-        'help-text': ctx.helpText,
+        helpText: ctx.helpText,
         mask: ctx.mask,
         disabled: ctx.disabled,
         value: ctx.value,
         errors: ctx.errors,
         placeholder: ctx.placeholder,
         name: ctx.name,
-        'min-height': ctx.minHeight,
-        'max-height': ctx.maxHeight,
-        'max-length': ctx.maxLength,
+        minHeight: ctx.minHeight,
+        maxHeight: ctx.maxHeight,
+        maxLength: ctx.maxLength,
         copy: ctx.copy,
         autocomplete: ctx.autocomplete,
         readOnly: ctx.readOnly,
@@ -131,7 +131,13 @@ const actionsData = {
 }
 
 export const Default = () => ({
-    components: { McFieldText, McButton, McSvgIcon, McTitle, McTooltip },
+    components: {
+        McFieldText,
+        McButton,
+        McSvgIcon,
+        McTitle,
+        McTooltip,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -164,25 +170,31 @@ export const Default = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-field-text v-bind="tagBind" @input="handleInput">
-      <mc-title variation="subtitle" slot="header">
-          {{header}}
-          <mc-tooltip slot="icon-append" content="Lorem ipsum dolor sit amet" placement="top" size="s">
-              <mc-svg-icon name="help" color="dark-gray" />
-          </mc-tooltip>
-      </mc-title>
-      <mc-svg-icon v-if="isPrepend" slot="prepend" name="access_time" />
-      <mc-svg-icon v-if="isPrepend" slot="prepend" name="face_alt" />
-      <mc-button v-if="isAppend" slot="append" uppercase variation="dark-gray-link" size="xs-compact" @click="handleClick">
-          <mc-svg-icon v-if="isAppend" slot="icon-prepend" name="cancel" size="400" />
-      </mc-button>
-      <mc-svg-icon v-if="isAppend" slot="append" name="dollar" />
-  </mc-field-text>`,
+    template: `
+        <mc-field-text v-bind="tagBind" @input="handleInput">
+            <mc-title variation="subtitle" slot="header">
+                {{header}}
+                <mc-tooltip slot="icon-append" content="Lorem ipsum dolor sit amet" placement="top" size="s">
+                    <mc-svg-icon name="help" color="dark-gray" />
+                </mc-tooltip>
+            </mc-title>
+            <mc-svg-icon v-if="isPrepend" slot="prepend" name="access_time" />
+            <mc-svg-icon v-if="isPrepend" slot="prepend" name="face_alt" />
+            <mc-button v-if="isAppend" slot="append" uppercase variation="dark-gray-link" size="xs-compact" @click="handleClick">
+                <mc-svg-icon v-if="isAppend" slot="icon-prepend" name="cancel" size="400" />
+            </mc-button>
+            <mc-svg-icon v-if="isAppend" slot="append" name="dollar" />
+        </mc-field-text>
+    `,
 })
 
 // type textarea
 export const Textarea = () => ({
-    components: { McFieldText, McButton, McSvgIcon },
+    components: {
+        McFieldText,
+        McButton,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -204,16 +216,22 @@ export const Textarea = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-field-text v-bind="tagBind" @input="handleInput">
-      <mc-button v-if="isAppend" slot="append" variation="purple-link" size="m-compact" @click="handleClick">
-          <mc-svg-icon slot="icon-append" name="send" />
-      </mc-button>
-  </mc-field-text>`,
+    template: `
+        <mc-field-text v-bind="tagBind" @input="handleInput">
+            <mc-button v-if="isAppend" slot="append" variation="purple-link" size="m-compact" @click="handleClick">
+                <mc-svg-icon slot="icon-append" name="send" />
+            </mc-button>
+        </mc-field-text>
+    `,
 })
 
 // type copy
 export const Copy = () => ({
-    components: { McFieldText, McButton, McSvgIcon },
+    components: {
+        McFieldText,
+        McButton,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -237,7 +255,11 @@ export const Copy = () => ({
 
 // type date
 export const Date = () => ({
-    components: { McFieldText, McButton, McSvgIcon },
+    components: {
+        McFieldText,
+        McButton,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -255,7 +277,11 @@ export const Date = () => ({
 
 // type date
 export const withMask = () => ({
-    components: { McFieldText, McButton, McSvgIcon },
+    components: {
+        McFieldText,
+        McButton,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -273,7 +299,11 @@ export const withMask = () => ({
 
 // type password
 export const Password = () => ({
-    components: { McFieldText, McButton, McSvgIcon },
+    components: {
+        McFieldText,
+        McButton,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)

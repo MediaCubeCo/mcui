@@ -108,12 +108,14 @@ export const WithSlot = () => ({
         },
     },
     methods: actionsData,
-    template: `<div>
-      <mc-field-radio-button v-bind="tagBind" :value="value_1" @input="handleInput">
-      {{ slotContent1 }}
-  </mc-field-radio-button>
-  <mc-field-radio-button :name="name" :value="value_2" :disabled="tagBind.disabled" @input="handleInput">
-      {{ slotContent2 }}
-  </mc-field-radio-button>
-  </div>`,
+    template: `
+        <div>
+            <mc-field-radio-button v-bind="tagBind" :value="value_1" @input="handleInput">
+                {{ slotContent1 }}
+            </mc-field-radio-button>
+            <mc-field-radio-button :name="name" :value="value_2" :disabled="tagBind.disabled" @input="handleInput">
+                {{ slotContent2 }}
+            </mc-field-radio-button>
+        </div>
+    `,
 })

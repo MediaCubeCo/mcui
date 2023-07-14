@@ -3,7 +3,7 @@ import { text, select, boolean } from '@storybook/addon-knobs'
 import McTitle from './McTitle'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
 import { getTokensByType, getTokenGroup } from '../../utils/getTokens'
-import { TITLE_VARIATION } from '../../helpers/storybook_consts'
+import { TITLE_VARIATION } from '../../helpers/storybookVariables'
 
 export default {
     title: 'Elements/McTitle',
@@ -81,17 +81,19 @@ const getCommonTags = ctx => {
         preline: ctx.preline,
         plainText: ctx.plainText,
         nowrap: ctx.nowrap,
-        'tag-name': ctx.tagName,
+        tagName: ctx.tagName,
         uppercase: ctx.uppercase,
-        'text-align': ctx.textAlign,
-        'line-height': ctx.lineHeight,
+        textAlign: ctx.textAlign,
+        lineHeight: ctx.lineHeight,
         weight: ctx.weight,
-        'max-width': ctx.maxWidth,
+        maxWidth: ctx.maxWidth,
     }
 }
 
 export const Default = () => ({
-    components: { McTitle },
+    components: {
+        McTitle,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -108,7 +110,10 @@ export const Default = () => ({
 
 // mc-title with icons
 export const WithIcons = () => ({
-    components: { McTitle, McSvgIcon },
+    components: {
+        McTitle,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -126,9 +131,11 @@ export const WithIcons = () => ({
             default: boolean('slot icon append', true, 'withIcons'),
         },
     },
-    template: `<mc-title v-bind="tagBind"> 
-      <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" color="purple" /> 
-      {{ value }} 
-      <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" color="red" /> 
-  </mc-title>`,
+    template: `
+        <mc-title v-bind="tagBind">
+            <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" color="purple" />
+            {{ value }}
+            <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" color="red" />
+        </mc-title>
+    `,
 })

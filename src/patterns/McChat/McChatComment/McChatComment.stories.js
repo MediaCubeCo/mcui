@@ -26,7 +26,9 @@ const getCommonTags = ctx => {
 const actionsData = {}
 
 export const Default = () => ({
-    components: { McChatComment },
+    components: {
+        McChatComment,
+    },
     data() {
         return {
             value: '',
