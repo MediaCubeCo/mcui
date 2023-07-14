@@ -16,7 +16,6 @@
                     <mc-side-bar-center
                         :title="menuMainTitle"
                         :menu-main="menuMain"
-                        :menu-additional="menuAdditional"
                         :chatra-config="chatraConfig"
                         :user="user"
                         :compact="prettyCompact"
@@ -106,14 +105,6 @@ export default {
          *
          */
         menuMain: {
-            type: Array,
-            default: () => [],
-        },
-        /**
-         *  Меню при клике на +
-         *
-         */
-        menuAdditional: {
             type: Array,
             default: () => [],
         },

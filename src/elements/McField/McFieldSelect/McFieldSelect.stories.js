@@ -22,6 +22,7 @@ export default {
 }
 
 const mappedCategories = categories.map(c => ({ name: c.title, value: c.id }))
+const mappedCategoriesWithPreview = categories.map(c => ({ name: c.title, value: c.id, icon: 'bitcoin', text: 'test' }))
 const iconNames = svgIcons.map(icon => icon.name.slice(2, -4))
 const colors = getTokensByType('color')
 
@@ -46,6 +47,9 @@ const getUniqueProps = key => {
         },
         allowEmpty: {
             default: boolean('allowEmpty', true, key),
+        },
+        required: {
+            default: boolean('required', false, key),
         },
         disabled: {
             default: boolean('disabled', false, key),
@@ -87,6 +91,8 @@ const getCommonTags = ctx => {
         'internal-search': ctx.internalSearch,
         errors: ctx.errors,
         name: ctx.name,
+        required: ctx.required,
+        maxHeight: ctx.maxHeight,
         'options-tooltip': ctx.optionsTooltip,
     }
 }
@@ -130,6 +136,9 @@ export const Multiple = () => ({
         },
         header: {
             default: text('header', 'Multiple with header slot', 'multiple'),
+        },
+        maxHeight: {
+            default: text('maxHeight', `60px`, 'mulitple'),
         },
     },
     methods: actionsData,
@@ -182,6 +191,41 @@ export const Single = () => ({
       @original-input="handleOriginalInput" 
   />`,
 })
+
+export const optionsWithPreview = () => ({
+    components: { McFieldSelect, McTooltip, McSvgIcon, McTitle },
+    data() {
+        return {
+            categoriesModel: [],
+            options: mappedCategoriesWithPreview,
+        }
+    },
+    computed: {
+        tagBind() {
+            return {
+                ...getCommonTags(this),
+                multiple: false,
+                taggable: false,
+                title: 'preview',
+                optionWithPreview: true,
+            }
+        },
+    },
+    props: {
+        ...getUniqueProps('preview'),
+        searchable: {
+            default: boolean('searchable', false, 'preview'),
+        },
+    },
+    methods: actionsData,
+    template: `<mc-field-select 
+      v-bind="tagBind"
+      v-model="categoriesModel"
+      @input="handleInput" 
+      @original-input="handleOriginalInput" 
+  />`,
+})
+
 
 export const Grouped = () => ({
     components: { McFieldSelect, McTooltip, McSvgIcon, McTitle },

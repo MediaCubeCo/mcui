@@ -81,10 +81,6 @@ export default {
         container: {
             default: 'body', //Boolean, String, HTMLElement,
         },
-        disablePointerEvents: {
-            type: Boolean,
-            default: false,
-        },
         maxLines: {
             type: Number,
             default: null,

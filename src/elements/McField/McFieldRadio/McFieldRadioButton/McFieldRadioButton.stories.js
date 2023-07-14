@@ -1,4 +1,4 @@
-import { text, boolean, number } from '@storybook/addon-knobs'
+import { text, boolean, number, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 
 import McFieldRadioButton from './McFieldRadioButton'
@@ -33,6 +33,7 @@ const getCommonTags = ctx => {
         label: ctx.label,
         disabled: ctx.disabled,
         tabindex: ctx.tabindex,
+        activeVariation: ctx.activeVariation,
     }
 }
 
@@ -66,6 +67,9 @@ export const Default = () => ({
         label: {
             default: text('label', 'Default radio button', 'default'),
         },
+        activeVariation: {
+            default: select('activeVariation', ['circle', 'checkmark'], 'circle', 'default'),
+        }
     },
     methods: actionsData,
     template: `<mc-field-radio-button v-bind="tagBind" :value="value" @input="handleInput" />`,

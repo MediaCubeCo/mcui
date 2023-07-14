@@ -9,6 +9,7 @@ import McSideBarTop from '../McSideBarTop/McSideBarTop'
 import McSideBarCenter from '../McSideBarCenter/McSideBarCenter'
 import McSideBarBottom from '../McSideBarBottom/McSideBarBottom'
 import McSideBarButton from '../McSideBarButton/McSideBarButton'
+import {SVG_ICONS, TITLE_VARIATION} from '../../../helpers/storybook_consts'
 
 const wrapper = () => {
     return {
@@ -42,11 +43,14 @@ const getUniqueProps = key => {
         logoTitle: {
             default: text('logoTitle', 'Dashboard', key),
         },
+        logoTitleVariation: {
+            default: select('logoTitleVariation', TITLE_VARIATION, 'subtitle', key)
+        },
         logoSrc: {
             default: text('logoSrc', '/img/mc_dashboard.svg', key),
         },
         logoIcon: {
-            default: text('logoIcon', 'mc_dashboard', key),
+            default: select('logoIcon', SVG_ICONS, 'mc_dashboard', key),
         },
         menuMainTitle: {
             default: text('menuMainTitle', 'Sections', key),
@@ -81,6 +85,7 @@ const getUniqueProps = key => {
 const getCommonTags = ctx => {
     return {
         logoTitle: ctx.logoTitle,
+        logoTitleVariation: ctx.logoTitleVariation,
         logoSrc: ctx.logoSrc,
         logoIcon: ctx.logoIcon,
         menuMainTitle: ctx.menuMainTitle,

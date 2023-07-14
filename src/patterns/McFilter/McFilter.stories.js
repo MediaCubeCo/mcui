@@ -1,4 +1,4 @@
-import { text } from '@storybook/addon-knobs'
+import { text, boolean, object } from '@storybook/addon-knobs'
 import authUser from '../../mocks/authUser'
 import menuLangs from '../../mocks/menuLangs'
 import { value, filters, placeholders } from '../../mocks/filterMocks'
@@ -28,6 +28,18 @@ const getUniqueProps = key => {
     name: {
       default: text('name', 'defaultFilterName', key),
     },
+      buttonConfirmIsLoading: {
+        default: boolean('buttonConfirmIsLoading', false, key),
+      },
+      usePortal: {
+        default: boolean('usePortal', true, key),
+      },
+      disabledOpen: {
+        default: boolean('disabledOpen', false, key),
+      },
+      placeholders: {
+        default: object('placeholders', placeholders, key),
+      }
   }
 }
 
@@ -36,6 +48,9 @@ const getCommonTags = ctx => {
     filters: ctx.filters,
     placeholders: ctx.placeholders,
     name: ctx.name,
+      buttonConfirmIsLoading: ctx.buttonConfirmIsLoading,
+      usePortal: ctx.usePortal,
+      disabledOpen: ctx.disabledOpen,
   }
 }
 
@@ -66,9 +81,6 @@ export const Default = () => ({
     ...getUniqueProps('default'),
     filters: {
       default: filters,
-    },
-    placeholders: {
-      default: placeholders,
     },
   },
   methods: {

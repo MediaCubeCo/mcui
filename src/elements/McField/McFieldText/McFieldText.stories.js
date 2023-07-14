@@ -1,4 +1,4 @@
-import { text, select, boolean, array, number, radios } from '@storybook/addon-knobs'
+import { text, select, boolean, array, number, radios, object } from '@storybook/addon-knobs'
 
 import McFieldText from './McFieldText'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
@@ -6,6 +6,7 @@ import McButton from '../../McButton/McButton'
 import McTitle from '../../McTitle/McTitle'
 import McTooltip from '../../McTooltip/McTooltip'
 import { action } from '@storybook/addon-actions'
+import {LANGS} from '../../../helpers/storybook_consts'
 
 export default {
     title: 'Elements/McField/McFieldText',
@@ -25,7 +26,9 @@ const types = {
     'textarea-autosize': 'textarea-autosize',
     password: 'password',
     email: 'email',
-    number: 'number',
+    num: 'num',
+    amount_format: 'amount_format',
+    int: 'int',
     tel: 'tel',
     url: 'url',
 }
@@ -74,6 +77,21 @@ const getUniqueProps = key => {
         passwordTooltip: {
             default: text('passwordTooltip', null, key),
         },
+        passwordHideTooltip: {
+            default: text('passwordHideTooltip', null, key),
+        },
+        clearOutput: {
+            default: boolean('clearOutput', false, key),
+        },
+        maxDecimals: {
+            default: number('maxDecimals', null, {}, key),
+        },
+        required: {
+            default: boolean('required', false, key),
+        },
+        locale: {
+            default: select('locale', LANGS, 'en', key)
+        },
     }
 }
 
@@ -96,6 +114,13 @@ const getCommonTags = ctx => {
         readOnly: ctx.readOnly,
         tabindex: ctx.tabindex,
         passwordTooltip: ctx.passwordTooltip,
+        clearOutput: ctx.clearOutput,
+        required: ctx.required,
+        isMobile: ctx.isMobile,
+        locale: ctx.locale,
+        maxDecimals: ctx.maxDecimals,
+        maskOptions: ctx.maskOptions,
+        passwordHideTooltip: ctx.passwordHideTooltip,
     }
 }
 
@@ -210,6 +235,42 @@ export const Copy = () => ({
     template: `<mc-field-text v-bind="tagBind" @copy="handleCopy" @input="handleInput" />`,
 })
 
+// type date
+export const Date = () => ({
+    components: { McFieldText, McButton, McSvgIcon },
+    computed: {
+        tagBind() {
+            return getCommonTags(this)
+        },
+    },
+    props: {
+        ...getUniqueProps('date'),
+        type: {
+            default: select('type', types, 'date', 'date'),
+        },
+    },
+    methods: actionsData,
+    template: `<mc-field-text v-bind="tagBind" @input="handleInput" />`,
+})
+
+// type date
+export const withMask = () => ({
+    components: { McFieldText, McButton, McSvgIcon },
+    computed: {
+        tagBind() {
+            return getCommonTags(this)
+        },
+    },
+    props: {
+        ...getUniqueProps('with-mask'),
+        maskOptions: {
+            default: object('maskOptions', { mask: '+{32}(000)000-000' }, 'with-mask'),
+        },
+    },
+    methods: actionsData,
+    template: `<mc-field-text v-bind="tagBind" @input="handleInput" />`,
+})
+
 // type password
 export const Password = () => ({
     components: { McFieldText, McButton, McSvgIcon },
@@ -225,6 +286,9 @@ export const Password = () => ({
         },
         errors: {
             default: array('errors', null, ',', 'password'),
+        },
+        isMobile: {
+            default: boolean('isMobile', false, 'password')
         },
     },
     methods: actionsData,

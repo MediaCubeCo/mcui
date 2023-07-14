@@ -42,6 +42,9 @@ const getUniqueProps = key => {
         sticky: {
             default: boolean('sticky', false, key),
         },
+        loading: {
+            default: boolean('loading', false, key),
+        },
     }
 }
 
@@ -55,6 +58,7 @@ const getCommonTags = ctx => {
         'accent-color': ctx.accentColor,
         uppercase: ctx.uppercase,
         sticky: ctx.sticky,
+        loading: ctx.loading,
     }
 }
 
@@ -100,6 +104,13 @@ export const Default = () => ({
           href="https://ya.ru"
       >
         Этот контент мы не увидим
+      </mc-tab>
+      <mc-tab
+          name="with counter"
+          :append-count="5"
+          append-count-color="purple"
+      >
+          Этот контент мы не увидим
       </mc-tab>
       <mc-tab
           name="Router link"

@@ -1,4 +1,4 @@
-import { text, select, boolean } from '@storybook/addon-knobs'
+import { text, select, boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 
 import McTooltip from './McTooltip'
@@ -92,6 +92,9 @@ const getUniqueProps = key => {
         container: {
             default: text('container', 'body', key),
         },
+        maxLines: {
+            default: number('maxLines', null, {}, key)
+        },
     }
 }
 
@@ -106,6 +109,7 @@ const getCommonTags = ctx => {
         trigger: ctx.trigger,
         show: ctx.show,
         container: ctx.container,
+        maxLines: ctx.maxLines,
     }
 }
 

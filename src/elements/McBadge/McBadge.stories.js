@@ -31,6 +31,7 @@ Object.keys(tokenColors).forEach(c => {
 const getCommonTags = ctx => {
   return {
     variation: ctx.variation,
+    modern: ctx.modern,
     verticalLine: ctx.verticalLine,
   }
 }
@@ -50,6 +51,9 @@ export const Default = () => ({
   props: {
     variation: {
       default: select('variation', variations, 'dark-green', 'default')
+    },
+    modern: {
+      default: boolean('modern', false, 'default')
     },
     value: {
       default: text('slot default', 'badge content', 'default'),

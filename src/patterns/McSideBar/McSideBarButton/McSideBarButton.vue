@@ -109,10 +109,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        withSubmenu: {
-            type: Boolean,
-            default: false,
-        },
         withIndicator: {
             type: Boolean,
             default: false,
@@ -162,7 +158,6 @@ export default {
         classes() {
             return {
                 'mc-side-bar-button': true,
-                'mc-side-bar-button__with-submenu': this.withSubmenu,
                 [`mc-side-bar--${this.themeConfig.mode || 'black'}__button`]: true,
                 'purple-hover': !this.secondaryColor && this.themeConfig.mainMenuLinks.variable === 'black-flat',
             }

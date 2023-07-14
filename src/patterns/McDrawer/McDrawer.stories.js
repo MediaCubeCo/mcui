@@ -7,6 +7,7 @@ import McTitle from "../../elements/McTitle/McTitle"
 import McFieldText from "../../elements/McField/McFieldText/McFieldText"
 
 import TmDrawerWrapper from "../../examples/templates/TmDrawerWrapper/TmDrawerWrapper"
+import svgIcons from '../../utils/load-icons'
 
 export default {
   title: 'Patterns/McDrawer',
@@ -33,6 +34,7 @@ const getCommonTags = ctx => {
 
   }
 }
+const names = svgIcons.map(icon => icon.name.slice(2, -4))
 
 export const Default = () => ({
   components: { McDrawer, McRoot, McButton, McTitle, McFieldText },
@@ -65,6 +67,15 @@ export const Default = () => ({
     keepAlive: {
       default: boolean('keepAlive', false, 'default'),
     },
+      titleEllipsis: {
+        default: boolean('titleEllipsis', false, 'default'),
+      },
+      closeVisible: {
+        default: boolean('closeVisible', true, 'default'),
+      },
+      iconClose: {
+        default: select('iconClose', names, 'arrow_backward', 'default'),
+      },
   },
   watch: {
     panelResult(newValue) {
@@ -92,6 +103,11 @@ export const Default = () => ({
         props: {
           userName: this.userName,
           userAge: this.userAge,
+            drawerProps: {
+              titleEllipsis: this.titleEllipsis,
+                closeVisible: this.closeVisible,
+                iconClose: this.iconClose,
+            },
         }
       })
     }

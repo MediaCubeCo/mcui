@@ -208,6 +208,7 @@ export default {
         },
         handleLoading() {
             this.$emit('loading')
+            this.$bus && this.$bus.emit('chat-loading')
         },
         /**
          * скроллит контент (необходимо, чтобы фиксировать контент на месте при подгрузке новых сообщений)

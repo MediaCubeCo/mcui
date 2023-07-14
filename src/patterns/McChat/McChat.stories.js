@@ -9,7 +9,7 @@ import McButton from '../../elements/McButton/McButton'
 import McTitle from '../../elements/McTitle/McTitle'
 import McFieldText from '../../elements/McField/McFieldText/McFieldText'
 
-import chatComments from '../../mocks/chatComments'
+import { comments, extraComments } from '../../mocks/chatComments'
 
 export default {
     title: 'Patterns/McChat/McChat',
@@ -33,8 +33,9 @@ export const Default = () => ({
     data() {
         return {
             value: '',
-            comments: chatComments,
+            comments: comments,
             name: 'Kirill Sushko',
+            loaded: false,
         }
     },
     props: {
@@ -68,17 +69,25 @@ export const Default = () => ({
         dateFormat: {
             default: text('dateFormat', 'YYYY-MM-DD HH:mm', 'default'),
         },
+        defaultUserName: {
+            default: text('defaultUserName', 'System Comment', 'default'),
+        },
+        hasMoreMessages: {
+            default: boolean('hasMoreMessages', false, 'default'),
+        },
     },
     created() {
         this.$bus.on('chat-input', this.updateChatInput)
         this.$bus.on('chat-submit', this.onChatSubmit)
         this.$bus.on('chat-delete', this.onCommentDelete)
+        this.$bus.on('chat-loading', this.onChatLoading)
     },
 
     beforeDestroy() {
         this.$bus.off('chat-input', this.updateChatInput)
         this.$bus.off('chat-submit', this.onChatSubmit)
         this.$bus.off('chat-delete', this.onCommentDelete)
+        this.$bus.off('chat-loading', this.onChatLoading)
     },
     computed: {
         tagBind() {
@@ -99,6 +108,8 @@ export const Default = () => ({
                 keepAlive: false,
                 props: {
                     title: this.title,
+                    defaultUserName: this.defaultUserName,
+                    hasMoreMessages: this.hasMoreMessages,
                     emptyMessage: this.emptyMessage,
                     showInput: this.showInput,
                     value: this.value,
@@ -124,6 +135,10 @@ export const Default = () => ({
             }
             this.comments.push(comment)
             this.value = ''
+        },
+        onChatLoading() {
+            if(!this.loaded) this.comments.push(...extraComments)
+            this.loaded = true
         },
         onCommentDelete(id) {
             console.log('onCommentDelete', id)

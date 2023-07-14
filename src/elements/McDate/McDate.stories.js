@@ -11,10 +11,6 @@ export default {
   component: McDate,
   parameters: {
     componentSubtitle: 'Status: Ready',
-    // design: {
-    //   type: 'figma',
-    //   url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=1%3A2',
-    // },
   },
 }
 

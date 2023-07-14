@@ -1,6 +1,7 @@
 import { text, select, boolean, array, object } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import McDatePicker from "./McDatePicker";
+import { LANGS } from '../../helpers/storybook_consts'
 
 export default {
   title: "Elements/McDatePicker",
@@ -24,16 +25,16 @@ const types = {
   week: "week"
 };
 
-const langs = {
-  en: "en",
-  ru: "ru",
-  es: "es"
-};
+const minutes = Array.from({ length: 60 }).map((_, i) => i)
+const seconds = Array.from({ length: 60 }).map((_, i) => i)
+const hours = Array.from({ length: 24 })
+    .map((_, i) => i)
+    .filter(m => m >= 3)
 
 const getUniqueProps = key => {
   return {
     type: {
-      default: select("type", types, "date", key)
+      default: select("type", types, "datetime", key)
     },
     helpText: {
       default: text("helpText", "Вспомогательный текст", key)
@@ -57,16 +58,40 @@ const getUniqueProps = key => {
       default: text("name", "DatepickerName", key)
     },
     lang: {
-      default: select("lang", langs, "en", key)
+      default: select("lang", LANGS, "en", key)
     },
     format: {
-      default: text("format", "DD.MM.YYYY", key)
+      default: text("format", "DD.MM.YYYY HH:mm:SS", key)
     },
     toFormat: {
-      default: text("toFormat", "YYYY-MM-DD", key)
+      default: text("toFormat", "YYYY-MM-DD HH:mm:SS", key)
     },
     popupStyle: {
       default: object("popupStyle", {}, key)
+    },
+    seconds: {
+      default: array('seconds', seconds, ',', key)
+    },
+    minutes: {
+      default: array('minutes', minutes, ',', key)
+    },
+    hours: {
+      default: array('hours', hours, ',', key)
+    },
+    minWidth: {
+      default: text("minWidth", "240px", key)
+    },
+    useFormat: {
+      default: boolean('useFormat', false, key),
+    },
+    useTimezone: {
+      default: boolean('useTimezone', false, key),
+    },
+    timezone: {
+      default: text('timezone', 'UTC', key),
+    },
+    setDefaultToday: {
+      default: boolean('setDefaultToday', true, key),
     },
     placeholders: {
       default: object(
@@ -99,7 +124,17 @@ const getCommonTags = ctx => {
     format: ctx.format,
     toFormat: ctx.toFormat,
     range: ctx.range,
+    seconds: ctx.seconds,
+    minutes: ctx.minutes,
+    hours: ctx.hours,
+    timezone: ctx.timezone,
+    useFormat: ctx.useFormat,
+    useTimezone: ctx.useTimezone,
+    customPresets: ctx.customPresets,
     inline: ctx.inline,
+    minWidth: ctx.minWidth,
+    appendToBody: ctx.appendToBody,
+    setDefaultToday: ctx.setDefaultToday,
     popupStyle: ctx.popupStyle,
     placeholders: ctx.placeholders
   };
@@ -109,6 +144,9 @@ const actionsData = {
   handleClick: action("clicked"),
   handlerDisabledDate(date) {
     return date <= new Date().setTime(Date.now() - 24 * 3600 * 1000);
+  },
+  handlerDisabledTime(date) {
+    return date <= new Date().setHours(new Date().getHours() - 3);
   }
 };
 
@@ -123,7 +161,8 @@ export const Default = () => ({
     tagBind() {
       return {
         ...getCommonTags(this),
-        disabledDate: this.handlerDisabledDate
+        disabledDate: this.handlerDisabledDate,
+        disabledTime: this.handlerDisabledTime,
       };
     }
   },
@@ -139,7 +178,8 @@ export const Default = () => ({
         ",",
         "default"
       )
-    }
+    },
+    appendToBody: boolean("appendToBody", true, "default"),
   },
   methods: actionsData,
   template: `<mc-date-picker v-model="date" v-bind="tagBind" />`
@@ -168,6 +208,14 @@ export const Range = () => ({
     },
     errors: {
       default: array("errors", [], ",", "range")
+    },
+    customPresets: {
+      default: object('customPresets', [
+        {
+          title: "Custom",
+          period: ["2025-05-01", "2025-05-31"],
+        }
+      ], "range")
     },
     range: {
       default: true

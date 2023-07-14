@@ -1,4 +1,4 @@
-import { select, boolean } from '@storybook/addon-knobs'
+import { select, boolean, text } from '@storybook/addon-knobs'
 
 import McDropdown from './McDropdown'
 import McDropdownPanel from './McDropdownPanel/McDropdownPanel'
@@ -47,6 +47,9 @@ const getUniqueProps = key => {
         rotateIcon: {
             default: boolean('rotateIcon', true, key),
         },
+        listMinWidth: {
+            default: text('listMinWidth', 'inherit', key),
+        },
     }
 }
 
@@ -55,6 +58,7 @@ const getCommonTags = ctx => {
         position: ctx.position,
         listPosition: ctx.listPosition,
         rotateIcon: ctx.rotateIcon,
+        listMinWidth: ctx.listMinWidth,
     }
 }
 

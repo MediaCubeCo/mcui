@@ -26,6 +26,9 @@ export const Icon = () => ({
     name: {
       default: select('name', names, 'add'),
     },
+    defaultName: {
+      default: select('defaultName', names, 'add'),
+    },
     color: {
       default: select('color', colors, 'red'),
     },
@@ -37,6 +40,9 @@ export const Icon = () => ({
     },
     weight: {
       default: number('weight', 0, {}),
+    },
+    type: {
+      default: text('type', 'span')
     },
   },
   template:

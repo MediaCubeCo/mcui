@@ -4,6 +4,7 @@ import { getTokensByType } from '../../utils/getTokens'
 
 import McButton from './McButton'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
+import { BUTTON_VARIATIONS } from '../../helpers/storybook_consts'
 
 export default {
     title: 'Elements/McButton',
@@ -38,20 +39,7 @@ const positions = {
 const tokenColors = getTokensByType('color')
 const fontWeights = getTokensByType('font-weight')
 const computedFontWeights = { default: '', ...fontWeights }
-let variations = {}
-Object.keys(tokenColors).forEach(c => {
-    const colorVariations = {
-        [c]: c,
-        [`${c}-flat`]: `${c}-flat`,
-        [`${c}-invert`]: `${c}-invert`,
-        [`${c}-outline`]: `${c}-outline`,
-        [`${c}-link`]: `${c}-link`,
-    }
-    variations = {
-        ...variations,
-        ...colorVariations,
-    }
-})
+
 
 const getUniqueProps = key => {
     return {
@@ -77,7 +65,7 @@ const getUniqueProps = key => {
             default: select('type', types, 'default', key),
         },
         variation: {
-            default: select('variation', variations, 'purple', key),
+            default: select('variation', BUTTON_VARIATIONS, 'purple', key),
         },
         size: {
             default: select('size', sizes, 'm', key),
@@ -121,6 +109,15 @@ const getUniqueProps = key => {
         weight: {
             default: select('weight', computedFontWeights, 'semi-bold', key),
         },
+        animation: {
+            default: boolean('animation', false, key)
+        },
+        animationCustomBg: {
+            default: select('animationBg', { ...tokenColors, none: '' }, '', key)
+        },
+        animationCustomText: {
+            default: text('animationText', '', key)
+        },
         tabindex: {
             default: number('tabindex', null, {}, key),
         },
@@ -151,6 +148,11 @@ const getCommonTags = ctx => {
         underlineLink: ctx.underlineLink,
         bgFlat: ctx.bgFlat,
         weight: ctx.weight,
+        animation: ctx.animation,
+        customAnimation: {
+            background: ctx.animationCustomBg,
+            text: ctx.animationCustomText,
+        },
         tabindex: ctx.tabindex,
     }
 }
