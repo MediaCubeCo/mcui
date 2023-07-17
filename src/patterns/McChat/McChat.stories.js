@@ -9,12 +9,16 @@ import McButton from '../../elements/McButton/McButton'
 import McTitle from '../../elements/McTitle/McTitle'
 import McFieldText from '../../elements/McField/McFieldText/McFieldText'
 
-import chatComments from '../../mocks/chatComments'
+import { comments } from '../../mocks/chatComments'
 
 export default {
     title: 'Patterns/McChat/McChat',
     component: McChat,
-    subcomponents: { McDrawer, McChatForm, McChatComment },
+    subcomponents: {
+        McDrawer,
+        McChatForm,
+        McChatComment,
+    },
     parameters: {
         componentSubtitle: 'Status: Ready',
         design: {
@@ -24,16 +28,19 @@ export default {
     },
 }
 
-const getCommonTags = ctx => {
-    return {}
-}
 
 export const Default = () => ({
-    components: { McChat, McRoot, McButton, McTitle, McFieldText },
+    components: {
+        McChat,
+        McRoot,
+        McButton,
+        McTitle,
+        McFieldText,
+    },
     data() {
         return {
             value: '',
-            comments: chatComments,
+            comments: comments,
             name: 'Kirill Sushko',
         }
     },
@@ -68,6 +75,12 @@ export const Default = () => ({
         dateFormat: {
             default: text('dateFormat', 'YYYY-MM-DD HH:mm', 'default'),
         },
+        defaultUserName: {
+            default: text('defaultUserName', 'System Comment', 'default'),
+        },
+        hasMoreMessages: {
+            default: boolean('hasMoreMessages', false, 'default'),
+        },
     },
     created() {
         this.$bus.on('chat-input', this.updateChatInput)
@@ -79,11 +92,6 @@ export const Default = () => ({
         this.$bus.off('chat-input', this.updateChatInput)
         this.$bus.off('chat-submit', this.onChatSubmit)
         this.$bus.off('chat-delete', this.onCommentDelete)
-    },
-    computed: {
-        tagBind() {
-            return getCommonTags(this)
-        },
     },
     methods: {
         showChat() {
@@ -99,6 +107,8 @@ export const Default = () => ({
                 keepAlive: false,
                 props: {
                     title: this.title,
+                    defaultUserName: this.defaultUserName,
+                    hasMoreMessages: this.hasMoreMessages,
                     emptyMessage: this.emptyMessage,
                     showInput: this.showInput,
                     value: this.value,
@@ -129,7 +139,9 @@ export const Default = () => ({
             console.log('onCommentDelete', id)
         },
     },
-    template: `<mc-root>
-    <mc-button @click.prevent="showChat">Show Chat</mc-button>
-  </mc-root>`,
+    template: `
+        <mc-root>
+            <mc-button @click.prevent="showChat">Show Chat</mc-button>
+        </mc-root>
+    `,
 })

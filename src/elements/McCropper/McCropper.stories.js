@@ -28,11 +28,14 @@ const getUniqueProps = key => {
 const getCommonTags = ctx => {
     return {
         imgSrc: ctx.imgSrc,
+        zoomable: ctx.zoomable,
     }
 }
 
 export const Default = () => ({
-    components: { McCropper },
+    components: {
+        McCropper,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -41,7 +44,31 @@ export const Default = () => ({
     props: {
         ...getUniqueProps('default'),
     },
-    template: `<div style="max-width: 100px;">
-        <mc-cropper v-bind="tagBind" />
-    </div>`,
+    template: `
+        <div style="max-width: 100px;">
+            <mc-cropper v-bind="tagBind" />
+        </div>
+    `,
+})
+
+export const notZoomable = () => ({
+    components: {
+        McCropper,
+    },
+    computed: {
+        tagBind() {
+            return {
+                ...getCommonTags(this),
+                zoomable: false,
+            }
+        },
+    },
+    props: {
+        ...getUniqueProps('not-zoomable'),
+    },
+    template: `
+        <div style="max-width: 100px;">
+            <mc-cropper v-bind="tagBind" />
+        </div>
+    `,
 })

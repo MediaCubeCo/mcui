@@ -130,14 +130,6 @@ export default {
             default: () => [],
         },
         /**
-         *  Меню при клике на +
-         *
-         */
-        menuAdditional: {
-            type: Array,
-            default: () => [],
-        },
-        /**
          *  Id чатры
          *
          */
@@ -224,8 +216,8 @@ export default {
             this.preparedMainMenu = this.menuMain.map(i => {
                 const active = () => {
                     return (
-                        (i.menu && i.menu.some(r => this.$route.fullPath.match(r.to))) ||
-                        !!this.$route.fullPath.match(i.to)
+                        (i.menu && i.menu.some(r => this.$route?.fullPath?.match(r.to))) ||
+                        !!this.$route?.fullPath?.match(i.to)
                     )
                 }
                 return {

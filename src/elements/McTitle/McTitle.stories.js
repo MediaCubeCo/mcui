@@ -3,6 +3,7 @@ import { text, select, boolean } from '@storybook/addon-knobs'
 import McTitle from './McTitle'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
 import { getTokensByType, getTokenGroup } from '../../utils/getTokens'
+import { TITLE_VARIATION } from '../../helpers/storybookVariables'
 
 export default {
     title: 'Elements/McTitle',
@@ -17,16 +18,7 @@ export default {
 }
 
 const colors = getTokensByType('color')
-const variations = {
-    h1: 'h1',
-    h2: 'h2',
-    h3: 'h3',
-    h4: 'h4',
-    subtitle: 'subtitle',
-    body: 'body',
-    overline: 'overline',
-    article: 'article',
-}
+
 const positions = {
     left: 'left',
     center: 'center',
@@ -39,7 +31,7 @@ const computedLineHeights = { default: '', ...lineHeights }
 const getUniqueProps = key => {
     return {
         variation: {
-            default: select('variation', variations, 'body', key),
+            default: select('variation', TITLE_VARIATION, 'body', key),
         },
         color: {
             default: select('color', colors, 'black', key),
@@ -62,6 +54,15 @@ const getUniqueProps = key => {
         maxWidth: {
             default: text('maxWidth', '', key),
         },
+        preline: {
+            default: boolean('preline', false, key),
+        },
+        nowrap: {
+            default: boolean('nowrap', false, key),
+        },
+        plainText: {
+            default: boolean('plainText', false, key),
+        },
         value: {
             default: text(
                 'slot default',
@@ -77,17 +78,22 @@ const getCommonTags = ctx => {
         variation: ctx.variation,
         color: ctx.color,
         ellipsis: ctx.ellipsis,
-        'tag-name': ctx.tagName,
+        preline: ctx.preline,
+        plainText: ctx.plainText,
+        nowrap: ctx.nowrap,
+        tagName: ctx.tagName,
         uppercase: ctx.uppercase,
-        'text-align': ctx.textAlign,
-        'line-height': ctx.lineHeight,
+        textAlign: ctx.textAlign,
+        lineHeight: ctx.lineHeight,
         weight: ctx.weight,
-        'max-width': ctx.maxWidth,
+        maxWidth: ctx.maxWidth,
     }
 }
 
 export const Default = () => ({
-    components: { McTitle },
+    components: {
+        McTitle,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -104,7 +110,10 @@ export const Default = () => ({
 
 // mc-title with icons
 export const WithIcons = () => ({
-    components: { McTitle, McSvgIcon },
+    components: {
+        McTitle,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -122,9 +131,11 @@ export const WithIcons = () => ({
             default: boolean('slot icon append', true, 'withIcons'),
         },
     },
-    template: `<mc-title v-bind="tagBind"> 
-      <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" color="purple" /> 
-      {{ value }} 
-      <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" color="red" /> 
-  </mc-title>`,
+    template: `
+        <mc-title v-bind="tagBind">
+            <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" color="purple" />
+            {{ value }}
+            <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" color="red" />
+        </mc-title>
+    `,
 })

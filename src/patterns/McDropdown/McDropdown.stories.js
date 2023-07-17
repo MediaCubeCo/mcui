@@ -1,4 +1,4 @@
-import { select, boolean } from '@storybook/addon-knobs'
+import { select, boolean, text } from '@storybook/addon-knobs'
 
 import McDropdown from './McDropdown'
 import McDropdownPanel from './McDropdownPanel/McDropdownPanel'
@@ -7,16 +7,20 @@ import McButton from '../../elements/McButton/McButton'
 
 const wrapper = () => {
     return {
-        template: `<div style="display: flex; align-items: center; justify-content: center; height: 400px;">
-        <story />
-    </div>`,
+        template: `
+            <div style="display: flex; align-items: center; justify-content: center; height: 400px;">
+                <story />
+            </div>
+        `,
     }
 }
 
 export default {
     title: 'Patterns/McDropdown/McDropdown',
     component: McDropdown,
-    subcomponents: { McDropdownPanel },
+    subcomponents: {
+        McDropdownPanel,
+    },
     parameters: {
         componentSubtitle: 'Status: Ready',
         design: {
@@ -47,6 +51,9 @@ const getUniqueProps = key => {
         rotateIcon: {
             default: boolean('rotateIcon', true, key),
         },
+        listMinWidth: {
+            default: text('listMinWidth', 'inherit', key),
+        },
     }
 }
 
@@ -55,11 +62,17 @@ const getCommonTags = ctx => {
         position: ctx.position,
         listPosition: ctx.listPosition,
         rotateIcon: ctx.rotateIcon,
+        listMinWidth: ctx.listMinWidth,
     }
 }
 
 export const Default = () => ({
-    components: { McDropdown, McDropdownPanel, McButton, McSvgIcon },
+    components: {
+        McDropdown,
+        McDropdownPanel,
+        McButton,
+        McSvgIcon,
+    },
     data() {
         return {
             dropIsOpen: false,
@@ -79,24 +92,26 @@ export const Default = () => ({
     props: {
         ...getUniqueProps('default'),
     },
-    template: `<mc-dropdown v-bind="tagBind" v-model="dropIsOpen">
-    <mc-button slot="activator">
-      Dropdown
-      <mc-svg-icon slot="icon-append" name="arrow_drop_down" class="rotate"/>
-    </mc-button>
-    <mc-dropdown-panel>
-      <mc-button
-        v-for="(btn, i) in buttons"
-        :key="i"
-        href="#"
-        full-width
-        text-align="left"
-        :variation="btn.icon === 'exit_to_app' ? 'red-flat' : 'black-flat'"
-        @click.prevent
-      >
-        <mc-svg-icon slot="icon-prepend" :name="btn.icon" />
-        {{ btn.name }}
-      </mc-button>
-    </mc-dropdown-panel>
-  </mc-dropdown>`,
+    template: `
+        <mc-dropdown v-bind="tagBind" v-model="dropIsOpen">
+            <mc-button slot="activator">
+                Dropdown
+                <mc-svg-icon slot="icon-append" name="arrow_drop_down" class="rotate"/>
+            </mc-button>
+            <mc-dropdown-panel>
+                <mc-button
+                    v-for="(btn, i) in buttons"
+                    :key="i"
+                    href="#"
+                    full-width
+                    text-align="left"
+                    :variation="btn.icon === 'exit_to_app' ? 'red-flat' : 'black-flat'"
+                    @click.prevent
+                >
+                    <mc-svg-icon slot="icon-prepend" :name="btn.icon" />
+                    {{ btn.name }}
+                </mc-button>
+            </mc-dropdown-panel>
+        </mc-dropdown>
+    `,
 })

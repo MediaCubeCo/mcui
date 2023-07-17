@@ -28,7 +28,7 @@
                     height="24"
                     :alt="logoTitle"
                 />
-                <mc-svg-icon v-else-if="logoIcon" slot="left" class="rotate" name="mc_dashboard" />
+                <mc-svg-icon v-else-if="logoIcon" slot="left" class="rotate" :name="logoIcon" />
                 <mc-button
                     slot="top"
                     :variation="`${themeConfig.dropdownActivator}-link`"

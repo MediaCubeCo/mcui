@@ -206,10 +206,16 @@ export default {
             type: String,
             default: 'semi-bold',
         },
+        /**
+         * Нужна ли кастомная анимация для кнопки
+         */
         animation: {
             type: Boolean,
             default: false,
         },
+        /**
+         * Настройка кастомной анимации - смена бг // текста при наведении
+         */
         customAnimation: {
             type: Object,
             default: () => ({

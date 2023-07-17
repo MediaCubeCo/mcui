@@ -1,6 +1,6 @@
 <template>
     <div class="tm-drawer-wrapper">
-        <mc-drawer icon-close="arrow_backward" :title="`Hi, ${userName}!`" @close-panel="handleClose">
+        <mc-drawer v-bind="drawerProps" :title="`Hi, ${userName}!`" @close-panel="handleClose">
             <mc-field-text
                 v-model="prettyUserAge"
                 name="age"
@@ -50,6 +50,10 @@ export default {
         userAge: {
             type: Number,
             default: 0,
+        },
+        drawerProps: {
+            type: Object,
+            default: () => ({}),
         },
     },
     data() {

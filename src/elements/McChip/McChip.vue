@@ -37,14 +37,6 @@ export default {
             default: '',
         },
         /**
-         *  Отключенное состояние
-         *
-         */
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        /**
          *  Кнопка закрытия
          *
          */

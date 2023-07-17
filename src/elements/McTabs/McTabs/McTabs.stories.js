@@ -1,4 +1,4 @@
-import { text, boolean, array, select, number } from '@storybook/addon-knobs'
+import { boolean, select, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 
 import McTabs from './McTabs'
@@ -8,7 +8,9 @@ import { getTokensByType } from '../../../utils/getTokens'
 export default {
     title: 'Elements/McTabs/McTabs',
     component: McTabs,
-    subcomponents: { McTab },
+    subcomponents: {
+        McTab,
+    },
     parameters: {
         componentSubtitle: 'Status: Ready',
         design: {
@@ -42,19 +44,23 @@ const getUniqueProps = key => {
         sticky: {
             default: boolean('sticky', false, key),
         },
+        loading: {
+            default: boolean('loading', false, key),
+        },
     }
 }
 
 const getCommonTags = ctx => {
     return {
-        'cache-lifetime': ctx.cacheLifetime,
-        'use-url-fragment': ctx.useUrlFragment,
-        'default-tab-hash': ctx.defaultTabHash,
-        'tab-variation': ctx.tabVariation,
+        cacheLifetime: ctx.cacheLifetime,
+        useUrlFragment: ctx.useUrlFragment,
+        defaultTabHash: ctx.defaultTabHash,
+        tabVariation: ctx.tabVariation,
         color: ctx.color,
-        'accent-color': ctx.accentColor,
+        accentColor: ctx.accentColor,
         uppercase: ctx.uppercase,
         sticky: ctx.sticky,
+        loading: ctx.loading,
     }
 }
 
@@ -64,7 +70,10 @@ const actionsData = {
 
 // mc-tabs default
 export const Default = () => ({
-    components: { McTabs, McTab },
+    components: {
+        McTabs,
+        McTab,
+    },
     computed: {
         tagBind() {
             return {
@@ -85,32 +94,41 @@ export const Default = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-tabs v-bind="tagBind" @changed="handleChange">
-      <mc-tab id="custom" name="Custom fragment">Custom fragment content</mc-tab>
-      <mc-tab 
-          name="With icon"
-          icon-prepend-classes="las la-check-circle"
-          icon-prepend-color="red"
-      >
-          Lorem ipsum dolor sit amet.
-      </mc-tab>
-      <mc-tab
-          name="Href link"
-          icon-append-classes="las la-external-link-alt"
-          href="https://ya.ru"
-      >
-        Этот контент мы не увидим
-      </mc-tab>
-      <mc-tab
-          name="Router link"
-          icon-append-classes="las la-external-link-alt"
-          :to="{name: 'test', params: { id: 123 }}"
-      >
-        Сработает только при наличии this.$router (в проекте nuxt)
-      </mc-tab>
-      <mc-tab prefix="<<< " suffix=" >>>" name="With prefix and suffix">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, voluptatibus.
-      </mc-tab>
-      <mc-tab name="Disabled" :is-disabled="true">Disabled content</mc-tab>
-  </mc-tabs>`,
+    template: `
+        <mc-tabs v-bind="tagBind" @changed="handleChange">
+            <mc-tab id="custom" name="Custom fragment">Custom fragment content</mc-tab>
+            <mc-tab 
+                name="With icon" 
+                icon-prepend-classes="las la-check-circle" 
+                icon-prepend-color="red"
+            >
+                Lorem ipsum dolor sit amet.
+            </mc-tab>
+            <mc-tab
+                name="Href link"
+                icon-append-classes="las la-external-link-alt"
+                href="https://ya.ru"
+            >
+                Этот контент мы не увидим
+            </mc-tab>
+            <mc-tab
+                name="with counter"
+                :append-count="5"
+                append-count-color="purple"
+            >
+                Этот контент мы не увидим
+            </mc-tab>
+            <mc-tab
+                name="Router link" 
+                icon-append-classes="las la-external-link-alt" 
+                :to="{name: 'test', params: { id: 123 }}"
+            >
+                Сработает только при наличии this.$router (в проекте nuxt)
+            </mc-tab>
+            <mc-tab prefix="<<< " suffix=" >>>" name="With prefix and suffix">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, voluptatibus.
+            </mc-tab>
+            <mc-tab name="Disabled" :is-disabled="true">Disabled content</mc-tab>
+        </mc-tabs>
+    `,
 })

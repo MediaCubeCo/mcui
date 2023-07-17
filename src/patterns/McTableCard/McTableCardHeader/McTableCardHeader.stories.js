@@ -35,7 +35,11 @@ const getCommonTags = ctx => {
 }
 
 export const Default = () => ({
-    components: { McTableCardHeader, McButton, McSvgIcon },
+    components: {
+        McTableCardHeader,
+        McButton,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -50,21 +54,23 @@ export const Default = () => ({
             default: boolean('slot right', true, 'default'),
         },
     },
-    template: `<mc-table-card-header v-bind="tagBind">
-    <mc-button v-if="hasSlotLeft" uppercase variation="blue-link">Back to list</mc-button>
-    <template v-if="hasSlotRight" slot="right">
-      <mc-button variation="purple-link" size="xs">
-        Add channel
-        <mc-svg-icon slot="icon-append" name="add" />
-      </mc-button>
-      <mc-button variation="purple-link" size="xs">
-        Amount
-        <mc-svg-icon slot="icon-append" name="edit_solid" />
-      </mc-button>
-      <mc-button variation="purple-link" size="xs">
-        Chat
-        <mc-svg-icon slot="icon-append" name="chat" />
-      </mc-button>
-    </template>
-  </mc-table-card-header>`,
+    template: `
+        <mc-table-card-header v-bind="tagBind">
+            <mc-button v-if="hasSlotLeft" uppercase variation="blue-link">Back to list</mc-button>
+            <template v-if="hasSlotRight" slot="right">
+                <mc-button variation="purple-link" size="xs">
+                    Add channel
+                    <mc-svg-icon slot="icon-append" name="add" />
+                </mc-button>
+                <mc-button variation="purple-link" size="xs">
+                    Amount
+                    <mc-svg-icon slot="icon-append" name="edit_solid" />
+                </mc-button>
+                <mc-button variation="purple-link" size="xs">
+                    Chat
+                    <mc-svg-icon slot="icon-append" name="chat" />
+                </mc-button>
+            </template>
+        </mc-table-card-header>
+    `,
 })

@@ -4,6 +4,7 @@ import { getTokensByType } from '../../utils/getTokens'
 
 import McButton from './McButton'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
+import { setVariationsByColor } from '../../helpers/storybookFunctions'
 
 export default {
     title: 'Elements/McButton',
@@ -29,29 +30,16 @@ sizesArr.forEach(s => {
     sizes[s] = s
     sizes[`${s}-compact`] = `${s}-compact`
 })
-
+const colors = getTokensByType('color')
+const variants = setVariationsByColor(['flat', 'invert', 'outline', 'link'])
 const positions = {
     left: 'left',
     center: 'center',
     right: 'right',
 }
-const tokenColors = getTokensByType('color')
 const fontWeights = getTokensByType('font-weight')
 const computedFontWeights = { default: '', ...fontWeights }
-let variations = {}
-Object.keys(tokenColors).forEach(c => {
-    const colorVariations = {
-        [c]: c,
-        [`${c}-flat`]: `${c}-flat`,
-        [`${c}-invert`]: `${c}-invert`,
-        [`${c}-outline`]: `${c}-outline`,
-        [`${c}-link`]: `${c}-link`,
-    }
-    variations = {
-        ...variations,
-        ...colorVariations,
-    }
-})
+
 
 const getUniqueProps = key => {
     return {
@@ -77,7 +65,7 @@ const getUniqueProps = key => {
             default: select('type', types, 'default', key),
         },
         variation: {
-            default: select('variation', variations, 'purple', key),
+            default: select('variation', variants, 'purple', key),
         },
         size: {
             default: select('size', sizes, 'm', key),
@@ -110,7 +98,7 @@ const getUniqueProps = key => {
             default: text('defaultTag', 'button', key),
         },
         secondaryColor: {
-            default: select('secondaryColor', { ...tokenColors, none: '' }, '', key),
+            default: select('secondaryColor', { ...colors, none: '' }, '', key),
         },
         underlineLink: {
             default: boolean('underlineLink', false, key),
@@ -120,6 +108,15 @@ const getUniqueProps = key => {
         },
         weight: {
             default: select('weight', computedFontWeights, 'semi-bold', key),
+        },
+        animation: {
+            default: boolean('animation', false, key)
+        },
+        animationCustomBg: {
+            default: select('animationBg', { ...colors, none: '' }, '', key)
+        },
+        animationCustomText: {
+            default: text('animationText', '', key)
         },
         tabindex: {
             default: number('tabindex', null, {}, key),
@@ -141,16 +138,21 @@ const getCommonTags = ctx => {
         shadow: ctx.shadow,
         rounded: ctx.rounded,
         semiRounded: ctx.semiRounded,
-        'text-align': ctx.textAlign,
-        'full-width': ctx.fullWidth,
-        'is-active': ctx.isActive,
+        textAlign: ctx.textAlign,
+        fullWidth: ctx.fullWidth,
+        isActive: ctx.isActive,
         exact: ctx.exact,
         uppercase: ctx.uppercase,
-        'default-tag': ctx.defaultTag,
+        defaultTag: ctx.defaultTag,
         secondaryColor: ctx.secondaryColor,
         underlineLink: ctx.underlineLink,
         bgFlat: ctx.bgFlat,
         weight: ctx.weight,
+        animation: ctx.animation,
+        customAnimation: {
+            background: ctx.animationCustomBg,
+            text: ctx.animationCustomText,
+        },
         tabindex: ctx.tabindex,
     }
 }
@@ -197,9 +199,11 @@ export const WithIcons = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-button v-bind="tagBind" @click="handleClick">
-      <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" />
-      {{ value }}
-      <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" />
-  </mc-button>`,
+    template: `
+        <mc-button v-bind="tagBind" @click="handleClick">
+          <mc-svg-icon v-if="isIconPrepend" slot="icon-prepend" name="info" />
+            {{ value }}
+          <mc-svg-icon v-if="isIconAppend" slot="icon-append" name="face" />
+        </mc-button>
+    `,
 })

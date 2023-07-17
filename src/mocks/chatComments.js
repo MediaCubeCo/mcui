@@ -1,4 +1,4 @@
-export default [
+export const comments = [
     {
         id: 1,
         content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
@@ -37,9 +37,6 @@ export default [
         id: 4,
         content: 'Lorem ipsum dolor sit amet http:/broken.link',
         created_at: '2020-02-03T11:32:08+03:00',
-        user: {
-            full_name: 'Имя пользователя',
-        },
     },
     {
         id: 5,

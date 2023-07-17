@@ -45,8 +45,8 @@ const getUniqueProps = key => {
 const getCommonTags = ctx => {
     return {
         disabled: ctx.disabled,
-        'text-position': ctx.textPosition,
-        'colored-text': ctx.coloredText,
+        textPosition: ctx.textPosition,
+        coloredText: ctx.coloredText,
         color: ctx.color,
         tabindex: ctx.tabindex,
     }
@@ -58,7 +58,9 @@ const actionsData = {
 
 // mc-field-toggle default
 export const Default = () => ({
-    components: { McFieldToggle },
+    components: {
+        McFieldToggle,
+    },
     data() {
         return {
             value: null,
@@ -78,5 +80,9 @@ export const Default = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-field-toggle v-bind="tagBind" v-model="value" @input="handleInput">{{ textContent }}</mc-field-toggle>`,
+    template: `
+        <mc-field-toggle v-bind="tagBind" v-model="value" @input="handleInput">
+        {{ textContent }}
+        </mc-field-toggle>
+    `,
 })

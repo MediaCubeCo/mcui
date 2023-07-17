@@ -1,4 +1,4 @@
-import { boolean } from '@storybook/addon-knobs'
+import { boolean, text } from '@storybook/addon-knobs'
 import authUser from '../../mocks/authUser'
 import menuLangs from '../../mocks/menuLangs'
 
@@ -23,11 +23,18 @@ const getCommonTags = ctx => {
     return {
         user: ctx.user,
         menuLangs: ctx.menuLangs,
+        defaultLang: ctx.defaultLang,
+        currentLang: ctx.currentLang,
     }
 }
 
 export const Default = () => ({
-    components: { McTopBar, McTitle, McButton, McSvgIcon },
+    components: {
+        McTopBar,
+        McTitle,
+        McButton,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -49,12 +56,20 @@ export const Default = () => ({
         hasSlotRight: {
             default: boolean('hasSlotRight', true, 'default'),
         },
+        defaultLang: {
+            default: text('defaultLang', 'Choose language', 'default'),
+        },
+        currentLang: {
+            default: text('currentLang', null, 'default'),
+        },
     },
-    template: `<mc-top-bar v-bind="tagBind">
-    <mc-title v-if="hasSlotLeft" slot="left" variation="subtitle" max-width="auto">Left Section Title</mc-title>
-    <mc-button v-if="hasSlotLeft" slot="left" size="xs-compact" rounded variation="black-flat">
-      <mc-svg-icon slot="icon-prepend" name="add" />
-    </mc-button>
-    <mc-svg-icon v-if="hasSlotRight" slot="right" name="search" />
-  </mc-top-bar>`,
+    template: `
+        <mc-top-bar v-bind="tagBind">
+            <mc-title v-if="hasSlotLeft" slot="left" variation="subtitle" max-width="auto">Left Section Title</mc-title>
+            <mc-button v-if="hasSlotLeft" slot="left" size="xs-compact" rounded variation="black-flat">
+                <mc-svg-icon slot="icon-prepend" name="add" />
+            </mc-button>
+            <mc-svg-icon v-if="hasSlotRight" slot="right" name="search" />
+        </mc-top-bar>
+    `,
 })

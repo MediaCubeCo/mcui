@@ -1,7 +1,10 @@
-import { text, boolean, object } from '@storybook/addon-knobs'
+import { text, boolean, object, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 
 import McSideBarButton from './McSideBarButton'
+import { SVG_ICONS } from '../../../helpers/storybookVariables'
+import { getTokensByType } from '../../../utils/getTokens'
+import { setVariationsByColor } from '../../../helpers/storybookFunctions'
 
 const wrapper = () => {
     return {
@@ -10,6 +13,10 @@ const wrapper = () => {
     </div>`,
     }
 }
+
+const colors = getTokensByType('color')
+const variants = setVariationsByColor(['flat', 'invert', 'outline', 'link'])
+
 
 export default {
     title: 'patterns/McSideBar/McSideBarButton',
@@ -33,7 +40,7 @@ const getUniqueProps = key => {
             default: text('href', 'https://mediacube.agency/', key),
         },
         icon: {
-            default: text('icon', 'group', key),
+            default: select('icon', SVG_ICONS, 'group', key),
         },
         iconColor: {
             default: text('iconColor', 'currentColor', key),
@@ -47,11 +54,29 @@ const getUniqueProps = key => {
         info: {
             default: text('info', '1234', key),
         },
+        variation: {
+            default: select('variation', variants, null, key),
+        },
+        secondaryColor: {
+            default: select('secondaryColor', colors, null, key),
+        },
         exact: {
             default: boolean('exact', false, key),
         },
+        withTooltip: {
+            default: boolean('withTooltip (if compact)', false, key),
+        },
+        withSubmenu: {
+            default: boolean('withSubmenu', false, key),
+        },
+        withIndicator: {
+            default: boolean('withIndicator', false, key),
+        },
         disabled: {
             default: boolean('disabled', false, key),
+        },
+        isActive: {
+            default: boolean('isActive', false, key),
         },
     }
 }
@@ -67,6 +92,12 @@ const getCommonTags = ctx => {
         info: ctx.info,
         exact: ctx.exact,
         disabled: ctx.disabled,
+        variation: ctx.variation,
+        secondaryColor: ctx.secondaryColor,
+        withTooltip: ctx.withTooltip,
+        withSubmenu: ctx.withSubmenu,
+        isActive: ctx.isActive,
+        withIndicator: ctx.withIndicator,
     }
 }
 
@@ -75,7 +106,9 @@ const actionsData = {
 }
 
 export const Default = () => ({
-    components: { McSideBarButton },
+    components: {
+        McSideBarButton,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)

@@ -1,12 +1,15 @@
-import { text, boolean } from '@storybook/addon-knobs'
+import {text, boolean, select} from '@storybook/addon-knobs'
 import McSideBarTop from '../McSideBarTop/McSideBarTop'
 import menuApps from '../../../mocks/menuApps'
+import { SVG_ICONS, TITLE_VARIATION } from '../../../helpers/storybookVariables'
 
 const wrapper = () => {
     return {
-        template: `<div style="background-color: #202427; width: 216px;">
-        <story />
-    </div>`,
+        template: `
+            <div style="background-color: #202427; width: 216px;">
+                <story />
+            </div>
+        `,
     }
 }
 
@@ -31,8 +34,17 @@ const getUniqueProps = key => {
         logoSrc: {
             default: text('logoSrc', '/img/mc_dashboard.svg', key),
         },
+        logoIcon: {
+            default: select('logoIcon', SVG_ICONS, 'mc_dashboard', key),
+        },
         compact: {
             default: boolean('compact', false, key),
+        },
+        logoTitleVariation: {
+            default: select('logoTitleVariation', TITLE_VARIATION, 'subtitle', key)
+        },
+        dropdownPosition: {
+            default: select('dropdownPosition', ['left', 'right'], 'left', key),
         },
     }
 }
@@ -43,6 +55,9 @@ const getCommonTags = ctx => {
         logoSrc: ctx.logoSrc,
         compact: ctx.compact,
         menuApps: ctx.menuApps,
+        logoTitleVariation: ctx.logoTitleVariation,
+        logoIcon: ctx.logoIcon,
+        dropdownPosition: ctx.dropdownPosition,
     }
 }
 

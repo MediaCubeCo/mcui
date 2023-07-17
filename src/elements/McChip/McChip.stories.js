@@ -1,9 +1,10 @@
 import { text, select, boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { getTokensByType } from '../../utils/getTokens'
 
 import McChip from './McChip'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
+import { setVariationsByColor } from '../../helpers/storybookFunctions'
+import { getTokensByType } from '../../utils/getTokens'
 
 export default {
     title: 'Elements/McChip',
@@ -17,19 +18,8 @@ export default {
     },
 }
 
-const tokenColors = getTokensByType('color')
-let variations = {}
-Object.keys(tokenColors).forEach(c => {
-    const colorVariations = {
-        [c]: c,
-        [`${c}-invert`]: `${c}-invert`,
-        [`${c}-outline`]: `${c}-outline`,
-    }
-    variations = {
-        ...variations,
-        ...colorVariations,
-    }
-})
+let variations = setVariationsByColor(['invert', 'outline'])
+const colors = getTokensByType('color')
 
 const sizes = ['xs', 's', 'm'].map(s => [s, `${s}-compact`]).flat()
 
@@ -42,7 +32,7 @@ const getUniqueProps = key => {
             default: select('size', sizes, 'm', key),
         },
         textColor: {
-            default: select('textColor', { ...tokenColors, default: '' }, '', key),
+            default: select('textColor', { ...colors, default: '' }, '', key),
         },
     }
 }
@@ -64,7 +54,9 @@ const actionsData = {
 
 // mc-chip default
 export const Default = () => ({
-    components: { McChip },
+    components: {
+        McChip,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
@@ -85,7 +77,10 @@ export const Default = () => ({
 
 // mc-chip with icon and counter
 export const WithIconAndCounter = () => ({
-    components: { McChip, McSvgIcon },
+    components: {
+        McChip,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return {
@@ -110,15 +105,20 @@ export const WithIconAndCounter = () => ({
         },
     },
     methods: actionsData,
-    template: `<mc-chip v-bind="tagBind" @click="handleClick"> 
-      <mc-svg-icon v-if="hasIcon" slot="icon" size="200" name="favorite" color="red" />
-      {{ text }} 
-  </mc-chip>`,
+    template: `
+        <mc-chip v-bind="tagBind" @click="handleClick"> 
+            <mc-svg-icon v-if="hasIcon" slot="icon" size="200" name="favorite" color="red" />
+            {{ text }} 
+        </mc-chip>
+    `,
 })
 
 // mc-chip with custom button icon
 export const CustomButton = () => ({
-    components: { McChip, McSvgIcon },
+    components: {
+        McChip,
+        McSvgIcon,
+    },
     computed: {
         tagBind() {
             return getCommonTags(this)
