@@ -563,11 +563,11 @@ export default {
                     this.setCaretPos(e.target, cursor_position + space_length, cursor_position + space_length)
                     break
                 case 'uppercase':
-                    value = value.toUpperCase()
+                    value = value?.toUpperCase()
                     e.target.value = value
                     break
                 case 'lowercase':
-                    value = value.toLowerCase()
+                    value = value?.toLowerCase()
                     e.target.value = value
                     break
             }
