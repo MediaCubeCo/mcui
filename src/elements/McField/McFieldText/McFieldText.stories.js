@@ -31,6 +31,8 @@ const types = {
     int: 'int',
     tel: 'tel',
     url: 'url',
+    uppercase: 'uppercase',
+    lowercase: 'lowercase',
 }
 
 const getUniqueProps = key => {
