@@ -146,6 +146,7 @@ export default {
          * кастомный int - разрешает ввод только целочисленных значений
          * кастомный amount_format - форматирует ввод числовых данных разделяя на разряды(1 000 000)
          * date - добавляет placeholder, маску и ограничения ввода
+         * uppercase\lowercase - форматирует текст согласну значению (верхний\нижний регистр)
          */
         type: {
             type: String,
@@ -560,6 +561,14 @@ export default {
                     e.target.value = this.isRtl ? formatted_value.replace(/ /gm, '') : formatted_value
                     const space_length = e.target.value?.slice(0, cursor_position).replace(/[^ ]/gm, '')?.length || 0
                     this.setCaretPos(e.target, cursor_position + space_length, cursor_position + space_length)
+                    break
+                case 'uppercase':
+                    value = value?.toUpperCase()
+                    e.target.value = value
+                    break
+                case 'lowercase':
+                    value = value?.toLowerCase()
+                    e.target.value = value
                     break
             }
 
