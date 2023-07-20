@@ -1,6 +1,6 @@
 {
   "name": "mediacube-ui",
-  "version": "0.1.78",
+  "version": "0.1.79",
   "description": "Design system for Mediacube services",
   "author": "Mediacube",
   "private": false,
@@ -8,7 +8,7 @@
   "license": "MIT",
   "main": "dist/mediacube-ui.common.js",
   "files": [
-    "src/public",
+    "public",
     "src/assets/fonts",
     "src/assets/img",
     "src/assets/tokens",
@@ -30,13 +30,7 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "scss-export": "sass-export src/tokens/*.scss -o src/assets/tokens/tokens.json",
-    "release": "node createsvgsprite.js && standard-version",
-    "release:patch": "yarn release -- --release-as patch",
-    "release:minor": "yarn release -- --release-as minor",
-    "release:major": "yarn release -- --release-as major",
-    "publish:patch": "yarn release:patch && npm publish && git push",
-    "publish:minor": "yarn release:minor && npm publish && git push",
-    "publish:major": "yarn release:major && npm publish && git push"
+    "release": "node createsvgsprite.js && standard-version && npm publish"
   },
   "husky": {
     "hooks": {
