@@ -364,3 +364,37 @@
     padding-left: $space-200;
   }
 }
+
+@mixin common-slide-styles {
+  &-enter-active,
+  &-leave-active {
+    transition: all $duration-s ease;
+  }
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+  }
+}
+
+@mixin slideAnimations {
+  /*slide-right*/
+  .slide-right {
+    @include common-slide-styles;
+    &-enter {
+      transform: translateX(50%);
+    }
+    &-leave-to {
+      transform: translateX(-50%);
+    }
+  }
+  /*slide-left*/
+  .slide-left {
+    @include common-slide-styles;
+    &-enter {
+      transform: translateX(-50%);
+    }
+    &-leave-to {
+      transform: translateX(50%);
+    }
+  }
+}
