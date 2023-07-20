@@ -1,6 +1,6 @@
 {
   "name": "mediacube-ui",
-  "version": "0.1.76",
+  "version": "0.1.77",
   "description": "Design system for Mediacube services",
   "author": "Mediacube",
   "private": false,
@@ -31,9 +31,9 @@
     "release:patch": "yarn release -- --release-as patch",
     "release:minor": "yarn release -- --release-as minor",
     "release:major": "yarn release -- --release-as major",
-    "publish:patch": "yarn release:patch && yarn publish . && git push",
-    "publish:minor": "yarn release:minor && yarn publish . && git push",
-    "publish:major": "yarn release:major && yarn publish . && git push"
+    "publish:patch": "yarn release:patch && npm publish && git push",
+    "publish:minor": "yarn release:minor && npm publish && git push",
+    "publish:major": "yarn release:major && npm publish && git push"
   },
   "husky": {
     "hooks": {
