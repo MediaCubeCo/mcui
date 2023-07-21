@@ -7,6 +7,21 @@
   "homepage": "https://mediacube.co",
   "license": "MIT",
   "main": "dist/mediacube-ui.common.js",
+  "files": [
+    "public",
+    "src/assets/fonts",
+    "src/assets/img",
+    "src/assets/tokens",
+    "src/helpers",
+    "src/styles",
+    "src/tokens",
+    "src/utils",
+    "src/mixins",
+    "src/elements/**/*.vue",
+    "src/patterns/**/*.vue",
+    "src/templates/**/*.vue",
+    "src/main.js"
+  ],
   "scripts": {
     "start": "yarn scss-export && start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook",
