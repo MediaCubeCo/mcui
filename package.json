@@ -1,6 +1,6 @@
 {
   "name": "mediacube-ui",
-  "version": "0.1.80",
+  "version": "0.1.84",
   "description": "Design system for Mediacube services",
   "author": "Mediacube",
   "private": false,
@@ -8,10 +8,10 @@
   "license": "MIT",
   "main": "dist/mediacube-ui.common.js",
   "files": [
-    "public",
     "src/assets/fonts",
     "src/assets/img",
     "src/assets/tokens",
+    "src/assets/icons.svg",
     "src/helpers",
     "src/styles",
     "src/tokens",
