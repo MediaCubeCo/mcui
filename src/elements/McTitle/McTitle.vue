@@ -170,12 +170,10 @@ export default {
     &__text {
         padding-bottom: 1px; // fix overflow
         margin-bottom: -1px; // fix overflow
-        & + *:not(:empty) {
-            margin-left: $space-50;
-        }
-        *:not(:empty) + & {
-            margin-left: $space-50;
-        }
+    }
+
+    > *:not(:empty):not(:last-child) {
+        margin-right: $space-50;
     }
 
     .mc-svg-icon,
@@ -439,16 +437,11 @@ export default {
 }
 html[direction='rtl'] {
     .mc-title {
-        &__text {
-            & + *:not(:empty) {
-                margin-left: unset;
-                margin-right: $space-50;
-            }
-            *:not(:empty) + & {
-                margin-left: unset;
-                margin-right: $space-50;
-            }
+        > *:not(:empty):not(:last-child) {
+            margin-right: unset;
+            margin-left: $space-50;
         }
+
         &--text-align {
             &-left {
                 text-align: right;
