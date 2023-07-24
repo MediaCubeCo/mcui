@@ -398,3 +398,61 @@
     }
   }
 }
+
+@mixin animation-border-spinner($duration: 2s, $border-color: $color-purple, $border-size: $space-100) {
+  background-repeat: no-repeat;
+  background-image: linear-gradient(to right, $border-color 100%, $border-color 100%),
+    linear-gradient(to bottom, $border-color 100%, $border-color 100%),
+    linear-gradient(to right, $border-color 100%, $border-color 100%),
+    linear-gradient(to bottom, $border-color 100%, $border-color 100%);
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  background-size: 100% $border-size, $border-size 100%, 100% $border-size, $border-size 100%;
+  animation: spin-border $duration linear;
+
+  @keyframes spin-border {
+    0% {
+      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      background-size: 0 $border-size, $border-size 0, 0 $border-size, $border-size 0;
+    }
+    10% {
+      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      background-size: 0 $border-size, $border-size 25%, 0 $border-size, $border-size 0;
+    }
+    20% {
+      background-position: 0 0, 100% 100%, 100% 100%, 0 100%;
+      background-size: 0 $border-size, $border-size 50%, 0 $border-size, $border-size 0;
+    }
+    30% {
+      background-position: 0 0, 100% 100%, 100% 100%, 0 100%;
+      background-size: 0 $border-size, $border-size 0, 100% $border-size, $border-size 0;
+    }
+    40% {
+      background-position: 0 0, 100% 0, 0 100%, 0 100%;
+      background-size: 0 $border-size, $border-size 0, 100% $border-size, $border-size 100%;
+    }
+    50% {
+      background-position: 0 0, 100% 0, 0 100%, 0 100%;
+      background-size: 50% $border-size, $border-size 0, 75% $border-size, $border-size 100%;
+    }
+    60% {
+      background-position: 0 0, 100% 0, 0 100%, 0 100%;
+      background-size: 100% $border-size, $border-size 0, 50% $border-size, $border-size 100%;
+    }
+    70% {
+      background-position: 0 0, 100% 0, 0 100%, 0 100%;
+      background-size: 100% $border-size, $border-size 33%, 25% $border-size, $border-size 100%;
+    }
+    80% {
+      background-position: 0 0, 100% 0, 0 100%, 0 100%;
+      background-size: 100% $border-size, $border-size 66%, 0 $border-size, $border-size 100%;
+    }
+    90% {
+      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      background-size: 100% $border-size, $border-size 100%, 0 $border-size, $border-size 100%;
+    }
+    100% {
+      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      background-size: 100% $border-size, $border-size 100%, 100% $border-size, $border-size 100%;
+    }
+  }
+}
