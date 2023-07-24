@@ -91,7 +91,12 @@ export default {
     &--size {
         @each $size, $value in $token-icon-sizes {
             &-#{$size} {
-                @include size($value);
+                width: $value;
+                height: $value;
+                min-width: $value;
+                min-height: $value;
+                max-width: $value;
+                max-height: $value;
             }
         }
     }
