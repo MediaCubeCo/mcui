@@ -107,9 +107,9 @@ export default {
             default: '',
         },
         /**
-       *  Центральное меню
-       *
-       *  {
+     *  Центральное меню
+     *
+     *  {
                 name: [String] - menu item title,
                 icon: [String] - icon,
                 to: [String] - route path (used like link if this route haven't nested menu if they isn't they work like button who open nested menu),
@@ -123,8 +123,8 @@ export default {
                     ...
                 ]
             },
-       *
-       */
+     *
+     */
         menuMain: {
             type: Array,
             default: () => [],
@@ -257,6 +257,13 @@ export default {
             }
             .with-submenu {
                 pointer-events: all !important;
+                .item__head {
+                    &-button--no-hover {
+                        a {
+                            background-color: unset;
+                        }
+                    }
+                }
             }
             &__head {
                 display: flex;
@@ -291,6 +298,9 @@ export default {
                     padding: 0;
                     border-radius: 4px;
                     border: none;
+                    &.open {
+                        background-color: unset;
+                    }
                 }
             }
             &__submenu {

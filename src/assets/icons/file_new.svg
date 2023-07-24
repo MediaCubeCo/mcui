@@ -1,3 +1,3 @@
-<svg data-token-name="file" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 11H14M8 14H14M8 17H12.33M14 3C14.53 3 15.211 3.211 15.586 3.586L18.414 6.414C18.789 6.789 19 7.47 19 8M14 3H7C5.895 3 5 3.895 5 5V19C5 20.105 5.895 21 7 21H17C18.105 21 19 20.105 19 19V8M14 3V7C14 7.552 14.448 8 15 8H19" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<svg data-token-name="file" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 11H14M8 14H14M8 17H12.33M14 3C14.53 3 15.211 3.211 15.586 3.586L18.414 6.414C18.789 6.789 19 7.47 19 8M14 3H7C5.895 3 5 3.895 5 5V19C5 20.105 5.895 21 7 21H17C18.105 21 19 20.105 19 19V8M14 3V7C14 7.552 14.448 8 15 8H19" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

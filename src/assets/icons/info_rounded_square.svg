@@ -1,5 +1,5 @@
 <svg data-token-name="info_rounded_square" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 21H8C5.239 21 3 18.761 3 16V8C3 5.239 5.239 3 8 3H16C18.761 3 21 5.239 21 8V16C21 18.761 18.761 21 16 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12.25 16.184V11.434H11.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M11.9602 7.99H11.9502C11.8102 7.99 11.7002 8.1 11.7002 8.24C11.7002 8.37 11.8102 8.49 11.9502 8.48C12.0802 8.47 12.2002 8.36 12.1902 8.22C12.1902 8.08 12.0702 7.97 11.9402 7.97" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16 21H8C5.239 21 3 18.761 3 16V8C3 5.239 5.239 3 8 3H16C18.761 3 21 5.239 21 8V16C21 18.761 18.761 21 16 21Z" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.25 16.184V11.434H11.25" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.9602 7.99H11.9502C11.8102 7.99 11.7002 8.1 11.7002 8.24C11.7002 8.37 11.8102 8.49 11.9502 8.48C12.0802 8.47 12.2002 8.36 12.1902 8.22C12.1902 8.08 12.0702 7.97 11.9402 7.97" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
