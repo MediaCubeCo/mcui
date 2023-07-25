@@ -50,7 +50,7 @@
                     <mc-side-bar-button
                         v-for="(menuItem, i) in menuMainItem.menu"
                         :key="i"
-                        :info="menuItem.info"
+                        :info="counts[menuItem.count_key]"
                         :href="menuItem.href"
                         :to="menuItem.to"
                         :icon="menuItem.icon"
@@ -128,6 +128,15 @@ export default {
         menuMain: {
             type: Array,
             default: () => [],
+        },
+        /**
+         *  Каунты для пунктов меню
+         *  вставляются в пункты с ключем 'count_key'
+         *
+         */
+        counts: {
+            type: Object,
+            default: () => ({}),
         },
         /**
          *  Id чатры
@@ -232,7 +241,7 @@ export default {
                     id: _XEUtils.uniqueId(),
                     ...i,
                     active,
-                    indicator: () => i.menu && i.menu.some(r => !!r.info),
+                    indicator: () => i.menu && i.menu.some(r => !!this.counts?.[r.count_key]),
                     open: !this.compact && active(),
                 }
             })

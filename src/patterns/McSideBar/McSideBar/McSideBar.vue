@@ -16,6 +16,7 @@
                     <mc-side-bar-center
                         :title="menuMainTitle"
                         :menu-main="menuMain"
+                        :counts="counts"
                         :chatra-config="chatraConfig"
                         :user="user"
                         :compact="prettyCompact"
@@ -107,6 +108,15 @@ export default {
         menuMain: {
             type: Array,
             default: () => [],
+        },
+        /**
+         *  Каунты для пунктов меню
+         *  вставляются в пункты с ключем 'count_key'
+         *
+         */
+        counts: {
+            type: Object,
+            default: () => ({}),
         },
         /**
          *  Меню приложений
