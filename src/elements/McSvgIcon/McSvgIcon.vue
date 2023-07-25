@@ -95,8 +95,6 @@ export default {
                 height: $value;
                 min-width: $value;
                 min-height: $value;
-                max-width: $value;
-                max-height: $value;
             }
         }
     }

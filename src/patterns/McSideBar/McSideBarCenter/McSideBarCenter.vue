@@ -189,6 +189,14 @@ export default {
                 const route = this.preparedMainMenu.find(r => r.to === newRoute.path)
                 route?.menu && !this.compact && (route.open = true)
             }
+            this.$nextTick(() => {
+                this.preparedMainMenu.forEach(mi => {
+                    const exact_route = mi.to === newRoute.path
+                    const route_menu_match_new_route =
+                        mi.menu && mi.menu.some(mim => mim.to?.match(newRoute.path) || newRoute.path?.match(mim.to))
+                    if (!(exact_route || route_menu_match_new_route)) mi.open = false
+                })
+            })
         },
     },
     created() {
