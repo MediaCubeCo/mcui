@@ -2,7 +2,7 @@
     <section class="mc-date">
         <!-- @slot Слот для вставки в начало -->
         <slot name="prepend" />
-        <time class="mc-date__time" :datetime="momentDate">
+        <time class="mc-date__time" :datetime="dayjsDate">
             <mc-title :variation="size" :ellipsis="ellipsis" :uppercase="uppercase" :color="color">
                 {{ formattedDate }}
             </mc-title>
@@ -73,14 +73,14 @@ export default {
     },
 
     computed: {
-        momentDate() {
-            if (this.$moment === null) return null
-            const locale = this.$i18n ? this.$i18n.locale : 'ru'
-            return this.$moment(this.value).locale(locale)
+        dayjsDate() {
+            if (this.$dayjs === null) return null
+            const locale = this.$i18n ? this.$i18n.locale : 'ru' // TODO: maybe `en`?
+            return this.$dayjs(this.value).locale(locale)
         },
         formattedDate() {
-            if (this.momentDate === null) return this.value
-            return this.momentDate.format(this.format)
+            if (this.dayjsDate === null) return this.value
+            return this.dayjsDate.format(this.format)
         },
     },
 }

@@ -43,8 +43,8 @@
   "dependencies": {
     "bourbon": "^7.0.0",
     "core-js": "^3.6.5",
+    "dayjs": "^1.11.9",
     "lodash": "^4.17.15",
-    "moment-timezone": "^0.5.34",
     "normalize.css": "^8.0.1",
     "portal-vue": "^2.1.7",
     "postcss-safe-parser": "^4.0.2",
@@ -56,7 +56,6 @@
     "vue-imask": "6.2.2",
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-masked-input": "^0.5.2",
-    "vue-moment": "^4.1.0",
     "vue-multiselect": "^2.1.6",
     "vue-textarea-autosize": "^1.1.1",
     "vue-toasted": "^1.1.28",
