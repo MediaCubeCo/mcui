@@ -12,6 +12,7 @@ $space-250: 20px; /* Additional token */
 $space-300: 24px;
 $space-350: 28px; /* Additional token */
 $space-400: 32px;
+$space-450: 36px; /* Additional token */
 $space-500: 40px;
 $space-600: 48px;
 $space-700: 56px;
@@ -27,6 +28,7 @@ $token-spaces: (
   250: $space-250, /* Additional token */
   300: $space-300,
   400: $space-400,
+  450: $space-450, /* Additional token */
   500: $space-500,
   600: $space-600,
   700: $space-700,
