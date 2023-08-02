@@ -301,17 +301,23 @@
   em,
   u,
   span {
-    font-size: $font-size-200;
-    line-height: $line-height-200;
+    font-size: $font-size-300;
+    line-height: $line-height-300;
     margin: 0;
     &:empty {
       display: none;
     }
   }
-  ol li,
-  ul li {
-    font-size: $font-size-300;
-    line-height: 28px;
+  ol,
+  ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: $space-250;
+
+    li {
+      font-size: $font-size-300;
+      line-height: $line-height-300;
+    }
   }
   a {
     @include text-link(true);
