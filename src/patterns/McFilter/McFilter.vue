@@ -155,6 +155,7 @@ import McFilterTypeRelation from './McFilterTypeRelation/McFilterTypeRelation'
 import McFilterTypeText from './McFilterTypeText/McFilterTypeText'
 import McFilterTypeRange from './McFilterTypeRange/McFilterTypeRange'
 import McFilterTypeDate from './McFilterTypeDate/McFilterTypeDate'
+import McFilterTypeLabels from './McFilterTypeLabels/McFilterTypeLabels'
 import McFilterTags from './McFilterTags/McFilterTags'
 import McChip from '../../elements/McChip/McChip'
 
@@ -166,6 +167,7 @@ export default {
         McFilterTypeText,
         McFilterTypeRange,
         McFilterTypeDate,
+        McFilterTypeLabels,
         McSvgIcon,
         McButton,
         McTitle,
@@ -197,7 +199,7 @@ export default {
        *  [{
                 name: Filter title,
                 value: [String] - Filter value(key),
-                type: [String] - Filter type(relation / date / text / fast),
+                type: [String] - Filter type(relation / date / text / fast / labels),
                 options: [Array] - Filter options,
                 getAjaxOne: [Function] - Method for get selected options when filter initialize,
                 getAjaxOptions: [Function] - Method for get options by API,
@@ -440,11 +442,32 @@ export default {
             this.activeTag ? this.editTag() : this.addTag()
         },
         editTag() {
-            this.currentFilter.type === 'relation' ? this.editRelationValue() : this.addSimpleValue()
+            switch (this.currentFilter.type) {
+                case 'relation':
+                case 'labels': {
+                    this.editRelationValue()
+                    break
+                }
+                default: {
+                    this.addSimpleValue()
+                    break
+                }
+            }
             this.activeTag = null
         },
         addTag() {
-            this.currentFilter.type === 'relation' ? this.addRelationValue() : this.addSimpleValue()
+            switch (this.currentFilter.type) {
+                case 'relation':
+                case 'labels': {
+                    this.addRelationValue()
+                    break
+                }
+                default: {
+                    this.addSimpleValue()
+                    break
+                }
+            }
+            this.activeTag = null
         },
         editRelationValue() {
             const tagRelationValue = this.activeTag.relationKey === 'exists' ? [0] : [this.activeTag.value]
@@ -536,6 +559,8 @@ export default {
         setEmptyCondition() {
             switch (this.currentFilter.type) {
                 case 'relation':
+                case 'date':
+                case 'labels':
                     this.handleConditionChange()
                     break
                 case 'text':
@@ -543,9 +568,6 @@ export default {
                     break
                 case 'range':
                     this.handleConditionChange({})
-                    break
-                case 'date':
-                    this.handleConditionChange()
                     break
                 default:
                     break
