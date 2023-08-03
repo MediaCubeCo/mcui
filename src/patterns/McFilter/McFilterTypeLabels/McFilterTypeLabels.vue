@@ -3,18 +3,18 @@
         v-model="selectedOptionValue"
         :placeholder="filter.placeholder || placeholders.choose"
         class="mc-filter-type-labels"
-        name="relation_select"
+        name="labels_text"
     >
-        <div slot="header" class="mc-filter-type-relation__header">
+        <div slot="header" class="mc-filter-type-labels__header">
             <mc-title>{{ placeholders.condition }}</mc-title>
-            <div class="mc-filter-type-relation__buttons">
+            <div class="mc-filter-type-labels__buttons">
                 <mc-button
                     v-for="relation in relations"
                     :key="relation"
                     :variation="relation_type === relation ? 'purple' : 'dark-gray-outline'"
                     @click="() => changeRelationType(relation)"
                 >
-                    {{ placeholders.actions[`${relation === 'exists' ? 'empty' : relation}`] }}
+                    {{ placeholders.actions[relation] }}
                 </mc-button>
             </div>
         </div>
@@ -77,7 +77,7 @@ export default {
                 let val = this.value
                 if (val) {
                     for (let [relationKey, relationVal] of Object.entries(this.value)) {
-                        val = relationVal[0]
+                        [val] = relationVal || []
                     }
                 }
                 return val
