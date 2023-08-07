@@ -53,7 +53,7 @@
                 </template>
                 <!-- @slot Слот для текста, если ничего не найдено -->
                 <slot slot="noResult" name="noResult">
-                    <span>Ничего не найдено</span>
+                    <span>No results</span>
                 </slot>
             </multi-select>
         </div>
