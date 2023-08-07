@@ -95,6 +95,16 @@ export default {
         },
     },
     watch: {
+        value: {
+            handler(val) {
+                if (val) {
+                    for (let relationKey of Object.keys(val)) {
+                        this.relation_type = relationKey
+                    }
+                }
+            },
+            immediate: true,
+        },
         filter() {
             this.relation_type = 'is'
         },
