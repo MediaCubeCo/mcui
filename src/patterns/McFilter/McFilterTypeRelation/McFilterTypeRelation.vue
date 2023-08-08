@@ -173,9 +173,11 @@ export default {
             const hasVal = value || Number.isInteger(value)
             if (this.relationType !== 'exists' && hasVal) {
 
-                const option = this.filter.is_text ? value : this.computedOptions.find(o => String(o.value) === String(value))?.name
+                const name = this.filter.is_text
+                    ? value
+                    : this.computedOptions.find(o => String(o.value) === String(value))?.name
                 currentValue = { [this.relationType]: [String(value)] }
-                currentValueName = { [this.relationType]: { [String(value)]: option } }
+                currentValueName = { [this.relationType]: { [String(value)]: name } }
             }
 
             if (this.relationType === 'exists' && !this.currentValues[this.filter.value]) {

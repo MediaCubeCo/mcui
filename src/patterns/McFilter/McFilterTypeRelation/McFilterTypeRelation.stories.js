@@ -1,7 +1,7 @@
 import { value, filters, placeholders } from '../../../mocks/filterMocks'
 
 import McFilterTypeRelation from './McFilterTypeRelation'
-import {boolean} from '@storybook/addon-knobs'
+import { boolean } from '@storybook/addon-knobs'
 
 export default {
     title: 'Patterns/McFilter/McFilterTypeRelation',
