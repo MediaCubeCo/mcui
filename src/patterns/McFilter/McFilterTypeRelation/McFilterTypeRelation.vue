@@ -1,9 +1,10 @@
 <template>
-    <mc-field-select
+    <component
         v-model="selectedOptionValue"
+        :is="component"
         :options="computedOptions"
         :internal-search="!isAjax"
-        :placeholder="filter.placeholder || placeholders.choose"
+        :placeholder="computedPlaceholder"
         :disabled="relationType === 'exists'"
         class="mc-filter-type-relation"
         name="relation_select"
@@ -22,7 +23,7 @@
                 </mc-button>
             </div>
         </div>
-    </mc-field-select>
+    </component>
 </template>
 
 <script>
@@ -33,6 +34,7 @@ import _isEmpty from 'lodash/isEmpty'
 import McButton from '../../../elements/McButton/McButton'
 import McTitle from '../../../elements/McTitle/McTitle'
 import McFieldSelect from '../../../elements/McField/McFieldSelect/McFieldSelect'
+import McFieldText from '../../../elements/McField/McFieldText/McFieldText'
 
 export default {
     name: 'McFilterTypeRelation',
@@ -40,6 +42,7 @@ export default {
         McButton,
         McTitle,
         McFieldSelect,
+        McFieldText,
     },
     props: {
         /**
@@ -81,6 +84,12 @@ export default {
         }
     },
     computed: {
+        component() {
+            return this.filter.is_text ? 'mc-field-text' : 'mc-field-select'
+        },
+        computedPlaceholder() {
+            return this.filter.placeholder || this.filter.is_text ? this.placeholders.enter : this.placeholders.choose
+        },
         computedOptions() {
             let options = this.isAjax ? this.ajaxOptions : this.filter.options || []
 
@@ -163,9 +172,10 @@ export default {
             let currentValueName = null
             const hasVal = value || Number.isInteger(value)
             if (this.relationType !== 'exists' && hasVal) {
-                const selectedOption = this.computedOptions.find(o => String(o.value) === String(value))
+
+                const option = this.filter.is_text ? value : this.computedOptions.find(o => String(o.value) === String(value))?.name
                 currentValue = { [this.relationType]: [String(value)] }
-                currentValueName = { [this.relationType]: { [String(value)]: selectedOption.name } }
+                currentValueName = { [this.relationType]: { [String(value)]: option } }
             }
 
             if (this.relationType === 'exists' && !this.currentValues[this.filter.value]) {
