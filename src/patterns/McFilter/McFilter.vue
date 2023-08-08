@@ -155,7 +155,6 @@ import McFilterTypeRelation from './McFilterTypeRelation/McFilterTypeRelation'
 import McFilterTypeText from './McFilterTypeText/McFilterTypeText'
 import McFilterTypeRange from './McFilterTypeRange/McFilterTypeRange'
 import McFilterTypeDate from './McFilterTypeDate/McFilterTypeDate'
-import McFilterTypeLabels from './McFilterTypeLabels/McFilterTypeLabels'
 import McFilterTags from './McFilterTags/McFilterTags'
 import McChip from '../../elements/McChip/McChip'
 
@@ -167,7 +166,6 @@ export default {
         McFilterTypeText,
         McFilterTypeRange,
         McFilterTypeDate,
-        McFilterTypeLabels,
         McSvgIcon,
         McButton,
         McTitle,
@@ -443,8 +441,7 @@ export default {
         },
         editTag() {
             switch (this.currentFilter.type) {
-                case 'relation':
-                case 'labels': {
+                case 'relation': {
                     this.editRelationValue()
                     break
                 }
@@ -457,8 +454,7 @@ export default {
         },
         addTag() {
             switch (this.currentFilter.type) {
-                case 'relation':
-                case 'labels': {
+                case 'relation': {
                     this.addRelationValue()
                     break
                 }
@@ -560,7 +556,6 @@ export default {
             switch (this.currentFilter.type) {
                 case 'relation':
                 case 'date':
-                case 'labels':
                     this.handleConditionChange()
                     break
                 case 'text':

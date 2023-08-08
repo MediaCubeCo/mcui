@@ -73,7 +73,8 @@ const filters = [
     {
         name: 'Тэг',
         value: 'tags',
-        type: 'labels',
+        type: 'relation',
+        is_text: true,
     },
 ]
 
