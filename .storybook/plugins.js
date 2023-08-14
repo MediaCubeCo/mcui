@@ -8,23 +8,13 @@ import Toasted from 'vue-toasted'
 import PortalVue from 'portal-vue'
 import VueJSModal from 'vue-js-modal'
 
-import dayjs from 'dayjs'
-import timezone from 'dayjs/plugin/timezone'
-import utc from 'dayjs/plugin/utc'
-
-import 'dayjs/locale/en'
-import 'dayjs/locale/es'
-import 'dayjs/locale/pt'
-import 'dayjs/locale/th'
-import 'dayjs/locale/ru'
-
-dayjs.extend(timezone)
-dayjs.extend(utc)
+import { dayjsPlugin } from './dayjs'
 
 // for fix error: `Property or method "toJSON" is not defined on the instance but referenced during render`
 Vue.prototype.toJSON = function() {
     return this
 }
+Vue.use(dayjsPlugin)
 Vue.use(VueLazyload)
 Vue.use(VXETable)
 Vue.use(VueJSModal)
@@ -38,10 +28,3 @@ Vue.use(Toasted, {
     keepOnHover: true,
 })
 Vue.use(PortalVue)
-Vue.use({
-    install(ctx) {
-        ctx.prototype.$dayjs = dayjs
-    },
-})
-
-export { dayjs }

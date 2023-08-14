@@ -125,7 +125,7 @@
 </template>
 
 <script>
-import { dayjs } from '../../../.storybook/plugins'
+import { dayjs, dayjsLocales } from '../../../.storybook/dayjs'
 import _isEmpty from 'lodash/isEmpty'
 import _omit from 'lodash/omit'
 import DatePicker from 'vue2-datepicker'
@@ -406,10 +406,15 @@ export default {
             return formattingDate(this.value)
         },
     },
-    mounted() {
-        this.$dayjs.locale(this.lang !== 'ar' ? this.lang : 'en')
+    async mounted() {
+        await this.setupDayjsLocale()
     },
     methods: {
+        async setupDayjsLocale() {
+            const locale = this.lang !== 'ar' && Object.keys(dayjsLocales).includes(this.lang) ? this.lang : 'en'
+            await dayjsLocales[locale]()
+            this.$dayjs.locale(locale)
+        },
         handleEmitDate(value) {
             const date = this.getFormattedDate(value)
             this.toggleErrorVisible()
