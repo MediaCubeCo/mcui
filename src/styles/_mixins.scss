@@ -98,7 +98,7 @@
 */
 
 @mixin responsive-ratio($x, $y, $pseudo: false) {
-  $padding: unquote(calc(calc(#{$y} / #{$x}) * 100) + "%");
+  $padding: calc(#{$y} / #{$x} * 100 * 1%);
 
   @if $pseudo {
     &::before {
@@ -295,23 +295,29 @@
   }
 }
 
-@mixin editor-default-styles() {
+@mixin editor-default-styles($main-font-size: $font-size-300, $main-line-height: $line-height-300) {
   p,
   strong,
   em,
   u,
   span {
-    font-size: $font-size-200;
-    line-height: $line-height-200;
+    font-size: $main-font-size;
+    line-height: $main-line-height;
     margin: 0;
     &:empty {
       display: none;
     }
   }
-  ol li,
-  ul li {
-    font-size: $font-size-300;
-    line-height: 28px;
+  ol,
+  ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: $space-250;
+
+    li {
+      font-size: $main-font-size;
+      line-height: $main-line-height;
+    }
   }
   a {
     @include text-link(true);

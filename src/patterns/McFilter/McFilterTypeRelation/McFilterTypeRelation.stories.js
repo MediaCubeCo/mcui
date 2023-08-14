@@ -1,6 +1,7 @@
 import { value, filters, placeholders } from '../../../mocks/filterMocks'
 
 import McFilterTypeRelation from './McFilterTypeRelation'
+import { boolean } from '@storybook/addon-knobs'
 
 export default {
     title: 'Patterns/McFilter/McFilterTypeRelation',
@@ -30,7 +31,6 @@ export const Default = () => ({
     data() {
         return {
             value: null,
-            filter: filters.find(f => f.type === 'relation'),
             currentValues: value,
         }
     },
@@ -38,10 +38,16 @@ export const Default = () => ({
         tagBind() {
             return getCommonTags(this)
         },
+        filter() {
+            return filters.find(f => f.type === 'relation' && (this.isText ? f.is_text : true))
+        },
     },
     props: {
         placeholders: {
             default: placeholders,
+        },
+        isText: {
+            default: boolean('isText', false, 'default')
         },
     },
     methods: {

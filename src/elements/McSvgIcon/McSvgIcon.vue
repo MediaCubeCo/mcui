@@ -45,7 +45,7 @@ export default {
          */
         size: {
             type: String,
-            default: '300',
+            default: '250',
         },
         /**
          * Толщина линий

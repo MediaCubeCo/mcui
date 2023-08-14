@@ -70,6 +70,12 @@ const filters = [
     value: 'created_at',
     type: 'date',
   },
+    {
+        name: 'Тэг',
+        value: 'tags',
+        type: 'relation',
+        is_text: true,
+    },
 ]
 
 const placeholders = {
