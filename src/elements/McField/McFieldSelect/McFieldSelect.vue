@@ -532,11 +532,16 @@ $text-white: scale-color($color-white, $alpha: -10%);
         }
 
         &__select {
-            height: $size-500 - 2px;
+            overflow: hidden;
+            height: $size-300;
+            width: $size-300;
+            top: $space-100;
+            right: $space-100;
             &::before {
                 direction: ltr;
                 width: 0;
                 height: 0;
+                top: 80%;
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
                 border-bottom: 5px solid transparent;
