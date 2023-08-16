@@ -1,1 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" id="vietnam"><defs><clipPath id="a"><path fill-opacity=".67" d="M-85.334 0h682.67v512h-682.67z"></path></clipPath></defs><g fill-rule="evenodd" clip-path="url(#a)" transform="translate(80.001) scale(.9375)"><path fill="#ec0015" d="M-128 0h768v512h-768z"></path><path fill="#ff0" d="m349.59 381.05-89.576-66.893-89.137 67.55 33.152-109.77-88.973-67.784 110.08-.945 34.142-109.44 34.873 109.19 110.08.144-88.517 68.423 33.884 109.53z"></path></g></svg>
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1">
+
+ <g>
+  <g stroke="null" id="svg_1">
+   <path stroke="null" id="svg_2" fill="#DA251D" d="m-3.04441,2.56249l29.90382,0c1.00957,0.00486 1.8306,0.66519 1.8306,1.4712l0,15.69762c0,0.806 -0.82103,1.46634 -1.8306,1.4712l-29.90382,0c-1.00957,0 -1.8306,-0.66034 -1.8306,-1.46634l0,-15.70247c0,-0.806 0.82103,-1.46634 1.8306,-1.4712l0,0z" class="st0"/>
+   <path stroke="null" id="svg_3" fill="#FFFF00" d="m11.91054,8.08462l-1.44137,3.72551l2.9618,0.80634l-1.52043,-4.53186l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_4" fill="#FFFF00" d="m11.91054,8.08462l1.44137,3.72551l-2.9618,0.80634l1.52043,-4.53186l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_5" fill="#FFFF00" d="m16.3502,10.79455l-4.67076,0l0,2.61296l4.67076,-2.61296l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_6" fill="#FFFF00" d="m16.3502,10.79455l-3.77675,2.30165l-1.8306,-2.11283l5.60735,-0.18883l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_7" fill="#FFFF00" d="m14.6534,15.1733l-1.44137,-3.72551l-2.9618,0.80634l4.40317,2.91917l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_8" fill="#FFFF00" d="m14.6534,15.1733l-3.77675,-2.30165l1.8306,-2.11283l1.94615,4.41448l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_9" fill="#FFFF00" d="m7.47089,10.79455l4.67076,0l0,2.61296l-4.67076,-2.61296l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_10" fill="#FFFF00" d="m7.47089,10.79455l3.77675,2.30165l1.8306,-2.11283l-5.60735,-0.18883l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_11" fill="#FFFF00" d="m9.16769,15.1733l1.44137,-3.72551l2.9618,0.80634l-4.40317,2.91917l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_12" fill="#FFFF00" d="m9.16769,15.1733l3.77675,-2.30165l-1.8306,-2.11283l-1.94615,4.41448l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+  </g>
+ </g>
+</svg>
