@@ -1,9 +1,9 @@
 <template>
     <div class="mc-field-select" :class="classes" :style="styles" ref="field">
-        <div :for="name" class="mc-field-select__header" :class="{ required }">
+        <div :for="name" class="mc-field-select__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
-                <mc-title v-if="title" :ellipsis="false" max-width="100%" weight="medium">{{ title }}</mc-title>
+                <mc-title v-if="title" :ellipsis="false" max-width="100%" weight="medium">{{ computedTitle }}</mc-title>
             </slot>
         </div>
         <div class="mc-field-select__main">
@@ -335,6 +335,9 @@ export default {
                 'mc-field-select--max-height': this.maxHeight,
             }
         },
+        computedTitle() {
+            return `${this.title}${this.required ? ' *' : ''}`
+        },
         styles() {
             return {
                 '--max-height': this.maxHeight,
@@ -449,17 +452,6 @@ $text-white: scale-color($color-white, $alpha: -10%);
         &:empty {
             display: none;
         }
-        &.required {
-            * {
-                display: inline;
-            }
-            & > * {
-                &::after {
-                    content: '*';
-                    position: absolute;
-                }
-            }
-        }
     }
 
     &__footer {
@@ -532,16 +524,11 @@ $text-white: scale-color($color-white, $alpha: -10%);
         }
 
         &__select {
-            overflow: hidden;
-            height: $size-300;
-            width: $size-300;
-            top: $space-100;
-            right: $space-100;
+            height: $size-500 - 2px;
             &::before {
                 direction: ltr;
                 width: 0;
                 height: 0;
-                top: 80%;
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
                 border-bottom: 5px solid transparent;
@@ -872,11 +859,6 @@ $text-white: scale-color($color-white, $alpha: -10%);
 }
 html[direction='rtl'] {
     .mc-field-select {
-        &__header {
-            &.required {
-                text-align: right;
-            }
-        }
         &__single-label {
             @include child-indent-right(0);
             @include child-indent-left-rtl($space-50);
