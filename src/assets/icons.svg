@@ -1458,21 +1458,21 @@
         <path fill-rule="evenodd" clip-rule="evenodd" d="M2 4H22V6.57812H2V4ZM2 16.5H22V19H2V16.5Z" fill="#A51931"/>
     </g>
     
-</symbol><symbol id="flag_vi">
-
+</symbol><symbol id="flag_vi" viewBox="0 0 24 24">
  <g>
+  <title>Layer 1</title>
   <g stroke="null" id="svg_1">
-   <path stroke="null" id="svg_2" fill="#DA251D" d="m-3.04441,2.56249l29.90382,0c1.00957,0.00486 1.8306,0.66519 1.8306,1.4712l0,15.69762c0,0.806 -0.82103,1.46634 -1.8306,1.4712l-29.90382,0c-1.00957,0 -1.8306,-0.66034 -1.8306,-1.46634l0,-15.70247c0,-0.806 0.82103,-1.46634 1.8306,-1.4712l0,0z" class="st0"/>
-   <path stroke="null" id="svg_3" fill="#FFFF00" d="m11.91054,8.08462l-1.44137,3.72551l2.9618,0.80634l-1.52043,-4.53186l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
-   <path stroke="null" id="svg_4" fill="#FFFF00" d="m11.91054,8.08462l1.44137,3.72551l-2.9618,0.80634l1.52043,-4.53186l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
-   <path stroke="null" id="svg_5" fill="#FFFF00" d="m16.3502,10.79455l-4.67076,0l0,2.61296l4.67076,-2.61296l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
-   <path stroke="null" id="svg_6" fill="#FFFF00" d="m16.3502,10.79455l-3.77675,2.30165l-1.8306,-2.11283l5.60735,-0.18883l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
-   <path stroke="null" id="svg_7" fill="#FFFF00" d="m14.6534,15.1733l-1.44137,-3.72551l-2.9618,0.80634l4.40317,2.91917l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
-   <path stroke="null" id="svg_8" fill="#FFFF00" d="m14.6534,15.1733l-3.77675,-2.30165l1.8306,-2.11283l1.94615,4.41448l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
-   <path stroke="null" id="svg_9" fill="#FFFF00" d="m7.47089,10.79455l4.67076,0l0,2.61296l-4.67076,-2.61296l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
-   <path stroke="null" id="svg_10" fill="#FFFF00" d="m7.47089,10.79455l3.77675,2.30165l1.8306,-2.11283l-5.60735,-0.18883l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
-   <path stroke="null" id="svg_11" fill="#FFFF00" d="m9.16769,15.1733l1.44137,-3.72551l2.9618,0.80634l-4.40317,2.91917l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
-   <path stroke="null" id="svg_12" fill="#FFFF00" d="m9.16769,15.1733l3.77675,-2.30165l-1.8306,-2.11283l-1.94615,4.41448l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_2" fill="#DA251D" d="m0.24427,3.87499l23.38896,0c0.78962,0.00417 1.43178,0.57152 1.43178,1.26401l0,13.48698c0,0.6925 -0.64216,1.25984 -1.43178,1.26401l-23.38896,0c-0.78962,0 -1.43178,-0.56735 -1.43178,-1.25984l0,-13.49116c0,-0.6925 0.64216,-1.25984 1.43178,-1.26401l0,0z" class="st0"/>
+   <path stroke="null" id="svg_3" fill="#FFFF00" d="m11.94113,8.61946l-1.12735,3.20087l2.31654,0.69279l-1.18919,-3.89366l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_4" fill="#FFFF00" d="m11.94113,8.61946l1.12735,3.20087l-2.31654,0.69279l1.18919,-3.89366l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_5" fill="#FFFF00" d="m15.41356,10.94776l-3.65319,0l0,2.24499l3.65319,-2.24499l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_6" fill="#FFFF00" d="m15.41356,10.94776l-2.95394,1.97752l-1.43178,-1.81529l4.38573,-0.16224l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_7" fill="#FFFF00" d="m14.08642,14.70987l-1.12735,-3.20087l-2.31654,0.69279l3.44389,2.50808l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_8" fill="#FFFF00" d="m14.08642,14.70987l-2.95394,-1.97752l1.43178,-1.81529l1.52216,3.79281l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_9" fill="#FFFF00" d="m8.4687,10.94776l3.65319,0l0,2.24499l-3.65319,-2.24499l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_10" fill="#FFFF00" d="m8.4687,10.94776l2.95394,1.97752l1.43178,-1.81529l-4.38573,-0.16224l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_11" fill="#FFFF00" d="m9.79583,14.70987l1.12735,-3.20087l2.31654,0.69279l-3.44389,2.50808l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
+   <path stroke="null" id="svg_12" fill="#FFFF00" d="m9.79583,14.70987l2.95394,-1.97752l-1.43178,-1.81529l-1.52216,3.79281l0,0zm0,0l0,0l0,0l0,0z" class="st1"/>
   </g>
  </g>
 </symbol><symbol id="fly_dollar" viewBox="0 0 24 24">
