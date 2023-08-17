@@ -1,13 +1,14 @@
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
+import 'dayjs/locale/en'
 
 const dayjsLocales = {
-    en: () => import(`dayjs/locale/en`),
-    es: () => import(`dayjs/locale/es`),
-    pt: () => import(`dayjs/locale/pt`),
-    th: () => import(`dayjs/locale/th`),
-    ru: () => import(`dayjs/locale/ru`),
+    es: () => import('dayjs/locale/es'),
+    pt: () => import('dayjs/locale/pt'),
+    th: () => import('dayjs/locale/th'),
+    ru: () => import('dayjs/locale/ru'),
+    vi: () => import('dayjs/locale/vi'),
 }
 
 dayjs.extend(timezone)
