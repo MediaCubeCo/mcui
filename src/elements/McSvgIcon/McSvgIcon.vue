@@ -48,12 +48,12 @@ export default {
             default: '250',
         },
         /**
-         * Толщина линий
+         * Толщина линий 0-5 если нужно больше, нужно дописать список в стилях
          * stroke-width
          */
         weight: {
             type: Number,
-            default: 0,
+            default: null,
         },
         /**
          * Отображение иконки,
@@ -74,6 +74,7 @@ export default {
         classes() {
             return {
                 [`mc-svg-icon--size-${this.size}`]: !!this.size,
+                [`mc-svg-icon--weight-${String(this.weight)?.replace('.', '')}`]: !!this.weight,
                 [`mc-svg-icon--color-${this.color}`]: !!this.color,
             }
         },
@@ -82,6 +83,19 @@ export default {
 </script>
 
 <style lang="scss">
+$token-weights: (
+    '05': 0.5,
+    '1': 1,
+    '15': 1.5,
+    '2': 2,
+    '25': 2.5,
+    '3': 3,
+    '35': 3.5,
+    '4': 4,
+    '45': 4.5,
+    '5': 5,
+);
+
 .mc-svg-icon {
     @include reset();
     @include reset-text-indents();
@@ -95,6 +109,17 @@ export default {
                 height: $value;
                 min-width: $value;
                 min-height: $value;
+            }
+        }
+    }
+
+    &--weight {
+        @each $weight, $value in $token-weights {
+            &-#{$weight} {
+                stroke-width: $value;
+                use {
+                    stroke-width: $value;
+                }
             }
         }
     }
