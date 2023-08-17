@@ -1,9 +1,9 @@
 <template>
     <div ref="field" class="mc-field-text" :class="classes">
-        <label :for="name" class="mc-field-text__header" :class="{ required }">
+        <label :for="name" class="mc-field-text__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
-                <mc-title v-if="title" :ellipsis="false" max-width="100%" weight="medium">{{ title }}</mc-title>
+                <mc-title v-if="title" :ellipsis="false" max-width="100%" weight="medium">{{ computedTitle }}</mc-title>
             </slot>
         </label>
         <div class="mc-field-text__inner">
@@ -379,7 +379,9 @@ export default {
                 'mc-field-text--rtl': ['ar'].includes(this.locale),
             }
         },
-
+        computedTitle() {
+            return `${this.title}${this.required ? ' *' : ''}`
+        },
         isMaskVisible() {
             return this.mask || this.maskOptions || this.prettyType === 'date'
         },
@@ -696,17 +698,6 @@ export default {
         &:empty {
             display: none;
         }
-        &.required {
-            * {
-                display: inline;
-            }
-            & > * {
-                &::after {
-                    content: '*';
-                    position: absolute;
-                }
-            }
-        }
     }
 
     &__inner {
@@ -873,12 +864,6 @@ export default {
 }
 html[direction='rtl'] {
     .mc-field-text {
-        &__header {
-            &.required {
-                text-align: right;
-            }
-        }
-
         &__char-counter {
             right: unset;
             left: $space-150;
