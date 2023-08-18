@@ -53,7 +53,7 @@ export default {
          */
         weight: {
             type: Number,
-            default: null,
+            default: 1.5,
         },
         /**
          * Отображение иконки,
