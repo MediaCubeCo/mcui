@@ -1,7 +1,7 @@
 <template>
     <div class="mc-tabs" :class="classes">
         <div class="tabs-component">
-            <ul role="tablist" class="tabs-component-tabs">
+            <mc-wrap-scroll tag-name="ul" role="tablist" scrollable class="tabs-component-tabs">
                 <li
                     v-for="(tab, i) in tabs"
                     v-show="tab.isVisible"
@@ -20,7 +20,7 @@
                         v-html="tab.header"
                     ></a>
                 </li>
-            </ul>
+            </mc-wrap-scroll>
             <div class="tabs-component-panels">
                 <slot />
             </div>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import McWrapScroll from '../../../patterns/McWrapScroll/McWrapScroll'
 class ExpiringStorage {
     get(key) {
         const cached = JSON.parse(localStorage.getItem(key))
@@ -56,6 +57,9 @@ const expiringStorage = new ExpiringStorage()
 
 export default {
     name: 'McTabs',
+    components: {
+        McWrapScroll,
+    },
     props: {
         value: {
             type: String,
@@ -428,10 +432,6 @@ export default {
         padding-left: 0;
         margin-top: 0;
         list-style-type: none;
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
         height: $space-350;
         @include border();
     }
