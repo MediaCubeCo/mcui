@@ -1,5 +1,5 @@
 <template>
-    <div :class="wrapperClasses" class="mc-wrap-scroll__wrapper">
+    <component :is="tagName" :class="wrapperClasses" class="mc-wrap-scroll__wrapper">
         <div ref="scrollContainer" :class="containerClasses" class="mc-wrap-scroll" @mousedown="onMouseDown">
             <mc-grid-row
                 v-bind="containerProps"
@@ -9,7 +9,7 @@
                 <slot />
             </mc-grid-row>
         </div>
-    </div>
+    </component>
 </template>
 
 <script>
@@ -62,6 +62,10 @@ export default {
         scrollSpeed: {
             type: Number,
             default: 1,
+        },
+        tagName: {
+            type: String,
+            default: 'div',
         },
     },
     data: () => ({
