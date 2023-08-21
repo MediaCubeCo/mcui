@@ -132,7 +132,7 @@ export default {
         },
     },
     data: () => ({
-        tabs: [],
+        children: [],
         activeTabHash: '',
         activeTabIndex: 0,
         lastActiveTabHash: '',
@@ -158,6 +158,9 @@ export default {
         storageKey() {
             return `vue-tabs-component.cache.${window.location.host}${window.location.pathname}`
         },
+        tabs() {
+            return this.children.filter(tab => tab.$options.name === 'McTab')
+        },
     },
     watch: {
         loading(val, oldVal) {
@@ -168,7 +171,7 @@ export default {
         },
     },
     created() {
-        this.tabs = this.$children
+        this.children = this.$children
     },
     mounted() {
         this.options = {
