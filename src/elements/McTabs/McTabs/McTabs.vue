@@ -209,7 +209,8 @@ export default {
     methods: {
         checkInitTab() {
             if (this.activeTab) {
-                const tab = this.$children.find(t => t.id === this.activeTab)
+                const tab_component = this.$children.find(t => t.id === this.activeTab)
+                const tab = tab_component || this.$children?.[0]
                 tab?.hash && tab?.hash?.replace('#', '') && this.setActiveTab(tab.hash)
             }
         },
