@@ -1,13 +1,22 @@
 <template>
-    <div class="mc-field-select" :class="classes" :style="styles" ref="field">
+    <div ref="field" class="mc-field-select" :class="classes" :style="styles">
         <div :for="name" class="mc-field-select__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
-                <mc-title v-if="title" :ellipsis="false" max-width="100%" weight="medium">{{ computedTitle }}</mc-title>
+                <mc-title v-if="hasTitle" :ellipsis="false" max-width="100%" weight="medium">{{
+                    computedTitle
+                }}</mc-title>
             </slot>
         </div>
         <div class="mc-field-select__main">
-            <multi-select v-bind="tagBind" @input="handleChange" @tag="handleTag" @search-change="handleSearchChange">
+            <multi-select
+                :ref="key"
+                v-bind="tagBind"
+                @input="handleChange"
+                @tag="handleTag"
+                @search-change="handleSearchChange"
+                @open="repositionDropDown"
+            >
                 <template slot="singleLabel" slot-scope="{ option }">
                     <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
                         <mc-svg-icon slot="left" :name="option.icon" size="400" />
@@ -285,10 +294,18 @@ export default {
             type: String,
             default: null,
         },
+        /**
+         * Рендерить ли выпадающий список абсолютно, что бы помещался в ограниченном пространстве
+         * */
+        renderAbsoluteList: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
             searchValue: null,
+            key: `field_select_${Date.now()}`,
         }
     },
     computed: {
@@ -313,6 +330,9 @@ export default {
                 ...(this.groupKeys ? { groupLabel: this.groupKeys.label } : {}),
                 ...(this.groupKeys ? { groupValues: this.groupKeys.values } : {}),
             }
+        },
+        hasTitle() {
+            return !!this.title
         },
         /**
          * Если режим taggable && searchValueInOptions то добавлять введенный тег в опции
@@ -387,6 +407,31 @@ export default {
         },
     },
     methods: {
+        repositionDropDown() {
+            if (!this.renderAbsoluteList) return
+            const { top, height, width, left } = this.$el.getBoundingClientRect()
+            const ref = this.$refs[this.key]
+
+            if (ref) {
+                ref.$refs.list.style.width = `${width}px`
+                ref.$refs.list.style.position = 'fixed'
+                ref.$refs.list.style.left = `${left}px`
+
+                const title_height = document.querySelector('.mc-field-select__header').offsetHeight
+                const title_margin = 8
+
+                switch (this.openDirection) {
+                    case 'top':
+                        ref.$refs.list.style.top = `${top + (this.hasTitle ? title_height + title_margin : 0) - 300}px`
+                        ref.$refs.list.style.bottom = 'auto'
+                        break
+                    case 'bottom':
+                        ref.$refs.list.style.bottom = 'auto'
+                        ref.$refs.list.style.top = `${top + height}px`
+                        break
+                }
+            }
+        },
         handleChange(value) {
             /**
              * Истинное значение инпута
@@ -611,6 +656,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
             box-shadow: $shadow-s;
             overflow-y: auto;
             overflow-x: hidden;
+            max-height: 300px;
         }
 
         &--above {
