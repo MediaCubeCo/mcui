@@ -28,7 +28,7 @@ export default {
          */
         placement: {
             type: String,
-            default: 'bottom',
+            default: 'top',
         },
         /**
          *  Цвет:
@@ -57,7 +57,7 @@ export default {
          */
         size: {
             type: String,
-            default: 'm',
+            default: 's',
         },
         /**
          *  Событие по отображению:
