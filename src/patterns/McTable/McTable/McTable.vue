@@ -48,6 +48,7 @@
                 <mc-title color="outline-gray">{{ placeholders.loading }}</mc-title>
             </div>
         </div>
+        <mc-overlay v-if="overlayLoading" size="700" />
     </div>
 </template>
 
@@ -59,6 +60,7 @@ import _isEmpty from 'lodash/isEmpty'
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
 import McTableCol from '../McTableCol/McTableCol'
+import McOverlay from '../../McOverlay/McOverlay.vue'
 
 /**
  *  More info: https://xuliangzhan.com/vxe-table, https://xuliangzhan.github.io/vxe-table
@@ -69,6 +71,7 @@ export default {
         McTitle,
         McSvgIcon,
         McTableCol,
+        McOverlay,
     },
     provide() {
         const provideData = {}
@@ -152,6 +155,13 @@ export default {
             },
         },
         sortLoading: {
+            type: Boolean,
+            default: false,
+        },
+        /**
+         * Оверлей со спиннером
+         */
+        overlayLoading: {
             type: Boolean,
             default: false,
         },
