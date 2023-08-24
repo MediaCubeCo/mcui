@@ -197,6 +197,8 @@
 <path d="M14 19.5C14 20.3293 15.568 21 17.5 21C19.432 21 20.999 20.3282 21 19.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M14 13.5C14 14.3293 15.568 15 17.5 15C19.432 15 20.999 14.3282 21 13.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M14 16.5C14 17.3293 15.568 18 17.5 18C19.432 18 20.999 17.3282 21 16.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol><symbol id="bank_building" viewBox="0 0 32 32">
+<path d="M19.524 13.3333V24M25.3333 24V13.3333M6.66667 13.3333V24M12.476 24V13.3333M28 13.3333H4V9.32533L16.2027 4L28 9.148V13.3333ZM4 28H28V26.6667L26.6667 24H5.33333L4 26.6667V28Z" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol><symbol id="bank_building_blue" viewBox="0 0 24 24">
 <path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="#8756FF"/>
 <path d="M14.0557 9.44444V15.6667M17.4444 15.6667V9.44444M6.55556 9.44444V15.6667M9.94433 15.6667V9.44444M19 9.44444H5V7.10644L12.1182 4L19 7.003V9.44444ZM5 18H19V17.2222L18.2222 15.6667H5.77778L5 17.2222V18Z" stroke="white" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
