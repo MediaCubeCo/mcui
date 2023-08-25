@@ -159,7 +159,10 @@ export default {
             return `vue-tabs-component.cache.${window.location.host}${window.location.pathname}`
         },
         tabs() {
-            return this.children.filter(tab => tab.$options.name === 'McTab' && tab.visible)
+            return this.children.filter(tab => tab.$options.name === 'McTab')
+        },
+        visibleTabs() {
+            return this.tabs.filter(tab => tab.visible)
         },
     },
     watch: {
@@ -209,8 +212,8 @@ export default {
     methods: {
         checkInitTab() {
             if (this.activeTab) {
-                const tab_component = this.tabs.find(t => t.id === this.activeTab)
-                const tab = tab_component || this.tabs?.[0]
+                const tab_component = this.visibleTabs.find(t => t.id === this.activeTab)
+                const tab = tab_component || this.visibleTabs?.[0]
                 tab?.hash && tab?.hash?.replace('#', '') && this.setActiveTab(tab.hash)
             }
         },
