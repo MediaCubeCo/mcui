@@ -159,7 +159,7 @@ export default {
             return `vue-tabs-component.cache.${window.location.host}${window.location.pathname}`
         },
         tabs() {
-            return this.children.filter(tab => tab.$options.name === 'McTab')
+            return this.children.filter(tab => tab.$options.name === 'McTab' && tab.visible)
         },
     },
     watch: {
