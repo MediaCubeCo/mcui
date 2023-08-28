@@ -638,6 +638,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
 
             &::after {
                 @include align(true, true, absolute);
+                top: 45%;
                 color: $color-white;
             }
         }
