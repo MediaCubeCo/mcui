@@ -116,7 +116,7 @@ import _omit from 'lodash/omit'
 import { getTokenValue } from '../../../utils/getTokens'
 import { IMaskComponent, IMask } from 'vue-imask'
 
-import TextareaAutosize from 'vue-textarea-autosize/src/components/TextareaAutosize.vue'
+import TextareaAutosize from 'vue2-textarea-autosize/src/components/TextareaAutosize.vue'
 import McTitle from '../../McTitle/McTitle'
 import McButton from '../../McButton/McButton'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
