@@ -1,9 +1,9 @@
 <template>
-    <div class="mc-stack" ref="stack">
-        <div v-show="loaded" class="mc-stack__body" ref="mc-stack-body">
+    <div ref="stack" class="mc-stack">
+        <div v-show="loaded" ref="mc-stack-body" class="mc-stack__body">
             <slot />
         </div>
-        <div v-if="more" class="mc-stack__counter" ref="counter">
+        <div v-if="more" ref="counter" class="mc-stack__counter">
             {{ counterText }}
         </div>
     </div>
@@ -33,6 +33,7 @@ export default {
         more: 0,
         loaded: false,
         custom_limit: 0,
+        observer: null,
     }),
     computed: {
         classes() {
@@ -48,16 +49,23 @@ export default {
             return `+${this.more}`
         },
     },
+    watch: {
+        limit: {
+            handler() {
+                this.toggleObserver(this.isAutoLimit)
+            },
+        },
+    },
     mounted() {
         this.init()
     },
     beforeDestroy() {
-        if (this.isAutoLimit) window.removeEventListener('resize', this.calcLimit)
+        this.toggleObserver(false)
     },
     methods: {
         init() {
             if (this.isAutoLimit) {
-                window.addEventListener('resize', this.calcLimit)
+                this.toggleObserver()
                 // setTimeout из-за случаев, когда элемент рендерится с 0 шириной, а потом она устанавливается динамически
                 setTimeout(() => this.calcLimit(), 1)
             } else {
@@ -65,7 +73,7 @@ export default {
             }
         },
         calcLimit(showAll, limit) {
-            if(showAll) this.toggleChilds()
+            if (showAll) this.toggleChilds()
             this.custom_limit = Infinity
             let childWidth = 0
             // ширина родителя без учета счетчика
@@ -101,6 +109,16 @@ export default {
             }
             // Передаем в $nextTick лимит для пересчета, т.к. рендерится counter, который занимает доп место и обрезает элементы
             if (hide && this.isAutoLimit) this.$nextTick(() => this.calcLimit(false, limit))
+        },
+        toggleObserver(enable = true) {
+            if (enable) {
+                this.observer = new ResizeObserver(this.calcLimit)
+                this.observer.observe(this.$refs.stack)
+                this.observer.observe(this.$refs['mc-stack-body'])
+            } else {
+                this.observer?.disconnect()
+                this.observer = null
+            }
         },
     },
 }
