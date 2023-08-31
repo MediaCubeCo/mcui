@@ -488,7 +488,7 @@ export default {
         }
         &:empty {
             position: relative;
-            padding: $space-300 0 0;
+            padding: $space-350 0 0;
         }
     }
     &--variation {
