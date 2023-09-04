@@ -32,11 +32,11 @@ spriteConfigs.forEach(spriteConfig => {
             const filePath = path.join(iconsFolder, svgFile)
             const iconName = path.basename(svgFile, '.svg')
             const svgContent = fs.readFileSync(filePath, 'utf8')
-            sprites.add(iconName, svgContent)
+            sprites.add(iconName, svgContent, { copyAttrs: true, renameDefs: true })
         })
 
         // Генерация спрайта
-        const spriteContent = sprites.toString()
+        const spriteContent = sprites.toString()?.replace(/(\r\n|\n|\r)/gm, '')
 
         // Создание файла спрайта
         const outputFilePath = path.join(outputFolder, spriteName)
