@@ -435,7 +435,7 @@ export default {
         margin-block-end: 0;
     }
 }
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-title {
         > *:not(:empty):not(:last-child) {
             margin-right: unset;

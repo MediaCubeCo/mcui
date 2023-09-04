@@ -814,7 +814,7 @@ $colors: $token-colors;
     }
 }
 
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-button {
         &--size {
             &-xxs {

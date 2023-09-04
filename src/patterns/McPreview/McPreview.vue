@@ -126,7 +126,7 @@ export default {
         }
     }
 }
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-preview {
         &--size {
             &-s {

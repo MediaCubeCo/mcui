@@ -248,7 +248,7 @@ export default {
         }
     }
 }
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-side-bar-button {
         &__dot {
             @include position(absolute, $space-100 null null 6px);

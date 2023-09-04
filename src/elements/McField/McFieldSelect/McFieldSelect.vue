@@ -904,7 +904,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
         white-space: nowrap;
     }
 }
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-field-select {
         &__single-label {
             @include child-indent-right(0);

@@ -862,7 +862,7 @@ export default {
         display: contents;
     }
 }
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-field-text {
         &__char-counter {
             right: unset;

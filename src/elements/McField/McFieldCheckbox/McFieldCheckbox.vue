@@ -314,7 +314,7 @@ export default {
         direction: rtl;
     }
 }
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-field-checkbox {
         &__name-text {
             margin-left: unset;
