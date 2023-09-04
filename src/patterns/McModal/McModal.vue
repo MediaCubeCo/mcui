@@ -521,7 +521,7 @@ export default {
         }
     }
 }
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-modal {
         $border-color: #dee1e9;
         $box-shadow-color: #20008c28;
