@@ -244,3 +244,11 @@ pre {
     display: none !important;
   }
 }
+
+.color {
+  @each $name, $color in $token-colors {
+    &--#{$name} {
+      color: $color;
+    }
+  }
+}
