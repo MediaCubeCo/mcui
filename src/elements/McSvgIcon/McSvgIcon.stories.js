@@ -8,7 +8,6 @@ import { getTokensByType, getTokenGroup } from '../../utils/getTokens'
 import { SVG_ICONS } from '../../helpers/storybookVariables'
 
 export default {
-    components: {McFieldText},
     title: 'Elements/McSvgIcon',
     component: McSvgIcon,
     parameters: {
