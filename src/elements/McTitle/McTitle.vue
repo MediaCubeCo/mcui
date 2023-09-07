@@ -159,42 +159,8 @@ export default {
 <style lang="scss">
 .mc-title {
     $block-name: &;
-    margin-top: 0;
-    margin-bottom: 0;
-    display: inline-flex;
-    max-width: 100%;
-    width: 100%;
-    text-decoration: none;
-    //@include child-indent-right($space-50);
 
-    &__text {
-        padding-bottom: 1px; // fix overflow
-        margin-bottom: -1px; // fix overflow
-    }
-
-    > *:not(:empty):not(:last-child) {
-        margin-right: $space-50;
-    }
-
-    .mc-svg-icon,
-    .mc-button {
-        @include reset-text-indents();
-    }
-
-    &--pre-line {
-        #{$block-name}__text {
-            white-space: pre-line !important;
-            word-break: normal;
-        }
-    }
-
-    &--nowrap {
-        #{$block-name}__text {
-            white-space: nowrap;
-        }
-    }
-
-    &--variation {
+    @mixin variations() {
         font-family: $font-family-main;
         &-h1 {
             font-size: $font-size-700;
@@ -264,76 +230,49 @@ export default {
         }
     }
 
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline-flex;
+    max-width: 100%;
+    width: 100%;
+    text-decoration: none;
+    //@include child-indent-right($space-50);
+
+    &__text {
+        padding-bottom: 1px; // fix overflow
+        margin-bottom: -1px; // fix overflow
+    }
+
+    > *:not(:empty):not(:last-child) {
+        margin-right: $space-50;
+    }
+
+    .mc-svg-icon,
+    .mc-button {
+        @include reset-text-indents();
+    }
+
+    &--pre-line {
+        #{$block-name}__text {
+            white-space: pre-line !important;
+            word-break: normal;
+        }
+    }
+
+    &--nowrap {
+        #{$block-name}__text {
+            white-space: nowrap;
+        }
+    }
+
+    &--variation {
+        @include variations;
+    }
+
     @each $media, $value in $token-media-queries {
         @media #{$value} {
             &--variation-#{$media} {
-                font-family: $font-family-main;
-                &-h1 {
-                    font-size: $font-size-700;
-                    line-height: $line-height-600;
-                    font-weight: $font-weight-semi-bold;
-                    #{$block-name}__text {
-                        max-width: 920px;
-                    }
-                }
-                &-h2 {
-                    font-size: $font-size-600;
-                    line-height: $line-height-500;
-                    font-weight: $font-weight-semi-bold;
-                    #{$block-name}__text {
-                        max-width: 820px;
-                    }
-                }
-                &-h3 {
-                    font-size: $font-size-500;
-                    line-height: $line-height-400;
-                    font-weight: $font-weight-semi-bold;
-                    #{$block-name}__text {
-                        max-width: 720px;
-                    }
-                }
-                &-h4 {
-                    font-size: $font-size-400;
-                    line-height: $line-height-300;
-                    font-weight: $font-weight-bold;
-                    #{$block-name}__text {
-                        max-width: 700px;
-                    }
-                }
-
-                &-subtitle {
-                    font-size: $font-size-300;
-                    line-height: $line-height-250;
-                    #{$block-name}__text {
-                        max-width: 640px;
-                    }
-                }
-                &-article {
-                    font-size: $font-size-200;
-                    line-height: $line-height-250;
-                    #{$block-name}__text {
-                        max-width: 536px;
-                    }
-                }
-                &-info {
-                    font-size: $font-size-300;
-                    line-height: $line-height-300;
-                }
-                &-body {
-                    font-size: $font-size-200;
-                    line-height: $line-height-200;
-                    #{$block-name}__text {
-                        max-width: 330px;
-                    }
-                }
-                &-overline {
-                    font-size: $font-size-100;
-                    line-height: $line-height-150;
-                    font-weight: $font-weight-medium;
-                    #{$block-name}__text {
-                        max-width: 330px;
-                    }
-                }
+                @include variations;
             }
         }
     }
