@@ -67,18 +67,25 @@ export const IconsList = () => ({
                 flags: [],
                 checks: [],
                 mediacube: [],
-                other: []
+                other: [],
             }
             SVG_ICONS.forEach(icon => {
                 switch (true) {
-                    case icon.includes('_colored'): return iconsObject.colored.push(icon)
-                    case icon.includes('_blue'): return iconsObject.blue.push(icon)
-                    case icon.includes('arrow'): return iconsObject.arrows.push(icon)
-                    case icon.includes('flag'): return iconsObject.flags.push(icon)
-                    case icon.includes('check'): return iconsObject.checks.push(icon)
+                    case icon.includes('_colored'):
+                        return iconsObject.colored.push(icon)
+                    case icon.includes('_blue'):
+                        return iconsObject.blue.push(icon)
+                    case icon.includes('arrow'):
+                        return iconsObject.arrows.push(icon)
+                    case icon.includes('flag'):
+                        return iconsObject.flags.push(icon)
+                    case icon.includes('check'):
+                        return iconsObject.checks.push(icon)
                     case icon.includes('mc'):
-                    case icon.includes('mediacube'): return iconsObject.mediacube.push(icon)
-                    default: return iconsObject.other.push(icon)
+                    case icon.includes('mediacube'):
+                        return iconsObject.mediacube.push(icon)
+                    default:
+                        return iconsObject.other.push(icon)
                 }
             })
             const defaultSections = Object.keys(iconsObject).map(key => ({
@@ -87,10 +94,12 @@ export const IconsList = () => ({
                 id: key,
             }))
             return this.search
-                ? [{
-                    title: 'Search results',
-                    icons: SVG_ICONS.filter(icon => icon.includes(this.search))
-                }]
+                ? [
+                      {
+                          title: 'Search results',
+                          icons: SVG_ICONS.filter(icon => icon.includes(this.search)),
+                      },
+                  ]
                 : defaultSections
         },
     },
