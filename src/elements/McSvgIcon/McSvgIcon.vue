@@ -64,6 +64,13 @@ export default {
             type: String,
             default: '',
         },
+        dir: {
+            type: String,
+            default: 'ltr',
+            validator(value) {
+                return ['ltr', 'rtl'].includes(value)
+            },
+        },
     },
     data() {
         return {
@@ -76,6 +83,7 @@ export default {
                 [`mc-svg-icon--size-${this.size}`]: !!this.size,
                 [`mc-svg-icon--weight-${String(this.weight)?.replace('.', '')}`]: !!this.weight,
                 [`mc-svg-icon--color-${this.color}`]: !!this.color,
+                [`mc-svg-icon--dir-${this.dir}`]: !!this.dir,
             }
         },
     },
@@ -129,6 +137,12 @@ $token-weights: (
             &-#{$color} {
                 color: $value;
             }
+        }
+    }
+
+    &--dir {
+        &-rtl {
+            transform: scale(-1, 1);
         }
     }
 }
