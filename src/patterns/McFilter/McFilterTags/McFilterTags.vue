@@ -141,7 +141,7 @@ export default {
                         const to = value.less
                             ? `${this.placeholders.to} ${this.getFormattedVal(
                                   filter.type === 'date' && filter.useTimezone
-                                      ? this.$moment(value.less)
+                                      ? this.$dayjs(value.less)
                                             .subtract(1, 'days')
                                             .format()
                                       : value.less,
@@ -300,7 +300,7 @@ export default {
         getFormattedVal(val, filter) {
             switch (filter.type) {
                 case 'date':
-                    return this.$moment ? this.$moment(val).format('DD.MM.YYYY') : val
+                    return this.$dayjs ? this.$dayjs(val).format('DD.MM.YYYY') : val
                 case 'range':
                     return this.getFormattedNum(val)
                 default:
