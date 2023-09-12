@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.133](https://github.com/MediaCubeCo/mcui/compare/v0.1.132...v0.1.133) (2023-09-07)
+
+### [0.1.132](https://github.com/MediaCubeCo/mcui/compare/v0.1.131...v0.1.132) (2023-09-05)
+
+### [0.1.131](https://github.com/MediaCubeCo/mcui/compare/v0.1.130...v0.1.131) (2023-09-04)
+
+### [0.1.130](https://github.com/MediaCubeCo/mcui/compare/v0.1.129...v0.1.130) (2023-09-04)
+
+### [0.1.129](https://github.com/MediaCubeCo/mcui/compare/v0.1.128...v0.1.129) (2023-08-31)
+
+### [0.1.128](https://github.com/MediaCubeCo/mcui/compare/v0.1.127...v0.1.128) (2023-08-30)
+
+### [0.1.127](https://github.com/MediaCubeCo/mcui/compare/v0.1.126...v0.1.127) (2023-08-25)
+
+### [0.1.126](https://github.com/MediaCubeCo/mcui/compare/v0.1.125...v0.1.126) (2023-08-25)
+
+### [0.1.125](https://github.com/MediaCubeCo/mcui/compare/v0.1.124...v0.1.125) (2023-08-24)
+
+### [0.1.124](https://github.com/MediaCubeCo/mcui/compare/v0.1.123...v0.1.124) (2023-08-24)
+
+### [0.1.123](https://github.com/MediaCubeCo/mcui/compare/v0.1.122...v0.1.123) (2023-08-23)
+
+### [0.1.122](https://github.com/MediaCubeCo/mcui/compare/v0.1.121...v0.1.122) (2023-08-22)
+
+### [0.1.121](https://github.com/MediaCubeCo/mcui/compare/v0.1.120...v0.1.121) (2023-08-22)
+
+### [0.1.120](https://github.com/MediaCubeCo/mcui/compare/v0.1.119...v0.1.120) (2023-08-21)
+
+### [0.1.119](https://github.com/MediaCubeCo/mcui/compare/v0.1.118...v0.1.119) (2023-08-21)
+
+### [0.1.118](https://github.com/MediaCubeCo/mcui/compare/v0.1.117...v0.1.118) (2023-08-18)
+
+### [0.1.117](https://github.com/MediaCubeCo/mcui/compare/v0.1.116...v0.1.117) (2023-08-17)
+
+### [0.1.116](https://github.com/MediaCubeCo/mcui/compare/v0.1.115...v0.1.116) (2023-08-17)
+
+### [0.1.115](https://github.com/MediaCubeCo/mcui/compare/v0.1.114...v0.1.115) (2023-08-16)
+
+### [0.1.114](https://github.com/MediaCubeCo/mcui/compare/v0.1.113...v0.1.114) (2023-08-16)
+
+### [0.1.113](https://github.com/MediaCubeCo/mcui/compare/v0.1.112...v0.1.113) (2023-08-16)
+
+### [0.1.112](https://github.com/MediaCubeCo/mcui/compare/v0.1.111...v0.1.112) (2023-08-16)
+
+### [0.1.111](https://github.com/MediaCubeCo/mcui/compare/v0.1.110...v0.1.111) (2023-08-15)
+
 ### [0.1.110](https://github.com/MediaCubeCo/mcui/compare/v0.1.109...v0.1.110) (2023-08-14)
 
 ### [0.1.109](https://github.com/MediaCubeCo/mcui/compare/v0.1.108...v0.1.109) (2023-08-10)

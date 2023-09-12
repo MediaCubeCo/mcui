@@ -226,7 +226,7 @@ export default {
         }
     }
 }
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-field-toggle {
         &__text {
             margin-right: 0;

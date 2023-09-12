@@ -47,7 +47,7 @@
     }
   }
   @at-root {
-    html[direction="rtl"] {
+    html[dir="rtl"] {
       #{$toasted-container-name} {
         .toasted {
           padding: $space-100 $space-150 $space-100 $space-400;

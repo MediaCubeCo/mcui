@@ -685,12 +685,15 @@ export default {
             this.presets = JSON.parse(window.localStorage.mcFilterPresets || '{}')
         },
         handleCreatePreset() {
-            if (this.presets[this.name] && this.presets[this.name].find(p => p.name === this.newPresetName)) {
+            if (
+                this.presets[this.name] &&
+                this.presets[this.name].find(p => p.name?.trim() === this.newPresetName?.trim())
+            ) {
                 this.$emit('error', this.placeholders.messages.same_preset_name)
                 return
             }
             const preset = {
-                name: this.newPresetName,
+                name: this.newPresetName?.trim(),
                 filter: _cloneDeep(this.currentValues),
                 filter_name: _cloneDeep(this.currentValuesName),
             }

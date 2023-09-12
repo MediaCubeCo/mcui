@@ -1,7 +1,7 @@
 <svg data-token-name="reset" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M20.4238 4.80273V7.69573H17.5308H20.4238" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M9 20.477C5.507 19.24 3 15.917 3 12C3 7.03 7.029 3 12 3C15.412 3 18.379 4.899 19.905 7.696" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M16.5 21C18.9853 21 21 18.9853 21 16.5C21 14.0147 18.9853 12 16.5 12C14.0147 12 12 14.0147 12 16.5C12 18.9853 14.0147 21 16.5 21Z" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M17.75 15.25L15.25 17.75" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M17.75 17.75L15.25 15.25" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.4238 4.80273V7.69573H17.5308H20.4238" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9 20.477C5.507 19.24 3 15.917 3 12C3 7.03 7.029 3 12 3C15.412 3 18.379 4.899 19.905 7.696" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.5 21C18.9853 21 21 18.9853 21 16.5C21 14.0147 18.9853 12 16.5 12C14.0147 12 12 14.0147 12 16.5C12 18.9853 14.0147 21 16.5 21Z" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.75 15.25L15.25 17.75" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.75 17.75L15.25 15.25" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

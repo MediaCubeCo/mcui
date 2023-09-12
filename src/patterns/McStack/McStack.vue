@@ -1,6 +1,6 @@
 <template>
     <div class="mc-stack" ref="stack">
-        <div v-show="loaded" class="mc-stack__body" ref="body">
+        <div v-show="loaded" class="mc-stack__body" ref="mc-stack-body">
             <slot />
         </div>
         <div v-if="more" class="mc-stack__counter" ref="counter">
@@ -90,7 +90,7 @@ export default {
         toggleChilds(hide, limit = 0) {
             this.loaded = true
             this.more = 0
-            this.children = this.$refs.body.children
+            this.children = this.$refs?.['mc-stack-body']?.children
             let elementsLimit = hide ? (limit - 1) : this.children.length
             for (let i = 0; i < this.children?.length; i++) {
                 this.setStyles(this.children[i])

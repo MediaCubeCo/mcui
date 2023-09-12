@@ -1,6 +1,6 @@
 <svg data-token-name="check_all" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M13.623 16.3119H18.123" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M5.37402 15.8818L6.6186 17L9.12402 14.75" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M13.623 9.56194H18.123" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M5.37402 9.13175L6.6186 10.25L9.12402 8" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.623 16.3119H18.123" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5.37402 15.8818L6.6186 17L9.12402 14.75" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.623 9.56194H18.123" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5.37402 9.13175L6.6186 10.25L9.12402 8" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -1,0 +1,16 @@
+<svg data-token-name="flag_vi" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_10761_44560)">
+<mask id="mask0_10761_44560" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="2" y="4" width="20" height="15">
+<path d="M2.00098 4H21.999V19H2.00098V4Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_10761_44560)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.75 4H23.25V19H0.75V4Z" fill="#EC0015"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M14.7422 15.1621L12.1172 13.208L9.50977 15.1797L10.4766 11.9688L7.86914 9.98535L11.0947 9.95605L12.0967 6.75098L13.1133 9.94727L16.3389 9.9502L13.7461 11.9541L14.7393 15.165L14.7422 15.1621Z" fill="#FFFF00"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_10761_44560">
+<rect width="20" height="15" fill="white" transform="translate(2 4)"/>
+</clipPath>
+</defs>
+</svg>

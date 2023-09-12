@@ -1,9 +1,9 @@
 <template>
     <div ref="field" class="mc-field-text" :class="classes">
-        <label :for="name" class="mc-field-text__header" :class="{ required }">
+        <label :for="name" class="mc-field-text__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
-                <mc-title v-if="title" :ellipsis="false" max-width="100%" weight="medium">{{ title }}</mc-title>
+                <mc-title v-if="title" :ellipsis="false" max-width="100%" weight="medium">{{ computedTitle }}</mc-title>
             </slot>
         </label>
         <div class="mc-field-text__inner">
@@ -116,7 +116,7 @@ import _omit from 'lodash/omit'
 import { getTokenValue } from '../../../utils/getTokens'
 import { IMaskComponent, IMask } from 'vue-imask'
 
-import TextareaAutosize from 'vue-textarea-autosize/src/components/TextareaAutosize.vue'
+import TextareaAutosize from 'vue2-textarea-autosize/src/components/TextareaAutosize.vue'
 import McTitle from '../../McTitle/McTitle'
 import McButton from '../../McButton/McButton'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
@@ -379,7 +379,9 @@ export default {
                 'mc-field-text--rtl': ['ar'].includes(this.locale),
             }
         },
-
+        computedTitle() {
+            return `${this.title}${this.required ? ' *' : ''}`
+        },
         isMaskVisible() {
             return this.mask || this.maskOptions || this.prettyType === 'date'
         },
@@ -530,22 +532,34 @@ export default {
             }
             return val
         },
+        /**
+         * Remove leading zero from input if length > 1 && number isn't decimal
+         * */
+        removeLeadingZero(val) {
+            let result = val
+            const [first_char] = val || []
+            if (val.length > 1 && +first_char === 0 && val.indexOf('.') === -1) result = val.slice(1)
+            return result
+        },
         prepareHandleInput(e) {
             let value = e.target.value
             switch (this.type) {
                 case 'num':
                     let [num] = /-?\d*[\.]?\d*/.exec(String(value)) || []
                     num = this.setDecimalsLimit(num)
+                    num = this.removeLeadingZero(num)
                     value = num
                     e.target.value = num
                     break
                 case 'int':
-                    const [int] = /-?\d*/.exec(String(e.target.value)) || []
+                    let [int] = /-?\d*/.exec(String(e.target.value)) || []
+                    int = this.removeLeadingZero(int)
                     value = int
                     e.target.value = int
                     break
                 case 'amount_format':
                     value = this.setDecimalsLimit(value)
+                    value = this.removeLeadingZero(value)
                     const cursor_position = this.getCaretPos(e.target)?.start
                     const prepared_value = this.formattedToNumber(value)
 
@@ -695,17 +709,6 @@ export default {
 
         &:empty {
             display: none;
-        }
-        &.required {
-            * {
-                display: inline;
-            }
-            & > * {
-                &::after {
-                    content: '*';
-                    position: absolute;
-                }
-            }
         }
     }
 
@@ -871,14 +874,8 @@ export default {
         display: contents;
     }
 }
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-field-text {
-        &__header {
-            &.required {
-                text-align: right;
-            }
-        }
-
         &__char-counter {
             right: unset;
             left: $space-150;

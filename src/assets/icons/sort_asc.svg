@@ -1,4 +1,4 @@
 <svg data-token-name="sort_asc" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M15 17L18 20M18 20L21 17M18 20V4.5" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M11 19.5H3M11 14.5H5M11 9.5H7M11 4.5H9" stroke="currentColor" fill="none"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15 17L18 20M18 20L21 17M18 20V4.5" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11 19.5H3M11 14.5H5M11 9.5H7M11 4.5H9" stroke="currentColor" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

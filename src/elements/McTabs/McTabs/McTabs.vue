@@ -1,7 +1,7 @@
 <template>
     <div class="mc-tabs" :class="classes">
         <div class="tabs-component">
-            <ul role="tablist" class="tabs-component-tabs">
+            <mc-wrap-scroll tag-name="ul" role="tablist" scrollable class="tabs-component-tabs">
                 <li
                     v-for="(tab, i) in tabs"
                     v-show="tab.isVisible"
@@ -20,7 +20,7 @@
                         v-html="tab.header"
                     ></a>
                 </li>
-            </ul>
+            </mc-wrap-scroll>
             <div class="tabs-component-panels">
                 <slot />
             </div>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import McWrapScroll from '../../../patterns/McWrapScroll/McWrapScroll'
 class ExpiringStorage {
     get(key) {
         const cached = JSON.parse(localStorage.getItem(key))
@@ -56,6 +57,9 @@ const expiringStorage = new ExpiringStorage()
 
 export default {
     name: 'McTabs',
+    components: {
+        McWrapScroll,
+    },
     props: {
         value: {
             type: String,
@@ -128,7 +132,7 @@ export default {
         },
     },
     data: () => ({
-        tabs: [],
+        children: [],
         activeTabHash: '',
         activeTabIndex: 0,
         lastActiveTabHash: '',
@@ -154,6 +158,12 @@ export default {
         storageKey() {
             return `vue-tabs-component.cache.${window.location.host}${window.location.pathname}`
         },
+        tabs() {
+            return this.children.filter(tab => tab.$options.name === 'McTab')
+        },
+        visibleTabs() {
+            return this.tabs.filter(tab => tab.visible)
+        },
     },
     watch: {
         loading(val, oldVal) {
@@ -164,7 +174,7 @@ export default {
         },
     },
     created() {
-        this.tabs = this.$children
+        this.children = this.$children
     },
     mounted() {
         this.options = {
@@ -202,7 +212,8 @@ export default {
     methods: {
         checkInitTab() {
             if (this.activeTab) {
-                const tab = this.$children.find(t => t.id === this.activeTab)
+                const tab_component = this.visibleTabs.find(t => t.id === this.activeTab)
+                const tab = tab_component || this.visibleTabs?.[0]
                 tab?.hash && tab?.hash?.replace('#', '') && this.setActiveTab(tab.hash)
             }
         },
@@ -428,10 +439,6 @@ export default {
         padding-left: 0;
         margin-top: 0;
         list-style-type: none;
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
         height: $space-350;
         @include border();
     }

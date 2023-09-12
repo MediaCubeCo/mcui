@@ -88,6 +88,9 @@ const getUniqueProps = key => {
         sortLoading: {
             default: boolean('sortLoading', false, key),
         },
+        overlayLoading: {
+            default: boolean('overlayLoading', false, key),
+        },
         size: {
             default: select('size', sizes, 'small', key),
         },
@@ -135,6 +138,7 @@ const getCommonTags = ctx => {
         stripe: ctx.stripe,
         border: ctx.border,
         sortLoading: ctx.sortLoading,
+        overlayLoading: ctx.overlayLoading,
         scrollY: ctx.scrollY,
         noDataIconSrc: ctx.noDataIconSrc,
         rowsToStartLoad: ctx.rowsToStartLoad,
@@ -204,30 +208,30 @@ export const Default = () => ({
             return getCommonTags(this)
         },
         items() {
-            return !this.removeItems ? body
-                .map(item => {
-                    return {
-                        ...item,
-                        avatar: item.image_small,
-                        views_count: num(item.views_count, 0),
-                        average_views_per_video: num(item.average_views_per_video, 0),
-                        subscribers_count: num(item.subscribers_count, 0),
-                        categories: item.categories.map(c => c.title).join(', '),
-                        language: item.language.name,
-                        country: item.country.name,
-                        roles: ['Одмен', 'Петух', 'Лопух'],
-                        price: item.agency_channels.filter(item => item.type === 2).length
-                            ? num(
-                                  _minBy(
-                                      item.agency_channels.filter(item => item.type === 2),
-                                      'total',
-                                  ).total,
-                                  0,
-                              ) + ' $'
-                            : null,
-                    }
-                })
-                .slice(0, 50) : []
+            return !this.removeItems
+                ? body
+                      .map(item => ({
+                          ...item,
+                          avatar: item.image_small,
+                          views_count: num(item.views_count, 0),
+                          average_views_per_video: num(item.average_views_per_video, 0),
+                          subscribers_count: num(item.subscribers_count, 0),
+                          categories: item.categories.map(c => c.title).join(', '),
+                          language: item.language.name,
+                          country: item.country.name,
+                          roles: ['Одмен', 'Петух', 'Лопух'],
+                          price: item.agency_channels.filter(item => item.type === 2).length
+                              ? num(
+                                    _minBy(
+                                        item.agency_channels.filter(item => item.type === 2),
+                                        'total',
+                                    ).total,
+                                    0,
+                                ) + ' $'
+                              : null,
+                      }))
+                      .slice(0, 50)
+                : []
         },
     },
     props: {

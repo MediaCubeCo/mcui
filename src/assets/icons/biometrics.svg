@@ -1,8 +1,8 @@
 <svg data-token-name="biometrics" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.3164 11V9.684C10.3164 8.754 11.0704 8 12.0004 8C12.9304 8 13.6844 8.754 13.6844 9.684V11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M14 16H10C9.448 16 9 15.552 9 15V12C9 11.448 9.448 11 10 11H14C14.552 11 15 11.448 15 12V15C15 15.552 14.552 16 14 16Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M7.5 3H5.25C4.007 3 3 4.007 3 5.25V7.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M3 16.5V18.75C3 19.993 4.007 21 5.25 21H7.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M16.5 21H18.75C19.993 21 21 19.993 21 18.75V16.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M21 7.5V5.25C21 4.007 19.993 3 18.75 3H16.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.3164 11V9.684C10.3164 8.754 11.0704 8 12.0004 8C12.9304 8 13.6844 8.754 13.6844 9.684V11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M14 16H10C9.448 16 9 15.552 9 15V12C9 11.448 9.448 11 10 11H14C14.552 11 15 11.448 15 12V15C15 15.552 14.552 16 14 16Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.5 3H5.25C4.007 3 3 4.007 3 5.25V7.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3 16.5V18.75C3 19.993 4.007 21 5.25 21H7.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.5 21H18.75C19.993 21 21 19.993 21 18.75V16.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21 7.5V5.25C21 4.007 19.993 3 18.75 3H16.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

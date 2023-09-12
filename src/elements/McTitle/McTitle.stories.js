@@ -2,7 +2,7 @@ import { text, select, boolean } from '@storybook/addon-knobs'
 
 import McTitle from './McTitle'
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
-import { getTokensByType, getTokenGroup } from '../../utils/getTokens'
+import { getTokensByType, getTokenGroup, getTokenValue } from '../../utils/getTokens'
 import { TITLE_VARIATION } from '../../helpers/storybookVariables'
 
 export default {
@@ -73,6 +73,32 @@ const getUniqueProps = key => {
     }
 }
 
+const variationProps = Object.fromEntries(
+    Object.entries({
+        h1: [700, 600, 'semi-bold'],
+        h2: [600, 500, 'semi-bold'],
+        h3: [500, 400, 'semi-bold'],
+        h4: [400, 300, 'semi-bold'],
+        subtitle: [300, 250, 'normal'],
+        article: [200, 250, 'normal'],
+        info: [300, 300, 'normal'],
+        body: [200, 200, 'normal'],
+        overline: [100, 150, 'medium'],
+    }).map(([key, [fs, lh, fw]]) => [
+        key,
+        {
+            'font size': getTokenValue(`$font-size-${fs}`),
+            'line height': getTokenValue(`$line-height-${lh}`),
+            'font weight': getTokenValue(`$font-weight-${fw}`),
+        },
+    ]),
+)
+
+const getVariationProps = variation =>
+    Object.entries(variationProps[variation])
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(' | ')
+
 const getCommonTags = ctx => {
     return {
         variation: ctx.variation,
@@ -98,6 +124,9 @@ export const Default = () => ({
         tagBind() {
             return getCommonTags(this)
         },
+        variationProps() {
+            return getVariationProps(this.variation)
+        },
     },
     props: {
         ...getUniqueProps('default'),
@@ -105,7 +134,12 @@ export const Default = () => ({
             default: boolean('ellipsis', true, 'default'),
         },
     },
-    template: `<mc-title v-bind="tagBind"> {{ value }} </mc-title>`,
+    template: `
+        <div>
+            <mc-title line-height="600" color="gray">{{ variationProps }}</mc-title>
+            <mc-title v-bind="tagBind"> {{ value }} </mc-title>
+        </div>
+    `,
 })
 
 // mc-title with icons

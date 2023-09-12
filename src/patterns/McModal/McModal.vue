@@ -488,7 +488,7 @@ export default {
         }
         &:empty {
             position: relative;
-            padding: $space-300 0 0;
+            padding: $space-350 0 0;
         }
     }
     &--variation {
@@ -521,7 +521,7 @@ export default {
         }
     }
 }
-html[direction='rtl'] {
+html[dir='rtl'] {
     .mc-modal {
         $border-color: #dee1e9;
         $box-shadow-color: #20008c28;
