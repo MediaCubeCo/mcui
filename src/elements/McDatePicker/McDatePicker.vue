@@ -125,8 +125,7 @@
 </template>
 
 <script>
-import momentTz from 'moment-timezone'
-import moment from 'moment'
+import { dayjs, dayjsLocales } from '../../../.storybook/dayjs'
 import _isEmpty from 'lodash/isEmpty'
 import _omit from 'lodash/omit'
 import DatePicker from 'vue2-datepicker'
@@ -212,7 +211,7 @@ export default {
         },
 
         /**
-         *  Формат даты (как в moment.js)
+         *  Формат даты (как в dayjs)
          */
         format: {
             type: String,
@@ -317,7 +316,7 @@ export default {
         },
         timezone: {
             type: String,
-            default: momentTz.tz.guess(),
+            default: dayjs.tz.guess(),
         },
         useTimezone: {
             type: Boolean,
@@ -393,12 +392,12 @@ export default {
                     : new Date()
             }
             const formattingDate = date =>
-                momentTz.tz(moment(date, 'YYYY-MM-DD HH:mm:SS')._i, this.currentTimezone).format(this.format)
+                this.$dayjs.tz(this.$dayjs.utc(date, 'YYYY-MM-DD HH:mm:SS'), this.currentTimezone).format(this.format)
             if (this.isRange && this.value) {
                 const [start_date, end_date] = this.value
                 const prepared_value = [
                     start_date,
-                    moment(end_date)
+                    this.$dayjs(end_date)
                         .subtract(1, 'days')
                         .format(),
                 ]
@@ -407,11 +406,15 @@ export default {
             return formattingDate(this.value)
         },
     },
-    mounted() {
-        moment.locale(this.lang !== 'ar' ? this.lang : 'en')
-        momentTz.locale(this.lang !== 'ar' ? this.lang : 'en')
+    async mounted() {
+        await this.setupDayjsLocale()
     },
     methods: {
+        async setupDayjsLocale() {
+            const locale = this.lang !== 'ar' && Object.keys(dayjsLocales).includes(this.lang) ? this.lang : 'en'
+            await dayjsLocales[locale]()
+            this.$dayjs.locale(locale)
+        },
         handleEmitDate(value) {
             const date = this.getFormattedDate(value)
             this.toggleErrorVisible()
@@ -427,20 +430,20 @@ export default {
             if (!this.useTimezone) {
                 if (Array.isArray(newValue)) {
                     return newValue.map(v => {
-                        return v?.toString?.().trim() ? this.$moment(v).format(this.toFormat) : ' '
+                        return v?.toString?.().trim() ? this.$dayjs(v).format(this.toFormat) : ' '
                     })
                 }
                 return value?.toString?.().trim()
                     ? this.isTime
-                        ? this.$moment(value)._i
-                        : this.$moment(value).format(this.toFormat)
+                        ? this.$dayjs.utc(value)
+                        : this.$dayjs(value).format(this.toFormat)
                     : ' '
             }
 
             const hasDate = date => date && date?.trim()?.length
             const formatingDate = date =>
-                momentTz
-                    .tz(moment(date, this.format).format('YYYY-MM-DD HH:mm:SS'), this.currentTimezone)
+                this.$dayjs
+                    .tz(this.$dayjs(date, this.format), this.currentTimezone)
                     .utc()
                     .format()
             if (Array.isArray(newValue)) {
@@ -448,7 +451,7 @@ export default {
                 if (hasDate(start_date) && hasDate(end_date))
                     newValue = [
                         start_date,
-                        moment(end_date, this.format)
+                        this.$dayjs(end_date, this.format)
                             .add(1, 'days')
                             .format(this.format),
                     ]
@@ -463,39 +466,41 @@ export default {
             const end = this.pickDate || new Date()
             switch (key) {
                 case 'week':
-                    if (this.$moment) {
-                        start = this.$moment(end).subtract(7, 'days')
+                    if (this.$dayjs) {
+                        start = this.$dayjs(end).subtract(7, 'days')
                         break
                     }
                     start.setTime(end.getTime() - 6 * 24 * 3600 * 1000)
                     break
                 case 'month':
-                    if (this.$moment) {
-                        start = this.$moment(end).subtract(1, 'months')
+                    if (this.$dayjs) {
+                        start = this.$dayjs(end).subtract(1, 'months')
                         break
                     }
                     start.setMonth(end.getMonth() - 1, end.getDate())
                     break
                 case 'quarter':
-                    if (this.$moment) {
-                        start = this.$moment(end).subtract(3, 'months')
+                    if (this.$dayjs) {
+                        start = this.$dayjs(end).subtract(3, 'months')
                         break
                     }
                     start.setMonth(end.getMonth() - 3, end.getDate())
                     break
                 case 'year':
-                    if (this.$moment) {
-                        start = this.$moment(end).subtract(1, 'years')
+                    if (this.$dayjs) {
+                        start = this.$dayjs(end).subtract(1, 'years')
                         break
                     }
                     start.setFullYear(end.getFullYear() - 1, end.getMonth(), end.getDate())
                     break
             }
-            this.$refs.input.currentValue = [this.$moment ? start._d : start, end]
+            this.$refs.input.currentValue = [this.$dayjs ? start.toDate() : start, end]
         },
         handlerPreselectRange(period) {
             const [start, end] = period
-            this.$refs.input.currentValue = this.$moment ? [this.$moment(start)._d, this.$moment(end)._d] : period
+            this.$refs.input.currentValue = this.$dayjs
+                ? [this.$dayjs(start).toDate(), this.$dayjs(end).toDate()]
+                : period
         },
         handlePickDate(date) {
             this.pickDate = date

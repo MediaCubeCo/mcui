@@ -92,7 +92,7 @@ export default {
             default: 'System comment',
         },
         /**
-         * Формат даты (moment.js)
+         * Формат даты (dayjs)
          */
         dateFormat: {
             type: String,
