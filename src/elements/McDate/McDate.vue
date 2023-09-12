@@ -75,7 +75,7 @@ export default {
     computed: {
         dayjsDate() {
             if (this.$dayjs === null) return null
-            const locale = this.$i18n ? this.$i18n.locale : 'ru' // TODO: maybe `en`?
+            const locale = this.$i18n?.locale || 'ru' // TODO: maybe `en`?
             return this.$dayjs(this.value).locale(locale)
         },
         formattedDate() {
