@@ -17,7 +17,7 @@ dayjs.extend(utc)
 const dayjsPlugin = {
     install(ctx) {
         ctx.prototype.$dayjs = dayjs
-    }
+    },
 }
 
 export { dayjs, dayjsLocales, dayjsPlugin }

@@ -125,7 +125,7 @@
 </template>
 
 <script>
-import { dayjs, dayjsLocales } from '../../../.storybook/dayjs'
+import { dayjs, dayjsLocales } from '../../utils/dayjs'
 import _isEmpty from 'lodash/isEmpty'
 import _omit from 'lodash/omit'
 import DatePicker from 'vue2-datepicker'
