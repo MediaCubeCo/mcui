@@ -412,7 +412,7 @@ export default {
     methods: {
         async setupDayjsLocale() {
             const locale = this.lang !== 'ar' && Object.keys(dayjsLocales).includes(this.lang) ? this.lang : 'en'
-            await dayjsLocales[locale]()
+            await dayjsLocales[locale]?.()
             this.$dayjs.locale(locale)
         },
         handleEmitDate(value) {
