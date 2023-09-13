@@ -3,10 +3,9 @@ import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import 'dayjs/locale/en'
 
-// AR locale not used, EN have direct import
+// EN have direct import
 const dayjsLocales = {
     en: () => Promise.resolve(),
-    ar: () => Promise.resolve(),
     es: () => import('dayjs/locale/es'),
     pt: () => import('dayjs/locale/pt'),
     th: () => import('dayjs/locale/th'),
