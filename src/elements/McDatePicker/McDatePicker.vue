@@ -392,7 +392,7 @@ export default {
                     : new Date()
             }
             const formattingDate = date =>
-                this.$dayjs.tz(this.$dayjs.utc(date, 'YYYY-MM-DD HH:mm:SS'), this.currentTimezone).format(this.format)
+                this.$dayjs.tz(this.$dayjs.utc(date, 'YYYY-MM-DD HH:mm:ss'), this.currentTimezone).format(this.format)
             if (this.isRange && this.value) {
                 const [start_date, end_date] = this.value
                 const prepared_value = [
@@ -435,7 +435,7 @@ export default {
                 }
                 return value?.toString?.().trim()
                     ? this.isTime
-                        ? this.$dayjs.utc(value)
+                        ? value
                         : this.$dayjs(value).format(this.toFormat)
                     : ' '
             }
@@ -443,7 +443,7 @@ export default {
             const hasDate = date => date && date?.trim()?.length
             const formatingDate = date =>
                 this.$dayjs
-                    .tz(this.$dayjs(date, this.format), this.currentTimezone)
+                    .tz(this.$dayjs(date, this.format).format('YYYY-MM-DD HH:mm:ss'), this.currentTimezone)
                     .utc()
                     .format()
             if (Array.isArray(newValue)) {
