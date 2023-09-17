@@ -16,10 +16,4 @@ const dayjsLocales = {
 dayjs.extend(timezone)
 dayjs.extend(utc)
 
-const dayjsPlugin = {
-    install(ctx) {
-        ctx.prototype.$dayjs = dayjs
-    },
-}
-
-export { dayjs, dayjsLocales, dayjsPlugin }
+export { dayjs, dayjsLocales }

@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { dayjs } from '../../utils/dayjs'
 import McTitle from '../McTitle/McTitle'
 
 export default {
@@ -74,9 +75,9 @@ export default {
 
     computed: {
         dayjsDate() {
-            if (this.$dayjs === null) return null
+            if (dayjs === null) return null
             const locale = this.$i18n?.locale || 'ru' // TODO: maybe `en`?
-            return this.$dayjs(this.value).locale(locale)
+            return dayjs(this.value).locale(locale)
         },
         formattedDate() {
             if (this.dayjsDate === null) return this.value
