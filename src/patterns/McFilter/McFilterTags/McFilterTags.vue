@@ -49,6 +49,7 @@ import _XEUtils from 'xe-utils'
 import _isEqual from 'lodash/isEqual'
 import _isEmpty from 'lodash/isEmpty'
 import _cloneDeep from 'lodash/cloneDeep'
+import { dayjs } from '../../../utils/dayjs'
 
 import McButton from '../../../elements/McButton/McButton'
 import McTooltip from '../../../elements/McTooltip/McTooltip'
@@ -141,7 +142,7 @@ export default {
                         const to = value.less
                             ? `${this.placeholders.to} ${this.getFormattedVal(
                                   filter.type === 'date' && filter.useTimezone
-                                      ? this.$dayjs(value.less)
+                                      ? dayjs(value.less)
                                             .subtract(1, 'days')
                                             .format()
                                       : value.less,
@@ -300,7 +301,7 @@ export default {
         getFormattedVal(val, filter) {
             switch (filter.type) {
                 case 'date':
-                    return this.$dayjs ? this.$dayjs(val).format('DD.MM.YYYY') : val
+                    return dayjs(val).format('DD.MM.YYYY')
                 case 'range':
                     return this.getFormattedNum(val)
                 default:
