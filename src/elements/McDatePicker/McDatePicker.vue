@@ -392,12 +392,12 @@ export default {
                     : new Date()
             }
             const formattingDate = date =>
-                this.$dayjs.tz(this.$dayjs.utc(date, 'YYYY-MM-DD HH:mm:ss'), this.currentTimezone).format(this.format)
+                dayjs.tz(dayjs.utc(date, 'YYYY-MM-DD HH:mm:ss'), this.currentTimezone).format(this.format)
             if (this.isRange && this.value) {
                 const [start_date, end_date] = this.value
                 const prepared_value = [
                     start_date,
-                    this.$dayjs(end_date)
+                    dayjs(end_date)
                         .subtract(1, 'days')
                         .format(),
                 ]
@@ -413,7 +413,7 @@ export default {
         async setupDayjsLocale() {
             const locale = this.lang !== 'ar' && Object.keys(dayjsLocales).includes(this.lang) ? this.lang : 'en'
             await dayjsLocales[locale]?.()
-            this.$dayjs.locale(locale)
+            dayjs.locale(locale)
         },
         handleEmitDate(value) {
             const date = this.getFormattedDate(value)
@@ -430,20 +430,16 @@ export default {
             if (!this.useTimezone) {
                 if (Array.isArray(newValue)) {
                     return newValue.map(v => {
-                        return v?.toString?.().trim() ? this.$dayjs(v).format(this.toFormat) : ' '
+                        return v?.toString?.().trim() ? dayjs(v).format(this.toFormat) : ' '
                     })
                 }
-                return value?.toString?.().trim()
-                    ? this.isTime
-                        ? value
-                        : this.$dayjs(value).format(this.toFormat)
-                    : ' '
+                return value?.toString?.().trim() ? (this.isTime ? value : dayjs(value).format(this.toFormat)) : ' '
             }
 
             const hasDate = date => date && date?.trim()?.length
             const formatingDate = date =>
-                this.$dayjs
-                    .tz(this.$dayjs(date, this.format).format('YYYY-MM-DD HH:mm:ss'), this.currentTimezone)
+                dayjs
+                    .tz(dayjs(date, this.format).format('YYYY-MM-DD HH:mm:ss'), this.currentTimezone)
                     .utc()
                     .format()
             if (Array.isArray(newValue)) {
@@ -451,7 +447,7 @@ export default {
                 if (hasDate(start_date) && hasDate(end_date))
                     newValue = [
                         start_date,
-                        this.$dayjs(end_date, this.format)
+                        dayjs(end_date, this.format)
                             .add(1, 'days')
                             .format(this.format),
                     ]
@@ -466,41 +462,39 @@ export default {
             const end = this.pickDate || new Date()
             switch (key) {
                 case 'week':
-                    if (this.$dayjs) {
-                        start = this.$dayjs(end).subtract(7, 'days')
+                    if (dayjs) {
+                        start = dayjs(end).subtract(7, 'days')
                         break
                     }
                     start.setTime(end.getTime() - 6 * 24 * 3600 * 1000)
                     break
                 case 'month':
-                    if (this.$dayjs) {
-                        start = this.$dayjs(end).subtract(1, 'months')
+                    if (dayjs) {
+                        start = dayjs(end).subtract(1, 'months')
                         break
                     }
                     start.setMonth(end.getMonth() - 1, end.getDate())
                     break
                 case 'quarter':
-                    if (this.$dayjs) {
-                        start = this.$dayjs(end).subtract(3, 'months')
+                    if (dayjs) {
+                        start = dayjs(end).subtract(3, 'months')
                         break
                     }
                     start.setMonth(end.getMonth() - 3, end.getDate())
                     break
                 case 'year':
-                    if (this.$dayjs) {
-                        start = this.$dayjs(end).subtract(1, 'years')
+                    if (dayjs) {
+                        start = dayjs(end).subtract(1, 'years')
                         break
                     }
                     start.setFullYear(end.getFullYear() - 1, end.getMonth(), end.getDate())
                     break
             }
-            this.$refs.input.currentValue = [this.$dayjs ? start.toDate() : start, end]
+            this.$refs.input.currentValue = [dayjs ? start.toDate() : start, end]
         },
         handlerPreselectRange(period) {
             const [start, end] = period
-            this.$refs.input.currentValue = this.$dayjs
-                ? [this.$dayjs(start).toDate(), this.$dayjs(end).toDate()]
-                : period
+            this.$refs.input.currentValue = dayjs ? [dayjs(start).toDate(), dayjs(end).toDate()] : period
         },
         handlePickDate(date) {
             this.pickDate = date
