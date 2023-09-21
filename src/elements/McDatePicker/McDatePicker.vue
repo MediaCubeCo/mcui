@@ -436,6 +436,11 @@ export default {
 
             switch (true) {
                 case this.toIsoFormat: {
+                    if (Array.isArray(newValue)) {
+                        return newValue.map(v => {
+                            return v?.toString?.().trim() ? dayjs(v).toISOString() : ' '
+                        })
+                    }
                     return dayjs(value).toISOString()
                 }
                 case !this.useTimezone: {
