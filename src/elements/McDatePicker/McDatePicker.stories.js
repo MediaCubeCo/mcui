@@ -1,6 +1,7 @@
 import { text, select, boolean, array, object } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import McDatePicker from './McDatePicker'
+import McTitle from '../McTitle/McTitle'
 import { LANGS } from '../../helpers/storybookVariables'
 
 export default {
@@ -59,10 +60,13 @@ const getUniqueProps = key => {
             default: select('lang', LANGS, 'en', key),
         },
         format: {
-            default: text('format', 'DD.MM.YYYY HH:mm:SS', key),
+            default: text('format', 'DD.MM.YYYY HH:mm:ss', key),
         },
         toFormat: {
-            default: text('toFormat', 'YYYY-MM-DD HH:mm:SS', key),
+            default: text('toFormat', 'YYYY-MM-DD HH:mm:ss', key),
+        },
+        toIsoFormat: {
+            default: boolean('toIsoFormat', false, key),
         },
         popupStyle: {
             default: object('popupStyle', {}, key),
@@ -90,15 +94,15 @@ const getUniqueProps = key => {
         },
         placeholders: {
             default: object(
-                "placeholders",
+                'placeholders',
                 {
-                    week: "Неделя",
-                    month: "Месяц",
-                    quarter: "Квартал",
-                    year: "Год",
-                    confirm: "Применить",
-                    },
-                key
+                    week: 'Неделя',
+                    month: 'Месяц',
+                    quarter: 'Квартал',
+                    year: 'Год',
+                    confirm: 'Применить',
+                },
+                key,
             ),
         },
     }
@@ -118,6 +122,7 @@ const getCommonTags = ctx => {
         errors: ctx.errors,
         format: ctx.format,
         toFormat: ctx.toFormat,
+        toIsoFormat: ctx.toIsoFormat,
         range: ctx.range,
         minutes: ctx.minutes,
         hours: ctx.hours,
@@ -135,113 +140,120 @@ const getCommonTags = ctx => {
 }
 
 const actionsData = {
-  handleClick: action("clicked"),
-  handlerDisabledDate(date) {
-    return date <= new Date().setTime(Date.now() - 24 * 3600 * 1000);
-  },
-  handlerDisabledTime(date) {
-    return date <= new Date().setHours(new Date().getHours() - 3);
-  }
-};
+    handleClick: action('clicked'),
+    handlerDisabledDate(date) {
+        return date <= new Date().setTime(Date.now() - 24 * 3600 * 1000)
+    },
+    handlerDisabledTime(date) {
+        return date <= new Date().setHours(new Date().getHours() - 3)
+    },
+}
 
 export const Default = () => ({
-  components: { McDatePicker },
-  data() {
-    return {
-      date: null
-    };
-  },
-  computed: {
-    tagBind() {
-      return {
-        ...getCommonTags(this),
-        disabledDate: this.handlerDisabledDate,
-        disabledTime: this.handlerDisabledTime,
-      };
-    }
-  },
-  props: {
-    ...getUniqueProps("default"),
-    title: {
-      default: text("title", "Default", "default")
+    components: {
+        McDatePicker,
+        McTitle,
     },
-    errors: {
-      default: array(
-        "errors",
-        ["Необходимо выбрать период", "Нужно больше золота"],
-        ",",
-        "default"
-      )
+    data() {
+        return {
+            date: null,
+        }
     },
-    appendToBody: boolean("appendToBody", true, "default"),
-  },
-  methods: actionsData,
-  template: `<mc-date-picker v-model="date" v-bind="tagBind" />`
-});
+    computed: {
+        tagBind() {
+            return {
+                ...getCommonTags(this),
+                disabledDate: this.handlerDisabledDate,
+                disabledTime: this.handlerDisabledTime,
+            }
+        },
+    },
+    props: {
+        ...getUniqueProps('default'),
+        title: {
+            default: text('title', 'Default', 'default'),
+        },
+        errors: {
+            default: array('errors', ['Необходимо выбрать период', 'Нужно больше золота'], ',', 'default'),
+        },
+        appendToBody: boolean('appendToBody', true, 'default'),
+    },
+    methods: actionsData,
+    template: `
+        <section>
+            <mc-title line-height="600" color="gray">{{ date }}</mc-title>
+            <mc-date-picker v-model="date" v-bind="tagBind" />
+        </section>
+    `,
+})
 
 // mc-date-picker range
 export const Range = () => ({
-  components: { McDatePicker },
-  data() {
-    return {
-      date: null
-    };
-  },
-  computed: {
-    tagBind() {
-      return {
-        ...getCommonTags(this),
-        disabledDate: this.handlerDisabledDate
-      };
-    }
-  },
-  props: {
-    ...getUniqueProps("range"),
-    title: {
-      default: text("title", "Range", "range")
-    },
-    errors: {
-      default: array("errors", [], ",", "range")
-    },
-    customPresets: {
-      default: object('customPresets', [
-        {
-          title: "Custom",
-          period: ["2025-05-01", "2025-05-31"],
+    components: { McDatePicker },
+    data() {
+        return {
+            date: null,
         }
-      ], "range")
     },
-    range: {
-      default: true
-    }
-  },
-  methods: actionsData,
-  template: `<mc-date-picker v-model="date" v-bind="tagBind" />`
-});
+    computed: {
+        tagBind() {
+            return {
+                ...getCommonTags(this),
+                disabledDate: this.handlerDisabledDate,
+            }
+        },
+    },
+    props: {
+        ...getUniqueProps('range'),
+        title: {
+            default: text('title', 'Range', 'range'),
+        },
+        errors: {
+            default: array('errors', [], ',', 'range'),
+        },
+        customPresets: {
+            default: object(
+                'customPresets',
+                [
+                    {
+                        title: 'Custom',
+                        period: ['2025-05-01', '2025-05-31'],
+                    },
+                ],
+                'range',
+            ),
+        },
+        range: {
+            default: true,
+        },
+    },
+    methods: actionsData,
+    template: `<mc-date-picker v-model="date" v-bind="tagBind" />`,
+})
 
 // mc-date-picker inline
 export const Inline = () => ({
-  components: { McDatePicker },
-  data() {
-    return {
-      date: null
-    };
-  },
-  computed: {
-    tagBind() {
-      return {
-        ...getCommonTags(this)
-      };
-    }
-  },
-  props: {
-    ...getUniqueProps("inline"),
-    inline: {
-      default: true
+    components: { McDatePicker },
+    data() {
+        return {
+            date: null,
+        }
     },
-    helpText: {
-      default: ""
-    }
-  },
-  template: `<mc-date-picker v-model="date" v-bind="tagBind" />`
-});
+    computed: {
+        tagBind() {
+            return {
+                ...getCommonTags(this),
+            }
+        },
+    },
+    props: {
+        ...getUniqueProps('inline'),
+        inline: {
+            default: true,
+        },
+        helpText: {
+            default: '',
+        },
+    },
+    template: `<mc-date-picker v-model="date" v-bind="tagBind" />`,
+})
