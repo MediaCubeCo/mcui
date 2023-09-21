@@ -226,6 +226,13 @@ export default {
             default: 'YYYY-MM-DD',
         },
         /**
+         *  Отдаваемая дата будет в формате ISO String
+         */
+        toIsoFormat: {
+            type: Boolean,
+            default: false,
+        },
+        /**
          *  Формат отдаваемой даты
          */
         placeholders: {
@@ -427,35 +434,46 @@ export default {
         getFormattedDate(value) {
             let newValue = value
 
-            if (!this.useTimezone) {
-                if (Array.isArray(newValue)) {
-                    return newValue.map(v => {
-                        return v?.toString?.().trim() ? dayjs(v).format(this.toFormat) : ' '
-                    })
+            switch (true) {
+                case this.toIsoFormat: {
+                    if (Array.isArray(newValue)) {
+                        return newValue.map(v => {
+                            return v?.toString?.().trim() ? dayjs(v).toISOString() : ' '
+                        })
+                    }
+                    return dayjs(value).toISOString()
                 }
-                return value?.toString?.().trim() ? (this.isTime ? value : dayjs(value).format(this.toFormat)) : ' '
+                case !this.useTimezone: {
+                    if (Array.isArray(newValue)) {
+                        return newValue.map(v => {
+                            return v?.toString?.().trim() ? dayjs(v).format(this.toFormat) : ' '
+                        })
+                    }
+                    return value?.toString?.().trim() ? (this.isTime ? value : dayjs(value).format(this.toFormat)) : ' '
+                }
+                default: {
+                    const hasDate = date => date && date?.trim()?.length
+                    const formatingDate = date =>
+                        dayjs
+                            .tz(dayjs(date, this.format).format('YYYY-MM-DD HH:mm:ss'), this.currentTimezone)
+                            .utc()
+                            .format()
+                    if (Array.isArray(newValue)) {
+                        const [start_date, end_date] = newValue
+                        if (hasDate(start_date) && hasDate(end_date))
+                            newValue = [
+                                start_date,
+                                dayjs(end_date, this.format)
+                                    .add(1, 'days')
+                                    .format(this.format),
+                            ]
+                        newValue = newValue.every(d => hasDate(d)) ? newValue.map(v => formatingDate(v)) : newValue
+                    } else {
+                        newValue = formatingDate(value)
+                    }
+                    return newValue
+                }
             }
-
-            const hasDate = date => date && date?.trim()?.length
-            const formatingDate = date =>
-                dayjs
-                    .tz(dayjs(date, this.format).format('YYYY-MM-DD HH:mm:ss'), this.currentTimezone)
-                    .utc()
-                    .format()
-            if (Array.isArray(newValue)) {
-                const [start_date, end_date] = newValue
-                if (hasDate(start_date) && hasDate(end_date))
-                    newValue = [
-                        start_date,
-                        dayjs(end_date, this.format)
-                            .add(1, 'days')
-                            .format(this.format),
-                    ]
-                newValue = newValue.every(d => hasDate(d)) ? newValue.map(v => formatingDate(v)) : newValue
-            } else {
-                newValue = formatingDate(value)
-            }
-            return newValue
         },
         selectPeriod(key) {
             let start = new Date()
