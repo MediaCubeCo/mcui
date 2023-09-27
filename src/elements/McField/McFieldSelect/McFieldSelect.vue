@@ -4,8 +4,8 @@
             <!-- @slot Слот заголовка -->
             <slot name="header">
                 <mc-title v-if="hasTitle" :ellipsis="false" max-width="100%" weight="medium">{{
-                    computedTitle
-                }}</mc-title>
+                        computedTitle
+                    }}</mc-title>
             </slot>
         </div>
         <div class="mc-field-select__main">
@@ -301,6 +301,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Для какого языка селект
+         */
+        locale: {
+            type: String,
+            default: null,
+        },
     },
     data() {
         return {
@@ -353,6 +360,7 @@ export default {
                 'mc-field-select--is-empty-options-list': this.isEmptyOptionsList,
                 'mc-field-select--with-preview': this.optionWithPreview,
                 'mc-field-select--max-height': this.maxHeight,
+                'mc-field-select--rtl': ['ar'].includes(this.locale),
             }
         },
         computedTitle() {
@@ -587,6 +595,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
             border-radius: $radius-100 !important;
             padding: 0 $space-500 0 $space-100;
             overflow: hidden;
+            text-align: start;
             &:hover {
                 border-color: $color-purple;
             }
@@ -611,6 +620,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
             font-family: $font-family-main;
             margin-top: $space-50;
             margin-bottom: $space-50;
+            margin-right: unset;
             background-color: $color-lighter-purple;
             color: $color-black;
             padding: $size-50 $size-50 $size-50 $size-100;
@@ -903,55 +913,67 @@ $text-white: scale-color($color-white, $alpha: -10%);
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-}
-html[dir='rtl'] {
-    .mc-field-select {
-        &__single-label {
-            @include child-indent-right(0);
-            @include child-indent-left-rtl($space-50);
-        }
-        &__label-text {
-            padding-left: 0;
-            padding-right: $space-50;
-            &--indent-left {
-                margin-left: 0;
-                margin-right: $space-300;
-            }
-        }
 
-        .multiselect {
-            &__placeholder {
-                padding-left: 0;
-                padding-right: $space-50;
-            }
+    &--rtl {
+        direction: rtl;
+    }
 
-            &__single {
-                padding-right: 0;
-            }
-
-            &__input {
-                padding-left: 0;
-                padding-right: $space-50;
-            }
-            &__tags-wrap {
+    @at-root {
+        #{$block-name}--rtl,
+        html[dir='rtl'] #{$block-name} {
+            &__single-label {
                 @include child-indent-right(0);
-                @include child-indent-left-rtl($space-100);
+                @include child-indent-left-rtl($space-50);
             }
-            &__tags {
-                padding: 0 $space-100 0 $space-500;
+            &__label-text {
+                padding-left: 0;
+                padding-right: $space-50;
+                &--indent-left {
+                    margin-left: 0;
+                    margin-right: $space-300;
+                }
             }
-            &__select {
-                right: unset;
-                left: 1px;
-            }
-        }
-        &--with-preview {
-            .mc-preview {
-                align-items: center;
-            }
+
             .multiselect {
+                &__placeholder {
+                    padding-left: 0;
+                    padding-right: $space-50;
+                    width: 100%;
+                }
+
+                &__single {
+                    padding-right: 0;
+                }
+
+                &__input {
+                    padding-left: 0;
+                    padding-right: $space-50;
+                }
+                &__tags-wrap {
+                    @include child-indent-right(0);
+                    @include child-indent-left-rtl($space-100);
+                }
+                &__tag-icon {
+                    margin-left: unset;
+                    margin-right: 7px;
+                }
                 &__tags {
-                    padding: $space-200 $space-150;
+                    padding: 0 $space-100 0 $space-500;
+                    text-align: right;
+                }
+                &__select {
+                    right: unset;
+                    left: 1px;
+                }
+            }
+            &--with-preview {
+                .mc-preview {
+                    align-items: center;
+                }
+                .multiselect {
+                    &__tags {
+                        padding: $space-200 $space-150;
+                    }
                 }
             }
         }

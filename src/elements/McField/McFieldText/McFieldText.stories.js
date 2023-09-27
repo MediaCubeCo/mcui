@@ -92,7 +92,7 @@ const getUniqueProps = key => {
             default: boolean('required', false, key),
         },
         locale: {
-            default: select('locale', LANGS, 'en', key)
+            default: select('locale', LANGS, 'en', key),
         },
     }
 }
@@ -320,7 +320,7 @@ export const Password = () => ({
             default: array('errors', null, ',', 'password'),
         },
         isMobile: {
-            default: boolean('isMobile', false, 'password')
+            default: boolean('isMobile', false, 'password'),
         },
     },
     methods: actionsData,
