@@ -98,6 +98,7 @@ import McSvgIcon from '../../McSvgIcon/McSvgIcon'
 import McPreview from '../../../patterns/McPreview/McPreview'
 import fieldErrors from '../../../mixins/fieldErrors'
 import equalFieldHeight from '../../../mixins/equalFieldHeight'
+import { LANGUAGES } from '../../../helpers/consts'
 export default {
     name: 'McFieldSelect',
     components: { McSvgIcon, McAvatar, McTitle, McTooltip, MultiSelect, McPreview },
@@ -360,7 +361,7 @@ export default {
                 'mc-field-select--is-empty-options-list': this.isEmptyOptionsList,
                 'mc-field-select--with-preview': this.optionWithPreview,
                 'mc-field-select--max-height': this.maxHeight,
-                'mc-field-select--rtl': ['ar'].includes(this.locale),
+                'mc-field-select--rtl': LANGUAGES.rtl.includes(this.locale),
             }
         },
         computedTitle() {
