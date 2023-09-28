@@ -123,6 +123,7 @@ import McSvgIcon from '../../McSvgIcon/McSvgIcon'
 import fieldErrors from '../../../mixins/fieldErrors'
 import McTooltip from '../../McTooltip/McTooltip'
 import equalFieldHeight from '../../../mixins/equalFieldHeight'
+import { LANGUAGES } from '../../../helpers/consts'
 
 export default {
     name: 'McFieldText',
@@ -376,7 +377,7 @@ export default {
                 'mc-field-text--textarea-autosize': this.isTextareaAutosize,
                 'mc-field-text--disabled': this.disabled,
                 'mc-field-text--copy': this.copy,
-                'mc-field-text--rtl': ['ar'].includes(this.locale),
+                'mc-field-text--rtl': LANGUAGES.rtl.includes(this.locale),
             }
         },
         computedTitle() {

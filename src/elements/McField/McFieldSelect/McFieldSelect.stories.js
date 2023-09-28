@@ -8,6 +8,7 @@ import McTooltip from '../../McTooltip/McTooltip'
 import { action } from '@storybook/addon-actions'
 import { SVG_ICONS } from '../../../helpers/storybookVariables'
 import { getTokensByType } from '../../../utils/getTokens'
+import { LANGS } from '../../../helpers/storybookVariables'
 
 export default {
     title: 'Elements/McField/McFieldSelect',
@@ -70,6 +71,9 @@ const getUniqueProps = key => {
         optionsTooltip: {
             default: boolean('optionsTooltip', false, key),
         },
+        locale: {
+            default: select('locale', LANGS, 'en', key),
+        },
     }
 }
 
@@ -92,6 +96,7 @@ const getCommonTags = ctx => {
         required: ctx.required,
         maxHeight: ctx.maxHeight,
         optionsTooltip: ctx.optionsTooltip,
+        locale: ctx.locale,
     }
 }
 
