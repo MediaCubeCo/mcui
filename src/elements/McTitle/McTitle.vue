@@ -1,5 +1,5 @@
 <script>
-import _upperFirst from 'lodash/upperFirst'
+import { upperFirst } from '../../helpers/functions'
 
 const values = ['variation', 'weight']
 const sizes = ['xs', 's', 'm', 'l', 'xl', 'xxl']
@@ -113,7 +113,7 @@ export default {
         values.forEach(value => {
             responsivePropsClasses[`mc-title--${value}-${props[value]}`] = props[value]
             sizes.forEach(size => {
-                const sizeValue = props[`${value}${_upperFirst(size)}`]
+                const sizeValue = props[`${value}${upperFirst(size)}`]
                 responsivePropsClasses[`mc-title--${value}-${size}-${sizeValue}`] = sizeValue
             })
         })

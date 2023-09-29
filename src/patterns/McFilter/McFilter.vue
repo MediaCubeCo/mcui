@@ -140,10 +140,7 @@
 </template>
 
 <script>
-import _isEmpty from 'lodash/isEmpty'
-import _isEqual from 'lodash/isEqual'
-import _uniq from 'lodash/uniq'
-import _cloneDeep from 'lodash/cloneDeep'
+import { isEmpty, cloneDeep, isEqual } from '../../helpers/functions'
 import McSvgIcon from '../../elements/McSvgIcon/McSvgIcon'
 import McButton from '../../elements/McButton/McButton'
 import McTitle from '../../elements/McTitle/McTitle'
@@ -324,7 +321,7 @@ export default {
             return `mc-filter-type-${this.currentFilter.type}`
         },
         hasButtonAdd() {
-            return !_isEmpty(this.currentCondition)
+            return !isEmpty(this.currentCondition)
         },
         buttonCreateIsDisable() {
             return !this.newPresetName.trim()
@@ -337,7 +334,7 @@ export default {
                 if (val.filter_name) {
                     this.currentValuesName = JSON.parse(decodeURI(atob(val.filter_name)))
                 }
-                this.buttonConfirmIsDisable = _isEmpty(val.filter) || _isEmpty(val.filter_name)
+                this.buttonConfirmIsDisable = isEmpty(val.filter) || isEmpty(val.filter_name)
             },
             immediate: true,
             deep: true,
@@ -349,10 +346,10 @@ export default {
             deep: true,
         },
         currentValues(newVal, oldVal) {
-            if (_isEmpty(oldVal) && !_isEmpty(newVal)) {
+            if (isEmpty(oldVal) && !isEmpty(newVal)) {
                 this.buttonConfirmIsDisable = false
             }
-            if (_isEmpty(this.value.filter) && _isEmpty(newVal)) {
+            if (isEmpty(this.value.filter) && isEmpty(newVal)) {
                 this.buttonConfirmIsDisable = true
             }
 
@@ -361,8 +358,8 @@ export default {
                     if (p.name === this.activePreset.name) {
                         return {
                             name: p.name,
-                            filter: _cloneDeep(this.currentValues),
-                            filter_name: _cloneDeep(this.currentValuesName),
+                            filter: cloneDeep(this.currentValues),
+                            filter_name: cloneDeep(this.currentValuesName),
                         }
                     }
                     return p
@@ -425,8 +422,8 @@ export default {
                 this.currentValuesName = {}
             } else {
                 this.activePreset = preset
-                this.currentValues = _cloneDeep(preset.filter)
-                this.currentValuesName = _cloneDeep(preset.filter_name)
+                this.currentValues = cloneDeep(preset.filter)
+                this.currentValuesName = cloneDeep(preset.filter_name)
             }
             if (!this.isOpen) {
                 this.handleConfirm()
@@ -473,9 +470,9 @@ export default {
                 },
             }
             const selectedRelation = {
-                [this.selectedOptionFilter]: _cloneDeep(this.currentCondition),
+                [this.selectedOptionFilter]: cloneDeep(this.currentCondition),
             }
-            if (_isEqual(selectedRelation, tagRelation)) {
+            if (isEqual(selectedRelation, tagRelation)) {
                 /**
                  * Событие по возникшей ошибке
                  */
@@ -491,11 +488,10 @@ export default {
                 const index = numerableValues.indexOf(this.activeTag.value)
                 if (index !== -1) {
                     category[this.activeTag.relationKey].splice(index, 1)
-                    _isEmpty(category[this.activeTag.relationKey]) && delete category[this.activeTag.relationKey]
+                    isEmpty(category[this.activeTag.relationKey]) && delete category[this.activeTag.relationKey]
 
                     delete categoryName[this.activeTag.relationKey][this.activeTag.value]
-                    _isEmpty(categoryName[this.activeTag.relationKey]) &&
-                        delete categoryName[this.activeTag.relationKey]
+                    isEmpty(categoryName[this.activeTag.relationKey]) && delete categoryName[this.activeTag.relationKey]
                 }
             }
 
@@ -507,8 +503,8 @@ export default {
         },
         getCategoriesWithNewRelation() {
             const relationKeys = Object.keys(this.currentCondition)
-            const values = _cloneDeep(this.currentValues)
-            const valuesName = _cloneDeep(this.currentValuesName)
+            const values = cloneDeep(this.currentValues)
+            const valuesName = cloneDeep(this.currentValuesName)
             const selectedCategory = values[this.selectedOptionFilter]
             const selectedCategoryName = valuesName[this.selectedOptionFilter]
 
@@ -519,7 +515,7 @@ export default {
                         selectedCategoryName[k] = [0]
                     } else {
                         if (k in selectedCategory) {
-                            selectedCategory[k] = _uniq([...selectedCategory[k], ...this.currentCondition[k]])
+                            selectedCategory[k] = [...new Set([...selectedCategory[k], ...this.currentCondition[k]])]
                             selectedCategoryName[k] = {
                                 ...selectedCategoryName[k],
                                 ...this.currentConditionName[k],
@@ -537,7 +533,7 @@ export default {
                 ...this.currentValues,
                 [this.selectedOptionFilter]: val || this.currentCondition,
             }
-            if (_isEqual(this.currentValues, newVal)) {
+            if (isEqual(this.currentValues, newVal)) {
                 /**
                  * Событие по возникшей ошибке
                  */
@@ -582,17 +578,17 @@ export default {
         },
         onTagsChange(val) {
             this.activeTag = null
-            if (_isEmpty(val)) {
+            if (isEmpty(val)) {
                 this.currentValues = {}
                 this.currentValuesName = {}
                 return
             }
-            this.currentValuesName = _cloneDeep(val)
+            this.currentValuesName = cloneDeep(val)
             this.setRelationsToArrayFormat(val)
         },
         allTagsClear() {
-            this.temporaryValues = _cloneDeep(this.currentValues)
-            this.temporaryValuesName = _cloneDeep(this.currentValuesName)
+            this.temporaryValues = cloneDeep(this.currentValues)
+            this.temporaryValuesName = cloneDeep(this.currentValuesName)
             this.currentValues = {}
             this.currentValuesName = {}
             /**
@@ -605,11 +601,11 @@ export default {
             this.temporaryValuesName = {}
         },
         revertClearedValues() {
-            this.currentValues = _cloneDeep(this.temporaryValues)
-            this.currentValuesName = _cloneDeep(this.temporaryValuesName)
+            this.currentValues = cloneDeep(this.temporaryValues)
+            this.currentValuesName = cloneDeep(this.temporaryValuesName)
         },
         setRelationsToArrayFormat(obj) {
-            const newObj = _cloneDeep(obj)
+            const newObj = cloneDeep(obj)
             const relationKeys = ['is', 'is_not']
             for (let [categoryKey, categoryVal] of Object.entries(obj)) {
                 if (categoryVal.constructor === Object) {
@@ -623,7 +619,7 @@ export default {
             this.currentValues = newObj
         },
         onTagClick(tag) {
-            this.activeTag = _isEqual(this.activeTag, tag) ? null : tag
+            this.activeTag = isEqual(this.activeTag, tag) ? null : tag
             if (!this.activeTag) {
                 this.setEmptyCondition()
                 return
@@ -658,14 +654,14 @@ export default {
                 filter_name: encodedData,
             })
             this.$emit('confirm')
-            if (_isEmpty(this.currentValues)) {
+            if (isEmpty(this.currentValues)) {
                 this.buttonConfirmIsDisable = true
             }
         },
         handleDeletePreset(preset) {
             const filteredPresets = this.presets[this.name].filter(p => p.name !== preset.name)
             this.presets[this.name] = [...filteredPresets]
-            this.temporaryActivePreset = _cloneDeep(this.activePreset)
+            this.temporaryActivePreset = cloneDeep(this.activePreset)
             this.activePreset = null
             this.currentValues = {}
             this.currentValuesName = {}
@@ -678,9 +674,9 @@ export default {
             window.localStorage.mcFilterPresets = JSON.stringify({ ...this.presets })
         },
         getPresetsFromLocalStorage() {
-            this.activePreset = _cloneDeep(this.temporaryActivePreset)
-            this.currentValues = _cloneDeep(this.activePreset.filter)
-            this.currentValuesName = _cloneDeep(this.activePreset.filter_name)
+            this.activePreset = cloneDeep(this.temporaryActivePreset)
+            this.currentValues = cloneDeep(this.activePreset.filter)
+            this.currentValuesName = cloneDeep(this.activePreset.filter_name)
             this.temporaryActivePreset = null
             this.presets = JSON.parse(window.localStorage.mcFilterPresets || '{}')
         },
@@ -694,8 +690,8 @@ export default {
             }
             const preset = {
                 name: this.newPresetName?.trim(),
-                filter: _cloneDeep(this.currentValues),
-                filter_name: _cloneDeep(this.currentValuesName),
+                filter: cloneDeep(this.currentValues),
+                filter_name: cloneDeep(this.currentValuesName),
             }
             if ('mcFilterPresets' in window.localStorage) {
                 const presets = JSON.parse(window.localStorage.mcFilterPresets)

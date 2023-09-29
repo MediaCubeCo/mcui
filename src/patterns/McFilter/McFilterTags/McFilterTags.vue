@@ -46,9 +46,7 @@
 
 <script>
 import _XEUtils from 'xe-utils'
-import _isEqual from 'lodash/isEqual'
-import _isEmpty from 'lodash/isEmpty'
-import _cloneDeep from 'lodash/cloneDeep'
+import { isEqual, cloneDeep, isEmpty } from '../../../helpers/functions'
 import { dayjs } from '../../../utils/dayjs'
 
 import McButton from '../../../elements/McButton/McButton'
@@ -124,7 +122,7 @@ export default {
         },
         simpleTags() {
             const tags = []
-            !_isEmpty(this.simpleValues) &&
+            !isEmpty(this.simpleValues) &&
                 Object.entries(this.simpleValues).forEach(([key, value]) => {
                     const filter = this.filters.find(f => f.value === key)
                     if (filter && filter.type === 'fast') {
@@ -164,7 +162,7 @@ export default {
         },
         relationRows() {
             let tags = []
-            if (!_isEmpty(this.relationValues)) {
+            if (!isEmpty(this.relationValues)) {
                 tags = Object.entries(this.relationValues).map(([relationKey, relationVal]) => {
                     if (relationKey === 'exists') {
                         const empties = Object.keys(relationVal).map(key => {
@@ -233,7 +231,7 @@ export default {
         splitTags(value) {
             this.simpleValues = {}
             this.relationValues = {}
-            if (_isEmpty(value)) return
+            if (isEmpty(value)) return
             this.addInitTags(value)
         },
         addInitTags(parentVal, parentKey = null) {
@@ -260,14 +258,14 @@ export default {
             }
         },
         onTagClick(tag) {
-            this.prettyActiveTag = _isEqual(this.prettyActiveTag, tag) ? null : tag
+            this.prettyActiveTag = isEqual(this.prettyActiveTag, tag) ? null : tag
             /**
              * Событие по клику на тэг
              */
             this.$emit('tag-click', tag)
         },
         onTagClose(tag, relationKey = null) {
-            const value = _cloneDeep(this.value)
+            const value = cloneDeep(this.value)
             switch (relationKey) {
                 case 'exists':
                     delete value[tag.category][relationKey]
@@ -275,7 +273,7 @@ export default {
                 case 'is':
                 case 'is_not':
                     delete value[tag.category][relationKey][tag.value]
-                    if (_isEmpty(value[tag.category][relationKey])) {
+                    if (isEmpty(value[tag.category][relationKey])) {
                         delete value[tag.category][relationKey]
                     }
                     break
@@ -284,7 +282,7 @@ export default {
                     break
             }
 
-            if (_isEmpty(value[tag.category])) {
+            if (isEmpty(value[tag.category])) {
                 delete value[tag.category]
             }
             /**
@@ -317,7 +315,7 @@ export default {
                 .replace(/,/g, ' ')
         },
         checkTagIsActive(tag) {
-            return _isEqual(this.prettyActiveTag, tag)
+            return isEqual(this.prettyActiveTag, tag)
         },
     },
 }

@@ -112,7 +112,6 @@
 </template>
 
 <script>
-import _omit from 'lodash/omit'
 import { getTokenValue } from '../../../utils/getTokens'
 import { IMaskComponent, IMask } from 'vue-imask'
 
@@ -498,7 +497,11 @@ export default {
         },
 
         listeners() {
-            return _omit(this.$listeners, 'input')
+            const allListeners = this.$listeners
+            return {
+                ...allListeners,
+                input: undefined,
+            }
         },
 
         passwordTooltipProps() {

@@ -73,7 +73,7 @@
 
 <script>
 import _XEUtils from 'xe-utils'
-import _isEmpty from 'lodash/isEmpty'
+import { isEmpty } from '../../../helpers/functions'
 import McDropdown from '../../McDropdown/McDropdown'
 import McDropdownPanel from '../../McDropdown/McDropdownPanel/McDropdownPanel'
 import McButton from '../../../elements/McButton/McButton'
@@ -164,7 +164,7 @@ export default {
                   }
         },
         computedMenuApps() {
-            if (_isEmpty(this.menuApps)) return null
+            if (isEmpty(this.menuApps)) return null
             const apps = []
             this.menuApps.forEach(app => {
                 if (app.isVisible) {

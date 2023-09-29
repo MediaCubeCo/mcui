@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import _upperFirst from 'lodash/upperFirst'
+import { upperFirst } from '../../../helpers/functions'
 const values = ['span', 'order', 'offset', 'push', 'pull']
 const sizes = ['xs', 's', 'm', 'l', 'xl', 'xxl']
 const props = {}
@@ -73,7 +73,7 @@ export default {
             values.forEach(value => {
                 list[`mc-grid-col--${value}-${this[value]}`] = this[value]
                 sizes.forEach(size => {
-                    const sizeValue = this[`${value}${_upperFirst(size)}`]
+                    const sizeValue = this[`${value}${upperFirst(size)}`]
                     list[`mc-grid-col--${value}-${size}-${sizeValue}`] = sizeValue
                 })
             })
