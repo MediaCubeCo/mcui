@@ -31,7 +31,7 @@ const computedLineHeights = { default: '', ...lineHeights }
 const getUniqueProps = key => {
     return {
         variation: {
-            default: select('variation', TITLE_VARIATION, 'body', key),
+            default: select('variation', TITLE_VARIATION, TITLE_VARIATION.body, key),
         },
         color: {
             default: select('color', colors, 'black', key),
@@ -73,32 +73,23 @@ const getUniqueProps = key => {
     }
 }
 
-const variationProps = Object.fromEntries(
-    Object.entries({
-        h1: [700, 600, 'semi-bold'],
-        h2: [600, 500, 'semi-bold'],
-        h3: [500, 400, 'semi-bold'],
-        h4: [400, 300, 'semi-bold'],
-        subtitle: [300, 250, 'normal'],
-        article: [200, 250, 'normal'],
-        info: [300, 300, 'normal'],
-        body: [200, 200, 'normal'],
-        overline: [100, 150, 'medium'],
-    }).map(([key, [fs, lh, fw]]) => [
-        key,
-        {
-            'font size': getTokenValue(`$font-size-${fs}`),
-            'line height': getTokenValue(`$line-height-${lh}`),
-            'font weight': getTokenValue(`$font-weight-${fw}`),
-        },
-    ]),
-)
+const getTitleProps = ({fs, lh, fw}) => {
+    return `font-size: ${getTokenValue(`$font-size-${fs}`)} |
+        line-height: ${getTokenValue(`$line-height-${lh}`)} |
+        font-weight: ${getTokenValue(`$font-weight-${fw}`)}`
+}
 
-const getVariationProps = variation =>
-    Object.entries(variationProps[variation])
-        .map(([key, value]) => `${key}: ${value}`)
-        .join(' | ')
-
+const variations = {
+    [TITLE_VARIATION.h1]: { fs: 700, lh: 600, fw: 'semi-bold' },
+    [TITLE_VARIATION.h2]: { fs: 600, lh: 500, fw: 'semi-bold' },
+    [TITLE_VARIATION.h3]: { fs: 500, lh: 400, fw: 'semi-bold' },
+    [TITLE_VARIATION.h4]: { fs: 400, lh: 300, fw: 'semi-bold' },
+    [TITLE_VARIATION.subtitle]: { fs: 300, lh: 250 },
+    [TITLE_VARIATION.article]: { fs: 200, lh: 250 },
+    [TITLE_VARIATION.info]: { fs: 300, lh: 300 },
+    [TITLE_VARIATION.body]: { fs: 200, lh: 200 },
+    [TITLE_VARIATION.overline]: { fs: 100, lh: 150, fw: 'medium' }
+}
 const getCommonTags = ctx => {
     return {
         variation: ctx.variation,
@@ -124,8 +115,14 @@ export const Default = () => ({
         tagBind() {
             return getCommonTags(this)
         },
+        selectedVariation() {
+            return variations[this.variation] || variations[TITLE_VARIATION.body]
+        },
         variationProps() {
-            return getVariationProps(this.variation)
+            let titleProps = {...this.selectedVariation}
+            titleProps.fw = this.weight || this.selectedVariation.fw || 'normal'
+            titleProps.lh = this.lineHeight || this.selectedVariation.lh
+            return getTitleProps(titleProps)
         },
     },
     props: {
