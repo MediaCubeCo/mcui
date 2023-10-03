@@ -429,10 +429,8 @@ export default {
         findClosestScrollElement(element) {
             if (!element) return document.documentElement
             const {  overflow, overflowY  } = getComputedStyle(element)
-            if (overflow === 'auto' || overflow === 'scroll' || overflowY === 'auto' || overflowY === 'scroll') {
-                return element
-            }
-            return this.findClosestScrollElement(element.parentNode)
+            const scrollableVariants = ['auto', 'scroll']
+            return scrollableVariants.some(v => [overflow, overflowY].includes(v)) ? element : this.findClosestScrollElement(element.parentNode)
         },
         initScroll() {
             // looking for closest scroll elemen to track select list position dynamically
