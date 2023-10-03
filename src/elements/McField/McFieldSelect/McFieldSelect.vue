@@ -3,9 +3,9 @@
         <div :for="name" class="mc-field-select__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
-                <mc-title v-if="hasTitle" :ellipsis="false" max-width="100%" weight="medium">{{
-                        computedTitle
-                    }}</mc-title>
+                <mc-title v-if="hasTitle" :ellipsis="false" max-width="100%" weight="medium">
+                    {{ computedTitle }}
+                </mc-title>
             </slot>
         </div>
         <div class="mc-field-select__main">
@@ -15,7 +15,8 @@
                 @input="handleChange"
                 @tag="handleTag"
                 @search-change="handleSearchChange"
-                @open="repositionDropDown"
+                @open="handleOpen"
+                @close="handleClose"
             >
                 <template slot="singleLabel" slot-scope="{ option }">
                     <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
@@ -314,6 +315,7 @@ export default {
         return {
             searchValue: null,
             key: `field_select_${Date.now()}`,
+            closest_scroll_element: null,
         }
     },
     computed: {
@@ -416,19 +418,40 @@ export default {
         },
     },
     methods: {
-        repositionDropDown() {
+        handleOpen() {
             if (!this.renderAbsoluteList) return
+            this.repositionDropDown()
+            this.initScroll()
+        },
+        handleClose() {
+            this.closest_scroll_element?.removeEventListener('scroll', this.repositionDropDown)
+        },
+        findClosestScrollElement(element) {
+            if (!element) return document.documentElement
+            const {  overflow, overflowY  } = getComputedStyle(element)
+            if (overflow === 'auto' || overflow === 'scroll' || overflowY === 'auto' || overflowY === 'scroll') {
+                return element
+            }
+            return this.findClosestScrollElement(element.parentNode)
+        },
+        initScroll() {
+            // looking for closest scroll elemen to track select list position dynamically
+            this.closest_scroll_element = this.findClosestScrollElement(this.$refs.field)
+            this.closest_scroll_element.addEventListener('scroll', this.repositionDropDown)
+        },
+        repositionDropDown() {
             const { top, height, width, left } = this.$el.getBoundingClientRect()
             const ref = this.$refs[this.key]
-
+            // if field hides under scrolled element borders -> blur select to prevent overlap
+            if (this.closest_scroll_element?.scrollTop - this.$refs.field.clientHeight - this.$el.offsetTop > 0) {
+                return ref.$refs.search.blur()
+            }
             if (ref) {
                 ref.$refs.list.style.width = `${width}px`
                 ref.$refs.list.style.position = 'fixed'
                 ref.$refs.list.style.left = `${left}px`
-
                 const title_height = document.querySelector('.mc-field-select__header').offsetHeight
                 const title_margin = 8
-
                 switch (this.openDirection) {
                     case 'top':
                         ref.$refs.list.style.top = `${top + (this.hasTitle ? title_height + title_margin : 0) - 300}px`
