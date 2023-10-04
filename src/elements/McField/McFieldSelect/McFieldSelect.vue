@@ -442,7 +442,7 @@ export default {
             const ref = this.$refs[this.key]
             // if field hides under scrolled element borders -> blur select to prevent overlap
             if (this.closest_scroll_element?.scrollTop - this.$refs.field.clientHeight - this.$el.offsetTop > 0) {
-                return ref.$refs.search.blur()
+                return ref.deactivate()
             }
             if (ref) {
                 ref.$refs.list.style.width = `${width}px`
