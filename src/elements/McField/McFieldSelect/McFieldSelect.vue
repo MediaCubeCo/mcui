@@ -441,9 +441,12 @@ export default {
             const { top, height, width, left } = this.$el.getBoundingClientRect()
             const ref = this.$refs[this.key]
             // if field hides under scrolled element borders -> blur select to prevent overlap
-            if (this.closest_scroll_element?.scrollTop - this.$refs.field.clientHeight - this.$el.offsetTop > 0) {
-                return ref.deactivate()
-            }
+            const scrolledHeight = this.closest_scroll_element?.scrollTop
+            const fieldHeght = this.$refs.field.clientHeight
+            const scrolledElementTop = this.closest_scroll_element?.getBoundingClientRect().top
+
+            if ( scrolledHeight - fieldHeght - scrolledElementTop -top > 0) return ref.deactivate()
+
             if (ref) {
                 ref.$refs.list.style.width = `${width}px`
                 ref.$refs.list.style.position = 'fixed'
