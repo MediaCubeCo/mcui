@@ -4,6 +4,7 @@
         :placeholders="placeholders.calendar"
         :placeholder="filter.placeholder || placeholders.choose"
         :use-timezone="filter.useTimezone"
+        to-format="YYYY-MM-DD"
         name="condition_dates"
         class="mc-filter-type-date"
         range
