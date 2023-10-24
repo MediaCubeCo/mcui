@@ -130,7 +130,7 @@ export default {
             @include pseudo();
             @include position(null, 0);
             margin: 1px;
-            border: 2px solid $color-gray;
+            border: 2px solid $color-outline-gray;
             border-radius: $radius-circle;
             transition: border-color $duration-m;
         }
