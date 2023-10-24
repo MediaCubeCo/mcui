@@ -602,7 +602,12 @@ $text-white: scale-color($color-white, $alpha: -10%);
         }
 
         &__select {
-            height: $size-500 - 2px;
+            overflow: hidden;
+            height: $space-350;
+            width: $space-300;
+            right: $space-100;
+            top: 6px;
+            padding: 0;
             &::before {
                 direction: ltr;
                 width: 0;
