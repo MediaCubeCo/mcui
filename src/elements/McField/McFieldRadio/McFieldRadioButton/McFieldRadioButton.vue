@@ -141,7 +141,10 @@ export default {
         &::after {
             @include pseudo();
             @include size($size-100);
-            @include align(true, true, absolute);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transform-origin: center center;
             border-radius: $radius-circle;
             background-color: transparent;
             transition: background-color $duration-m;
@@ -172,15 +175,13 @@ export default {
                 &__icon {
                     &:after {
                         content: '✓';
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
                         font-weight: $font-weight-bold;
-                        // Для выравнивания иконки по центру кнопки
-                        line-height: 100%;
                         color: $color-white;
                         width: 100%;
                         height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                     }
                 }
             }
