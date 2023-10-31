@@ -52,7 +52,7 @@ export const Icon = () => ({
             default: select('dir', directions, 'ltr'),
         },
     },
-    template: '<mc-svg-icon :name="name" :size="size" :fill="fill" :color="color" :weight="weight" />',
+    template: '<mc-svg-icon :name="name" :size="size" :fill="fill" :color="color" :weight="weight" :dir="dir" />',
 })
 
 export const IconsList = () => ({
