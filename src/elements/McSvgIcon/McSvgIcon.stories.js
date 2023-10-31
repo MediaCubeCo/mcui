@@ -17,6 +17,10 @@ export default {
 
 const iconSizes = getTokenGroup('icon-sizes')
 const colors = getTokensByType('color')
+const directions = {
+    ltr: 'ltr',
+    rtl: 'rtl',
+}
 
 export const Icon = () => ({
     components: {
@@ -43,6 +47,9 @@ export const Icon = () => ({
         },
         type: {
             default: text('type', 'span'),
+        },
+        dir: {
+            default: select('dir', directions, 'ltr'),
         },
     },
     template: '<mc-svg-icon :name="name" :size="size" :fill="fill" :color="color" :weight="weight" />',
