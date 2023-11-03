@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.168](https://github.com/misochenk0/mcui/compare/v0.1.167...v0.1.168) (2023-11-03)
+
 ### 0.1.167 (2023-11-03)
 
 ### 0.1.166 (2023-11-02)
