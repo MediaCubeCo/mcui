@@ -764,7 +764,7 @@ export default {
     &__append {
         inset-inline-end: $space-100;
         padding: $space-100 0;
-        padding-inline: $space-5 0 0;
+        padding-inline: $space-50 0;
         &--indent-bottom {
             padding-bottom: $space-400;
         }
