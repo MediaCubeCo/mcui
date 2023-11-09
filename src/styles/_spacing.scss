@@ -38,22 +38,12 @@ $spacing-ratio: $line-height-250;
 
 @mixin child-indent-right($space) {
   > *:not(:last-child) {
-    margin-right: $space;
+    margin-inline-end: $space;
   }
 }
 @mixin child-indent-left($space) {
   > *:not(:first-child) {
-    margin-left: $space;
-  }
-}
-@mixin child-indent-right-rtl($space) {
-  > *:not(:first-child) {
-    margin-right: $space;
-  }
-}
-@mixin child-indent-left-rtl($space) {
-  > *:not(:last-child) {
-    margin-left: $space;
+    margin-inline-start: $space;
   }
 }
 

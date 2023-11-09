@@ -35,7 +35,7 @@ export default {
          */
         color: {
             type: String,
-            default: 'default',
+            default: '',
         },
         /**
          *  Максимальная ширина
@@ -95,14 +95,13 @@ export default {
                 trigger: this.trigger,
                 show: this.show,
                 container: this.container,
-                template: `<div class="tooltip" style="${this.tooltipVariables}" role="tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner test-class"><div class="tooltip-inner__content"></div></div> </div>`,
+                template: `<div class="tooltip" style="${this.tooltipVariables}" role="tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner"><div class="tooltip-inner__content"></div></div> </div>`,
                 innerSelector: '.tooltip-inner__content',
             }
         },
         tooltipClasses() {
             return [
                 'mc-tooltip',
-                `mc-tooltip--color-${this.color}`,
                 `mc-tooltip--width-${this.maxWidth}`,
                 `mc-tooltip--size-${this.size}`,
                 this.maxLines ? 'mc-tooltip--lines-limit' : '',
@@ -110,9 +109,17 @@ export default {
             ]
         },
         tooltipVariables() {
-            const variables = [this.maxLines && `--tooltip-content-max-lines: ${this.maxLines}`].filter(i => i)
+            let textColor
+            if (this.color === 'white') textColor = 'black'
 
-            return variables.join(' ')
+            const variables = [
+                this.maxLines && `--mc-tooltip-content-max-lines: ${this.maxLines}`,
+                this.color && `--mc-tooltip-arrow-color: var(--color-${this.color})`,
+                textColor && `--mc-tooltip-color: var(--color-${textColor})`,
+                this.color && `--mc-tooltip-background-color: var(--color-${this.color})`,
+            ].filter(i => i)
+
+            return variables.join('; ')
         },
     },
 }
@@ -125,7 +132,10 @@ export default {
 
 .mc-tooltip {
     $arrow-size: $space-100 - 1;
-
+    --mc-tooltip-arrow-color: #{$color-black};
+    --mc-tooltip-color: #{$color-white};
+    --mc-tooltip-background-color: #{$color-black};
+    --mc-tooltip-content-max-lines: initial;
     &.tooltip {
         display: block !important;
         z-index: 10005 !important;
@@ -136,9 +146,9 @@ export default {
             border-radius: $radius-100;
             box-shadow: $shadow-s;
             padding: $space-100 $space-150;
-
+            background-color: var(--mc-tooltip-background-color);
             &__content {
-                color: $color-white;
+                color: var(--mc-tooltip-color);
                 font-family: $font-family-main;
                 line-height: $line-height-250;
                 font-size: $font-size-300;
@@ -150,7 +160,7 @@ export default {
             border-style: solid;
             position: absolute;
             margin: $arrow-size;
-            border-color: $color-black;
+            border-color: var(--mc-tooltip-arrow-color);
             z-index: 1;
         }
 
@@ -282,7 +292,7 @@ export default {
                 &__content {
                     display: -webkit-box;
                     -webkit-box-orient: vertical;
-                    -webkit-line-clamp: var(--tooltip-content-max-lines);
+                    -webkit-line-clamp: var(--mc-tooltip-content-max-lines);
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
@@ -294,31 +304,6 @@ export default {
         &.tooltip {
             .tooltip-arrow {
                 display: none;
-            }
-        }
-    }
-
-    @each $color, $value in $token-colors {
-        &--color-#{$color} {
-            @if $color == 'white' {
-                &.tooltip {
-                    .tooltip-inner {
-                        color: $color-black;
-                        background-color: $value;
-                    }
-                    .tooltip-arrow {
-                        border-color: $value;
-                    }
-                }
-            } @else {
-                &.tooltip {
-                    .tooltip-inner {
-                        background-color: $value;
-                    }
-                    .tooltip-arrow {
-                        border-color: $value;
-                    }
-                }
             }
         }
     }

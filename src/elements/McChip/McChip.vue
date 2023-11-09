@@ -1,5 +1,5 @@
 <template>
-    <section class="mc-chip" tabindex="0" :class="classes">
+    <section class="mc-chip" tabindex="0" :class="classes" :style="styles">
         <div v-if="$slots.icon" class="mc-chip__icon">
             <!-- @slot Слот для иконки -->
             <slot name="icon" />
@@ -81,9 +81,38 @@ export default {
     computed: {
         classes() {
             return {
-                [`mc-chip--variation-${this.variation}`]: this.variation,
+                [`mc-chip--variation-${this.chipOptions.variation}`]: this.variation,
                 [`mc-chip--size-${this.size}`]: this.size,
-                [`mc-chip--text-color-${this.textColor}`]: this.textColor,
+            }
+        },
+        chipOptions() {
+            const variationProps = this.variation?.split('-')
+            const currentVariation = variationProps[variationProps.length - 1]
+            let color
+            let variation
+            switch (currentVariation) {
+                case 'outline':
+                case 'invert': {
+                    variation = currentVariation
+                    color = this.variation.replace(`-${currentVariation}`, '')
+                    break
+                }
+                default: {
+                    variation = 'default'
+                    color = this.variation
+                    break
+                }
+            }
+            return {
+                color,
+                variation,
+            }
+        },
+        styles() {
+            const textColor = this.textColor || 'white'
+            return {
+                ['--mc-chip-color']: `var(--color-${this.chipOptions.color})`,
+                ['--mc-chip-text-color']: `var(--color-${textColor})`,
             }
         },
     },
@@ -93,20 +122,34 @@ export default {
 <style lang="scss">
 .mc-chip {
     $block-name: &;
-
+    --mc-chip-text-color: #{$color-black};
+    --mc-chip-color: #{$color-white};
+    overflow: hidden;
     display: inline-flex;
+    position: relative;
     align-items: center;
-    color: $color-black;
+    color: var(--mc-chip-color);
     font-family: $font-family-main;
     font-size: $font-size-200;
     line-height: $line-height-200;
     max-width: 100%;
-
     border-radius: 100px;
     vertical-align: middle;
     outline: none;
+    z-index: 0;
+    flex-shrink: 0;
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 0;
+        @include size(100%);
+        background-color: var(--mc-chip-color);
+    }
     > * {
         margin-right: $space-50;
+        z-index: 1;
     }
     > *:first-child {
         margin-left: $space-50;
@@ -158,7 +201,7 @@ export default {
     &__title {
         @include ellipsis();
         @include layout-flex-fix();
-
+        color: var(--mc-chip-text-color);
         &:empty {
             display: none;
         }
@@ -211,42 +254,40 @@ export default {
         }
     }
 
-    @each $color, $value in $token-colors {
-        &--variation-#{$color} {
-            background-color: $value;
-            color: $color-white;
-
+    &--variation {
+        &-default {
             #{$block-name} {
                 &__button {
-                    color: $color-white;
-
+                    color: var(--mc-chip-color);
                     &:hover {
                         opacity: 1;
                         color: $color-white;
                     }
-
                     &:active {
                         color: darken($color-white, 15%);
                     }
                 }
-
+                &__title {
+                    color: var(--mc-chip-text-color);
+                }
                 &__counter {
-                    color: fade-out($color-white, 0.5);
+                    color: var(--mc-chip-text-color);
+                    opacity: 0.5;
                 }
             }
-
-            &-invert {
-                background-color: fade-out($value, 0.85);
-            }
-
-            &-outline {
-                border: 1px solid $value;
-                color: $value;
+        }
+        &-outline {
+            color: var(--mc-chip-color);
+            border: 1px solid var(--mc-chip-color);
+            &:before {
+                display: none;
             }
         }
-        &--text-color-#{$color} {
-            #{$block-name}__title {
-                color: $value;
+        &-invert {
+            color: $color-black;
+            &:before {
+                background-color: var(--mc-chip-color);
+                opacity: 0.15;
             }
         }
     }

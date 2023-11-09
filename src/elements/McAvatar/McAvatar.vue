@@ -89,8 +89,7 @@ export default {
             'mc-avatar-status': true,
             'mc-avatar-status--shadow': props.shadow,
             [`mc-avatar-status--size-${props.size}`]: props.size,
-            [`mc-avatar-status--border-color-${props.borderColor}`]: props.borderColor,
-            [`mc-avatar-status--dot-color-${props.dotColor}`]: props.dotColor,
+            'mc-avatar-status--has-dot': !!props.dotColor,
             ...(data.class || {}),
         }
 
@@ -101,6 +100,31 @@ export default {
         }
 
         let style = {}
+        if (hasStatus) {
+            if (props.borderColor) style['--mc-avatar-border-color'] = `var(--color-${props.borderColor})`
+            if (props.dotColor) style['--mc-avatar-dot-color'] = `var(--color-${props.dotColor})`
+        }
+        if (props.size) {
+            style['--mc-avatar-avatar-size'] = `var(--size-${props.size})`
+            if (+props.size < 500) {
+                style['--mc-avatar-avatar-radius'] = `var(--radius-50)`
+            }
+            switch (+props.size) {
+                case 500:
+                case 600: {
+                    style['--mc-avatar-dot-size'] = `var(--size-150)`
+                    break
+                }
+                case 700:
+                case 800:
+                case 900:
+                case 1000: {
+                    style['--mc-avatar-dot-size'] = `var(--size-200)`
+                    style['--mc-avatar-dot-border-width'] = '2px'
+                    break
+                }
+            }
+        }
         if (data.staticStyle) {
             style = data.staticStyle
         }
@@ -167,9 +191,11 @@ $dot-colors: $token-colors;
 
 .mc-avatar-status {
     $status-name: &;
-
+    --mc-avatar-dot-border-width: 1px;
+    --mc-avatar-dot-size: #{$space-100};
+    --mc-avatar-border-color: initial;
     display: inline-flex;
-    border: 2px solid transparent;
+    border: 2px solid var(--mc-avatar-border-color);
     padding: 1px;
     position: relative;
     border-radius: $radius-circle;
@@ -179,25 +205,28 @@ $dot-colors: $token-colors;
     }
 
     &::after {
-        @include size($size-100);
-        @include pseudo();
-        border: none;
-        position: absolute;
+        width: var(--mc-avatar-dot-size);
+        height: var(--mc-avatar-dot-size);
+        @include pseudo($display: none);
+        left: 0;
+        bottom: 0;
+        border: var(--mc-avatar-dot-border-width) solid $color-white;
+        background-color: var(--mc-avatar-dot-color);
         z-index: 2;
         border-radius: 50%;
     }
+    &--has-dot {
+        &:after {
+            display: block;
+        }
+    }
 
-    @each $color, $value in $color-borders {
-        &--border-color-#{$color} {
-            border-color: $value;
-            transition: box-shadow $duration-s;
+    transition: box-shadow $duration-s;
 
-            &:hover,
-            &:focus {
-                .mc-avatar {
-                    box-shadow: none;
-                }
-            }
+    &:hover,
+    &:focus {
+        .mc-avatar {
+            box-shadow: none;
         }
     }
 
@@ -208,90 +237,18 @@ $dot-colors: $token-colors;
             box-shadow: 0 0 0 $space-50 $color-hover-gray;
         }
     }
-
-    @each $color, $value in $dot-colors {
-        &--dot-color-#{$color} {
-            &::after {
-                border: 1px solid $color-white;
-                background-color: $value;
-                @if $color == 'transparent' {
-                    display: none;
-                }
-            }
-        }
-    }
-
-    @each $size, $value in $token-avatar-sizes {
-        &--size-#{$size} {
-            @if $size == 300 {
-                &::after {
-                    bottom: -1px;
-                    left: -2px;
-                }
-            }
-            @if $size == 400 {
-                &::after {
-                    bottom: 0;
-                    left: -1px;
-                }
-            }
-            @if $size == 500 {
-                &::after {
-                    @include size($size-150);
-                    bottom: -1px;
-                    left: -2px;
-                }
-            }
-            @if $size == 600 {
-                &::after {
-                    @include size($size-150);
-                    bottom: -1px;
-                    left: 0;
-                }
-            }
-            @if $size == 700 {
-                &::after {
-                    @include size($size-200);
-                    border-width: 2px;
-                    bottom: -1px;
-                    left: -1px;
-                }
-            }
-            @if $size == 800 {
-                &::after {
-                    @include size($size-200);
-                    border-width: 2px;
-                    bottom: 0;
-                    left: -1px;
-                }
-            }
-            @if $size == 900 {
-                &::after {
-                    @include size($size-200);
-                    border-width: 2px;
-                    bottom: 1px;
-                    left: 0;
-                }
-            }
-            @if $size == 1000 {
-                &::after {
-                    @include size($size-200);
-                    border-width: 2px;
-                    bottom: 1px;
-                    left: 2px;
-                }
-            }
-        }
-    }
 }
 
 .mc-avatar {
     $avatar-name: &;
-
+    --mc-avatar-avatar-radius: #{$space-100};
     @include reset();
     position: relative;
     display: inline-block;
-    border-radius: $radius-100;
+    width: var(--mc-avatar-avatar-size);
+    height: var(--mc-avatar-avatar-size);
+    min-width: var(--mc-avatar-avatar-size);
+    border-radius: var(--mc-avatar-avatar-radius);
     overflow: hidden;
     background-color: $color-hover-gray;
     transition: box-shadow $duration-s;
@@ -300,16 +257,6 @@ $dot-colors: $token-colors;
         width: 100%;
         height: 100%;
         object-fit: cover;
-    }
-
-    @each $size, $value in $token-avatar-sizes {
-        &--size-#{$size} {
-            @include size($value);
-            min-width: $value;
-            @if $size < 500 {
-                border-radius: $radius-50;
-            }
-        }
     }
     &--rounded {
         border-radius: $radius-circle;

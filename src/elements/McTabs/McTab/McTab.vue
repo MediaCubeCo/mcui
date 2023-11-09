@@ -133,18 +133,16 @@ export default {
             return '#' + this.computedId
         },
         computedPrefix() {
-            const colorClass = this.iconPrependColor
-                ? ` tabs-component-tab__icon-prepend--color-${this.iconPrependColor}`
-                : ''
-            const classes = `${this.iconPrependClasses}${colorClass}`
-            return this.iconPrependClasses ? `<span class="${classes}"></span>` : this.prefix
+            let styles
+            if (this.iconPrependClasses) styles = `--mc-tab-icon-prepend-color: var(--color-${this.iconPrependColor})`
+            const classes = `${this.iconPrependClasses} tabs-component-tab__icon-prepend`
+            return this.iconPrependClasses ? `<span class="${classes}" style="${styles}"></span>` : this.prefix
         },
         computedSuffix() {
-            const colorClass = this.iconAppendColor
-                ? ` tabs-component-tab__icon-append--color-${this.iconAppendColor}`
-                : ''
-            const classes = `${this.iconAppendClasses}${colorClass}`
-            return this.iconAppendClasses ? `<span class="${classes}"></span>` : this.suffix
+            let styles
+            if (this.iconAppendColor) styles = `--mc-tab-icon-append-color: var(--color-${this.iconAppendColor})`
+            const classes = `${this.iconAppendClasses} tabs-component-tab__icon-append`
+            return this.iconAppendClasses ? `<span class="${classes}" style="${styles}"></span>` : this.suffix
         },
         hasAppendCount() {
             return this.appendCount || this.appendCount === 0
@@ -154,17 +152,18 @@ export default {
                 `${this.computedPrefix}` +
                 `<span class="tabs-component-tab__tab-name" data-name="${this.name}">${this.name}</span>` +
                 `${this.computedSuffix}` +
-                (this.hasAppendCount ? `<span class="${this.appendCountClasses}">${this.appendCount}</span>` : '')
+                (this.hasAppendCount
+                    ? `<span class="tabs-component-tab__tab-name-append-count" style="${this.appendCountStyles}">
+                            ${this.appendCount}
+                        </span>`
+                    : '')
             )
         },
         header() {
             return this.visible ? this.computedTabName : ''
         },
-        appendCountClasses() {
-            return (
-                `tabs-component-tab__tab-name-append-count ` +
-                `tabs-component-tab__tab-name-append-count--${this.appendCountColor}`
-            )
+        appendCountStyles() {
+            return `--mc-tab-append-count-color: var(--color-${this.appendCountColor})`
         },
     },
 }
@@ -177,11 +176,7 @@ export default {
 .tabs-component-tab {
     &__tab {
         &-name-append-count {
-            @each $color, $value in $token-colors {
-                &--#{$color} {
-                    color: $value;
-                }
-            }
+            color: var(--mc-tab-append-count-color);
         }
     }
     a:empty {

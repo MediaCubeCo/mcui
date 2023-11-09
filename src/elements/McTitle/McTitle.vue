@@ -110,8 +110,8 @@ export default {
             }
         }
         const responsivePropsClasses = {}
+        responsivePropsClasses[`mc-title--variation-${props.variation}`] = props.variation
         values.forEach(value => {
-            responsivePropsClasses[`mc-title--${value}-${props[value]}`] = props[value]
             sizes.forEach(size => {
                 const sizeValue = props[`${value}${_upperFirst(size)}`]
                 responsivePropsClasses[`mc-title--${value}-${size}-${sizeValue}`] = sizeValue
@@ -119,9 +119,7 @@ export default {
         })
         const classes = {
             'mc-title': true,
-            [`mc-title--line-height-${props.lineHeight}`]: props.lineHeight,
             ['mc-title--ellipsis']: props.ellipsis,
-            [`mc-title--color-${props.color}`]: props.color,
             [`mc-title--text-align-${props.textAlign}`]: props.textAlign,
             [`mc-title--pre-line`]: props.preLine,
             [`mc-title--nowrap`]: props.nowrap,
@@ -140,8 +138,13 @@ export default {
             })
         }
         let style = {}
+        if (props.color) style['--mc-title-color'] = `var(--color-${props.color})`
+        if (props.weight) style['--mc-title-weight'] = `var(--font-weight-${props.weight})`
+        if (props.lineHeight) style['--mc-title-line-height'] = `var(--line-height-${props.lineHeight})`
         if (data.staticStyle) {
-            style = data.staticStyle
+            style = {
+                ...data.staticStyle,
+            }
         }
         return h(
             'div',
@@ -159,7 +162,12 @@ export default {
 <style lang="scss">
 .mc-title {
     $block-name: &;
-
+    --mc-title-color: initial;
+    --mc-title-weight: initial;
+    --mc-title-line-height: initial;
+    color: var(--mc-title-color);
+    font-weight: var(--mc-title-weight);
+    line-height: var(--mc-title-line-height);
     @mixin variations() {
         font-family: $font-family-main;
         &-h1 {
@@ -244,7 +252,7 @@ export default {
     }
 
     > *:not(:empty):not(:last-child) {
-        margin-right: $space-50;
+        margin-inline-end: $space-50;
     }
 
     .mc-svg-icon,
@@ -267,20 +275,6 @@ export default {
 
     &--variation {
         @include variations;
-    }
-
-    @each $media, $value in $token-media-queries {
-        @media #{$value} {
-            &--variation-#{$media} {
-                @include variations;
-            }
-        }
-    }
-
-    @each $line-height, $value in $token-line-heights {
-        &--line-height-#{$line-height} {
-            line-height: $value;
-        }
     }
 
     &--ellipsis {
@@ -306,18 +300,10 @@ export default {
         }
     }
 
-    &--color {
-        @each $color, $value in $token-colors {
-            &-#{$color} {
-                color: $value;
-            }
-        }
-    }
-
     &--text-align {
         &-left {
             justify-content: flex-start;
-            text-align: left;
+            text-align: start;
         }
         &-center {
             justify-content: center;
@@ -325,25 +311,14 @@ export default {
         }
         &-right {
             justify-content: flex-end;
-            text-align: right;
-        }
-    }
-    &--weight {
-        &-normal {
-            font-weight: $font-weight-normal;
-        }
-        &-medium {
-            font-weight: $font-weight-medium;
-        }
-        &-semi-bold {
-            font-weight: $font-weight-semi-bold;
-        }
-        &-bold {
-            font-weight: $font-weight-bold;
+            text-align: end;
         }
     }
     @each $media, $value in $token-media-queries {
         @media #{$value} {
+            &--variation-#{$media} {
+                @include variations;
+            }
             &--weight-#{$media} {
                 &-normal {
                     font-weight: $font-weight-normal;
@@ -372,23 +347,6 @@ export default {
         line-height: inherit;
         margin-block-start: 0;
         margin-block-end: 0;
-    }
-}
-html[dir='rtl'] {
-    .mc-title {
-        > *:not(:empty):not(:last-child) {
-            margin-right: unset;
-            margin-left: $space-50;
-        }
-
-        &--text-align {
-            &-left {
-                text-align: right;
-            }
-            &-right {
-                text-align: left;
-            }
-        }
     }
 }
 </style>

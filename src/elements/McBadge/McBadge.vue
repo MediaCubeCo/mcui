@@ -24,10 +24,11 @@ export default {
         },
     },
     render(h, { props, slots, data }) {
+        const variation = `${props.variation}${props.modern ? '-modern' : ''}`
         const classes = {
             'mc-badge': true,
             'mc-badge--vertical-line': props.verticalLine,
-            [`mc-badge--variation-${props.variation}${props.modern ? '-modern' : ''}`]: props.variation,
+            'mc-badge--modern': props.modern,
             ...(data.class || {}),
         }
 
@@ -37,6 +38,33 @@ export default {
         }
 
         let style = {}
+        const texts = variation.split('-')
+        const currentStyle = texts[texts.length - 1]
+        const color = props.variation ? variation.replace(`-${currentStyle}`, '') : variation
+        const setProperty = ({ property = '--mc-badge-color', value, newColor = color } = {}) =>
+            (style[property] = value || `var(--color-${newColor})`)
+        switch (currentStyle) {
+            case 'outline': {
+                setProperty()
+                setProperty({ property: '--mc-badge-border-color' })
+                setProperty({ property: '--mc-badge-background-color', newColor: 'white' })
+                setProperty({ property: '--mc-badge-background-opacity', value: '0.4' })
+                break
+            }
+            case 'invert':
+            case 'modern': {
+                setProperty()
+                setProperty({ property: '--mc-badge-background-color' })
+                setProperty({ property: '--mc-badge-background-opacity', value: '0.1' })
+                break
+            }
+            default: {
+                const lightColors = ['hover-gray', 'white', 'lighter-blue', 'lighter-purple', 'toxic', 'transparent']
+                lightColors.includes(variation) && setProperty({ newColor: 'black' })
+                setProperty({ property: '--mc-badge-background-color', newColor: variation })
+                break
+            }
+        }
         if (data.staticStyle) {
             style = data.staticStyle
         }
@@ -55,6 +83,9 @@ export default {
                     },
                     slots()['default'],
                 ),
+                h('div', {
+                    class: 'mc-badge__background',
+                }),
             ],
         )
     },
@@ -62,13 +93,16 @@ export default {
 </script>
 
 <style lang="scss">
-$light-scale: 'hover-gray', 'white', 'lighter-blue', 'lighter-purple', 'toxic', 'transparent';
 .mc-badge {
     $block-name: &;
-
+    --mc-badge-color: #{$color-white};
+    --mc-badge-background-color: inherit;
+    --mc-badge-background-opacity: initial;
+    --mc-badge-border-color: #{$color-transparent};
     @include ellipsis(100%, inline-flex);
     align-items: center;
-    color: $color-white;
+    color: var(--mc-badge-color);
+    position: relative;
     font-family: $font-family-main;
     font-size: $font-size-100;
     line-height: $line-height-150;
@@ -77,34 +111,24 @@ $light-scale: 'hover-gray', 'white', 'lighter-blue', 'lighter-purple', 'toxic', 
     text-transform: uppercase;
     letter-spacing: $letter-spacing-m;
     vertical-align: middle;
-    border-radius: $radius-50;
     padding: 2px $space-100;
-    border: 1px solid transparent;
-
-    @each $color, $value in $token-colors {
-        &--variation-#{$color} {
-            background-color: $value;
-
-            @each $col-l in $light-scale {
-                @if $color == $col-l {
-                    color: $color-black;
-                }
-            }
-            &-invert {
-                background-color: fade-out($value, 0.9);
-                color: $value;
-            }
-            &-outline {
-                background-color: $color-white;
-                color: $value;
-                border-color: fade-out($value, 0.6);
-            }
-            &-modern {
-                background-color: rgba($value, 0.1);
-                color: $value;
-                border-radius: $radius-150;
-            }
-        }
+    border-radius: $radius-50;
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        @include size(100%);
+        background-color: var(--mc-badge-background-color);
+        opacity: var(--mc-badge-background-opacity);
+        border: 1px solid var(--mc-badge-border-color);
+        border-radius: inherit;
+    }
+    &__text {
+        z-index: 1;
+    }
+    &--modern {
+        border-radius: $radius-50;
     }
     &--vertical-line {
         padding: 0;

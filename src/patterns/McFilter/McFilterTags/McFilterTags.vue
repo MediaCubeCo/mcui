@@ -340,7 +340,7 @@ export default {
             flex-grow: 1;
         }
         &-right {
-            margin-left: $space-100;
+            margin-inline-start: $space-100;
             .mc-button {
                 padding: $space-50 $space-150;
                 height: $space-300;

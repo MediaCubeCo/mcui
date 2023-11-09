@@ -1,5 +1,5 @@
 <template>
-    <div :class="classes">
+    <div class="mc-notification" :style="styles">
         <div class="mc-notification__inner">
             <mc-preview>
                 <!-- @slot Слот для иконки -->
@@ -108,8 +108,10 @@ export default {
         },
     },
     computed: {
-        classes() {
-            return ['mc-notification', `mc-notification--variation-${this.variation}`]
+        styles() {
+            return {
+                '--mc-notification-color': this.variation && `var(--color-${this.variation})`,
+            }
         },
     },
     methods: {
@@ -126,19 +128,18 @@ export default {
 <style lang="scss">
 .mc-notification {
     $block-name: &;
-
+    --mc-notification-color: #{$color-orange};
     position: relative;
     background-color: $color-white;
     border-radius: $radius-150;
     overflow: hidden;
-
     &:before {
         content: '';
         @include position(absolute, 0 null null 0);
         display: block;
         height: 100%;
         width: $size-50;
-        background-color: $color-orange;
+        background-color: var(--mc-notification-color);
     }
 
     &__text {
@@ -146,27 +147,45 @@ export default {
         line-height: $line-height-200;
     }
 
+    #{$block-name}__text,
+    #{$block-name}__title {
+        filter: contrast(59%);
+    }
+
     &__inner {
         padding: $space-100 $space-150 $space-100 $space-200;
         min-height: $size-700;
         display: flex;
         align-items: center;
+        position: relative;
+        color: var(--mc-notification-color);
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--mc-notification-color);
+            opacity: 0.1;
+        }
 
         .mc-preview {
             width: 100%;
+            z-index: 1;
             &__top {
                 margin-bottom: $space-50;
             }
             &__left {
                 display: flex;
                 align-items: center;
-                margin-right: $size-150;
+                margin-inline-end: $size-150;
             }
             &__right {
                 display: flex;
                 align-items: center;
-                margin-left: auto;
-                padding-left: $space-100;
+                margin-inline-start: auto;
+                padding-inline-start: $space-100;
             }
         }
 
@@ -179,24 +198,9 @@ export default {
                 }
                 &__right {
                     width: 100%;
-                    padding: $space-100 0 0 $size-400 - 2;
+                    padding-top: $space-100;
+                    padding-inline-start: $size-400 - 2;
                 }
-            }
-        }
-    }
-
-    @each $variation, $value in $token-colors {
-        &--variation-#{$variation} {
-            &:before {
-                background-color: $value;
-            }
-            #{$block-name}__inner {
-                background-color: rgba($value, 0.1);
-                color: $value;
-            }
-            #{$block-name}__text,
-            #{$block-name}__title {
-                filter: contrast(59%);
             }
         }
     }

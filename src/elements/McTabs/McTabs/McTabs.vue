@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-tabs" :class="classes">
+    <div :class="classes" :style="styles">
         <div class="tabs-component">
             <mc-wrap-scroll tag-name="ul" role="tablist" scrollable class="tabs-component-tabs">
                 <li
@@ -140,11 +140,16 @@ export default {
     computed: {
         classes() {
             return {
-                [`mc-tabs--color-${this.color}`]: this.color,
-                [`mc-tabs--accent-color-${this.accentColor}`]: this.accentColor,
+                'mc-tabs': true,
                 [`mc-tabs--tab-variation-${this.tabVariation}`]: this.tabVariation,
                 [`mc-tabs--uppercase`]: this.uppercase,
                 [`mc-tabs--sticky`]: this.sticky,
+            }
+        },
+        styles() {
+            return {
+                ['--mc-tabs-color']: `var(--color-${this.color})`,
+                ['--mc-tabs-accent-color']: `var(--color-${this.accentColor})`,
             }
         },
         activeTab: {
@@ -384,35 +389,22 @@ export default {
             }
         }
     }
-
-    &--color {
-        @each $color, $value in $token-colors {
-            &-#{$color} {
-                .tabs-component-tab-a {
-                    color: $value;
-                }
-            }
-        }
+    .tabs-component-tab-a {
+        color: var(--mc-tabs-color);
     }
 
-    &--accent-color {
-        @each $color, $value in $token-colors {
-            &-#{$color} {
-                .tabs-component-tab-a {
-                    &::after {
-                        background-color: $value;
-                    }
-                    &:hover {
-                        color: $value;
-                    }
-                }
-                .tabs-component-tab.is-active {
-                    .tabs-component-tab-a {
-                        color: $value;
-                        font-weight: $font-weight-semi-bold;
-                    }
-                }
-            }
+    .tabs-component-tab-a {
+        &::after {
+            background-color: var(--mc-tabs-accent-color);
+        }
+        &:hover {
+            color: var(--mc-tabs-accent-color);
+        }
+    }
+    .tabs-component-tab.is-active {
+        .tabs-component-tab-a {
+            color: var(--mc-tabs-accent-color);
+            font-weight: $font-weight-semi-bold;
         }
     }
 
@@ -484,13 +476,11 @@ export default {
             }
         }
         &__icon {
-            &-prepend,
+            &-prepend {
+                color: var(--mc-tab-icon-prepend-color);
+            }
             &-append {
-                @each $color, $value in $token-colors {
-                    &--color-#{$color} {
-                        color: $value;
-                    }
-                }
+                color: var(--mc-tab-icon-append-color);
             }
         }
     }

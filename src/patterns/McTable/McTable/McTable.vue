@@ -746,15 +746,15 @@ export default {
         border-bottom: 1px solid $color-hover-gray;
     }
     .vxe-cell {
-        padding-left: $space-200;
-        padding-right: $space-200;
+        padding-inline-start: $space-200;
+        padding-inline-end: $space-200;
         &--checkbox {
             display: flex;
             align-items: center;
             max-width: 100%;
-            padding-left: 1.8em;
+            padding-inline-start: 1.8em;
             .vxe-checkbox--icon {
-                margin-right: $space-50;
+                margin-inline-end: $space-50;
                 top: 50%;
                 transform: translateY(-50%);
             }
@@ -811,7 +811,7 @@ export default {
         height: 24px;
         width: 24px;
         min-width: 24px;
-        margin-right: $space-50;
+        margin-inline-end: $space-50;
         @include gradient();
     }
     .preview-content {
