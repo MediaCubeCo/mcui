@@ -275,29 +275,29 @@ export default {
             &__inner {
                 border-radius: 32px;
                 box-shadow: 0px 15px 30px $box-shadow-color;
-                padding: 32px;
+                padding: $space-400;
             }
             &__btn-close,
             &__btn-back {
                 top: 27px;
             }
             &__btn-close {
-                right: 32px;
+                inset-inline-end: $space-400;
             }
             &__btn-back {
-                left: 32px;
+                inset-inline-start: $space-400;
             }
             &__header {
                 padding-bottom: 9px;
                 border-bottom: 2px solid $border-color;
-                margin-bottom: 32px;
+                margin-bottom: $space-400;
             }
             &__control {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 .mc-button {
-                    border-radius: 12px;
+                    border-radius: $radius-150;
                 }
             }
         }
@@ -308,8 +308,8 @@ export default {
         background-color: fade-out($color-black, 0.5);
         position: fixed;
         top: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         bottom: 0;
         width: 100% !important;
         height: 100% !important;
@@ -429,11 +429,9 @@ export default {
         &-center {
             #{$block-name} {
                 &__header {
-                    padding-left: $space-500;
-                    padding-right: $space-500;
+                    padding-inline: $space-500;
                     @media #{$media-query-s} {
-                        padding-left: $space-700;
-                        padding-right: $space-700;
+                        padding-inline: $space-700;
                     }
                 }
             }
@@ -513,54 +511,18 @@ export default {
                 }
                 &__body {
                     @media #{$media-query-s} {
-                        padding-left: $space-300;
-                        padding-right: $space-300;
+                        padding-inline: $space-300;
                     }
                 }
             }
         }
     }
-}
-html[dir='rtl'] {
-    .mc-modal {
-        $border-color: #dee1e9;
-        $box-shadow-color: #20008c28;
-        &__btn-close {
-            position: absolute;
-            right: unset;
-            left: $space-200;
-            top: $space-400;
-            @media #{$media-query-s} {
-                left: $space-600;
-            }
-        }
-        &__btn-back {
-            position: absolute;
-            left: unset;
-            right: $space-200;
-            top: $space-400;
-            transform: rotate(180deg);
-            @media #{$media-query-m} {
-                right: $space-400;
-            }
-        }
-        &.mc-modal--secondary {
-            .mc-modal {
-                &__btn-close {
-                    right: unset;
-                    left: 32px;
-                }
+    @at-root {
+        html[dir='rtl'] {
+            #{$block-name} {
                 &__btn-back {
-                    left: unset;
-                    right: 32px;
+                    transform: rotate(180deg);
                 }
-            }
-        }
-
-        &.v--modal-overlay {
-            .v--modal-box {
-                left: unset !important;
-                right: auto !important;
             }
         }
     }

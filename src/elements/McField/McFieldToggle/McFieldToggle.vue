@@ -1,5 +1,5 @@
 <template>
-    <label class="mc-field-toggle" :class="classes">
+    <label :class="classes" :style="styles">
         <span class="mc-field-toggle__text">
             <!-- @slot Слот для тайтла тогглера -->
             <slot />
@@ -82,11 +82,30 @@ export default {
         },
         classes() {
             return {
+                'mc-field-toggle': true,
                 'mc-field-toggle--checked': this._value,
                 'mc-field-toggle--disabled': this.disabled,
                 'mc-field-toggle--colored-text': this.coloredText,
                 [`mc-field-toggle--text-position-${this.textPosition}`]: this.textPosition,
-                [`mc-field-toggle--color-${this.color}`]: this.color,
+            }
+        },
+        styles() {
+            let disabledColor
+            let saturateValue
+            switch (this.color) {
+                case 'purple': {
+                    disabledColor = 'light-purple'
+                    break
+                }
+                default: {
+                    disabledColor = this.color
+                    saturateValue = '50%'
+                }
+            }
+            return {
+                '--mc-field-toggle-color': this.color && `var(--color-${this.color})`,
+                '--mc-field-toggle-disabled-color': disabledColor && `var(--color-${disabledColor})`,
+                '--mc-field-toggle-saturate-value': saturateValue,
             }
         },
         inputProps() {
@@ -114,7 +133,10 @@ export default {
 <style lang="scss">
 .mc-field-toggle {
     $block-name: &;
-
+    $toggle-indent: $space-50 / 2;
+    --mc-field-toggle-color: initial;
+    --mc-field-disabled-color: initial;
+    --mc-field-toggle-saturate-value: initial;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -124,11 +146,11 @@ export default {
         transition: color $duration-m;
         line-height: $line-height-200;
         font-size: $font-size-200;
-        margin-right: $space-100;
+        margin-inline-end: $space-100;
         text-align: right;
 
         &:empty {
-            margin-right: 0;
+            margin-inline-end: 0;
         }
     }
 
@@ -157,8 +179,7 @@ export default {
     &--text-position-right {
         #{$block-name}__text {
             order: 2;
-            margin-right: 0;
-            margin-left: $space-100;
+            margin-inline: $space-100 0;
             text-align: left;
         }
     }
@@ -176,7 +197,7 @@ export default {
                 background-color: $color-purple;
 
                 &:before {
-                    transform: translateX($space-300);
+                    inset-inline-start: $space-300 + $toggle-indent;
                 }
             }
         }
@@ -190,7 +211,7 @@ export default {
             &::before {
                 @include pseudo();
                 @include size($size-200);
-                @include position(null, null null 2px 2px);
+                @include position(null, null null $toggle-indent $toggle-indent);
                 background-color: $color-white;
                 transition: $duration-m;
                 border-radius: $radius-circle;
@@ -207,55 +228,13 @@ export default {
             }
         }
     }
-
-    @each $color, $value in $token-colors {
-        &--color-#{$color} {
-            #{$block-name}__wrapper > #{$block-name}__field:checked + #{$block-name}__slider {
-                background-color: $value;
-            }
-            &#{$block-name}--disabled {
-                &#{$block-name}--checked #{$block-name}__slider {
-                    @if $color != 'purple' {
-                        background-color: $value !important;
-                        filter: saturate(50%);
-                    } @else {
-                        background-color: $color-light-purple !important;
-                    }
-                }
-            }
-        }
+    #{$block-name}__wrapper > #{$block-name}__field:checked + #{$block-name}__slider {
+        background-color: var(--mc-field-toggle-color);
     }
-}
-html[dir='rtl'] {
-    .mc-field-toggle {
-        &__text {
-            margin-right: 0;
-            margin-left: $space-100;
-            &:empty {
-                margin-left: 0;
-            }
-        }
-        &--text-position-right {
-            .mc-field-toggle__text {
-                margin-left: 0;
-                margin-right: $space-100;
-            }
-        }
-
-        &__wrapper {
-            & > .mc-field-toggle__field {
-                &:checked + .mc-field-toggle__slider {
-                    &:before {
-                        transform: translateX(-$space-300);
-                    }
-                }
-            }
-
-            .mc-field-toggle__slider {
-                &::before {
-                    @include position(null, null 2px 2px null);
-                }
-            }
+    &#{$block-name}--disabled {
+        &#{$block-name}--checked #{$block-name}__slider {
+            background-color: var(--mc-field-toggle-disabled-color) !important;
+            filter: saturate(var(--mc-field-toggle-saturate-value));
         }
     }
 }

@@ -70,12 +70,6 @@ export default {
         }
         const classes = {
             'mc-separator': true,
-            [`mc-separator--weight-${props.weight}`]: props.weight,
-            [`mc-separator--color-${props.color}`]: props.color,
-            [`mc-separator--indent-top-${indents.top}`]: indents.top,
-            [`mc-separator--indent-bottom-${indents.bottom}`]: indents.bottom,
-            [`mc-separator--indent-left-${indents.left}`]: indents.left,
-            [`mc-separator--indent-right-${indents.right}`]: indents.right,
             ...(data.class || {}),
         }
 
@@ -85,6 +79,22 @@ export default {
         }
 
         let style = {}
+        if (props.color) style['--mc-separator-color'] = `var(--color-${props.color})`
+        if (indents.top) style['--mc-separator-indent-top'] = `var(--space-${indents.top})`
+        if (indents.bottom) style['--mc-separator-indent-bottom'] = `var(--space-${indents.bottom})`
+        if (indents.left) style['--mc-separator-indent-left'] = `var(--space-${indents.left})`
+        if (indents.right) style['--mc-separator-indent-right'] = `var(--space-${indents.right})`
+        let weight
+        switch (props.weight) {
+            case 's': {
+                weight = '1px'
+                break
+            }
+            case 'm': {
+                weight = '2px'
+            }
+        }
+        if (weight) style['--separator-weight'] = weight
         if (data.staticStyle) {
             style = data.staticStyle
         }
@@ -110,49 +120,22 @@ export default {
 </script>
 
 <style lang="scss">
-$weights: (
-    's': 1px,
-    'm': 2px,
-);
-
 .mc-separator {
     $block-name: &;
-
+    --mc-separator-indent-top: initial;
+    --mc-separator-indent-bottom: initial;
+    --mc-separator-indent-left: initial;
+    --mc-separator-indent-right: initial;
+    --mc-separator-weight: initial;
     width: 100%;
-
-    @each $key, $value in $weights {
-        &--weight-#{$key} {
-            height: #{$value};
-        }
-    }
-
-    &--color {
-        @each $color, $value in $token-colors {
-            &-#{$color} {
-                #{$block-name}__wrapper {
-                    @include size(100%);
-                    background-color: $value;
-                }
-            }
-        }
-    }
-
-    @each $key, $value in $token-spaces {
-        &--indent-top-#{$key} {
-            margin-top: #{$value};
-        }
-
-        &--indent-bottom-#{$key} {
-            margin-bottom: #{$value};
-        }
-
-        &--indent-left-#{$key} {
-            padding-left: #{$value};
-        }
-
-        &--indent-right-#{$key} {
-            padding-right: #{$value};
-        }
+    margin-top: var(--mc-separator-indent-top);
+    margin-bottom: var(--mc-separator-indent-bottom);
+    margin-inline-start: var(--mc-separator-indent-left);
+    margin-inline-end: var(--mc-separator-indent-right);
+    height: var(--mc-separator-weight);
+    &__wrapper {
+        @include size(100%);
+        background-color: var(--separator-color);
     }
 }
 </style>

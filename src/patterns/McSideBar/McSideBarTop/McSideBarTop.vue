@@ -195,15 +195,15 @@ export default {
             cursor: pointer;
         }
         .mc-preview__left {
-            margin-right: 0;
+            margin-inline-end: 0;
         }
         .mc-button {
             line-height: $line-height-250;
             &__text {
-                margin-left: $space-100;
+                margin-inline-start: $space-100;
             }
             &__append {
-                margin-left: 0;
+                margin-inline-start: 0;
             }
             .rotate {
                 @include size($size-200);
@@ -211,7 +211,7 @@ export default {
         }
     }
     &__img {
-        margin-left: $space-100;
+        margin-inline-start: $space-100;
     }
     &__activator-btn {
         font-size: $font-size-400;

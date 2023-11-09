@@ -82,7 +82,7 @@ export default {
             // Сравниваем переданный лимит с заново выставленным, если они не равны, то ререндерим потомков
             if (this.custom_limit !== limit) this.toggleChilds(true, this.custom_limit)
         },
-        setStyles(elem, opacity = 1, visibility = 'visible', position = 'initial') {
+        setStyles(elem, opacity = 1, visibility = 'visible', position = 'relative') {
             elem.style.opacity = opacity
             elem.style.visibility = visibility
             elem.style.position = position
@@ -141,7 +141,7 @@ export default {
         width: auto;
         position: sticky;
         right: 0;
-        margin-left: $space-50;
+        margin-inline-start: $space-50;
         flex: 0 0 auto;
         font-size: $font-size-200;
         line-height: $line-height-200;

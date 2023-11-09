@@ -88,7 +88,7 @@ export default {
     @include position(absolute, 0);
     z-index: 10;
     background-color: $color-white;
-    border-left: 1px solid $color-hover-gray;
+    border-inline-start: 1px solid $color-hover-gray;
     display: flex;
     flex-direction: column;
     @include custom-scroll();
@@ -124,7 +124,7 @@ export default {
                 background: linear-gradient(to top, $color-white, transparent);
                 position: absolute;
                 width: 100%;
-                left: 0;
+                inset-inline-start: 0;
                 bottom: 100%;
                 pointer-events: none;
             }

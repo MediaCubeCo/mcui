@@ -6,6 +6,7 @@
         class="mc-button"
         :class="classes"
         :exact="exact"
+        :style="styles"
         v-on="$listeners"
         @mouseover="animateUp"
         @mouseleave="animateDown"
@@ -25,6 +26,7 @@
             <!-- @slot Слот для вставки в конец -->
             <slot name="icon-append" />
         </span>
+        <div v-if="!isVariationLink" class="mc-button__background" />
     </component>
 </template>
 
@@ -232,7 +234,9 @@ export default {
             type: [String, Number],
         },
     },
-
+    data: () => ({
+        custom_background: null,
+    }),
     computed: {
         classes() {
             return {
@@ -248,10 +252,68 @@ export default {
                 'mc-button--full-width': this.fullWidth,
                 'mc-button--uppercase': this.uppercase,
                 'mc-button--shadow': this.shadow,
-                [`mc-button--secondary-color-${this.secondaryColor}`]: this.secondaryColor,
+                'mc-button--secondary-color': !!this.secondaryColor,
                 'mc-button--underline-link': this.underlineLink,
                 'mc-button--bg-flat': this.bgFlat,
-                [`mc-button--weight-${this.weight}`]: this.weight,
+                [`mc-button--type-${this.buttonVariation.type}`]: this.buttonVariation.type,
+            }
+        },
+        buttonVariation() {
+            const variation = this.custom_background || this.variation
+            const texts = variation.split('-')
+            const currentStyle = texts[texts.length - 1]
+            let color = variation.replace(`-${currentStyle}`, '')
+            switch (currentStyle) {
+                case 'link':
+                case 'flat':
+                case 'outline':
+                case 'invert': {
+                    break
+                }
+                default: {
+                    color = variation
+                    break
+                }
+            }
+            return {
+                color,
+                type: currentStyle,
+            }
+        },
+        styles() {
+            let hoverBrightness
+            let textColor
+            switch (this.buttonVariation.type) {
+                case 'link':
+                case 'flat':
+                case 'outline':
+                case 'invert': {
+                    break
+                }
+                default: {
+                    switch (this.buttonVariation.color) {
+                        case 'yellow':
+                        case 'white': {
+                            hoverBrightness = '0.9'
+                            break
+                        }
+                        case 'toxic': {
+                            break
+                        }
+                        default: {
+                            textColor = 'white'
+                        }
+                    }
+                    break
+                }
+            }
+
+            return {
+                '--mc-button-secondary-color': this.secondaryColor && `var(--color-${this.secondaryColor})`,
+                '--mc-button-background-color': this.variation && `var(--color-${this.buttonVariation.color})`,
+                '--mc-button-font-weight': this.weight && `var(--font-weight-${this.weight})`,
+                '--mc-button-hover-brightness': hoverBrightness,
+                '--mc-button-text-color': textColor && `var(--color-${textColor})`,
             }
         },
         tag() {
@@ -261,6 +323,9 @@ export default {
                 return 'a'
             }
             return this.defaultTag
+        },
+        isVariationLink() {
+            return this.buttonVariation.type === 'link'
         },
         tagBind() {
             const result = {}
@@ -272,9 +337,7 @@ export default {
                 result.disabled = true
             }
 
-            if (this.variation?.match('link')) {
-                result.rel = 'noreferrer'
-            }
+            if (this.isVariationLink) result.rel = 'noreferrer'
             result.type = this.type
             result.tabindex = this.tabindex
 
@@ -291,8 +354,7 @@ export default {
             if (this.animation) {
                 this.customAnimation?.text &&
                     (this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = this.customAnimation?.text)
-                this.$refs['mc-button'].classList.remove(`mc-button--variation-${this.variation}`)
-                this.$refs['mc-button'].classList.add(`mc-button--variation-${this.customAnimation?.background}`)
+                this.custom_background = this.customAnimation?.background
             }
         },
         animateDown() {
@@ -305,24 +367,26 @@ export default {
             this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = defaultSlotText
                 ? defaultSlotText.text
                 : ''
-            this.$refs['mc-button'].classList.remove(`mc-button--variation-${this.customAnimation?.background}`)
-            this.$refs['mc-button'].classList.add(`mc-button--variation-${this.variation}`)
+            this.custom_background = null
         },
     },
 }
 </script>
 
 <style lang="scss">
-$colors: $token-colors;
-
 .mc-button {
     $block-name: &;
-
     @include reset();
+    --mc-button-background-color: #{$color-transparent};
+    --mc-button-font-weight: #{$font-weight-normal};
+    --mc-button-text-color: #{$color-black};
+    --mc-button-hover-brightness: 0.9;
+    --mc-button-secondary-color: initial;
     position: relative;
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    border: none;
     flex-wrap: nowrap;
     max-width: 100%;
     font-family: $font-family-main;
@@ -331,53 +395,56 @@ $colors: $token-colors;
     user-select: none;
     text-decoration: none;
     text-transform: none;
-    background-color: transparent;
-    background-image: none;
+    background: none;
     cursor: pointer;
     outline: 0;
-    border: 1px solid transparent;
     transition: all $duration-s;
-
-    color: $color-black;
+    font-weight: var(--mc-button-font-weight);
+    color: var(--mc-button-text-color);
     -webkit-appearance: none;
     -webkit-text-fill-color: currentColor;
+    z-index: 0;
 
     &__loader {
         display: none;
         @include align(true, true, absolute);
+        z-index: 1;
         &-icon {
             animation: $animation-spinner;
         }
     }
-
     &__prepend,
     &__append {
         display: inline-flex;
         align-items: center;
+        z-index: 1;
     }
 
     &__text {
         @include ellipsis($display: inline-block);
         @include layout-flex-fix();
-
+        z-index: 1;
         &:empty {
             display: none;
         }
     }
+    @mixin hoverMixin {
+        @media #{$media-desktop} {
+            &:hover {
+                #{$block-name}__background {
+                    @content;
+                }
+            }
+        }
 
-    &--weight {
-        &-normal {
-            font-weight: $font-weight-normal;
+        &:active {
+            #{$block-name}__background {
+                @content;
+            }
         }
-        &-medium {
-            font-weight: $font-weight-medium;
-        }
-        &-semi-bold {
-            font-weight: $font-weight-semi-bold;
-        }
-        &-bold {
-            font-weight: $font-weight-bold;
-        }
+    }
+    @include hoverMixin {
+        filter: brightness(var(--mc-button-hover-brightness));
     }
 
     &--size {
@@ -401,10 +468,10 @@ $colors: $token-colors;
 
             #{$block-name} {
                 &__prepend {
-                    margin-right: $space-50;
+                    margin-inline-end: $space-50;
                 }
                 &__append {
-                    margin-left: $space-50;
+                    margin-inline-start: $space-50;
                 }
             }
         }
@@ -428,10 +495,10 @@ $colors: $token-colors;
 
             #{$block-name} {
                 &__prepend {
-                    margin-right: $space-50;
+                    margin-inline-end: $space-50;
                 }
                 &__append {
-                    margin-left: $space-50;
+                    margin-inline-start: $space-50;
                 }
             }
         }
@@ -455,10 +522,10 @@ $colors: $token-colors;
 
             #{$block-name} {
                 &__prepend {
-                    margin-right: $space-50;
+                    margin-inline-end: $space-50;
                 }
                 &__append {
-                    margin-left: $space-50;
+                    margin-inline-start: $space-50;
                 }
             }
         }
@@ -481,10 +548,10 @@ $colors: $token-colors;
 
             #{$block-name} {
                 &__prepend {
-                    margin-right: $space-50;
+                    margin-inline-end: $space-50;
                 }
                 &__append {
-                    margin-left: $space-50;
+                    margin-inline-start: $space-50;
                 }
             }
         }
@@ -507,10 +574,10 @@ $colors: $token-colors;
 
             #{$block-name} {
                 &__prepend {
-                    margin-right: $space-100;
+                    margin-inline-end: $space-100;
                 }
                 &__append {
-                    margin-left: $space-100;
+                    margin-inline-start: $space-100;
                 }
             }
         }
@@ -529,215 +596,121 @@ $colors: $token-colors;
         }
     }
 
-    @each $color, $value in $colors {
-        &--variation-#{$color} {
-            @if $color == 'white' or $color == 'yellow' {
-                background-color: $value;
-
-                @media #{$media-desktop} {
-                    &:hover {
-                        background-color: fade-out($value, 1 - $opacity-hover);
-                    }
-                }
-
-                &:active {
-                    background-color: fade-out($value, 1 - $opacity-active);
-                }
-
-                &-flat {
-                    color: $value;
-
-                    @media #{$media-desktop} {
-                        &:hover {
-                            opacity: $opacity-hover;
-                        }
-                    }
-
-                    &:active {
-                        opacity: $opacity-active;
-                    }
-                }
-
-                &-link {
-                    color: $value;
-                    padding: 0;
-                    @include size(auto);
-                    border: none;
-                    user-select: text;
-
-                    &#{$block-name}--size-l {
-                        line-height: $line-height-250;
-                    }
-
-                    @media #{$media-desktop} {
-                        &:hover {
-                            color: darken($value, 12%);
-                        }
-                    }
-
-                    &:active {
-                        color: darken($value, 16%);
-                    }
-
-                    &#{$block-name} {
-                        &--disabled {
-                            opacity: $opacity-disabled;
-                            background-color: transparent !important;
-                            color: $value !important;
-                            border-color: transparent !important;
-                        }
-                    }
-                }
-            } @else {
-                background-color: $value;
-
-                @if $color == 'toxic' {
-                    color: $color-black;
-                } @else {
-                    color: $color-white;
-                }
-
-                @media #{$media-desktop} {
-                    &:hover {
-                        background-color: darken($value, 10%);
-                    }
-                }
-
-                &:active {
-                    background-color: darken($value, 15%);
-                }
-
-                &#{$block-name} {
-                    &--shadow {
-                        box-shadow: 0 3px 10px fade-out($value, 0.8);
-                    }
-                }
+    &__background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include size(100%);
+        opacity: 1 !important;
+        border: 1px solid $color-transparent;
+        border-radius: inherit;
+        background-color: var(--mc-button-background-color);
+        transition: all $duration-s;
+    }
+    &--type {
+        &-outline {
+            color: var(--mc-button-background-color);
+            #{$block-name}__background {
+                opacity: 0.6 !important;
+                background-color: $color-transparent;
+                border-color: var(--mc-button-background-color);
             }
-
-            &-invert {
-                background-color: fade-out($value, 0.9);
-                color: $value;
-
-                @media #{$media-desktop} {
-                    &:hover {
-                        background-color: fade-out($value, 0.8);
+            @media #{$media-desktop} {
+                &:hover {
+                    #{$block-name}__background {
+                        background-color: var(--mc-button-background-color);
+                        opacity: 0.2 !important;
                     }
                 }
-
                 &:active {
-                    background-color: fade-out($value, 0.75);
-                }
-
-                &#{$block-name} {
-                    &--shadow {
-                        box-shadow: 0 3px 10px fade-out($value, 0.8);
-                    }
-                }
-            }
-
-            &-outline {
-                border-color: fade-out($value, 0.6);
-                color: $value;
-
-                @media #{$media-desktop} {
-                    &:hover {
-                        background-color: fade-out($value, 0.8);
-                        border-color: fade-out($value, 1);
-                    }
-                }
-
-                &:active {
-                    border-color: fade-out($value, 1);
-                    background-color: fade-out($value, 0.7);
-                }
-
-                &#{$block-name} {
-                    &--shadow {
-                        box-shadow: 0 3px 10px fade-out($value, 0.8);
-                    }
-                }
-            }
-
-            &-flat {
-                color: $value;
-
-                @media #{$media-desktop} {
-                    &:hover {
-                        background-color: fade-out($value, 0.9);
-                    }
-                }
-
-                &:active {
-                    background-color: fade-out($value, 0.85);
-                }
-
-                &#{$block-name} {
-                    &--shadow {
-                        box-shadow: 0 3px 10px fade-out($value, 0.8);
-                    }
-                }
-            }
-
-            &-link {
-                color: $value;
-                padding: 0;
-                @include size(auto);
-                border: none;
-                user-select: text;
-
-                &#{$block-name}--size-l {
-                    line-height: $line-height-250;
-                }
-
-                @media #{$media-desktop} {
-                    &:hover {
-                        color: darken($value, 12%);
-                    }
-                }
-
-                &:active {
-                    color: darken($value, 16%);
-                }
-
-                &#{$block-name} {
-                    &--disabled {
-                        opacity: $opacity-disabled;
-                        background-color: transparent !important;
-                        color: $value !important;
-                        border-color: transparent !important;
+                    #{$block-name}__background {
+                        background-color: var(--mc-button-background-color);
+                        border: none;
                     }
                 }
             }
         }
-
-        &--secondary-color-#{$color} {
+        &-invert {
+            color: var(--mc-button-background-color);
+            #{$block-name} {
+                &__background {
+                    opacity: 0.1 !important;
+                }
+            }
+            @include hoverMixin {
+                opacity: 0.2 !important;
+            }
+        }
+        &-flat {
+            color: var(--mc-button-background-color);
+            #{$block-name}__background {
+                opacity: 0 !important;
+            }
+            @include hoverMixin {
+                opacity: 0.1 !important;
+            }
+        }
+        &-link {
+            color: var(--mc-button-background-color);
+            padding: 0;
+            @include size(auto);
+            border: none;
+            user-select: text;
+            &#{$block-name}--size-l {
+                line-height: $line-height-250;
+            }
+            &#{$block-name} {
+                &--disabled {
+                    opacity: $opacity-disabled;
+                    background-color: transparent !important;
+                    color: var(--mc-button-background-color) !important;
+                    border-color: transparent !important;
+                }
+            }
             @media #{$media-desktop} {
                 &:hover {
-                    color: $value;
+                    filter: brightness(0.85);
                 }
             }
 
             &:active {
-                color: $value;
+                filter: brightness(0.85);
             }
-        }
-
-        &--underline-link {
-            &#{$block-name}--variation-#{$color} {
-                &-link {
-                    #{$block-name}__text {
-                        text-decoration: underline;
-                    }
+            #{$block-name} {
+                &__background {
+                    display: none;
                 }
             }
         }
-
-        &--bg-flat {
-            &#{$block-name}--variation-#{$color} {
-                &-flat {
-                    background-color: fade-out($value, 0.9);
+    }
+    &--bg-flat {
+        #{$block-name} {
+            &__background {
+                opacity: 0.1 !important;
+            }
+        }
+    }
+    &--shadow {
+        box-shadow: 0 3px 10px var(--mc-button-background-color);
+    }
+    &--underline-link {
+        #{$block-name} {
+            &-link {
+                #{$block-name}__text {
+                    text-decoration: underline !important;
                 }
             }
+        }
+    }
+
+    &--secondary-color {
+        @media #{$media-desktop} {
+            &:hover {
+                color: var(--mc-button-secondary-color);
+            }
+        }
+        &:active {
+            color: var(--mc-button-secondary-color);
         }
     }
 
@@ -807,75 +780,12 @@ $colors: $token-colors;
     }
 
     &--disabled {
-        background-color: $color-hover-gray;
-        border-color: $color-hover-gray;
         color: $color-outline-gray;
         cursor: not-allowed;
-    }
-}
-
-html[dir='rtl'] {
-    .mc-button {
-        &--size {
-            &-xxs {
-                .mc-button {
-                    &__prepend {
-                        margin-right: 0;
-                        margin-left: $space-50;
-                    }
-                    &__append {
-                        margin-left: 0;
-                        margin-right: $space-50;
-                    }
-                }
-            }
-            &-xs {
-                .mc-button {
-                    &__prepend {
-                        margin-right: 0;
-                        margin-left: $space-50;
-                    }
-                    &__append {
-                        margin-left: 0;
-                        margin-right: $space-50;
-                    }
-                }
-            }
-            &-s {
-                .mc-button {
-                    &__prepend {
-                        margin-right: 0;
-                        margin-left: $space-50;
-                    }
-                    &__append {
-                        margin-left: 0;
-                        margin-right: $space-50;
-                    }
-                }
-            }
-            &-m {
-                .mc-button {
-                    &__prepend {
-                        margin-right: 0;
-                        margin-left: $space-50;
-                    }
-                    &__append {
-                        margin-left: 0;
-                        margin-right: $space-50;
-                    }
-                }
-            }
-            &-l {
-                .mc-button {
-                    &__prepend {
-                        margin-right: 0;
-                        margin-left: $space-100;
-                    }
-                    &__append {
-                        margin-left: 0;
-                        margin-right: $space-100;
-                    }
-                }
+        #{$block-name} {
+            &__background {
+                background-color: $color-hover-gray;
+                border-color: $color-hover-gray;
             }
         }
     }

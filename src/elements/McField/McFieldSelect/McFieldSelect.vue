@@ -1,5 +1,5 @@
 <template>
-    <div ref="field" class="mc-field-select" :class="classes" :style="styles">
+    <div ref="field" :dir="dir" :class="classes" :style="styles">
         <div :for="name" class="mc-field-select__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
@@ -37,7 +37,7 @@
                             class="mc-field-select__label-text"
                             :class="hasPrepend ? 'mc-field-select__label-text--indent-left' : ''"
                         >
-                            {{ option ? option.name : this.placeholder }}
+                            {{ option ? option.name : placeholder }}
                         </div>
                     </div>
                 </template>
@@ -355,23 +355,51 @@ export default {
             }
             return options
         },
+        rtl() {
+            return LANGUAGES.rtl.includes(this.locale)
+        },
+        dir() {
+            return this.rtl ? 'rtl' : null
+        },
         classes() {
             return {
+                'mc-field-select': true,
                 'mc-field-select--error': this.errorText,
                 'mc-field-select--disabled': this.disabled,
                 [`mc-field-select--bg-${this.backgroundColor}`]: this.backgroundColor,
                 'mc-field-select--is-empty-options-list': this.isEmptyOptionsList,
                 'mc-field-select--with-preview': this.optionWithPreview,
                 'mc-field-select--max-height': this.maxHeight,
-                'mc-field-select--rtl': LANGUAGES.rtl.includes(this.locale),
+                'mc-field-select--rtl': this.rtl,
             }
         },
         computedTitle() {
             return `${this.title}${this.required ? ' *' : ''}`
         },
         styles() {
+            const darkColors = ['gray', 'dark-gray', 'black']
+            const lightColors = ['white']
+            let placeHolderColor
+            let borderColor = this.backgroundColor
+            let backgroundColor = this.backgroundColor
+            let labelColor
+            if (!this.backgroundColor || lightColors.includes(this.backgroundColor)) {
+                borderColor = 'purple'
+            }
+            if (darkColors.includes(this.backgroundColor)) {
+                labelColor = 'white'
+                placeHolderColor = 'white'
+                borderColor = 'black'
+            }
+            if (this.disabled && !this.backgroundColor) {
+                backgroundColor = 'hover-gray'
+            }
             return {
-                '--max-height': this.maxHeight,
+                '--mc-field-select-max-height': this.maxHeight,
+                '--mc-field-select-color': backgroundColor && `var(--color-${backgroundColor})`,
+                '--mc-field-select-border-color': borderColor && `var(--color-${borderColor})`,
+                '--mc-field-select-label-color': labelColor && `var(--color-${labelColor})`,
+                '--mc-field-select-placeholder-color': placeHolderColor && `var(--color-${placeHolderColor})`,
             }
         },
         _value() {
@@ -383,7 +411,7 @@ export default {
                         ...(this.groupKeys ? this.options.map(o => o[this.groupKeys.values]).flat() : this.options),
                     ]
                     let option = options.find(o => {
-                        if (o.value.hasOwnProperty('id') && o.value.id == value.id) {
+                        if (o.value?.hasOwnProperty('id') && o.value.id == value.id) {
                             return true
                         }
                         return o.value == value
@@ -428,9 +456,11 @@ export default {
         },
         findClosestScrollElement(element) {
             if (!element) return document.documentElement
-            const {  overflow, overflowY  } = getComputedStyle(element)
+            const { overflow, overflowY } = getComputedStyle(element)
             const scrollableVariants = ['auto', 'scroll']
-            return scrollableVariants.some(v => [overflow, overflowY].includes(v)) ? element : this.findClosestScrollElement(element.parentNode)
+            return scrollableVariants.some(v => [overflow, overflowY].includes(v))
+                ? element
+                : this.findClosestScrollElement(element.parentNode)
         },
         initScroll() {
             // looking for closest scroll elemen to track select list position dynamically
@@ -445,7 +475,7 @@ export default {
             const fieldHeght = this.$refs.field.clientHeight
             const scrolledElementTop = this.closest_scroll_element?.getBoundingClientRect().top
 
-            if ( scrolledHeight - fieldHeght - scrolledElementTop -top > 0) return ref.deactivate()
+            if (scrolledHeight - fieldHeght - scrolledElementTop - top > 0) return ref.deactivate()
 
             if (ref) {
                 ref.$refs.list.style.width = `${width}px`
@@ -511,14 +541,13 @@ export default {
 </script>
 
 <style lang="scss">
-$colors: $token-colors;
-$gray-scale: 'gray', 'dark-gray', 'black';
-$text-black: scale-color($color-black, $alpha: -10%);
-$text-white: scale-color($color-white, $alpha: -10%);
-
 .mc-field-select {
     $block-name: &;
-
+    --mc-field-select-color: initial;
+    --mc-field-select-label-color: #{$color-black};
+    --mc-field-select-border-color: initial;
+    --mc-field-select-max-height: initial;
+    --mc-field-select-placeholder-color: #{$color-gray};
     @include custom-scroll($space-100);
     font-family: $font-family-main;
 
@@ -558,26 +587,27 @@ $text-white: scale-color($color-white, $alpha: -10%);
         @include ellipsis();
         font-size: $font-size-200;
         line-height: $line-height-200;
-        padding-left: $space-50;
-        color: $color-black;
+        padding-inline-start: $space-50;
+        color: var(--mc-field-select-label-color);
         &--indent-left {
-            margin-left: $space-300;
+            margin-inline-start: $space-300;
         }
     }
 
     .multiselect {
         &__placeholder {
             @include ellipsis();
-            color: $color-gray;
+            color: var(--mc-field-select-placeholder-color);
             font-size: $font-size-200;
             line-height: $line-height-200;
             margin-bottom: $space-150 - 1px;
             padding-top: $space-150 - 1px;
-            padding-left: $space-50;
+            padding-inline-start: $space-50;
+            width: 100%;
         }
 
         &__single {
-            padding-left: 0;
+            padding-inline-start: 0;
             margin-bottom: $space-150 - 1px;
             margin-top: $space-150 - 1px;
             background-color: transparent;
@@ -589,13 +619,13 @@ $text-white: scale-color($color-white, $alpha: -10%);
         }
 
         &__input {
-            padding-left: $space-50;
+            padding-inline-start: $space-50;
             margin-bottom: $space-150 - 2px;
             padding-top: $space-150 - 1px;
             font-size: $font-size-200;
             line-height: $line-height-200;
             min-height: auto;
-
+            background-color: $color-transparent;
             @include input-placeholder() {
                 color: $color-gray;
             }
@@ -605,9 +635,10 @@ $text-white: scale-color($color-white, $alpha: -10%);
             overflow: hidden;
             height: $space-350;
             width: $space-300;
-            right: $space-100;
+            inset-inline-end: $space-100;
             top: 6px;
             padding: 0;
+            z-index: 1;
             &::before {
                 direction: ltr;
                 width: 0;
@@ -615,19 +646,30 @@ $text-white: scale-color($color-white, $alpha: -10%);
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
                 border-bottom: 5px solid transparent;
-                border-top: 5px solid $text-black;
+                border-top: 5px solid var(--mc-field-select-label-color);
             }
         }
 
         &__tags {
             @include reset-text-indents();
+            position: relative;
             border: 1px solid $color-outline-gray;
             border-radius: $radius-100 !important;
-            padding: 0 $space-500 0 $space-100;
+            padding: 0;
+            padding-inline: $space-100 $space-500;
             overflow: hidden;
             text-align: start;
             &:hover {
                 border-color: $color-purple;
+            }
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                @include size(100%);
+                background-color: var(--mc-field-select-color);
+                opacity: 0.6;
             }
         }
 
@@ -671,6 +713,7 @@ $text-white: scale-color($color-white, $alpha: -10%);
             background-color: $color-purple;
             border-radius: $radius-circle;
             flex: 0 0 auto;
+            margin-inline-start: $space-100;
 
             &:hover {
                 background-color: $color-red;
@@ -736,114 +779,14 @@ $text-white: scale-color($color-white, $alpha: -10%);
         &--active {
             .multiselect {
                 &__tags {
-                    border-color: $color-purple;
+                    &:before {
+                        background-color: $color-transparent;
+                    }
+                    border-color: var(--mc-field-select-border-color);
                 }
                 &__select {
                     &::before {
-                        border-color: $color-purple transparent transparent;
-                    }
-                }
-            }
-        }
-    }
-
-    @each $color, $value in $token-colors {
-        &--bg-#{$color} {
-            .multiselect {
-                &__tags {
-                    background-color: fade-out($value, 0.6);
-                }
-
-                @if $color != 'white' {
-                    &__tags {
-                        border-color: transparent;
-                    }
-                }
-
-                &--active {
-                    .multiselect {
-                        &__tags {
-                            background-color: transparent;
-                            @if $color != 'white' {
-                                border-color: $value;
-                            }
-                        }
-
-                        &__select {
-                            &:before {
-                                border-color: $text-black transparent transparent;
-                            }
-                        }
-                    }
-                }
-            }
-
-            &#{$block-name}--disabled {
-                .multiselect--disabled {
-                    .multiselect {
-                        &__tags {
-                            background-color: fade-out($value, 0.6);
-                            @if $color != 'white' {
-                                border-color: $color-outline-gray !important;
-                            }
-                        }
-
-                        &__select {
-                            &::before {
-                                border-color: $color-outline-gray transparent transparent;
-                            }
-                        }
-                    }
-                }
-                & #{$block-name}__label-text {
-                    color: $color-gray;
-                }
-            }
-
-            @each $col-g in $gray-scale {
-                @if $color == $col-g {
-                    #{$block-name}__label-text {
-                        color: $text-white;
-                    }
-
-                    .multiselect {
-                        &__tags {
-                            background-color: $value;
-                        }
-
-                        &__placeholder {
-                            color: $text-white;
-                        }
-
-                        &__select {
-                            &::before {
-                                border-color: $text-white transparent transparent;
-                            }
-                        }
-
-                        &--active {
-                            .multiselect {
-                                &__tags {
-                                    border-color: $color-black;
-                                }
-                            }
-                        }
-                    }
-
-                    &#{$block-name}--disabled {
-                        .multiselect--disabled {
-                            .multiselect {
-                                &__tags {
-                                    background-color: $value;
-                                }
-
-                                &__select {
-                                    &::before {
-                                        border-color: fade-out($color-outline-gray, 0.3) transparent transparent;
-                                    }
-                                }
-                            }
-                        }
+                        border-color: $color-purple $color-transparent $color-transparent;
                     }
                 }
             }
@@ -872,24 +815,16 @@ $text-white: scale-color($color-white, $alpha: -10%);
             opacity: 1;
             background: transparent;
             .multiselect {
-                &__tags {
-                    border-color: $color-outline-gray;
-                    background-color: $color-hover-gray;
-                }
-
                 &__placeholder {
                     color: $color-gray;
                 }
-
                 &__single {
                     & #{$block-name}__label-text {
                         color: $color-gray;
                     }
                 }
-
                 &__select {
                     background-color: transparent;
-
                     &::before {
                         border-color: $color-outline-gray transparent transparent;
                     }
@@ -913,7 +848,8 @@ $text-white: scale-color($color-white, $alpha: -10%);
                 margin: 0;
             }
             &__tags {
-                padding: $space-200 $space-150;
+                padding: $space-200 0;
+                padding-inline: $space-150;
                 cursor: pointer;
                 border-color: $color-outline-light;
             }
@@ -928,12 +864,8 @@ $text-white: scale-color($color-white, $alpha: -10%);
     &--max-height {
         .multiselect {
             &__tags {
-                max-height: var(--max-height);
+                max-height: var(--mc-field-select-max-height);
                 overflow-y: auto;
-            }
-            // Фиксит баг, когда пропадает стрелка на iPhone при установленной максимальной высоте блока
-            &__select {
-                z-index: 1;
             }
         }
     }
@@ -946,67 +878,6 @@ $text-white: scale-color($color-white, $alpha: -10%);
 
     &--rtl {
         direction: rtl;
-    }
-
-    @at-root {
-        #{$block-name}--rtl,
-        html[dir='rtl'] #{$block-name} {
-            &__single-label {
-                @include child-indent-right(0);
-                @include child-indent-left-rtl($space-50);
-            }
-            &__label-text {
-                padding-left: 0;
-                padding-right: $space-50;
-                &--indent-left {
-                    margin-left: 0;
-                    margin-right: $space-300;
-                }
-            }
-
-            .multiselect {
-                &__placeholder {
-                    padding-left: 0;
-                    padding-right: $space-50;
-                    width: 100%;
-                }
-
-                &__single {
-                    padding-right: 0;
-                }
-
-                &__input {
-                    padding-left: 0;
-                    padding-right: $space-50;
-                }
-                &__tags-wrap {
-                    @include child-indent-right(0);
-                    @include child-indent-left-rtl($space-100);
-                }
-                &__tag-icon {
-                    margin-left: unset;
-                    margin-right: 7px;
-                }
-                &__tags {
-                    padding: 0 $space-100 0 $space-500;
-                    text-align: right;
-                }
-                &__select {
-                    right: unset;
-                    left: 1px;
-                }
-            }
-            &--with-preview {
-                .mc-preview {
-                    align-items: center;
-                }
-                .multiselect {
-                    &__tags {
-                        padding: $space-200 $space-150;
-                    }
-                }
-            }
-        }
     }
 }
 </style>

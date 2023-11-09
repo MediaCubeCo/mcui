@@ -726,6 +726,9 @@ export default {
             > * {
                 @include child-indent-right($space-300);
             }
+            .mc-button {
+                @include child-indent-right($space-zero);
+            }
         }
         .mx-btn.mx-datepicker-btn-confirm {
             display: none;

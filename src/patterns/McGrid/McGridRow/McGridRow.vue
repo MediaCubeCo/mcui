@@ -100,6 +100,41 @@ export default {
             if (this.wrap) {
                 result['flex-wrap'] = 'wrap'
             }
+            let justify
+            switch (this.justify) {
+                case 'left':
+                    justify = 'flex-start'
+                    break
+                case 'right':
+                    justify = 'flex-end'
+                    break
+                case 'center':
+                    justify = 'center'
+                    break
+                case 'around':
+                    justify = 'space-around'
+                    break
+                case 'between':
+                    justify = 'space-between'
+                    break
+            }
+            let align
+            switch (this.align) {
+                case 'top':
+                    align = 'flex-start'
+                    break
+                case 'middle':
+                    align = 'center'
+                    break
+                case 'bottom':
+                    align = 'flex-end'
+                    break
+                case 'stretch':
+                    align = 'stretch'
+                    break
+            }
+            if (align) result['--mc-grid-row-align'] = align
+            if (justify) result['--mc-grid-row-justify'] = justify
 
             return result
         },
@@ -108,36 +143,12 @@ export default {
 </script>
 
 <style lang="scss">
-$justify: (
-    'left': 'flex-start',
-    'right': 'flex-end',
-    'center': 'center',
-    'around': 'space-around',
-    'between': 'space-between',
-);
-$align: (
-    'top': 'flex-start',
-    'middle': 'center',
-    'bottom': 'flex-end',
-    'stretch': 'stretch',
-);
 .mc-grid-row {
     $block-name: &;
-
     display: flex;
     flex-direction: row;
-
-    @each $key, $value in $justify {
-        &.mc-grid-row--justify-#{$key} {
-            justify-content: #{$value};
-        }
-    }
-    @each $key, $value in $align {
-        &.mc-grid-row--align-#{$key} {
-            align-items: #{$value};
-        }
-    }
-
+    justify-content: var(--mc-grid-row-justify);
+    align-items: var(--mc-grid-row-align);
     &--stretch {
         > .mc-grid-col {
             flex: 1;

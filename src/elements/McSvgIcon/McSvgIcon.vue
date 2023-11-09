@@ -1,5 +1,5 @@
 <template>
-    <svg :class="classes" class="mc-svg-icon">
+    <svg :class="classes" :style="styles">
         <use :xlink:href="`${spritePath}#${name}`"></use>
     </svg>
 </template>
@@ -80,10 +80,18 @@ export default {
     computed: {
         classes() {
             return {
-                [`mc-svg-icon--size-${this.size}`]: !!this.size,
-                [`mc-svg-icon--weight-${String(this.weight)?.replace('.', '')}`]: !!this.weight,
-                [`mc-svg-icon--color-${this.color}`]: !!this.color,
+                'mc-svg-icon': true,
                 [`mc-svg-icon--dir-${this.dir}`]: !!this.dir,
+            }
+        },
+        styles() {
+            return {
+                ['--mc-svg-icon-size']: `var(--size-${this.size})`,
+                ['--mc-svg-icon-weight']: String(this.weight)
+                    ?.replace('.', '')
+                    ?.split('')
+                    ?.join('.'),
+                ['--mc-svg-icon-color']: this.color && `var(--color-${this.color})`,
             }
         },
     },
@@ -91,54 +99,23 @@ export default {
 </script>
 
 <style lang="scss">
-$token-weights: (
-    '05': 0.5,
-    '1': 1,
-    '15': 1.5,
-    '2': 2,
-    '25': 2.5,
-    '3': 3,
-    '35': 3.5,
-    '4': 4,
-    '45': 4.5,
-    '5': 5,
-);
-
 .mc-svg-icon {
+    --mc-svg-icon-size: #{$size-250};
+    --mc-svg-icon-weight: 1.5;
+    --mc-svg-icon-color: initial;
     @include reset();
     @include reset-text-indents();
 
     @include size(inherit);
-
-    &--size {
-        @each $size, $value in $token-icon-sizes {
-            &-#{$size} {
-                width: $value;
-                height: $value;
-                min-width: $value;
-                min-height: $value;
-            }
-        }
+    width: var(--mc-svg-icon-size);
+    height: var(--mc-svg-icon-size);
+    min-width: var(--mc-svg-icon-size);
+    min-height: var(--mc-svg-icon-size);
+    stroke-width: var(--mc-svg-icon-weight);
+    use {
+        stroke-width: var(--mc-svg-icon-weight);
     }
-
-    &--weight {
-        @each $weight, $value in $token-weights {
-            &-#{$weight} {
-                stroke-width: $value;
-                use {
-                    stroke-width: $value;
-                }
-            }
-        }
-    }
-
-    &--color {
-        @each $color, $value in $token-colors {
-            &-#{$color} {
-                color: $value;
-            }
-        }
-    }
+    color: var(--mc-svg-icon-color);
 
     &--dir {
         &-rtl {

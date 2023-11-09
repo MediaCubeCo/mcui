@@ -778,7 +778,7 @@ export default {
 
             &-left {
                 > *:not(:first-child) {
-                    margin-left: $space-200;
+                    margin-inline-start: $space-200;
                 }
             }
             &-right {

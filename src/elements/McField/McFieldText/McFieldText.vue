@@ -1,5 +1,5 @@
 <template>
-    <div ref="field" class="mc-field-text" :class="classes">
+    <div ref="field" :dir="dir" :class="classes">
         <label :for="name" class="mc-field-text__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
@@ -370,14 +370,21 @@ export default {
     },
 
     computed: {
+        rtl() {
+            return LANGUAGES.rtl.includes(this.locale)
+        },
+        dir() {
+            return this.rtl ? 'rtl' : null
+        },
         classes() {
             return {
+                'mc-field-text': true,
                 'mc-field-text--error': this.errorText,
                 'mc-field-text--textarea': this.isTextarea,
                 'mc-field-text--textarea-autosize': this.isTextareaAutosize,
                 'mc-field-text--disabled': this.disabled,
                 'mc-field-text--copy': this.copy,
-                'mc-field-text--rtl': LANGUAGES.rtl.includes(this.locale),
+                'mc-field-text--rtl': this.rtl,
             }
         },
         computedTitle() {
@@ -504,18 +511,18 @@ export default {
         passwordTooltipProps() {
             return this.passwordTooltip
                 ? {
-                      is: 'mc-tooltip',
-                      content: this.isPasswordType
-                          ? this.passwordTooltip
-                          : this.passwordHideTooltip || this.passwordTooltip,
-                      placement: 'top',
-                      trigger: this.isMobile ? 'focus click' : 'hover focus',
-                      size: 's',
-                  }
+                    is: 'mc-tooltip',
+                    content: this.isPasswordType
+                        ? this.passwordTooltip
+                        : this.passwordHideTooltip || this.passwordTooltip,
+                    placement: 'top',
+                    trigger: this.isMobile ? 'focus click' : 'hover focus',
+                    size: 's',
+                }
                 : {
-                      is: 'div',
-                      class: 'mc-field-text__empty-tooltip',
-                  }
+                    is: 'div',
+                    class: 'mc-field-text__empty-tooltip',
+                }
         },
     },
 
@@ -545,20 +552,22 @@ export default {
         prepareHandleInput(e) {
             let value = e.target.value
             switch (this.type) {
-                case 'num':
+                case 'num': {
                     let [num] = /-?\d*[\.]?\d*/.exec(String(value)) || []
                     num = this.setDecimalsLimit(num)
                     num = this.removeLeadingZero(num)
                     value = num
                     e.target.value = num
                     break
-                case 'int':
+                }
+                case 'int': {
                     let [int] = /-?\d*/.exec(String(e.target.value)) || []
                     int = this.removeLeadingZero(int)
                     value = int
                     e.target.value = int
                     break
-                case 'amount_format':
+                }
+                case 'amount_format': {
                     value = this.setDecimalsLimit(value)
                     value = this.removeLeadingZero(value)
                     const cursor_position = this.getCaretPos(e.target)?.start
@@ -577,6 +586,7 @@ export default {
                     const space_length = e.target.value?.slice(0, cursor_position).replace(/[^ ]/gm, '')?.length || 0
                     this.setCaretPos(e.target, cursor_position + space_length, cursor_position + space_length)
                     break
+                }
                 case 'uppercase':
                     value = value?.toUpperCase()
                     e.target.value = value
@@ -591,11 +601,11 @@ export default {
         },
         formattedToNumber(value) {
             const [first] =
-                /-?\d*[\.]?\d*/.exec(
-                    String(value)
-                        ?.replace(/ /gm, '')
-                        ?.trim(),
-                ) || []
+            /-?\d*[\.]?\d*/.exec(
+                String(value)
+                    ?.replace(/ /gm, '')
+                    ?.trim(),
+            ) || []
 
             return first
         },
@@ -746,14 +756,15 @@ export default {
     }
 
     &__prepend {
-        left: 0;
-        padding: $space-100 $space-50 $space-100 $space-100;
+        inset-inline-start: 0;
+        padding: $space-100 0;
+        padding-inline: $space-100  $space-50;
     }
 
     &__append {
-        right: $space-100;
-        padding: $space-100 0 $space-100 $space-50;
-
+        inset-inline-end: $space-100;
+        padding: $space-100 0;
+        padding-inline: $space-5 0 0;
         &--indent-bottom {
             padding-bottom: $space-400;
         }
@@ -762,7 +773,7 @@ export default {
     &__char-counter {
         width: auto !important;
         position: absolute;
-        right: $space-150;
+        inset-inline-end: $space-150;
         bottom: $space-150;
         background-color: $color-transparent;
     }
@@ -873,14 +884,6 @@ export default {
 
     &__empty-tooltip {
         display: contents;
-    }
-}
-html[dir='rtl'] {
-    .mc-field-text {
-        &__char-counter {
-            right: unset;
-            left: $space-150;
-        }
     }
 }
 </style>

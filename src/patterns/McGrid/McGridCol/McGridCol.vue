@@ -123,15 +123,15 @@ export default {
             }
 
             &--push#{$viewport}-#{$i} {
-                left: calc((#{$i} / #{$cols}) * 100%);
+                inset-inline-start: calc((#{$i} / #{$cols}) * 100%);
             }
 
             &--pull#{$viewport}-#{$i} {
-                right: calc((#{$i} / #{$cols}) * 100%);
+                inset-inline-end: calc((#{$i} / #{$cols}) * 100%);
             }
 
             &--offset#{$viewport}-#{$i} {
-                margin-left: calc((#{$i} / #{$cols}) * 100%);
+                margin-inline-start: calc((#{$i} / #{$cols}) * 100%);
             }
 
             &--order#{$viewport}-#{$i} {

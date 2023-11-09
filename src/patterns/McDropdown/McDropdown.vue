@@ -145,6 +145,9 @@ export default {
         .mc-button {
             &:not(.nuxt-link-active):not(.mc-button--is-active):not(.mc-button--variation-red-flat) {
                 &:hover {
+                    .mc-button__background {
+                        opacity: 0 !important;
+                    }
                     background-color: fade-out($color-purple, 0.9);
                 }
             }
@@ -192,8 +195,8 @@ export default {
     &--position-right {
         #{$block-name} {
             &__body {
-                left: auto;
-                right: 0;
+                inset-inline-start: auto;
+                inset-inline-end: 0;
             }
         }
     }
@@ -201,8 +204,8 @@ export default {
     &--position-left {
         #{$block-name} {
             &__body {
-                left: 0;
-                right: auto;
+                inset-inline-start: 0;
+                inset-inline-end: auto;
             }
         }
     }
