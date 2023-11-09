@@ -46,18 +46,6 @@ $spacing-ratio: $line-height-250;
     margin-inline-start: $space;
   }
 }
-// TODO REMOVE
-@mixin child-indent-right-rtl($space) {
-  > *:not(:first-child) {
-    margin-right: $space;
-  }
-}
-// TODO REMOVE
-@mixin child-indent-left-rtl($space) {
-  > *:not(:last-child) {
-    margin-left: $space;
-  }
-}
 
 @mixin indent-top($space: $space-xs, $indent-type: "margin") {
   #{$indent-type}-top: $space;
