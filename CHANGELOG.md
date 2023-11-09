@@ -2,18 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.1.170](https://github.com/misochenk0/mcui/compare/v0.1.169...v0.1.170) (2023-11-07)
-
-### [0.1.169](https://github.com/misochenk0/mcui/compare/v0.1.168...v0.1.169) (2023-11-03)
-
-### [0.1.168](https://github.com/misochenk0/mcui/compare/v0.1.167...v0.1.168) (2023-11-03)
-
-### 0.1.167 (2023-11-03)
-
-### 0.1.166 (2023-11-02)
-
-### 0.1.165 (2023-10-30)
-
 ### [0.1.164](https://github.com/MediaCubeCo/mcui/compare/v0.1.163...v0.1.164) (2023-10-26)
 
 ### [0.1.163](https://github.com/MediaCubeCo/mcui/compare/v0.1.162...v0.1.163) (2023-10-25)
