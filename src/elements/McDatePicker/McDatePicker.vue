@@ -364,11 +364,8 @@ export default {
         },
 
         listeners() {
-            const allListeners = this.$listeners
-            return {
-                ...allListeners,
-                input: undefined,
-            }
+            const { input, ...listeners } = this.$listeners
+            return listeners
         },
         isRange() {
             return this.range
