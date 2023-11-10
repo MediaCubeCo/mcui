@@ -149,6 +149,9 @@ export default {
         return h(
             'div',
             {
+                attrs: {
+                    id: data.attrs?.id,
+                },
                 class: classes,
                 style,
                 on: listeners,
