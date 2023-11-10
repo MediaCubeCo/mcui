@@ -356,7 +356,7 @@ export default {
     }
     &--color-theme-white {
         background-color: $color-white;
-        border-right: 1px solid $color-hover-gray;
+        border-inline-end: 1px solid $color-hover-gray;
     }
     &__scrollable-container {
         @include hide-scrollbar;

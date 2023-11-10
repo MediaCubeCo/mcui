@@ -18,7 +18,7 @@ export default {
      * */
     methods: {
         setElemMinHeight(elem, height) {
-            if(elem) {
+            if (elem) {
                 elem.style.alignItems = 'self-end'
                 elem.style.minHeight = `${height}px`
             }

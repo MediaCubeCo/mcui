@@ -1,6 +1,6 @@
 {
   "name": "mediacube-ui",
-  "version": "0.1.146",
+  "version": "0.1.166",
   "description": "Design system for Mediacube services",
   "author": "Mediacube",
   "private": false,
@@ -41,13 +41,11 @@
     "src/*.{vue}": "eslint --fix --ext .vue src/"
   },
   "dependencies": {
-    "bourbon": "^7.0.0",
     "core-js": "^3.6.5",
     "dayjs": "^1.11.9",
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",
     "portal-vue": "^2.1.7",
-    "postcss-safe-parser": "^4.0.2",
     "v-tooltip": "^2.0.3",
     "vue": "^2.6.11",
     "vue-bus": "^1.2.1",
@@ -103,9 +101,6 @@
     "lint-staged": "^10.5.1",
     "node-sass": "^4.14.1",
     "numeral": "^2.0.6",
-    "postcss-import": "12.0.1",
-    "postcss-loader": "3.0.0",
-    "postcss-url": "8.0.0",
     "prettier": "^1.19.1",
     "sass-export": "^1.0.6",
     "sass-loader": "^8.0.2",

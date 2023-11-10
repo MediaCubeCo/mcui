@@ -252,3 +252,78 @@ pre {
     }
   }
 }
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+@keyframes rotate-reverse {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-359deg);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slide-up-with-margin {
+  from {
+    opacity: 0;
+    margin-top: 30px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+
+:root {
+  @each $name, $radius in $token-radius {
+    #{'--radius-'}#{$name}: #{$radius};
+  }
+  @each $name, $color in $token-colors {
+    #{'--color-'}#{$name}: #{$color};
+  }
+  @each $name, $size in $token-icon-sizes {
+    #{'--size-'}#{$name}: #{$size};
+  }
+  @each $name, $space in $token-spaces {
+    #{'--space-'}#{$name}: #{$space};
+  }
+  @each $name, $shadow in $token-shadows {
+    #{'--shadow-'}#{$name}: #{$shadow};
+  }
+  --font-weight-normal: #{$font-weight-normal};
+  --font-weight-medium: #{$font-weight-medium};
+  --font-weight-semi-bold: #{$font-weight-semi-bold};
+  --font-weight-bold: #{$font-weight-bold};
+
+  @each $name, $height in $token-line-heights {
+    #{'--line-height-'}#{$name}: #{$height};
+  }
+}

@@ -191,8 +191,7 @@ export default {
 
     &__icon {
         transition: all $duration-s;
-        margin-right: $space-50;
-        margin-left: $space-50;
+        margin-inline: $space-50 $space-50;
     }
 
     &__body {
@@ -202,14 +201,13 @@ export default {
             border-bottom: 1px solid $color-outline-gray;
 
             &__header {
-                padding-left: $space-400;
-                padding-right: $space-200;
+                padding-inline: $space-400 $space-200;
             }
 
             &__body {
                 #{$block-name} {
                     &__header {
-                        padding-left: $space-800;
+                        padding-inline-start: $space-800;
                     }
                 }
             }
@@ -272,7 +270,7 @@ export default {
     &--has-icon {
         &#{$block-name}--is-empty {
             #{$block-name}__header {
-                padding-left: $space-400;
+                padding-inline-start: $space-400;
             }
         }
     }

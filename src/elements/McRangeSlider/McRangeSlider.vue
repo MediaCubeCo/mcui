@@ -1,6 +1,7 @@
 <template>
     <vue-slider
         :class="classes"
+        :style="styles"
         :value="newValue"
         :dot-size="20"
         :interval="step"
@@ -114,6 +115,11 @@ export default {
                 'mc-range-slider--colored-tooltip': this.coloredTooltip,
             }
         },
+        styles() {
+            return {
+                ['--mc-range-slider-color']: `var(--color-${this.color})`,
+            }
+        },
     },
     methods: {
         handleInput(value) {
@@ -142,44 +148,36 @@ export default {
 <style lang="scss">
 .mc-range-slider {
     $block-name: &;
+    --mc-range-slider-color: #{$color-purple};
 
     .vue-slider-dot-tooltip-inner {
         line-height: $line-height-200;
         font-size: $font-size-200;
+        padding: $space-100 $space-150;
+        background-color: $color-black;
+        border-color: $color-black;
+    }
+    .vue-slider-process {
+        background-color: var(--mc-range-slider-color);
     }
 
-    @each $color, $value in $token-colors {
-        &--color-#{$color} {
-            .vue-slider-process {
-                background-color: $value;
-            }
-
-            .vue-slider-dot-tooltip-inner {
-                padding: $space-100 $space-150;
-                background-color: $color-black;
-                border-color: $color-black;
-            }
-
-            .vue-slider-dot-handle-focus {
-                box-shadow: $shadow-s;
-            }
-            .vue-slider-dot-handle {
-                box-shadow: $shadow-s;
-                &:hover {
-                    border: 2px solid fade_out($value, 0.5);
-                }
-                &:active {
-                    border: 2px solid $value;
-                }
-            }
-
-            &#{$block-name}--colored-tooltip {
-                .vue-slider-dot-tooltip-inner {
-                    background-color: $value;
-                    border-color: $value;
-                    padding: $space-100 $space-150;
-                }
-            }
+    .vue-slider-dot-handle-focus {
+        box-shadow: $shadow-s;
+    }
+    .vue-slider-dot-handle {
+        box-shadow: $shadow-s;
+        &:hover {
+            border: 2px solid var(--mc-range-slider-color);
+        }
+        &:active {
+            border: 2px solid var(--mc-range-slider-color);
+        }
+    }
+    &--colored-tooltip {
+        .vue-slider-dot-tooltip-inner {
+            background-color: var(--mc-range-slider-color);
+            border-color: var(--mc-range-slider-color);
+            padding: $space-100 $space-150;
         }
     }
     &.vue-slider {

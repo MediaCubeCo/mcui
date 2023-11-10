@@ -17,7 +17,6 @@ $color-purple: #8756FF; /* Кнопки, ссылки, выделение акт
 $color-light-purple: #CBB7FF; /* Текст на accent purple */
 $color-lighter-purple: #EEE8FF; /* Выбранные элементы */
 $color-bg-purple: #9673ED; /* Цвет для бэкграунда */
-
 //additional colors
 $color-hover-blue: #0A54C2; /* Альтернатива – Кнопки, ссылки, выделение активных элементов */
 $color-blue: #2578F4; /* Альтернатива – Кнопки, ссылки, выделение активных элементов и иконки */
@@ -47,8 +46,10 @@ $token-colors: (
         "purple": $color-purple,
         "hover-purple": $color-hover-purple,
         "light-purple": $color-light-purple,
+        "bg-purple": $color-bg-purple,
         "lighter-purple": $color-lighter-purple,
         "black": $color-black,
+        "outline-light": $color-outline-light,
         "dark-gray": $color-dark-gray,
         "gray": $color-gray,
         "outline-gray": $color-outline-gray,

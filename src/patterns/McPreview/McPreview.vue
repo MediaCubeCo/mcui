@@ -1,5 +1,5 @@
 <template>
-    <section class="mc-preview" :class="classes">
+    <section :class="classes">
         <div v-if="$slots.left" class="mc-preview__left">
             <!-- @slot Слот слева -->
             <slot name="left" />
@@ -37,6 +37,7 @@ export default {
     computed: {
         classes() {
             return {
+                'mc-preview': true,
                 [`mc-preview--size-${this.size}`]: this.size,
             }
         },
@@ -84,97 +85,32 @@ export default {
             display: none;
         }
     }
-
-    &--size {
-        &-s {
-            #{$block-name}__left {
-                margin-right: $space-50;
-            }
-            #{$block-name}__right {
-                margin-left: $space-50;
-            }
+    @mixin previewIndents($indent, $bottom: '') {
+        #{$block-name}__left {
+            margin-inline-end: $indent;
         }
-        &-m {
-            #{$block-name}__left {
-                margin-right: $space-100;
-            }
-            #{$block-name}__right {
-                margin-left: $space-100;
-            }
+        #{$block-name}__right {
+            margin-inline-start: $indent;
         }
-        &-l {
-            #{$block-name}__left {
-                margin-right: $space-150;
-            }
-            #{$block-name}__right {
-                margin-left: $space-150;
-            }
+        @if $bottom {
             #{$block-name}__bottom {
-                margin-top: $space-50;
-            }
-        }
-        &-xl {
-            #{$block-name}__left {
-                margin-right: $space-200;
-            }
-            #{$block-name}__right {
-                margin-left: $space-200;
-            }
-            #{$block-name}__bottom {
-                margin-top: $space-50;
+                margin-top: $bottom;
             }
         }
     }
-}
-html[dir='rtl'] {
-    .mc-preview {
-        &--size {
-            &-s {
-                .mc-preview__left {
-                    margin-right: unset;
-                    margin-left: $space-50;
-                }
-                .mc-preview__right {
-                    margin-left: unset;
-                    margin-right: $space-50;
-                }
-            }
-            &-m {
-                .mc-preview__left {
-                    margin-right: unset;
-                    margin-left: $space-100;
-                }
-                .mc-preview__right {
-                    margin-left: unset;
-                    margin-right: $space-100;
-                }
-            }
-            &-l {
-                .mc-preview__left {
-                    margin-right: unset;
-                    margin-left: $space-150;
-                }
-                .mc-preview__right {
-                    margin-left: unset;
-                    margin-right: $space-150;
-                }
-                .mc-preview__bottom {
-                    margin-top: $space-50;
-                }
-            }
-            &-xl {
-                .mc-preview__left {
-                    margin-right: unset;
-                    margin-left: $space-200;
-                }
-                .mc-preview__right {
-                    margin-right: $space-200;
-                    margin-left: unset;
-                }
-                .mc-preview__bottom {
-                    margin-top: $space-50;
-                }
-            }
+
+    &--size {
+        &-s {
+            @include previewIndents($space-50);
+        }
+        &-m {
+            @include previewIndents($space-100);
+        }
+        &-l {
+            @include previewIndents($space-150, $space-50);
+        }
+        &-xl {
+            @include previewIndents($space-200, $space-50);
         }
     }
 }

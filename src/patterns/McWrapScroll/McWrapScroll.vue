@@ -1,6 +1,6 @@
 <template>
     <component :is="tagName" :class="wrapperClasses" class="mc-wrap-scroll__wrapper">
-        <div ref="scrollContainer" :class="containerClasses" class="mc-wrap-scroll" @mousedown="onMouseDown">
+        <div ref="scrollContainer" :class="containerClasses" :style="containerStyles" @mousedown="onMouseDown">
             <mc-grid-row
                 v-bind="containerProps"
                 :style="{ 'pointer-events': drag_options.is_drag ? 'none' : 'auto' }"
@@ -92,10 +92,15 @@ export default {
         },
         containerClasses() {
             return {
+                'mc-wrap-scroll': true,
                 'mc-wrap-scroll--scrollable': this.scrollable,
                 'mc-wrap-scroll--no-scroll': !this.hasScroll,
-                [`mc-wrap-scroll--gutter-bottom-${this.gutterBottom}`]: !!this.gutterBottom,
                 'mc-wrap-scroll--more-space': this.moreSpace,
+            }
+        },
+        containerStyles() {
+            return {
+                ['--mc-wrap-scroll-bottom']: `var(--space-${this.gutterBottom})`,
             }
         },
         wrapperClasses() {
@@ -205,6 +210,9 @@ export default {
 .mc-wrap-scroll {
     $block-name: &;
     $more-space-indent: $space-200;
+    --mc-wrap-scroll-bottom: #{$space-zero};
+    padding-bottom: var(--mc-wrap-scroll-bottom);
+    margin-bottom: calc(var(--mc-wrap-scroll-bottom) * -1);
     &.mc-wrap-scroll--scrollable {
         overflow-x: auto;
         overflow-y: hidden;
@@ -215,12 +223,6 @@ export default {
     }
     &.mc-wrap-scroll--no-scroll {
         @include hide-scrollbar();
-    }
-    @each $name, $space in $token-spaces {
-        &--gutter-bottom-#{$name} {
-            padding-bottom: #{$space};
-            margin-bottom: #{-$space};
-        }
     }
     &__wrapper {
         position: relative;
@@ -245,13 +247,13 @@ export default {
             &#{$block-name}__wrapper {
                 &--left-blur {
                     #{$block-name} {
-                        padding-left: 0;
-                        margin-left: 0;
+                        padding-inline-start: 0;
+                        margin-inline-start: 0;
                     }
                     &::before {
                         top: $more-space-indent;
                         bottom: $more-space-indent;
-                        left: $more-space-indent;
+                        inset-inline-start: $more-space-indent;
                         @include left-blur;
                     }
                 }
@@ -263,7 +265,7 @@ export default {
                     &::after {
                         top: $more-space-indent;
                         bottom: $more-space-indent;
-                        right: $more-space-indent;
+                        inset-inline-end: $more-space-indent;
                         @include right-blur;
                     }
                 }
@@ -273,14 +275,14 @@ export default {
             &::before {
                 @include blur-common-styles;
                 @include left-blur;
-                left: 0;
+                inset-inline-start: 0;
             }
         }
         &--right-blur {
             &::after {
                 @include blur-common-styles;
                 @include right-blur;
-                right: 0;
+                inset-inline-end: 0;
             }
         }
     }

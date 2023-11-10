@@ -45,7 +45,8 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     background-color: $color-white;
-    padding: 0 $space-200 0 $space-150;
+    padding: 0;
+    padding-inline: $space-150 $space-200;
     align-items: center;
     height: 100%;
 
@@ -62,11 +63,11 @@ export default {
     }
 
     &__left {
-        margin-right: auto;
+        margin-inline-end: auto;
     }
 
     &__right {
-        margin-left: auto;
+        margin-inline-start: auto;
     }
 }
 </style>

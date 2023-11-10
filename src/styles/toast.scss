@@ -3,7 +3,8 @@
   z-index: $z-index-toasted !important;
   .toasted {
     &.mc-toast {
-      padding: $space-100 $space-400 $space-100 $space-150;
+      padding: $space-100 0;
+      padding-inline: $space-150 $space-400;
       &--primary {
         border-radius: $radius-100;
         background-color: $color-black;
@@ -28,13 +29,16 @@
             }
           }
           &:not(:last-child) {
-            margin-right: $space-50;
+            margin-inline-end: $space-50;
           }
           &:first-of-type {
-            margin-left: $space-600;
+            margin-inline-start: $space-600;
           }
           &:last-child {
-            margin-right: -$space-300; // TODO: refactor negative margin
+            margin-inline-end: -$space-300; // TODO: refactor negative margin
+          }
+          &:first-of-type:last-child {
+            margin-inline-end: -$space-300; // TODO: refactor negative margin
           }
         }
       }
@@ -42,42 +46,7 @@
       i {
         @include size($space-300);
         font-size: 24px;
-        margin-right: $space-150;
-      }
-    }
-  }
-  @at-root {
-    html[dir="rtl"] {
-      #{$toasted-container-name} {
-        .toasted {
-          padding: $space-100 $space-150 $space-100 $space-400;
-          &.mc-toast {
-            &--primary {
-              .action {
-                &:last-child {
-                  margin-right: unset;
-                  margin-left: -$space-300; // TODO: refactor negative margin
-                }
-                &:first-of-type {
-                  margin-left: unset;
-                  margin-right: $space-600;
-                }
-                &:not(:last-child) {
-                  margin-right: unset;
-                  margin-left: $space-50;
-                }
-                &:first-of-type:last-child {
-                  margin-left: -$space-300; // TODO: refactor negative margin
-                }
-              }
-            }
-            .las,
-            i {
-              margin-right: unset;
-              margin-left: $space-150;
-            }
-          }
-        }
+        margin-inline-end: $space-150;
       }
     }
   }

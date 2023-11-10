@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-chat-comment" :class="classes" @click="handleClick">
+    <div :class="classes" :style="contentStyles" @click="handleClick">
         <a ref="a" href="javascript:void(0);" class="mc-chat-comment__back"></a>
         <mc-preview>
             <mc-avatar slot="left" size="400" rounded lazy :src="computedAvatar" />
@@ -101,6 +101,7 @@ export default {
     computed: {
         classes() {
             return {
+                'mc-chat-comment': true,
                 'mc-chat-comment--editable': this.canEdit,
             }
         },
@@ -132,10 +133,21 @@ export default {
         commentStatus() {
             return (this.comment.status !== null && this.comment.status !== undefined) || !this.comment.status < 0
         },
+        contentStyles() {
+            let color = this.comment.status?.color?.replace('-outline', '')
+            let opacity = 0.1
+            if (color === 'outline-gray') {
+                color = 'hover-gray'
+                opacity = 1
+            }
+            return {
+                ['--mc-chat-comment-color']: `var(--color-${color})`,
+                ['--mc-chat-comment-opacity']: opacity,
+            }
+        },
         contentClasses() {
             return {
                 'mc-chat-comment__content': !!this.comment.status,
-                [`mc-chat-comment__content--variation-${this.comment.status?.color}`]: !!this.comment.status?.color,
             }
         },
     },
@@ -153,6 +165,8 @@ export default {
 <style lang="scss">
 .mc-chat-comment {
     $block-name: &;
+    --mc-chat-comment-color: initial;
+    --mc-chat-comment-opacity: initial;
     padding: $space-50;
     border-radius: $radius-100;
     display: block;
@@ -208,19 +222,17 @@ export default {
         margin-top: $space-50;
         border-radius: $radius-100;
         padding: $space-150 $space-200;
-        &--variation {
-            @each $color, $value in $token-colors {
-                &-#{$color} {
-                    &,
-                    &-outline {
-                        @if $color == 'outline-gray' {
-                            background-color: $color-hover-gray;
-                        } @else {
-                            background-color: rgba($value, 0.1);
-                        }
-                    }
-                }
-            }
+        position: relative;
+        overflow: hidden;
+        &:before {
+            content: '';
+            z-index: -1;
+            position: absolute;
+            left: 0;
+            top: 0;
+            @include size(100%);
+            background-color: var(--mc-chat-comment-color);
+            opacity: var(--mc-chat-comment-opacity);
         }
     }
     &__message {

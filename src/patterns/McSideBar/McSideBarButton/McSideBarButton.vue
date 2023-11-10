@@ -215,13 +215,13 @@ export default {
         }
 
         .mc-button__text {
-            margin-right: $space-100;
+            margin-inline-end: $space-100;
         }
         .mc-button__prepend {
-            margin-right: $space-100;
+            margin-inline-end: $space-100;
         }
         .mc-button__append {
-            margin-left: auto;
+            margin-inline-start: auto;
         }
         .mc-chip {
             height: auto;
@@ -245,27 +245,6 @@ export default {
             color: $color-purple;
             background-color: $color-lighter-purple;
             pointer-events: auto;
-        }
-    }
-}
-html[dir='rtl'] {
-    .mc-side-bar-button {
-        &__dot {
-            @include position(absolute, $space-100 null null 6px);
-        }
-        &.mc-button {
-            .mc-button__text {
-                margin-right: 0;
-                margin-left: $space-100;
-            }
-            .mc-button__prepend {
-                margin-right: 0;
-                margin-left: $space-100;
-            }
-            .mc-button__append {
-                margin-left: unset;
-                margin-right: auto;
-            }
         }
     }
 }

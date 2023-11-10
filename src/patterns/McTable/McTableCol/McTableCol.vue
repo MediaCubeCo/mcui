@@ -210,7 +210,7 @@ export default {
     $block-name: &;
 
     &--border-right {
-        border-right: 1px solid $color-hover-gray;
+        border-inline-end: 1px solid $color-hover-gray;
     }
     &--border-top {
         border-top: 1px solid $color-hover-gray;
@@ -225,7 +225,7 @@ export default {
     }
 
     &__total {
-        margin-left: auto;
+        margin-inline-start: auto;
         color: $color-gray;
     }
 

@@ -68,7 +68,6 @@ export default {
         const errorText = props.errors !== null && props.errors.length ? props.errors.join(', ') : ''
         const wrapperClasses = {
             'mc-progress': true,
-            [`mc-progress--color-${props.color}`]: props.color,
             'mc-progress--error': errorText,
             ...(data.class || {}),
         }
@@ -79,6 +78,7 @@ export default {
         }
 
         let style = {}
+        if (props.color) style['--mc-progress-color'] = `var(--color-${props.color})`
         if (data.staticStyle) {
             style = data.staticStyle
         }
@@ -114,10 +114,10 @@ export default {
                             ? h(
                                   'div',
                                   {
-                                      class: [
-                                          'mc-progress__help-text',
-                                          `mc-progress__help-text--color-${props.helpTextColor}`,
-                                      ],
+                                      class: ['mc-progress__help-text'],
+                                      style: {
+                                          ['--mc-progress-help-text-color']: `var(--color-${props.helpTextColor})`,
+                                      },
                                   },
                                   [props.helpText],
                               )
@@ -154,27 +154,16 @@ export default {
 <style lang="scss">
 .mc-progress {
     $block-name: &;
-
+    --mc-progress-color: #{$color-dark-gray};
+    --mc-progress-help-text-color: #{$color-gray};
     position: relative;
     width: 100%;
     font-family: $font-family-main;
     line-height: $line-height-200;
     font-size: $font-size-200;
-
-    @each $color, $value in $token-colors {
-        &--color-#{$color} {
-            #{$block-name} {
-                &__percent {
-                    color: $value;
-                }
-                &__line {
-                    background-color: $value;
-                }
-            }
-        }
-    }
     &__percent {
         flex-shrink: 0;
+        color: var(--mc-progress-color);
         &--monospace {
             font-feature-settings: 'tnum';
             font-variant-numeric: tabular-nums;
@@ -202,11 +191,7 @@ export default {
     }
 
     &__help-text {
-        @each $color, $value in $token-colors {
-            &--color-#{$color} {
-                color: $value;
-            }
-        }
+        color: var(--mc-progress-help-text-color);
     }
 
     &__wrapper-line {
@@ -220,6 +205,7 @@ export default {
         height: 100%;
         border-radius: $radius-100;
         max-width: 100%;
+        background-color: var(--mc-progress-color);
     }
 
     &__errors-container {

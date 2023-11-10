@@ -107,24 +107,24 @@ export default {
             default: '',
         },
         /**
-     *  Центральное меню
-     *
-     *  {
-                name: [String] - menu item title,
-                icon: [String] - icon,
-                to: [String] - route path (used like link if this route haven't nested menu if they isn't they work like button who open nested menu),
-                info: [String] - info badge text
-                menu: [
-                    {
-                        name: [String] - menu item title,
-                        to: [String] - route path,
-                        info: [String] - info badge text
-                    },
-                    ...
-                ]
-            },
-     *
-     */
+         *  Центральное меню
+         *
+         *  {
+         name: [String] - menu item title,
+         icon: [String] - icon,
+         to: [String] - route path (used like link if this route haven't nested menu if they isn't they work like button who open nested menu),
+         info: [String] - info badge text
+         menu: [
+         {
+         name: [String] - menu item title,
+         to: [String] - route path,
+         info: [String] - info badge text
+         },
+         ...
+         ]
+         },
+         *
+         */
         menuMain: {
             type: Array,
             default: () => [],
@@ -276,8 +276,8 @@ export default {
                 pointer-events: all !important;
                 .item__head {
                     &-button--no-hover {
-                        a {
-                            background-color: unset;
+                        .mc-button {
+                            background: none;
                         }
                     }
                 }
@@ -286,6 +286,15 @@ export default {
                 display: flex;
                 align-items: center;
                 border-radius: 4px;
+
+                .mc-button {
+                    &__background {
+                        display: none;
+                    }
+                }
+                &:hover {
+                    background-color: rgba($color-gray, 0.1);
+                }
                 &-arrow {
                     &.rotate {
                         .mc-svg-icon {
@@ -326,7 +335,7 @@ export default {
                 transition: all 0.3s ease;
                 @include child-indent-bottom($space-50);
                 .mc-side-bar-button {
-                    padding-left: $space-500;
+                    padding-inline-start: $space-500;
                     height: 42px;
                 }
                 &.open {

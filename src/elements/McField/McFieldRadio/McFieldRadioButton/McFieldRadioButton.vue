@@ -118,7 +118,7 @@ export default {
     min-height: $size-250;
     @include reset();
     position: relative;
-    padding-left: $space-300;
+    padding-inline-start: $space-300;
     line-height: $line-height-200;
     font-size: $font-size-200;
     cursor: pointer;
@@ -130,7 +130,7 @@ export default {
             @include pseudo();
             @include position(null, 0);
             margin: 1px;
-            border: 2px solid $color-gray;
+            border: 2px solid $color-outline-gray;
             border-radius: $radius-circle;
             transition: border-color $duration-m;
         }
@@ -141,7 +141,10 @@ export default {
         &::after {
             @include pseudo();
             @include size($size-100);
-            @include align(true, true, absolute);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transform-origin: center center;
             border-radius: $radius-circle;
             background-color: transparent;
             transition: background-color $duration-m;
@@ -172,15 +175,13 @@ export default {
                 &__icon {
                     &:after {
                         content: '✓';
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
                         font-weight: $font-weight-bold;
-                        // Для выравнивания иконки по центру кнопки
-                        line-height: 100%;
                         color: $color-white;
                         width: 100%;
                         height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                     }
                 }
             }

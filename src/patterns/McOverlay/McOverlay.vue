@@ -1,12 +1,13 @@
 <template>
-    <section :class="classes" class="mc-overlay">
-        <section class="mc-overlay__spinner"></section>
+    <section ref="overlay" class="mc-overlay" :style="styles">
+        <div class="mc-overlay__background" />
+        <section class="mc-overlay__spinner" />
     </section>
 </template>
 
 <script>
 export default {
-    name: 'McOverlay',
+    name: 'McOverlaySecond',
     props: {
         size: {
             type: [String, Number],
@@ -18,10 +19,10 @@ export default {
         },
     },
     computed: {
-        classes() {
+        styles() {
             return {
-                [`mc-overlay--${this.size}`]: !!this.size,
-                [`mc-overlay--${this.backgroundColor}`]: !this.transparent,
+                '--mc-overlay-color': this.backgroundColor && `var(--color-${this.backgroundColor})`,
+                '--mc-overlay-spinner-size': this.size && `var(--size-${this.size})`,
             }
         },
     },
@@ -31,26 +32,37 @@ export default {
 <style lang="scss">
 .mc-overlay {
     $block-name: &;
+    --mc-overlay-spinner-size: initial;
+    --mc-overlay-color: initial;
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: $z-index-overlay-page;
+    &__background {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--mc-overlay-color);
+        opacity: 0.85;
+    }
     &__spinner {
         display: block;
         border: 2px solid $color-purple;
-        border-left-color: transparent;
+        border-inline-start-color: transparent;
         border-radius: 50%;
         animation: rotate 1.5s infinite linear;
 
-        width: var(--spinner-size);
-        min-width: var(--spinner-size);
-        height: var(--spinner-size);
-        min-height: var(--spinner-size);
+        width: var(--mc-overlay-spinner-size);
+        min-width: var(--mc-overlay-spinner-size);
+        height: var(--mc-overlay-spinner-size);
+        min-height: var(--mc-overlay-spinner-size);
 
         @keyframes rotate {
             from {
@@ -59,20 +71,6 @@ export default {
             to {
                 transform: rotate(360deg);
             }
-        }
-    }
-    @each $color, $value in $token-colors {
-        &--#{$color} {
-            @if $color != 'transparent' {
-                background-color: rgba($value, 0.85);
-            } @else {
-                background-color: $value;
-            }
-        }
-    }
-    @each $size, $value in $token-icon-sizes {
-        &--#{$size} {
-            --spinner-size: #{$value};
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-field-checkbox" :class="classes">
+    <div :dir="dir" :class="classes" :style="styles">
         <div v-if="title || $slots.header" class="mc-field-text__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
@@ -156,13 +156,24 @@ export default {
         },
     },
     computed: {
+        rtl() {
+            return LANGUAGES.rtl.includes(this.locale)
+        },
+        dir() {
+            return this.rtl ? 'rtl' : null
+        },
         classes() {
             return {
+                'mc-field-checkbox': true,
                 'mc-field-checkbox--error': this.errors,
                 'mc-field-checkbox--disabled': this.disabled,
                 'mc-field-checkbox--empty': !this.mainText && !this.$slots.default,
-                [`mc-field-checkbox--size-${this.checkboxSize}`]: !!this.checkboxSize,
-                'mc-field-checkbox--rtl': LANGUAGES.rtl.includes(this.locale),
+                'mc-field-checkbox--rtl': this.rtl,
+            }
+        },
+        styles() {
+            return {
+                '--mc-field-checkbox-size': this.checkboxSize && `var(--size-${this.checkboxSize})`,
             }
         },
         inputProps() {
@@ -208,16 +219,11 @@ export default {
     $block-name: &;
     position: relative;
     display: block;
-    &--size {
-        @each $size, $value in $token-icon-sizes {
-            &-#{$size} {
-                min-width: $value;
-                min-height: $value;
-            }
-            #{$block-name}__icon {
-                @include size($value);
-            }
-        }
+    min-width: var(--mc-field-checkbox-size);
+    min-height: var(--mc-field-checkbox-size);
+    #{$block-name}__icon {
+        width: var(--mc-field-checkbox-size);
+        height: var(--mc-field-checkbox-size);
     }
 
     &__header {
@@ -250,7 +256,7 @@ export default {
 
     &__name-text {
         display: inline-block;
-        margin-left: $space-100;
+        margin-inline-start: $space-100;
         &:before {
             @include pseudo(none);
             @include size($size-200);
@@ -262,7 +268,7 @@ export default {
             display: inline;
             white-space: normal;
             vertical-align: top;
-            margin-left: 1px;
+            margin-inline-start: 1px;
 
             &__text {
                 white-space: normal;
@@ -276,7 +282,7 @@ export default {
     }
 
     &__footer {
-        padding-left: $space-250;
+        padding-inline-start: $space-250;
         margin-top: $space-50;
         &:empty {
             display: none;
@@ -313,22 +319,6 @@ export default {
 
     &--rtl {
         direction: rtl;
-    }
-}
-html[dir='rtl'] {
-    .mc-field-checkbox {
-        &__name-text {
-            margin-left: unset;
-            margin-right: $space-100;
-            .mc-button {
-                margin-left: unset;
-                margin-right: 1px;
-            }
-        }
-        &__footer {
-            padding-left: unset;
-            padding-right: $space-250;
-        }
     }
 }
 </style>
