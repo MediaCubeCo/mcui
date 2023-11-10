@@ -517,3 +517,7 @@
     }
   }
 }
+
+@mixin mirror-x {
+  transform: scale(-1, 1);
+}
