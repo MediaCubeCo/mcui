@@ -498,8 +498,8 @@ export default {
                 bottomStyle = { paddingBottom: `${spaceBottomValue - 1}px` }
             }
             return {
-                paddingLeft: this.prependWidth && `${this.prependWidth + space}px`,
-                paddingRight: this.appendWidth && `${this.appendWidth + space}px`,
+                paddingInlineStart: this.prependWidth && `${this.prependWidth + space}px`,
+                paddingInlineEnd: this.appendWidth && `${this.appendWidth + space}px`,
                 ...bottomStyle,
             }
         },
