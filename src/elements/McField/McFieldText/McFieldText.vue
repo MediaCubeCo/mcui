@@ -103,7 +103,14 @@
             <br v-if="errorText" />
             <!-- @slot Слот доп. текста под инпутом -->
             <slot name="footer">
-                <mc-title v-if="helpText" tag-name="div" variation="overline" max-width="100%" :ellipsis="false">
+                <mc-title
+                    v-if="helpText"
+                    tag-name="div"
+                    variation="overline"
+                    color="gray"
+                    max-width="100%"
+                    :ellipsis="false"
+                >
                     {{ helpText }}
                 </mc-title>
             </slot>
