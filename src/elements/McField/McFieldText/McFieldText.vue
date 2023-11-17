@@ -103,7 +103,14 @@
             <br v-if="errorText" />
             <!-- @slot Слот доп. текста под инпутом -->
             <slot name="footer">
-                <mc-title v-if="helpText" tag-name="div" variation="overline" max-width="100%" :ellipsis="false">
+                <mc-title
+                    v-if="helpText"
+                    tag-name="div"
+                    variation="overline"
+                    color="gray"
+                    max-width="100%"
+                    :ellipsis="false"
+                >
                     {{ helpText }}
                 </mc-title>
             </slot>
@@ -498,8 +505,8 @@ export default {
                 bottomStyle = { paddingBottom: `${spaceBottomValue - 1}px` }
             }
             return {
-                paddingLeft: this.prependWidth && `${this.prependWidth + space}px`,
-                paddingRight: this.appendWidth && `${this.appendWidth + space}px`,
+                paddingInlineStart: this.prependWidth && `${this.prependWidth + space}px`,
+                paddingInlineEnd: this.appendWidth && `${this.appendWidth + space}px`,
                 ...bottomStyle,
             }
         },
