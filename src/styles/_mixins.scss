@@ -521,3 +521,12 @@
 @mixin mirror-x {
   transform: scale(-1, 1);
 }
+
+@mixin gradientText($gradient) {
+  span {
+    -webkit-box-decoration-break: clone;
+    background: $gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
