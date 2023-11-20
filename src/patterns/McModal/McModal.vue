@@ -138,7 +138,7 @@ export default {
                 'mc-modal--top-padding': this.topPadding,
                 [`mc-modal--variation-${this.variation}`]: !!this.variation,
                 [`mc-modal--header-align-${this.headerAlign}`]:
-                    (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
+                (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
             }
         },
     },
@@ -495,6 +495,11 @@ export default {
                 &__header {
                     @media #{$media-query-s} {
                         padding: $space-300 $space-300 $space-150;
+                    }
+                }
+                &__btn-close {
+                    @media #{$media-query-s} {
+                        top: $space-300;
                     }
                 }
                 &__inner {

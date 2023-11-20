@@ -793,6 +793,9 @@ export default {
                     background-color: fade-out($color-dark-gray, 0.8);
                     color: $color-dark-gray;
                     border-color: fade-out($color-dark-gray, 1);
+                    .mc-button__background {
+                        display: none;
+                    }
                 }
             }
         }

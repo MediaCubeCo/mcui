@@ -94,7 +94,7 @@ export default {
                 weight = '2px'
             }
         }
-        if (weight) style['--separator-weight'] = weight
+        if (weight) style['--mc-separator-weight'] = weight
         if (data.staticStyle) {
             style = data.staticStyle
         }
@@ -122,6 +122,7 @@ export default {
 <style lang="scss">
 .mc-separator {
     $block-name: &;
+    --mc-separator-color: initial;
     --mc-separator-indent-top: initial;
     --mc-separator-indent-bottom: initial;
     --mc-separator-indent-left: initial;
@@ -135,7 +136,7 @@ export default {
     height: var(--mc-separator-weight);
     &__wrapper {
         @include size(100%);
-        background-color: var(--separator-color);
+        background-color: var(--mc-separator-color);
     }
 }
 </style>
