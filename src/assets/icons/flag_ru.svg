@@ -1,8 +1,5 @@
-<svg data-token-name="flag_ru" data-keep-original="keep" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g fill="none">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 4H22V19H2V4Z" fill="white"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 9H22V19H2V9Z" fill="#0039A6"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 14H22V19H2V14Z" fill="#D52B1E"/>
-        <rect x="1.5" y="3.5" width="21" height="16" stroke="#EDF0F3"/>
-    </g>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.5 4.5H23.5V19.5H0.5V4.5Z" fill="#F5F5F5" stroke="#C7CCD1"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1 9.15625H23V18.5312H1V9.15625Z" fill="#0039A6"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1 14H23V19H1V14Z" fill="#D52B1E"/>
 </svg>

@@ -124,6 +124,8 @@ export default {
             [`mc-title--pre-line`]: props.preLine,
             [`mc-title--nowrap`]: props.nowrap,
             'mc-title--uppercase': props.uppercase,
+            'mc-title--line-height': props.lineHeight,
+            'mc-title--weight': props.weight,
             'mc-title--plain-text': props.plainText,
             ...(data.class || {}),
             ...responsivePropsClasses,
@@ -169,8 +171,6 @@ export default {
     --mc-title-weight: initial;
     --mc-title-line-height: initial;
     color: var(--mc-title-color);
-    font-weight: var(--mc-title-weight);
-    line-height: var(--mc-title-line-height);
     @mixin variations() {
         font-family: $font-family-main;
         &-h1 {
@@ -316,6 +316,12 @@ export default {
             justify-content: flex-end;
             text-align: end;
         }
+    }
+    &--line-height {
+        line-height: var(--mc-title-line-height);
+    }
+    &--weight {
+        font-weight: var(--mc-title-weight);
     }
     @each $media, $value in $token-media-queries {
         @media #{$value} {

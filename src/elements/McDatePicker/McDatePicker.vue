@@ -395,8 +395,8 @@ export default {
                 return this.useFormat || (!this.setDefaultToday && !this.value)
                     ? this.value
                     : this.value
-                    ? new Date(this.value)
-                    : new Date()
+                        ? new Date(this.value)
+                        : new Date()
             }
             const formattingDate = date =>
                 dayjs.tz(dayjs.utc(date, 'YYYY-MM-DD HH:mm:ss'), this.currentTimezone).format(this.format)
@@ -629,6 +629,7 @@ export default {
     left: $space-100;
     color: $color-black;
 }
+
 .mx-icon-clear {
     svg {
         width: $space-200;
@@ -815,6 +816,20 @@ export default {
 
     .mx-calendar-decade-separator:after {
         content: '-';
+    }
+    @at-root {
+        html[dir='rtl'] {
+            .mx-icon {
+                &-double {
+                    &-right:after {
+                        left: $space-100;
+                    }
+                    &-left:before {
+                        left: -$space-100;
+                    }
+                }
+            }
+        }
     }
 }
 </style>
