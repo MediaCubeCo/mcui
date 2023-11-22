@@ -602,6 +602,10 @@ export default {
                     value = value?.toLowerCase()
                     e.target.value = value
                     break
+                case 'password':
+                    value = value?.replace(' ', '')
+                    e.target.value = value
+                    break
             }
 
             this.handleInput(value)
