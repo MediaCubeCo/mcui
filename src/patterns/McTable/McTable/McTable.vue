@@ -48,7 +48,7 @@
                 <mc-title color="outline-gray">{{ placeholders.loading }}</mc-title>
             </div>
         </div>
-        <mc-overlay v-if="overlayLoading" size="700" />
+        <mc-overlay v-if="overlayLoading" />
     </div>
 </template>
 
