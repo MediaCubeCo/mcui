@@ -518,18 +518,18 @@ export default {
         passwordTooltipProps() {
             return this.passwordTooltip
                 ? {
-                    is: 'mc-tooltip',
-                    content: this.isPasswordType
-                        ? this.passwordTooltip
-                        : this.passwordHideTooltip || this.passwordTooltip,
-                    placement: 'top',
-                    trigger: this.isMobile ? 'focus click' : 'hover focus',
-                    size: 's',
-                }
+                      is: 'mc-tooltip',
+                      content: this.isPasswordType
+                          ? this.passwordTooltip
+                          : this.passwordHideTooltip || this.passwordTooltip,
+                      placement: 'top',
+                      trigger: this.isMobile ? 'focus click' : 'hover focus',
+                      size: 's',
+                  }
                 : {
-                    is: 'div',
-                    class: 'mc-field-text__empty-tooltip',
-                }
+                      is: 'div',
+                      class: 'mc-field-text__empty-tooltip',
+                  }
         },
     },
 
@@ -603,8 +603,10 @@ export default {
                     e.target.value = value
                     break
                 case 'password':
+                    const cursor_position = this.getCaretPos(e.target)?.start
                     value = value?.replace(' ', '')
                     e.target.value = value
+                    this.setCaretPos(e.target, cursor_position, cursor_position)
                     break
             }
 
@@ -612,11 +614,11 @@ export default {
         },
         formattedToNumber(value) {
             const [first] =
-            /-?\d*[\.]?\d*/.exec(
-                String(value)
-                    ?.replace(/ /gm, '')
-                    ?.trim(),
-            ) || []
+                /-?\d*[\.]?\d*/.exec(
+                    String(value)
+                        ?.replace(/ /gm, '')
+                        ?.trim(),
+                ) || []
 
             return first
         },
@@ -769,7 +771,7 @@ export default {
     &__prepend {
         inset-inline-start: 0;
         padding: $space-100 0;
-        padding-inline: $space-100  $space-50;
+        padding-inline: $space-100 $space-50;
     }
 
     &__append {
