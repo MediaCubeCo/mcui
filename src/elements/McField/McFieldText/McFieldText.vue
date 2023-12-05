@@ -604,7 +604,7 @@ export default {
                     break
                 case 'password':
                     const cursor_position = this.getCaretPos(e.target)?.start
-                    value = value?.replace(' ', '')
+                    value = value?.replace(/ /gm, '')
                     e.target.value = value
                     this.setCaretPos(e.target, cursor_position, cursor_position)
                     break
