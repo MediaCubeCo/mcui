@@ -257,7 +257,7 @@ export default {
          */
         name: {
             type: String,
-            default: null,
+            required: true,
         },
         /**
          *  Если нужен тултип
@@ -338,6 +338,7 @@ export default {
                 hideSelected: this.hideSelected,
                 allowEmpty: this.allowEmpty,
                 openDirection: this.openDirection,
+                id: this.name,
                 taggable: this.taggable,
                 tagPlaceholder: '',
                 placeholder: this.placeholder,
