@@ -138,6 +138,7 @@ export default {
     outline: none;
     z-index: 0;
     flex-shrink: 0;
+    overflow: visible;
     &:before {
         content: '';
         position: absolute;
@@ -145,6 +146,7 @@ export default {
         right: 0;
         z-index: 0;
         @include size(100%);
+        border-radius: inherit;
         background-color: var(--mc-chip-color);
     }
     > * {
