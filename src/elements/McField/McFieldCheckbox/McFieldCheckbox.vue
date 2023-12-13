@@ -266,7 +266,7 @@ export default {
         margin-inline-start: $space-100;
         &:before {
             @include pseudo(none);
-            @include size($size-200);
+            @include size(var(--mc-field-checkbox-size));
             @include position(absolute, 0 null null 0);
             background-size: 100%;
         }
