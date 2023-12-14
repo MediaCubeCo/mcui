@@ -1,5 +1,5 @@
 <template>
-    <div v-tooltip="tooltipProps" class="mc-tooltip-target">
+    <div ref="tooltipTarget" v-tooltip="tooltipProps" class="mc-tooltip-target" @mouseenter.stop="handleHide">
         <!-- @slot Слот для элемента, у которого будет всплывать тултип -->
         <slot />
     </div>
@@ -122,6 +122,17 @@ export default {
             return variables.join('; ')
         },
     },
+    methods: {
+        handleHide() {
+            setTimeout(() => {
+                const tooltipID =this.$refs.tooltipTarget?.getAttribute('aria-describedby')
+                const tooltips = document.documentElement.querySelectorAll('.tooltip.mc-tooltip')
+                tooltips.forEach(tooltip => {
+                    tooltip.style.visibility = tooltip.id === tooltipID ? 'visible' : 'hidden'
+                })
+            }, 1)
+        },
+    }
 }
 </script>
 
