@@ -248,6 +248,12 @@ export default {
         }
     }
 
+    &--width-xs {
+        &.tooltip {
+            max-width: 180px;
+        }
+    }
+
     &--width-s {
         &.tooltip {
             max-width: 250px;
