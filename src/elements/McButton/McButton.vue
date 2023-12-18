@@ -2,6 +2,7 @@
     <component
         :is="tag"
         ref="mc-button"
+        v-tooltip="tooltipOptions"
         v-bind="tagBind"
         class="mc-button"
         :class="classes"
@@ -32,10 +33,16 @@
 
 <script>
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
+import { VTooltip } from 'v-tooltip'
+
+VTooltip.options.defaultBoundariesElement = 'window'
 export default {
     name: 'McButton',
     components: {
         McSvgIcon,
+    },
+    directives: {
+        tooltip: VTooltip,
     },
     props: {
         /**
@@ -225,6 +232,13 @@ export default {
                 text: null,
             }),
         },
+        /**
+         * Тултип при наличии
+         */
+        tooltip: {
+            type: String,
+            default: '',
+        },
 
         /**
          * Атрибут tabindex для главного элемента
@@ -342,6 +356,20 @@ export default {
             result.tabindex = this.tabindex
 
             return result
+        },
+        tooltipOptions() {
+            return this.tooltip
+                ? {
+                      content: this.tooltip,
+                      placement: 'top',
+                      classes: 'mc-tooltip mc-tooltip--width-s mc-tooltip--size-s',
+                      trigger: 'hover focus',
+                      show: false,
+                      container: 'body',
+                      template: `<div class="tooltip" role="tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner"><div class="tooltip-inner__content"></div></div> </div>`,
+                      innerSelector: '.tooltip-inner__content',
+                  }
+                : null
         },
     },
     watch: {
