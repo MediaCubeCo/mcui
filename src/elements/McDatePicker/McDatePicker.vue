@@ -126,8 +126,6 @@
 
 <script>
 import { dayjs, dayjsLocales } from '../../utils/dayjs'
-import _isEmpty from 'lodash/isEmpty'
-import _omit from 'lodash/omit'
 import DatePicker from 'vue2-datepicker'
 import 'vue2-datepicker/locale/ru'
 import 'vue2-datepicker/locale/en'
@@ -366,7 +364,8 @@ export default {
         },
 
         listeners() {
-            return _omit(this.$listeners, 'input')
+            const { input, ...listeners } = this.$listeners
+            return listeners
         },
         isRange() {
             return this.range
@@ -387,7 +386,10 @@ export default {
             return this.seconds && this.seconds.length ? { 'second-options': this.seconds } : {}
         },
         isFooterVisible() {
-            return this.$slots.footer || (this.isRange && (this.customPresets?.length || !_isEmpty(this.placeholders)))
+            return (
+                this.$slots.footer ||
+                (this.isRange && (this.customPresets?.length || Object.keys(this.placeholders || {}).length))
+            )
         },
         prettyValue() {
             if (!this.useTimezone) {

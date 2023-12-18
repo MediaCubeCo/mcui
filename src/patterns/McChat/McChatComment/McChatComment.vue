@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import _has from 'lodash/has'
 import McPreview from '../../McPreview/McPreview'
 import McTitle from '../../../elements/McTitle/McTitle'
 import McDate from '../../../elements/McDate/McDate'
@@ -113,7 +112,7 @@ export default {
             return this.comment?.moderator?.avatar ?? this.comment?.user?.avatar ?? this.comment?.user?.profile?.avatar
         },
         computedTitle() {
-            const hasUserName = _has(this.comment, ['user', 'full_name']) && this.comment.user.full_name
+            const hasUserName = !!this.comment?.user?.full_name
             return {
                 name: hasUserName ? this.comment.user.full_name : this.defaultUserName,
                 weight: hasUserName ? 'semi-bold' : 'medium',

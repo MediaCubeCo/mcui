@@ -53,9 +53,8 @@
 </template>
 
 <script>
+import { throttle, isEmpty } from '../../../helpers/functions'
 import noTableDataIcon from '../../../assets/img/no_table_data.png'
-import _throttle from 'lodash/throttle'
-import _isEmpty from 'lodash/isEmpty'
 
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
@@ -449,7 +448,7 @@ export default {
                 columns.map(column => {
                     if (column.type === 'seq') return data.length
                     if (column.type === 'checkbox') return ' '
-                    if (this.footerInfo === 'total' && !_isEmpty(this.totalFooter)) {
+                    if (this.footerInfo === 'total' && !isEmpty(this.totalFooter)) {
                         const info = Object.entries(this.totalFooter).find(([key]) => key === column.property)
                         if (!info) return null
                         if (!column?.params?.modifyTotal) return info[1]
@@ -461,7 +460,7 @@ export default {
                 }),
             ]
         },
-        handleScroll: _throttle(function({ scrollTop, $event, type, isY, $table }) {
+        handleScroll: throttle(function({ scrollTop, $event, type, isY, $table }) {
             const bottomPos = Math.ceil($event.target.scrollHeight - $event.target.clientHeight)
             const isLoadArea = bottomPos - scrollTop <= $table._data.rowHeight * this.rowsToStartLoad
             this.scrollIsBottom = scrollTop / bottomPos > 0.95

@@ -1,10 +1,7 @@
+import { isEqual, cloneDeep, isEmpty } from '../../../helpers/functions'
 import { value, filters, placeholders } from '../../../mocks/filterMocks'
 import { handleConfirmAction } from '../../../helpers/delayedAction'
-import _isEqual from 'lodash/isEqual'
-import _cloneDeep from 'lodash/cloneDeep'
-
 import McFilterTags from './McFilterTags'
-import _isEmpty from 'lodash/isEmpty'
 
 export default {
     title: 'Patterns/McFilter/McFilterTags',
@@ -53,32 +50,31 @@ export const Default = () => ({
     },
     methods: {
         onTagsChange(val) {
-            if (_isEmpty(val)) {
+            if (isEmpty(val)) {
                 this.valuesName = {}
                 return
             }
-            this.valuesName = _cloneDeep(val)
+            this.valuesName = cloneDeep(val)
         },
         onTagClick(tag) {
-            this.activeTag = _isEqual(this.activeTag, tag) ? null : tag
+            this.activeTag = isEqual(this.activeTag, tag) ? null : tag
             console.log('onTagClick', this.activeTag && this.activeTag.title)
         },
         allTagsClear() {
-            this.temporaryValuesName = _cloneDeep(this.valuesName)
+            this.temporaryValuesName = cloneDeep(this.valuesName)
             this.valuesName = {}
             handleConfirmAction(
                 this.clearTemporaryValues,
                 this.revertClearedValues,
-                this.placeholders.messages.accidentally_cleared
+                this.placeholders.messages.accidentally_cleared,
             )
         },
         clearTemporaryValues() {
             this.temporaryValuesName = {}
         },
         revertClearedValues() {
-            this.valuesName = _cloneDeep(this.temporaryValuesName)
+            this.valuesName = cloneDeep(this.temporaryValuesName)
         },
-  },
-  template: `<mc-filter-tags v-bind="tagBind" @tag-change="onTagsChange" @tag-click="onTagClick" @clear="allTagsClear" />`,
+    },
+    template: `<mc-filter-tags v-bind="tagBind" @tag-change="onTagsChange" @tag-click="onTagClick" @clear="allTagsClear" />`,
 })
-

@@ -15,7 +15,6 @@ import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
 import McStack from '../../../patterns/McStack/McStack'
 import McPreview from '../../McPreview/McPreview'
 
-import _minBy from 'lodash/minBy'
 import { number as num } from '../../../utils/filters'
 
 import body from '../../../mocks/tableInfusersBody'
@@ -220,15 +219,6 @@ export const Default = () => ({
                           language: item.language.name,
                           country: item.country.name,
                           roles: ['Одмен', 'Петух', 'Лопух'],
-                          price: item.agency_channels.filter(item => item.type === 2).length
-                              ? num(
-                                    _minBy(
-                                        item.agency_channels.filter(item => item.type === 2),
-                                        'total',
-                                    ).total,
-                                    0,
-                                ) + ' $'
-                              : null,
                       }))
                       .slice(0, 50)
                 : []

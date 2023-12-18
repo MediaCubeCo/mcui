@@ -27,10 +27,7 @@
 </template>
 
 <script>
-import _uniqWith from 'lodash/uniqWith'
-import _isEqual from 'lodash/isEqual'
-import _debounce from 'lodash/debounce'
-import _isEmpty from 'lodash/isEmpty'
+import { uniqWith, isEqual, isEmpty, debounce } from '../../../helpers/functions'
 import McButton from '../../../elements/McButton/McButton'
 import McTitle from '../../../elements/McTitle/McTitle'
 import McFieldSelect from '../../../elements/McField/McFieldSelect/McFieldSelect'
@@ -93,7 +90,7 @@ export default {
         computedOptions() {
             let options = this.isAjax ? this.ajaxOptions : this.filter.options || []
 
-            if (!_isEmpty(this.currentValues) && this.filter.value in this.currentValues) {
+            if (!isEmpty(this.currentValues) && this.filter.value in this.currentValues) {
                 const category = this.currentValues[this.filter.value]
                 let selected = []
                 for (let [key, val] of Object.entries(category)) {
@@ -160,19 +157,18 @@ export default {
         },
         async addAjaxOption(value) {
             const option = await this.filter.getAjaxOne(value)
-            this.ajaxOptions = _uniqWith([...this.ajaxOptions, option], _isEqual)
+            this.ajaxOptions = uniqWith([...this.ajaxOptions, option], isEqual)
         },
         handleSearchChange(value) {
             if (!this.isAjax || !value) return
             this.debounceHandler(this.setAjaxOptions.bind(null, value))
         },
-        debounceHandler: _debounce(method => method(), 500),
+        debounceHandler: debounce(method => method(), 500),
         setValue(value) {
             let currentValue = null
             let currentValueName = null
             const hasVal = value || Number.isInteger(value)
             if (this.relationType !== 'exists' && hasVal) {
-
                 const name = this.filter.is_text
                     ? value
                     : this.computedOptions.find(o => String(o.value) === String(value))?.name
