@@ -237,7 +237,7 @@ export default {
          */
         tooltip: {
             type: String,
-            default: '',
+            default: null,
         },
 
         /**
@@ -358,7 +358,7 @@ export default {
             return result
         },
         tooltipOptions() {
-            return this.tooltip
+            return this.tooltip && this.size.includes('-compact')
                 ? {
                       content: this.tooltip,
                       placement: 'top',
