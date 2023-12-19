@@ -133,7 +133,7 @@ export default {
 <style lang="scss">
 .mc-field-toggle {
     $block-name: &;
-    $toggle-indent: $space-50 / 2;
+    $toggle-indent: calc(#{$space-50} / 2);
     --mc-field-toggle-color: initial;
     --mc-field-disabled-color: initial;
     --mc-field-toggle-saturate-value: initial;
@@ -197,7 +197,7 @@ export default {
                 background-color: $color-purple;
 
                 &:before {
-                    inset-inline-start: $space-300 + $toggle-indent;
+                    inset-inline-start: calc(#{$space-300} + #{$toggle-indent});
                 }
             }
         }

@@ -212,7 +212,7 @@ export default {
     $more-space-indent: $space-200;
     --mc-wrap-scroll-bottom: #{$space-zero};
     padding-bottom: var(--mc-wrap-scroll-bottom);
-    margin-bottom: calc(var(--mc-wrap-scroll-bottom) * -1);
+    margin-bottom: -(var(--mc-wrap-scroll-bottom));
     &.mc-wrap-scroll--scrollable {
         overflow-x: auto;
         overflow-y: hidden;
