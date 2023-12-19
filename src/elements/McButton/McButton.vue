@@ -358,7 +358,7 @@ export default {
             return result
         },
         tooltipOptions() {
-            return this.tooltip && this.size.includes('-compact')
+            return this.tooltip
                 ? {
                       content: this.tooltip,
                       placement: 'top',

@@ -236,7 +236,7 @@ export default {
         }
 
         &[aria-hidden='true'] {
-            visibility: hidden;
+            visibility: hidden !important;
             opacity: 0;
             transition: opacity $duration-s, visibility $duration-s;
         }
