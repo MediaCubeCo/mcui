@@ -418,7 +418,10 @@ export default {
     },
     methods: {
         async setupDayjsLocale() {
-            const locale = this.lang !== 'ar' && Object.keys(dayjsLocales).includes(this.lang) ? this.lang : 'en'
+            const locale =
+                this.lang !== 'ar' && Object.keys(dayjsLocales).includes(this.lang)
+                    ? this.lang
+                    : DatePicker.locale('en')
             await dayjsLocales[locale]?.()
             dayjs.locale(locale)
         },
