@@ -413,18 +413,24 @@ export default {
             return formattingDate(this.value)
         },
     },
-    created() {
-        // Установка локали по умолчанию
-        DatePicker.locale('en');
-    },
-    async mounted() {
-        await this.setupDayjsLocale()
+    watch: {
+        lang: {
+            immediate: true,
+            handler() {
+                this.setupDayjsLocale()
+                this.setupDatePickerLocale()
+            }
+        }
     },
     methods: {
         async setupDayjsLocale() {
             const locale = this.lang !== 'ar' && Object.keys(dayjsLocales).includes(this.lang) ? this.lang : 'en'
             await dayjsLocales[locale]?.()
             dayjs.locale(locale)
+        },
+        setupDatePickerLocale() {
+            const locale = ['en', 'ru', 'es'].includes(this.lang) ? this.lang : 'en'
+            DatePicker.locale(locale);
         },
         handleEmitDate(value) {
             const date = this.getFormattedDate(value)
