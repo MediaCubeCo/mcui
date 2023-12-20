@@ -8244,11 +8244,6 @@ dom-walk@^0.1.0:
   resolved "https://registry.npmjs.org/dom-walk/-/dom-walk-0.1.2.tgz"
   integrity sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==
 
-dom-zindex@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/dom-zindex/-/dom-zindex-1.0.1.tgz#98df1d916f390f009bb0ec03b96df820e7c7073a"
-  integrity sha512-M/MERVDZ8hguvjl6MAlLWSLYLS7PzEyXaTb5gEeJ+SF+e9iUC0sdvlzqe91MMDHBoy+nqw7wKcUOrDSyvMCrRg==
-
 domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.npmjs.org/domain-browser/-/domain-browser-1.2.0.tgz"
@@ -17770,13 +17765,10 @@ vuex@^3.4.0:
   resolved "https://registry.npmjs.org/vuex/-/vuex-3.4.0.tgz"
   integrity sha512-ajtqwEW/QhnrBZQsZxCLHThZZaa+Db45c92Asf46ZDXu6uHXgbfVuBaJ4gzD2r4UX0oMJHstFwd2r2HM4l8umg==
 
-vxe-table@^3.7.6:
-  version "3.7.6"
-  resolved "https://registry.yarnpkg.com/vxe-table/-/vxe-table-3.7.6.tgz#e97c27b28d1a577315acf64615a83d50a8351c99"
-  integrity sha512-hcM5wjZChZhIbm4j+teh22U2HMparyJLUpedLBCbLZmEUX0gnKNwn4vm1BFsmmap02AYJmlTPMKtlkCnbKRaRQ==
-  dependencies:
-    dom-zindex "^1.0.1"
-    xe-utils "^3.5.13"
+vxe-table@2.9.17:
+  version "2.9.17"
+  resolved "https://registry.yarnpkg.com/vxe-table/-/vxe-table-2.9.17.tgz#4bc75211496236dece6c6128099fb3b78a8821eb"
+  integrity sha512-ywqKRfES5z5dBsFAynraRAOjEBDMEDEILVn8UtUYfepq5//opKwvAbUiXpN6YfbNW/eTN7yIpEY5C2uibmHMNg==
 
 w3c-hr-time@^1.0.1:
   version "1.0.2"
@@ -18216,11 +18208,6 @@ xe-utils@2.7.2:
   version "2.7.2"
   resolved "https://registry.npmjs.org/xe-utils/-/xe-utils-2.7.2.tgz"
   integrity sha512-zk88vpzs2Aztxo2g9M2D7tlCYlkSUO8hk3dyGZn3fE/q7i0EjHvMHo3eaITFD/mAiAo4EgwkXivXmqE/cefyUg==
-
-xe-utils@^3.5.13:
-  version "3.5.14"
-  resolved "https://registry.yarnpkg.com/xe-utils/-/xe-utils-3.5.14.tgz#37a983856fc82c8f2d8fcec57a019d3c445d04e0"
-  integrity sha512-Xq6mS8dWwHBQsQUEBXcZYSaBV0KnNLoVWd0vRRDI3nKpbNxfs/LSCK0W21g1edLFnXYfKqg7hh5dakr3RtYY0A==
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
