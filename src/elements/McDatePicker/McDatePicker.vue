@@ -413,15 +413,16 @@ export default {
             return formattingDate(this.value)
         },
     },
+    created() {
+        // Установка локали по умолчанию
+        DatePicker.locale('en');
+    },
     async mounted() {
         await this.setupDayjsLocale()
     },
     methods: {
         async setupDayjsLocale() {
-            const locale =
-                this.lang !== 'ar' && Object.keys(dayjsLocales).includes(this.lang)
-                    ? this.lang
-                    : DatePicker.locale('en')
+            const locale = this.lang !== 'ar' && Object.keys(dayjsLocales).includes(this.lang) ? this.lang : 'en'
             await dayjsLocales[locale]?.()
             dayjs.locale(locale)
         },
