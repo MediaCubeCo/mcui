@@ -748,6 +748,7 @@ export default {
     .vxe-cell {
         padding-inline-start: $space-200;
         padding-inline-end: $space-200;
+        word-break: break-word;
         &--checkbox {
             display: flex;
             align-items: center;
