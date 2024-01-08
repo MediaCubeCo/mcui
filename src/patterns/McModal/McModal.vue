@@ -2,6 +2,7 @@
     <modal
         :class="classes"
         :name="name"
+        :style="styles"
         :max-width="maxWidth"
         :click-to-close="clickToClose"
         class="mc-modal"
@@ -126,6 +127,20 @@ export default {
         scrolled_top: false,
         scrolled_bottom: false,
         resize_observer: null,
+        small_indents: false,
+        modal_params: {},
+        indent: {
+            regular: 400,
+            small: 150,
+        },
+        header: {
+            title: {
+                line_height: {
+                    regular: 300,
+                    small: 250,
+                }
+            }
+        },
     }),
     computed: {
         classes() {
@@ -136,9 +151,18 @@ export default {
                 'mc-modal--scrolled-bottom': this.scrolled_bottom,
                 'mc-modal--scrollable': this.scrollableContent,
                 'mc-modal--top-padding': this.topPadding,
+                'mc-modal--small-indents': this.small_indents,
                 [`mc-modal--variation-${this.variation}`]: !!this.variation,
                 [`mc-modal--header-align-${this.headerAlign}`]:
-                (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
+                    (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
+            }
+        },
+        styles() {
+            return {
+                '--mc-modal-padding': `var(--space-${this.indent.regular})`,
+                '--mc-modal-padding-small': `var(--space-${this.indent.small})`,
+                '--mc-modal-header-line-height': `var(--line-height-${this.header.title.line_height.regular})`,
+                '--mc-modal-header-line-height-small': `var(--line-height-${this.header.title.line_height.small})`,
             }
         },
     },
@@ -162,6 +186,7 @@ export default {
         },
         handleOpened(event) {
             if (this.separators) {
+                this.getParams()
                 this.$refs.mcModalBody.addEventListener('scroll', this.calculateSeparators, {
                     passive: true,
                 })
@@ -189,6 +214,16 @@ export default {
         handleBack(event) {
             this.$emit('back', event)
         },
+        getParams() {
+            try {
+                Object.keys(this.styles).forEach(attr => {
+                    const param = parseInt(getComputedStyle(this.$refs.modalInner)?.getPropertyValue(attr))
+                    param && (this.modal_params[attr] = param)
+                })
+            } catch (e) {
+                console.error(e)
+            }
+        },
         /**
          * Устанавливаем сепараторы, если есть скролл
          * @param {Boolean} scrolled - если метод вызван скроллом
@@ -197,6 +232,7 @@ export default {
             if (!scrolled) {
                 this.scrolled_top = false
                 this.scrolled_bottom = false
+                this.small_indents = false
             }
 
             setTimeout(
@@ -205,6 +241,18 @@ export default {
                     // Сепаратор появится если высота скролла будет > 2px
                     const offset = 2
                     this.scrolled_top = scrollTop > offset
+                    /* Если шапка уже маленькая, то отключаем при отключении сепаратора
+                     * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
+                     */
+                    const indentDifferences =
+                        (this.modal_params?.['--mc-modal-padding'] -
+                            this.modal_params?.['--mc-modal-padding-small']) *
+                        3
+                    const lineHeightDifferences =
+                        this.modal_params?.['--mc-modal-header-line-height'] -
+                        this.modal_params?.['--mc-modal-header-line-height-small']
+                    const sizeDifferences = indentDifferences + lineHeightDifferences
+                    this.small_indents = this.small_indents ? this.scrolled_top : scrollTop > sizeDifferences
                     this.scrolled_bottom = scrollTop + clientHeight < scrollHeight - offset
                 },
                 scrolled ? 0 : 300,
@@ -223,6 +271,10 @@ export default {
     $block-name: &;
     $border-color: #dee1e9;
     $box-shadow-color: #20008c28;
+    --mc-modal-padding: $space-400;
+    --mc-modal-padding-small: $space-150;
+    --mc-modal-header-line-height: $line-height-300;
+    --mc-modal-header-line-height-small: $line-height-250;
 
     @media #{$media-query-s} {
         padding: 12px 0;
@@ -231,22 +283,23 @@ export default {
     .vm--modal {
         border-radius: $radius-200;
     }
-    &__btn-close {
+    &__btn-close,
+    &__btn-back {
         @include reset-btn();
-        @include position(absolute, $space-400 $space-200 null null);
         @include close-link();
         z-index: $z-index-sticky;
+        transition: $duration-s all;
+    }
+    &__btn-close {
+        @include position(absolute, var(--mc-modal-padding) $space-200 null null);
         @media #{$media-query-s} {
-            @include position(absolute, $space-400 $space-600 null null);
+            @include position(absolute, var(--mc-modal-padding) $space-600 null null);
         }
     }
     &__btn-back {
-        @include reset-btn();
-        @include position(absolute, $space-400 null null $space-200);
-        @include close-link();
-        z-index: $z-index-sticky;
+        @include position(absolute, var(--mc-modal-padding) null null $space-200);
         @media #{$media-query-s} {
-            @include position(absolute, $space-400 null null $space-600);
+            @include position(absolute, var(--mc-modal-padding) null null $space-600);
         }
     }
 
@@ -290,7 +343,7 @@ export default {
             &__header {
                 padding-bottom: 9px;
                 border-bottom: 2px solid $border-color;
-                margin-bottom: $space-400;
+                margin-bottom: var(--mc-modal-padding);
             }
             &__control {
                 display: flex;
@@ -358,9 +411,14 @@ export default {
 
     &__header {
         flex-shrink: 0;
-        padding: $space-400 $space-200 $space-250;
+        transition: $duration-s all;
+        padding: var(--mc-modal-padding) $space-200 $space-250;
         @media #{$media-query-s} {
             padding: $space-350;
+            .mc-title {
+                transition: $duration-s all;
+                line-height: var(--mc-modal-header-line-height);
+            }
         }
     }
 
@@ -393,10 +451,10 @@ export default {
         overflow: hidden;
         height: 100% !important;
         > *:first-child {
-            padding-top: $space-400;
+            padding-top: var(--mc-modal-padding);
         }
         > *:last-child {
-            padding-bottom: $space-400;
+            padding-bottom: var(--mc-modal-padding);
         }
         @media #{$media-query-s} {
             overflow: visible;
@@ -444,6 +502,30 @@ export default {
             }
         }
     }
+    &--small-indents {
+        @media #{$media-query-s} {
+            #{$block-name} {
+                &__control {
+                    padding-bottom: var(--mc-modal-padding-small) !important;
+                }
+                &__header {
+                    padding-block: var(--mc-modal-padding-small) !important;
+                    .mc-title {
+                        font-weight: $font-weight-semi-bold;
+                        font-size: $font-size-300;
+                        line-height: var(--mc-modal-header-line-height-small);
+                        align-items: center;
+                    }
+                }
+                &__btn {
+                    &-back,
+                    &-close {
+                        top: var(--mc-modal-padding-small) !important;
+                    }
+                }
+            }
+        }
+    }
 
     &--scrolled {
         &-top {
@@ -473,8 +555,9 @@ export default {
         display: flex;
         justify-content: center;
         padding: $space-250 $space-200 $space-400;
+        transition: $duration-s all;
         @media #{$media-query-s} {
-            padding: $space-350 $space-300 $space-300;
+            padding: $space-150 $space-300 $space-300;
         }
         .mc-button {
             width: 100%;
