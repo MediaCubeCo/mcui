@@ -128,6 +128,7 @@ export default {
         scrolled_bottom: false,
         resize_observer: null,
         small_header: false,
+        modal_params: {},
         header_indent: 400,
         header_indent_small: 150,
         title_line_height: 300,
@@ -177,6 +178,7 @@ export default {
         },
         handleOpened(event) {
             if (this.separators) {
+                this.getParams()
                 this.$refs.mcModalBody.addEventListener('scroll', this.calculateSeparators, {
                     passive: true,
                 })
@@ -204,6 +206,16 @@ export default {
         handleBack(event) {
             this.$emit('back', event)
         },
+        getParams() {
+            try {
+                Object.keys(this.styles).forEach(attr => {
+                    const param = parseInt(getComputedStyle(this.$refs.modalInner)?.getPropertyValue(attr))
+                    param && (this.modal_params[attr] = param)
+                })
+            } catch (e) {
+                console.error(e)
+            }
+        },
         /**
          * Устанавливаем сепараторы, если есть скролл
          * @param {Boolean} scrolled - если метод вызван скроллом
@@ -225,8 +237,13 @@ export default {
                      * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
                      */
                     if (this.variation !== 'info') {
-                        const indentDifferences = (this.header_indent - this.header_indent_small) * 2
-                        const lineHeightDifferences = this.title_line_height - this.title_line_height_small
+                        const indentDifferences =
+                            (this.modal_params?.['--mc-modal-header-padding'] -
+                                this.modal_params?.['--mc-modal-header-padding-small']) *
+                            2
+                        const lineHeightDifferences =
+                            this.modal_params?.['--mc-modal-header-line-height'] -
+                            this.modal_params?.['--mc-modal-header-line-height-small']
                         const sizeDifferences = indentDifferences + lineHeightDifferences
                         this.small_header = this.small_header ? this.scrolled_top : scrollTop > sizeDifferences
                     }
