@@ -127,12 +127,20 @@ export default {
         scrolled_top: false,
         scrolled_bottom: false,
         resize_observer: null,
-        small_header: false,
+        small_indents: false,
         modal_params: {},
-        header_indent: 400,
-        header_indent_small: 150,
-        title_line_height: 300,
-        title_line_height_small: 250,
+        indent: {
+            regular: 400,
+            small: 150,
+        },
+        header: {
+            title: {
+                line_height: {
+                    regular: 300,
+                    small: 250,
+                }
+            }
+        },
     }),
     computed: {
         classes() {
@@ -143,7 +151,7 @@ export default {
                 'mc-modal--scrolled-bottom': this.scrolled_bottom,
                 'mc-modal--scrollable': this.scrollableContent,
                 'mc-modal--top-padding': this.topPadding,
-                'mc-modal--small-header': this.small_header,
+                'mc-modal--small-indents': this.small_indents,
                 [`mc-modal--variation-${this.variation}`]: !!this.variation,
                 [`mc-modal--header-align-${this.headerAlign}`]:
                     (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
@@ -151,10 +159,10 @@ export default {
         },
         styles() {
             return {
-                '--mc-modal-header-padding': `var(--space-${this.header_indent})`,
-                '--mc-modal-header-padding-small': `var(--space-${this.header_indent_small})`,
-                '--mc-modal-header-line-height': `var(--line-height-${this.title_line_height})`,
-                '--mc-modal-header-line-height-small': `var(--line-height-${this.title_line_height_small})`,
+                '--mc-modal-padding': `var(--space-${this.indent.regular})`,
+                '--mc-modal-padding-small': `var(--space-${this.indent.small})`,
+                '--mc-modal-header-line-height': `var(--line-height-${this.header.title.line_height.regular})`,
+                '--mc-modal-header-line-height-small': `var(--line-height-${this.header.title.line_height.small})`,
             }
         },
     },
@@ -224,7 +232,7 @@ export default {
             if (!scrolled) {
                 this.scrolled_top = false
                 this.scrolled_bottom = false
-                this.small_header = false
+                this.small_indents = false
             }
 
             setTimeout(
@@ -238,14 +246,14 @@ export default {
                      */
                     if (this.variation !== 'info') {
                         const indentDifferences =
-                            (this.modal_params?.['--mc-modal-header-padding'] -
-                                this.modal_params?.['--mc-modal-header-padding-small']) *
-                            2
+                            (this.modal_params?.['--mc-modal-padding'] -
+                                this.modal_params?.['--mc-modal-padding-small']) *
+                            3
                         const lineHeightDifferences =
                             this.modal_params?.['--mc-modal-header-line-height'] -
                             this.modal_params?.['--mc-modal-header-line-height-small']
                         const sizeDifferences = indentDifferences + lineHeightDifferences
-                        this.small_header = this.small_header ? this.scrolled_top : scrollTop > sizeDifferences
+                        this.small_indents = this.small_indents ? this.scrolled_top : scrollTop > sizeDifferences
                     }
                     this.scrolled_bottom = scrollTop + clientHeight < scrollHeight - offset
                 },
@@ -265,8 +273,8 @@ export default {
     $block-name: &;
     $border-color: #dee1e9;
     $box-shadow-color: #20008c28;
-    --mc-modal-header-padding: $space-400;
-    --mc-modal-header-padding-small: $space-150;
+    --mc-modal-padding: $space-400;
+    --mc-modal-padding-small: $space-150;
     --mc-modal-header-line-height: $line-height-300;
     --mc-modal-header-line-height-small: $line-height-250;
 
@@ -285,15 +293,15 @@ export default {
         transition: $duration-s all;
     }
     &__btn-close {
-        @include position(absolute, var(--mc-modal-header-padding) $space-200 null null);
+        @include position(absolute, var(--mc-modal-padding) $space-200 null null);
         @media #{$media-query-s} {
-            @include position(absolute, var(--mc-modal-header-padding) $space-600 null null);
+            @include position(absolute, var(--mc-modal-padding) $space-600 null null);
         }
     }
     &__btn-back {
-        @include position(absolute, var(--mc-modal-header-padding) null null $space-200);
+        @include position(absolute, var(--mc-modal-padding) null null $space-200);
         @media #{$media-query-s} {
-            @include position(absolute, var(--mc-modal-header-padding) null null $space-600);
+            @include position(absolute, var(--mc-modal-padding) null null $space-600);
         }
     }
 
@@ -337,7 +345,7 @@ export default {
             &__header {
                 padding-bottom: 9px;
                 border-bottom: 2px solid $border-color;
-                margin-bottom: var(--mc-modal-header-padding);
+                margin-bottom: var(--mc-modal-padding);
             }
             &__control {
                 display: flex;
@@ -406,7 +414,7 @@ export default {
     &__header {
         flex-shrink: 0;
         transition: $duration-s all;
-        padding: var(--mc-modal-header-padding) $space-200 $space-250;
+        padding: var(--mc-modal-padding) $space-200 $space-250;
         @media #{$media-query-s} {
             padding: $space-350;
             .mc-title {
@@ -445,10 +453,10 @@ export default {
         overflow: hidden;
         height: 100% !important;
         > *:first-child {
-            padding-top: var(--mc-modal-header-padding);
+            padding-top: var(--mc-modal-padding);
         }
         > *:last-child {
-            padding-bottom: $space-400;
+            padding-bottom: var(--mc-modal-padding);
         }
         @media #{$media-query-s} {
             overflow: visible;
@@ -496,11 +504,14 @@ export default {
             }
         }
     }
-    &--small-header:not(#{$block-name}--variation-info) {
+    &--small-indents:not(#{$block-name}--variation-info) {
         @media #{$media-query-s} {
             #{$block-name} {
+                &__control {
+                    padding-bottom: var(--mc-modal-padding-small);
+                }
                 &__header {
-                    padding-block: var(--mc-modal-header-padding-small);
+                    padding-block: var(--mc-modal-padding-small);
                     .mc-title {
                         font-weight: $font-weight-semi-bold;
                         font-size: $font-size-300;
@@ -511,7 +522,7 @@ export default {
                 &__btn {
                     &-back,
                     &-close {
-                        top: var(--mc-modal-header-padding-small);
+                        top: var(--mc-modal-padding-small);
                     }
                 }
             }
@@ -546,8 +557,9 @@ export default {
         display: flex;
         justify-content: center;
         padding: $space-250 $space-200 $space-400;
+        transition: $duration-s all;
         @media #{$media-query-s} {
-            padding: $space-350 $space-300 $space-300;
+            padding: $space-150 $space-300 $space-300;
         }
         .mc-button {
             width: 100%;
