@@ -244,17 +244,15 @@ export default {
                     /* Если шапка уже маленькая, то отключаем при отключении сепаратора
                      * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
                      */
-                    if (this.variation !== 'info') {
-                        const indentDifferences =
-                            (this.modal_params?.['--mc-modal-padding'] -
-                                this.modal_params?.['--mc-modal-padding-small']) *
-                            3
-                        const lineHeightDifferences =
-                            this.modal_params?.['--mc-modal-header-line-height'] -
-                            this.modal_params?.['--mc-modal-header-line-height-small']
-                        const sizeDifferences = indentDifferences + lineHeightDifferences
-                        this.small_indents = this.small_indents ? this.scrolled_top : scrollTop > sizeDifferences
-                    }
+                    const indentDifferences =
+                        (this.modal_params?.['--mc-modal-padding'] -
+                            this.modal_params?.['--mc-modal-padding-small']) *
+                        3
+                    const lineHeightDifferences =
+                        this.modal_params?.['--mc-modal-header-line-height'] -
+                        this.modal_params?.['--mc-modal-header-line-height-small']
+                    const sizeDifferences = indentDifferences + lineHeightDifferences
+                    this.small_indents = this.small_indents ? this.scrolled_top : scrollTop > sizeDifferences
                     this.scrolled_bottom = scrollTop + clientHeight < scrollHeight - offset
                 },
                 scrolled ? 0 : 300,
@@ -504,14 +502,14 @@ export default {
             }
         }
     }
-    &--small-indents:not(#{$block-name}--variation-info) {
+    &--small-indents {
         @media #{$media-query-s} {
             #{$block-name} {
                 &__control {
-                    padding-bottom: var(--mc-modal-padding-small);
+                    padding-bottom: var(--mc-modal-padding-small) !important;
                 }
                 &__header {
-                    padding-block: var(--mc-modal-padding-small);
+                    padding-block: var(--mc-modal-padding-small) !important;
                     .mc-title {
                         font-weight: $font-weight-semi-bold;
                         font-size: $font-size-300;
@@ -522,7 +520,7 @@ export default {
                 &__btn {
                     &-back,
                     &-close {
-                        top: var(--mc-modal-padding-small);
+                        top: var(--mc-modal-padding-small) !important;
                     }
                 }
             }
