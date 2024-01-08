@@ -219,7 +219,7 @@ export default {
          */
         openDirection: {
             type: String,
-            default: 'bottom',
+            default: 'auto',
         },
 
         taggable: {
