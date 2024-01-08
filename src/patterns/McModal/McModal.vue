@@ -2,6 +2,7 @@
     <modal
         :class="classes"
         :name="name"
+        :style="styles"
         :max-width="maxWidth"
         :click-to-close="clickToClose"
         class="mc-modal"
@@ -126,6 +127,11 @@ export default {
         scrolled_top: false,
         scrolled_bottom: false,
         resize_observer: null,
+        small_header: false,
+        header_indent: 400,
+        header_indent_small: 150,
+        title_line_height: 300,
+        title_line_height_small: 250,
     }),
     computed: {
         classes() {
@@ -136,9 +142,18 @@ export default {
                 'mc-modal--scrolled-bottom': this.scrolled_bottom,
                 'mc-modal--scrollable': this.scrollableContent,
                 'mc-modal--top-padding': this.topPadding,
+                'mc-modal--small-header': this.small_header,
                 [`mc-modal--variation-${this.variation}`]: !!this.variation,
                 [`mc-modal--header-align-${this.headerAlign}`]:
-                (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
+                    (this.closeVisible || this.arrowVisible) && !!this.headerAlign,
+            }
+        },
+        styles() {
+            return {
+                '--mc-modal-header-padding': `var(--space-${this.header_indent})`,
+                '--mc-modal-header-padding-small': `var(--space-${this.header_indent_small})`,
+                '--mc-modal-header-line-height': `var(--line-height-${this.title_line_height})`,
+                '--mc-modal-header-line-height-small': `var(--line-height-${this.title_line_height_small})`,
             }
         },
     },
@@ -197,6 +212,7 @@ export default {
             if (!scrolled) {
                 this.scrolled_top = false
                 this.scrolled_bottom = false
+                this.small_header = false
             }
 
             setTimeout(
@@ -205,6 +221,15 @@ export default {
                     // Сепаратор появится если высота скролла будет > 2px
                     const offset = 2
                     this.scrolled_top = scrollTop > offset
+                    /* Если шапка уже маленькая, то отключаем при отключении сепаратора
+                     * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
+                     */
+                    if (this.variation !== 'info') {
+                        const indentDifferences = (this.header_indent - this.header_indent_small) * 2
+                        const lineHeightDifferences = this.title_line_height - this.title_line_height_small
+                        const sizeDifferences = indentDifferences + lineHeightDifferences
+                        this.small_header = this.small_header ? this.scrolled_top : scrollTop > sizeDifferences
+                    }
                     this.scrolled_bottom = scrollTop + clientHeight < scrollHeight - offset
                 },
                 scrolled ? 0 : 300,
@@ -223,6 +248,10 @@ export default {
     $block-name: &;
     $border-color: #dee1e9;
     $box-shadow-color: #20008c28;
+    --mc-modal-header-padding: $space-400;
+    --mc-modal-header-padding-small: $space-150;
+    --mc-modal-header-line-height: $line-height-300;
+    --mc-modal-header-line-height-small: $line-height-250;
 
     @media #{$media-query-s} {
         padding: 12px 0;
@@ -231,22 +260,23 @@ export default {
     .vm--modal {
         border-radius: $radius-200;
     }
-    &__btn-close {
+    &__btn-close,
+    &__btn-back {
         @include reset-btn();
-        @include position(absolute, $space-400 $space-200 null null);
         @include close-link();
         z-index: $z-index-sticky;
+        transition: $duration-s all;
+    }
+    &__btn-close {
+        @include position(absolute, var(--mc-modal-header-padding) $space-200 null null);
         @media #{$media-query-s} {
-            @include position(absolute, $space-400 $space-600 null null);
+            @include position(absolute, var(--mc-modal-header-padding) $space-600 null null);
         }
     }
     &__btn-back {
-        @include reset-btn();
-        @include position(absolute, $space-400 null null $space-200);
-        @include close-link();
-        z-index: $z-index-sticky;
+        @include position(absolute, var(--mc-modal-header-padding) null null $space-200);
         @media #{$media-query-s} {
-            @include position(absolute, $space-400 null null $space-600);
+            @include position(absolute, var(--mc-modal-header-padding) null null $space-600);
         }
     }
 
@@ -290,7 +320,7 @@ export default {
             &__header {
                 padding-bottom: 9px;
                 border-bottom: 2px solid $border-color;
-                margin-bottom: $space-400;
+                margin-bottom: var(--mc-modal-header-padding);
             }
             &__control {
                 display: flex;
@@ -358,9 +388,14 @@ export default {
 
     &__header {
         flex-shrink: 0;
-        padding: $space-400 $space-200 $space-250;
+        transition: $duration-s all;
+        padding: var(--mc-modal-header-padding) $space-200 $space-250;
         @media #{$media-query-s} {
             padding: $space-350;
+            .mc-title {
+                transition: $duration-s all;
+                line-height: var(--mc-modal-header-line-height);
+            }
         }
     }
 
@@ -393,7 +428,7 @@ export default {
         overflow: hidden;
         height: 100% !important;
         > *:first-child {
-            padding-top: $space-400;
+            padding-top: var(--mc-modal-header-padding);
         }
         > *:last-child {
             padding-bottom: $space-400;
@@ -440,6 +475,27 @@ export default {
             #{$block-name} {
                 &__header {
                     padding-bottom: $space-150;
+                }
+            }
+        }
+    }
+    &--small-header:not(#{$block-name}--variation-info) {
+        @media #{$media-query-s} {
+            #{$block-name} {
+                &__header {
+                    padding-block: var(--mc-modal-header-padding-small);
+                    .mc-title {
+                        font-weight: $font-weight-semi-bold;
+                        font-size: $font-size-300;
+                        line-height: var(--mc-modal-header-line-height-small);
+                        align-items: center;
+                    }
+                }
+                &__btn {
+                    &-back,
+                    &-close {
+                        top: var(--mc-modal-header-padding-small);
+                    }
                 }
             }
         }
