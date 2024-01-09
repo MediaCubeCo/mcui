@@ -1,19 +1,37 @@
 <template>
-    <label :class="classes" :style="styles">
-        <span class="mc-field-toggle__text">
-            <!-- @slot Слот для тайтла тогглера -->
-            <slot />
-        </span>
-        <span class="mc-field-toggle__wrapper">
-            <input v-bind="inputProps" @input="e => change(e.target.checked)" />
-            <span class="mc-field-toggle__slider"></span>
-        </span>
-    </label>
+    <div class="mc-field-toggle__content">
+        <label :class="classes" :style="styles">
+            <span class="mc-field-toggle__text">
+                <!-- @slot Слот для тайтла тогглера -->
+                <slot />
+            </span>
+            <span class="mc-field-toggle__wrapper">
+                <input v-bind="inputProps" @input="e => change(e.target.checked)" />
+                <span class="mc-field-toggle__slider"></span>
+            </span>
+        </label>
+        <mc-title
+            v-if="errorText"
+            tag-name="div"
+            color="red"
+            variation="overline"
+            max-width="100%"
+            :ellipsis="false"
+        >
+            {{ errorText }}
+        </mc-title>
+    </div>
 </template>
 
 <script>
+import fieldErrors from '../../../mixins/fieldErrors'
+import McTitle from '../../McTitle/McTitle'
+
 export default {
     name: 'McFieldToggle',
+    components: {
+        McTitle,
+    },
     props: {
         /**
          *  Значение
@@ -69,6 +87,15 @@ export default {
         },
 
         /**
+         *  Ошибки
+         *
+         */
+        errors: {
+            type: Array,
+            default: null,
+        },
+
+        /**
          * Атрибут tabindex для главного элемента
          */
 
@@ -76,6 +103,7 @@ export default {
             type: [String, Number],
         },
     },
+    mixins: [fieldErrors],
     computed: {
         _value() {
             return this.value === this.checkedValue
@@ -120,6 +148,7 @@ export default {
     },
     methods: {
         change(checked) {
+            this.toggleErrorVisible()
             /**
              * Событие тоггла
              * @property {boolean}
@@ -182,6 +211,9 @@ export default {
             margin-inline: $space-100 0;
             text-align: left;
         }
+    }
+    &__content {
+        @include child-indent-bottom($space-50);
     }
 
     &__wrapper {
