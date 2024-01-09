@@ -242,7 +242,7 @@ export default {
         }
 
         &[aria-hidden='false'] {
-            visibility: visible;
+            visibility: visible !important;
             opacity: 1;
             transition: opacity $duration-s;
         }
