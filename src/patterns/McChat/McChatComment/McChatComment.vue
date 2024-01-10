@@ -25,8 +25,8 @@
                 :class="contentClasses"
                 v-html="filteredComment"
             />
-            <mc-title v-if="comment.message" slot="bottom" :ellipsis="false" class="mc-chat-comment__message">
-                {{ comment.message }}
+            <mc-title v-if="comment.message" slot="bottom" :ellipsis="false" pre-line class="mc-chat-comment__message"
+              >{{ comment.message }}
             </mc-title>
             <mc-button
                 v-if="canEdit"
