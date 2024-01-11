@@ -128,6 +128,7 @@ export default {
         scrolled_bottom: false,
         resize_observer: null,
         small_indents: false,
+        can_shorten_modal: false,
         modal_params: {},
         indent: {
             regular: 400,
@@ -190,7 +191,7 @@ export default {
                 this.$refs.mcModalBody.addEventListener('scroll', this.calculateSeparators, {
                     passive: true,
                 })
-                this.resize_observer = new ResizeObserver(() => this.calculateSeparators())
+                this.resize_observer = new ResizeObserver(() => this.resizeHandler())
                 this.resize_observer?.observe(this.$refs.mcModalBody)
                 this.calculateSeparators()
             }
@@ -224,6 +225,28 @@ export default {
                 console.error(e)
             }
         },
+
+        calculateIndents() {
+                        /* Если шапка уже маленькая, то отключаем при отключении сепаратора
+           * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
+           */
+            const indentDifferences =
+                (this.modal_params?.['--mc-modal-padding'] -
+                    this.modal_params?.['--mc-modal-padding-small']) *
+                3
+            const lineHeightDifferences =
+                this.modal_params?.['--mc-modal-header-line-height'] -
+                this.modal_params?.['--mc-modal-header-line-height-small']
+            const sizeDifferences = indentDifferences + lineHeightDifferences
+            if (!this.small_indents) {
+                const body =  this.$refs.mcModalBody
+                this.can_shorten_modal = body?.scrollHeight - body?.clientHeight > sizeDifferences
+            }
+        },
+        resizeHandler() {
+            this.calculateIndents()
+            this.calculateSeparators()
+        },
         /**
          * Устанавливаем сепараторы, если есть скролл
          * @param {Boolean} scrolled - если метод вызван скроллом
@@ -241,18 +264,7 @@ export default {
                     // Сепаратор появится если высота скролла будет > 2px
                     const offset = 2
                     this.scrolled_top = scrollTop > offset
-                    /* Если шапка уже маленькая, то отключаем при отключении сепаратора
-                     * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
-                     */
-                    const indentDifferences =
-                        (this.modal_params?.['--mc-modal-padding'] -
-                            this.modal_params?.['--mc-modal-padding-small']) *
-                        3
-                    const lineHeightDifferences =
-                        this.modal_params?.['--mc-modal-header-line-height'] -
-                        this.modal_params?.['--mc-modal-header-line-height-small']
-                    const sizeDifferences = indentDifferences + lineHeightDifferences
-                    this.small_indents = this.small_indents ? this.scrolled_top : scrollTop > sizeDifferences
+                    this.small_indents = this.scrolled_top  && this.can_shorten_modal
                     this.scrolled_bottom = scrollTop + clientHeight < scrollHeight - offset
                 },
                 scrolled ? 0 : 300,
@@ -528,17 +540,18 @@ export default {
     }
 
     &--scrolled {
+        $separator-border: 1px solid $color-hover-gray;
         &-top {
             #{$block-name} {
                 &__header {
-                    border-bottom: 1px solid $color-outline-gray;
+                    border-bottom: $separator-border;
                 }
             }
         }
         &-bottom {
             #{$block-name} {
                 &__control:not(:empty) {
-                    border-top: 1px solid $color-outline-gray;
+                    border-top: $separator-border;
                 }
             }
         }
@@ -564,6 +577,7 @@ export default {
         }
         @media #{$media-query-s} {
             .mc-button {
+                min-width: 100px;
                 width: unset;
             }
         }
