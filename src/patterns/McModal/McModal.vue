@@ -298,8 +298,8 @@ export default {
     --mc-modal-padding-small: #{$space-150};
     --mc-modal-header-line-height: #{$line-height-300};
     --mc-modal-header-line-height-small: #{$line-height-250};
-  --mc-modal-button-height: #{$size-600};
-  --mc-modal-button-height-small: #{$size-500};
+    --mc-modal-button-height: #{$size-600};
+    --mc-modal-button-height-small: #{$size-500};
 
     @media #{$media-query-s} {
         padding: 12px 0;
@@ -533,7 +533,7 @@ export default {
                 &__control {
                     padding-bottom: var(--mc-modal-padding-small) !important;
                     .mc-button {
-                      height: var(--mc-modal-button-height-small);
+                        height: var(--mc-modal-button-height-small);
                     }
                 }
                 &__header {
