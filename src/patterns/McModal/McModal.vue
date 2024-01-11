@@ -134,6 +134,12 @@ export default {
             regular: 400,
             small: 150,
         },
+        footer: {
+            button: {
+                regular: 600,
+                small: 500,
+            }
+        },
         header: {
             title: {
                 line_height: {
@@ -164,6 +170,8 @@ export default {
                 '--mc-modal-padding-small': `var(--space-${this.indent.small})`,
                 '--mc-modal-header-line-height': `var(--line-height-${this.header.title.line_height.regular})`,
                 '--mc-modal-header-line-height-small': `var(--line-height-${this.header.title.line_height.small})`,
+                '--mc-modal-button-height': `var(--size-${this.footer.button.regular})`,
+                '--mc-modal-button-height-small': `var(--size-${this.footer.button.small})`,
             }
         },
     },
@@ -237,7 +245,10 @@ export default {
             const lineHeightDifferences =
                 this.modal_params?.['--mc-modal-header-line-height'] -
                 this.modal_params?.['--mc-modal-header-line-height-small']
-            const sizeDifferences = indentDifferences + lineHeightDifferences
+            const buttonDifferences =
+                this.modal_params?.['--mc-modal-button-height'] -
+                this.modal_params?.['--mc-modal-button-height-small']
+            const sizeDifferences = indentDifferences + lineHeightDifferences + buttonDifferences
             if (!this.small_indents) {
                 const body =  this.$refs.mcModalBody
                 this.can_shorten_modal = body?.scrollHeight - body?.clientHeight > sizeDifferences
@@ -283,10 +294,12 @@ export default {
     $block-name: &;
     $border-color: #dee1e9;
     $box-shadow-color: #20008c28;
-    --mc-modal-padding: $space-400;
-    --mc-modal-padding-small: $space-150;
-    --mc-modal-header-line-height: $line-height-300;
-    --mc-modal-header-line-height-small: $line-height-250;
+    --mc-modal-padding: #{$space-400};
+    --mc-modal-padding-small: #{$space-150};
+    --mc-modal-header-line-height: #{$line-height-300};
+    --mc-modal-header-line-height-small: #{$line-height-250};
+    --mc-modal-button-height: #{$size-600};
+    --mc-modal-button-height-small: #{$size-500};
 
     @media #{$media-query-s} {
         padding: 12px 0;
@@ -519,6 +532,9 @@ export default {
             #{$block-name} {
                 &__control {
                     padding-bottom: var(--mc-modal-padding-small) !important;
+                    .mc-button {
+                        height: var(--mc-modal-button-height-small);
+                    }
                 }
                 &__header {
                     padding-block: var(--mc-modal-padding-small) !important;
@@ -578,6 +594,8 @@ export default {
         @media #{$media-query-s} {
             .mc-button {
                 min-width: 100px;
+                height: var(--mc-modal-button-height);
+                transition: $duration-s all;
                 width: unset;
             }
         }
