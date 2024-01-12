@@ -11,6 +11,7 @@
         v-on="$listeners"
         @mouseover="animateUp"
         @mouseleave="animateDown"
+        @blur="handleBlur"
     >
         <span v-if="$slots['icon-prepend']" class="mc-button__prepend">
             <!-- @slot Слот для вставки в начало -->
@@ -397,6 +398,9 @@ export default {
                 : ''
             this.custom_background = null
         },
+        handleBlur() {
+            this.$refs['mc-button'].blur()
+        }
     },
 }
 </script>
