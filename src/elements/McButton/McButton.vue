@@ -398,9 +398,10 @@ export default {
                 : ''
             this.custom_background = null
         },
-        handleBlur() {
+        handleBlur(e) {
             this.$refs['mc-button'].blur()
-        }
+            this.$emit('blur', e)
+        },
     },
 }
 </script>
