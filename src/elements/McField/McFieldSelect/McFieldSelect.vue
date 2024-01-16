@@ -323,6 +323,7 @@ export default {
             searchValue: null,
             key: `field_select_${Date.now()}`,
             closest_scroll_element: null,
+            scroll_resize_observer: null,
         }
     },
     computed: {
@@ -461,6 +462,8 @@ export default {
         },
         handleClose() {
             this.closest_scroll_element?.removeEventListener('scroll', this.repositionDropDown)
+            this.scroll_resize_observer?.disconnect()
+            this.scroll_resize_observer = null
         },
         findClosestScrollElement(element) {
             if (!element) return document.documentElement
@@ -474,6 +477,8 @@ export default {
             // looking for closest scroll elemen to track select list position dynamically
             this.closest_scroll_element = this.findClosestScrollElement(this.$refs.field)
             this.closest_scroll_element.addEventListener('scroll', this.repositionDropDown)
+            this.scroll_resize_observer = new ResizeObserver(this.repositionDropDown)
+            this.scroll_resize_observer.observe(this.closest_scroll_element)
         },
         repositionDropDown() {
             const { top, height, width, left } = this.$el.getBoundingClientRect()
@@ -491,9 +496,14 @@ export default {
                 ref.$refs.list.style.left = `${left}px`
                 const title_height = document.querySelector('.mc-field-select__header').offsetHeight
                 const title_margin = 8
-                switch (this.openDirection) {
+                let openDirection = this.openDirection
+                if (openDirection === 'auto') openDirection = ref?.isAbove ? 'top' : 'bottom'
+                switch (openDirection) {
                     case 'top':
-                        ref.$refs.list.style.top = `${top + (this.hasTitle ? title_height + title_margin : 0) - 300}px`
+                        ref.$refs.list.style.top = `${top +
+                            (this.hasTitle ? title_height + title_margin : 0) -
+                            ref.$refs.list.getBoundingClientRect().height -
+                            8}px`
                         ref.$refs.list.style.bottom = 'auto'
                         break
                     case 'bottom':
@@ -746,6 +756,7 @@ export default {
             border: none;
             border-radius: $radius-150;
             box-shadow: $shadow-s;
+            transition: opacity $duration-s ease;
             overflow-y: auto;
             overflow-x: hidden;
             max-height: 300px;
