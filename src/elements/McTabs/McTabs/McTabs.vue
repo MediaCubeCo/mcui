@@ -420,7 +420,7 @@ export default {
         .tabs-component-tabs {
             position: sticky !important;
             top: 0;
-            z-index: $z-index-sticky-tabs;
+            z-index: $z-index-sticky;
             background-color: $color-white;
         }
     }

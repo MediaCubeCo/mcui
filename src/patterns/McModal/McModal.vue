@@ -138,15 +138,15 @@ export default {
             button: {
                 regular: 600,
                 small: 500,
-            }
+            },
         },
         header: {
             title: {
                 line_height: {
                     regular: 300,
                     small: 250,
-                }
-            }
+                },
+            },
         },
     }),
     computed: {
@@ -235,22 +235,19 @@ export default {
         },
 
         calculateIndents() {
-                        /* Если шапка уже маленькая, то отключаем при отключении сепаратора
-           * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
-           */
+            /* Если шапка уже маленькая, то отключаем при отключении сепаратора
+             * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
+             */
             const indentDifferences =
-                (this.modal_params?.['--mc-modal-padding'] -
-                    this.modal_params?.['--mc-modal-padding-small']) *
-                3
+                (this.modal_params?.['--mc-modal-padding'] - this.modal_params?.['--mc-modal-padding-small']) * 3
             const lineHeightDifferences =
                 this.modal_params?.['--mc-modal-header-line-height'] -
                 this.modal_params?.['--mc-modal-header-line-height-small']
             const buttonDifferences =
-                this.modal_params?.['--mc-modal-button-height'] -
-                this.modal_params?.['--mc-modal-button-height-small']
+                this.modal_params?.['--mc-modal-button-height'] - this.modal_params?.['--mc-modal-button-height-small']
             const sizeDifferences = indentDifferences + lineHeightDifferences + buttonDifferences
             if (!this.small_indents) {
-                const body =  this.$refs.mcModalBody
+                const body = this.$refs.mcModalBody
                 this.can_shorten_modal = body?.scrollHeight - body?.clientHeight > sizeDifferences
             }
         },
@@ -275,7 +272,7 @@ export default {
                     // Сепаратор появится если высота скролла будет > 2px
                     const offset = 2
                     this.scrolled_top = scrollTop > offset
-                    this.small_indents = this.scrolled_top  && this.can_shorten_modal
+                    this.small_indents = this.scrolled_top && this.can_shorten_modal
                     this.scrolled_bottom = scrollTop + clientHeight < scrollHeight - offset
                 },
                 scrolled ? 0 : 300,
@@ -466,6 +463,10 @@ export default {
         @media #{$media-query-s} {
             padding: $space-50 $space-400;
             overflow: visible;
+        }
+        .mc-field-select {
+            position: relative;
+            z-index: 101;
         }
     }
     &__inner {
