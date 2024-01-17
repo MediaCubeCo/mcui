@@ -309,7 +309,6 @@ export default {
     &__btn-back {
         @include reset-btn();
         @include close-link();
-        z-index: $z-index-sticky;
         transition: $duration-s all;
     }
     &__btn-close {
@@ -463,10 +462,6 @@ export default {
         @media #{$media-query-s} {
             padding: $space-50 $space-400;
             overflow: visible;
-        }
-        .mc-field-select {
-            position: relative;
-            z-index: 101;
         }
     }
     &__inner {
