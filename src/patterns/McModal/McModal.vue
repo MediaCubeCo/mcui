@@ -442,6 +442,18 @@ export default {
                 line-height: var(--mc-modal-header-line-height);
             }
         }
+        *:empty {
+            display: none;
+            &:has(*:empty) {
+                display: none;
+            }
+        }
+        &:has(*:empty) {
+            display: none;
+            & + #{$block-name}__body {
+                padding-top: $space-400;
+            }
+        }
     }
 
     &__title {
