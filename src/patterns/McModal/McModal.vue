@@ -441,7 +441,7 @@ export default {
                 line-height: var(--mc-modal-header-line-height);
             }
         }
-        &:has(.mc-modal__title:empty) {
+        &:has(#{$block-name}__title:empty) {
             display: none;
             background-color: red;
             & + #{$block-name}__body {
