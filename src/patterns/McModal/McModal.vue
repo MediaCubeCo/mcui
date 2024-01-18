@@ -441,14 +441,9 @@ export default {
                 line-height: var(--mc-modal-header-line-height);
             }
         }
-        *:empty {
+        &:has(#{$block-name}__title:empty) {
             display: none;
-            &:has(*:empty) {
-                display: none;
-            }
-        }
-        &:has(*:empty) {
-            display: none;
+            background-color: red;
             & + #{$block-name}__body {
                 padding-top: $space-400;
             }
