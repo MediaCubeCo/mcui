@@ -443,7 +443,6 @@ export default {
         }
         &:has(#{$block-name}__title:empty) {
             display: none;
-            background-color: red;
             & + #{$block-name}__body {
                 padding-top: $space-400;
             }
