@@ -1,5 +1,5 @@
 <template>
-    <label class="mc-field-radio-button" :class="classes">
+    <label class="mc-field-radio-button" :class="classes" :style="styles">
         <input v-bind="inputProps" @change="handleChange" />
         <span class="mc-field-radio-button__icon"></span>
         <span v-if="label || $slots.default" class="mc-field-radio-button__text">
@@ -76,6 +76,13 @@ export default {
             type: String,
             default: 'circle',
         },
+        /**
+         * цвет
+         */
+        color: {
+            type: String,
+            default: 'purple',
+        },
     },
     computed: {
         classes() {
@@ -96,6 +103,11 @@ export default {
                 type: 'radio',
             }
         },
+        styles() {
+            return {
+                '--mc-field-radio-button-color': this.color && `var(--color-${this.color})`,
+            }
+        },
     },
     methods: {
         handleChange(event) {
@@ -111,8 +123,8 @@ export default {
 
 <style lang="scss">
 .mc-field-radio-button {
+    --mc-field-radio-button-color: initial;
     $block-name: &;
-
     display: inline-block;
     min-width: $size-250;
     min-height: $size-250;
@@ -161,10 +173,10 @@ export default {
 
         &:checked ~ #{$block-name}__icon {
             &::before {
-                border-color: $color-purple;
+                border-color: var(--mc-field-radio-button-color);
             }
             &::after {
-                background-color: $color-purple;
+                background-color: var(--mc-field-radio-button-color);
             }
         }
     }
