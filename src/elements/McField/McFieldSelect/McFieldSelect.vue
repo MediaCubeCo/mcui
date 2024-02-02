@@ -346,7 +346,7 @@ export default {
                 label: 'name',
                 trackBy: 'value',
                 value: this._value,
-                loading: true,
+                loading: this.loading,
                 options: this.computedOptions,
                 searchable: this.searchable,
                 showLabels: this.showLabels,
