@@ -615,6 +615,9 @@ export default {
     .vxe-body--row.row--cheched {
         background-color: rgba($color-purple, 0.05);
     }
+    .fixed-left--wrapper {
+        scrollbar-width: none;
+    }
 }
 .mc-table-wrapper {
     position: relative;

@@ -346,6 +346,8 @@ export default {
         return {
             pickDate: null,
             phone: null,
+            currentTouchArea: null,
+            firstTouch: true,
         }
     },
     computed: {
@@ -419,8 +421,14 @@ export default {
             handler() {
                 this.setupDayjsLocale()
                 this.setupDatePickerLocale()
-            }
-        }
+            },
+        },
+    },
+    mounted() {
+        document.addEventListener('touchstart', this.handleTouch)
+    },
+    beforeDestroy() {
+        document.removeEventListener('touchstart', this.handleTouch)
     },
     methods: {
         async setupDayjsLocale() {
@@ -538,6 +546,21 @@ export default {
         },
         closePopup() {
             this.$refs.input.closePopup()
+        },
+        handleTouch(event) {
+            const currentArea = this.getTouchArea(event)
+
+            if (this.firstTouch && currentArea !== this.currentTouchArea) {
+                event.target.click()
+                this.firstTouch = true
+                this.currentTouchArea = currentArea
+            }
+        },
+        getTouchArea(event) {
+            // Определяем в какой области (минуты или секунды) произошло касание
+            const min = document.querySelector(`[data-type="minute"]`)
+            const sec = document.querySelector(`[data-type="second"]`)
+            return min.contains(event.target) ? 'minute' : sec.contains(event.target) ? 'second' : null
         },
     },
 }
