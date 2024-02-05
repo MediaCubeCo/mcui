@@ -560,7 +560,7 @@ export default {
             // Определяем в какой области (минуты или секунды) произошло касание
             const min = document.querySelector(`[data-type="minute"]`)
             const sec = document.querySelector(`[data-type="second"]`)
-            return min.contains(event.target) ? 'minute' : sec.contains(event.target) ? 'second' : null
+            return min?.contains(event.target) ? 'minute' : sec?.contains(event.target) ? 'second' : null
         },
     },
 }
