@@ -1,5 +1,5 @@
 <template>
-    <div class="mc-date-picker" :class="classes" ref="field">
+    <div ref="field" class="mc-date-picker" :class="classes">
         <label :for="name" class="mc-date-picker__header">
             <!-- @slot Слот для заголовка над инпутом -->
             <slot name="title">
@@ -346,8 +346,8 @@ export default {
         return {
             pickDate: null,
             phone: null,
-            currentTouchArea: null,
-            firstTouch: true,
+            isScrolling: false,
+            isTouchEnd: false,
         }
     },
     computed: {
@@ -425,10 +425,14 @@ export default {
         },
     },
     mounted() {
-        document.addEventListener('touchstart', this.handleTouch)
+        document.addEventListener('touchstart', this.handleTouchStart)
+        document.addEventListener('touchend', this.handleTouchEnd)
+        document.addEventListener('touchmove', this.handleTouchMove)
     },
     beforeDestroy() {
-        document.removeEventListener('touchstart', this.handleTouch)
+        document.removeEventListener('touchstart', this.handleTouchStart)
+        document.removeEventListener('touchend', this.handleTouchEnd)
+        document.addEventListener('touchmove', this.handleTouchMove)
     },
     methods: {
         async setupDayjsLocale() {
@@ -438,7 +442,7 @@ export default {
         },
         setupDatePickerLocale() {
             const locale = ['en', 'ru', 'es'].includes(this.lang) ? this.lang : 'en'
-            DatePicker.locale(locale);
+            DatePicker.locale(locale)
         },
         handleEmitDate(value) {
             const date = this.getFormattedDate(value)
@@ -547,20 +551,20 @@ export default {
         closePopup() {
             this.$refs.input.closePopup()
         },
-        handleTouch(event) {
-            const currentArea = this.getTouchArea(event)
-
-            if (this.firstTouch && currentArea !== this.currentTouchArea) {
-                event.target.click()
-                this.firstTouch = true
-                this.currentTouchArea = currentArea
-            }
+        handleTouchStart() {
+            this.isScrolling = false
         },
-        getTouchArea(event) {
-            // Определяем в какой области (минуты или секунды) произошло касание
-            const min = document.querySelector(`[data-type="minute"]`)
-            const sec = document.querySelector(`[data-type="second"]`)
-            return min?.contains(event.target) ? 'minute' : sec?.contains(event.target) ? 'second' : null
+        handleTouchMove() {
+            this.isScrolling = true
+        },
+        handleTouchEnd(event) {
+            if (!this.isScrolling && !this.isTouchEnd) {
+                this.isTouchEnd = true
+                event.preventDefault()
+                event.stopPropagation()
+                event.target.click()
+                this.isTouchEnd = false
+            }
         },
     },
 }
