@@ -1,7 +1,14 @@
 <template>
     <label class="mc-field-radio-button" :class="classes">
         <input v-bind="inputProps" @change="handleChange" />
-        <span class="mc-field-radio-button__icon"></span>
+        <span class="mc-field-radio-button__icon_wrapper">
+            <mc-svg-icon
+                :name="checkedDefault ? activeIcon : 'circle'"
+                :color="checkedDefault ? color : 'gray'"
+                :size="iconSize"
+                class="mc-field-radio-button__icon"
+            />
+        </span>
         <span v-if="label || $slots.default" class="mc-field-radio-button__text">
             <!-- @slot Слот для пользовательской подписи радио -->
             <slot>
@@ -15,9 +22,13 @@
 
 <script>
 import McTitle from '../../../McTitle/McTitle'
+import McSvgIcon from '../../../McSvgIcon/McSvgIcon.vue'
 export default {
     name: 'McFieldRadioButton',
-    components: { McTitle },
+    components: {
+        McTitle,
+        McSvgIcon,
+    },
     props: {
         /**
          *  Значение
@@ -76,13 +87,33 @@ export default {
             type: String,
             default: 'circle',
         },
+        /**
+         * цвет
+         */
+        color: {
+            type: String,
+            default: 'purple',
+        },
+        iconSize: {
+            type: String,
+            default: '250',
+        },
     },
     computed: {
         classes() {
             return {
                 'mc-field-radio-button--disabled': this.disabled,
                 'mc-field-radio-button--empty': !this.label && !this.$slots.default,
-                [`mc-field-radio-button--active-${this.activeVariation}`]: !!this.activeVariation,
+            }
+        },
+        activeIcon() {
+            switch (this.activeVariation) {
+                case 'checkmark': {
+                    return 'check_circle_solid'
+                }
+                default: {
+                    return 'radio--checked'
+                }
             }
         },
         inputProps() {
@@ -112,7 +143,6 @@ export default {
 <style lang="scss">
 .mc-field-radio-button {
     $block-name: &;
-
     display: inline-block;
     min-width: $size-250;
     min-height: $size-250;
@@ -124,30 +154,9 @@ export default {
     cursor: pointer;
 
     &__icon {
-        @include position(absolute, 0 null null 0);
-        @include size($size-250);
-        &::before {
-            @include pseudo();
-            @include position(null, 0);
-            margin: 1px;
-            border: 2px solid $color-outline-gray;
-            border-radius: $radius-circle;
-            transition: border-color $duration-m;
-        }
-        &:hover::before {
-            border-color: $color-purple;
-        }
-
-        &::after {
-            @include pseudo();
-            @include size($size-100);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transform-origin: center center;
-            border-radius: $radius-circle;
-            background-color: transparent;
-            transition: background-color $duration-m;
+        &_wrapper {
+            z-index: 1;
+            @include position(absolute, 0 null null 0);
         }
     }
 
@@ -158,34 +167,6 @@ export default {
 
     &__input {
         display: none;
-
-        &:checked ~ #{$block-name}__icon {
-            &::before {
-                border-color: $color-purple;
-            }
-            &::after {
-                background-color: $color-purple;
-            }
-        }
-    }
-
-    &--active {
-        &-checkmark {
-            #{$block-name} {
-                &__icon {
-                    &:after {
-                        content: '✓';
-                        font-weight: $font-weight-bold;
-                        color: $color-white;
-                        width: 100%;
-                        height: 100%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
-                }
-            }
-        }
     }
 
     &--disabled {
