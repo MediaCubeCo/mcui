@@ -291,6 +291,7 @@ export default {
     $block-name: &;
     $border-color: #dee1e9;
     $box-shadow-color: #20008c28;
+    $border-color: $color-hover-gray;
     --mc-modal-padding: #{$space-400};
     --mc-modal-padding-small: #{$space-150};
     --mc-modal-header-line-height: #{$line-height-300};
@@ -434,6 +435,7 @@ export default {
         flex-shrink: 0;
         transition: $duration-s all;
         padding: var(--mc-modal-padding) $space-200 $space-250;
+        border-color: $border-color;
         @media #{$media-query-s} {
             padding: $space-350;
             .mc-title {
@@ -558,7 +560,7 @@ export default {
     }
 
     &--scrolled {
-        $separator-border: 1px solid $color-hover-gray;
+        $separator-border: 1px solid $border-color;
         &-top {
             #{$block-name} {
                 &__header {
@@ -604,6 +606,9 @@ export default {
         &:empty {
             position: relative;
             padding: $space-350 0 0;
+        }
+        &:not(:empty) {
+            border-color: $border-color;
         }
     }
     &--variation {
