@@ -339,7 +339,7 @@ export default {
                     height: 42px;
                 }
                 &.open {
-                    max-height: 200px;
+                    max-height: 230px;
                 }
             }
         }

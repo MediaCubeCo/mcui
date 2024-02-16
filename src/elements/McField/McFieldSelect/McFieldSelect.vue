@@ -63,7 +63,7 @@
                 </template>
                 <!-- @slot Слот для текста, если ничего не найдено -->
                 <slot slot="noResult" name="noResult">
-                    <span>No results</span>
+                    <span>{{ noResultsText }}</span>
                 </slot>
             </multi-select>
         </div>
@@ -317,6 +317,20 @@ export default {
             type: String,
             default: null,
         },
+        /**
+         * Текст для пустого селекта, когда неичего не найдено
+         */
+        noResultsText: {
+            type: String,
+            default: 'No results',
+        },
+        /**
+         * Показывать ли состояние лоадинга
+         */
+        loading: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -332,6 +346,7 @@ export default {
                 label: 'name',
                 trackBy: 'value',
                 value: this._value,
+                loading: this.loading,
                 options: this.computedOptions,
                 searchable: this.searchable,
                 showLabels: this.showLabels,
@@ -808,6 +823,15 @@ export default {
                         border-color: $color-purple $color-transparent $color-transparent;
                     }
                 }
+            }
+        }
+        &__spinner {
+            &:after,
+            &:before {
+                border-top-color: $color-purple;
+                @include size($space-300);
+                top: calc(50% - 5px);
+                left: calc(50% - 2px);
             }
         }
     }
