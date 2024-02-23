@@ -893,6 +893,9 @@ export default {
 
     &--rtl {
         direction: rtl;
+        input {
+            direction: rtl;
+        }
     }
 
     &__empty-tooltip {
