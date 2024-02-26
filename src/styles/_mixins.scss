@@ -271,10 +271,11 @@
     background: $color-gray;
   }
   ::-webkit-scrollbar-thumb:active {
+  }  /* Firefox */
+  @-moz-document url-prefix() {
+    scrollbar-color: $color-outline-gray $color-transparent;
+    scrollbar-width: thin;
   }
-  /* Firefox */
-  scrollbar-color: $color-outline-gray $color-transparent;
-  scrollbar-width: thin;
 }
 
 @mixin hide-scrollbar() {
