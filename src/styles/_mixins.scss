@@ -271,7 +271,8 @@
     background: $color-gray;
   }
   ::-webkit-scrollbar-thumb:active {
-  }  /* Firefox */
+  }
+  /* Firefox */
   @-moz-document url-prefix() {
     scrollbar-color: $color-outline-gray $color-transparent;
     scrollbar-width: thin;
