@@ -3,7 +3,8 @@
         <mc-title v-if="title" class="mc-side-bar-center__title" :color="compact ? 'transparent' : 'dark-gray'">
             {{ title }}
         </mc-title>
-        <div v-if="preparedMainMenu && preparedMainMenu.length" class="mc-side-bar-center__content">
+        <!-- v-show hides jumping with child menu opening after locale switch  -->
+        <div v-show="!loading" v-if="preparedMainMenu && preparedMainMenu.length" class="mc-side-bar-center__content">
             <div
                 v-for="menuMainItem in preparedMainMenu"
                 :key="menuMainItem.id"
@@ -164,6 +165,7 @@ export default {
     },
     data() {
         return {
+            loading: true,
             preparedMainMenu: [],
         }
     },
@@ -194,8 +196,11 @@ export default {
         },
         // если переходим на роут с вложенным меню, открываем вложенное меню
         $route(newRoute, oldRoute) {
+            this.loading = true
             if (oldRoute.path !== newRoute.path) {
-                const route = this.preparedMainMenu.find(r => r.to === newRoute.path)
+                const route = this.preparedMainMenu.find(
+                    r => r.to === newRoute.path || r.menu?.find(childRoute => childRoute.to === newRoute.path),
+                )
                 route?.menu && !this.compact && (route.open = true)
             }
             this.$nextTick(() => {
@@ -205,6 +210,7 @@ export default {
                         mi.menu && mi.menu.some(mim => mim.to?.match(newRoute.path) || newRoute.path?.match(mim.to))
                     if (!(exact_route || route_menu_match_new_route)) mi.open = false
                 })
+                this.loading = false
             })
         },
     },
@@ -230,6 +236,7 @@ export default {
         },
         // заранее формируем меню один раз, так как компьютед излишен и во вторых нужна переменная "open" что бы ее тогглить
         setMainMenu() {
+            this.loading = true
             this.preparedMainMenu = this.menuMain.map(i => {
                 const active = () => {
                     return (
@@ -245,6 +252,7 @@ export default {
                     open: !this.compact && active(),
                 }
             })
+            this.loading = false
         },
     },
 }
