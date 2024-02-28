@@ -338,6 +338,7 @@ export default {
             key: `field_select_${Date.now()}`,
             closest_scroll_element: null,
             scroll_resize_observer: null,
+            selected_options: [],
         }
     },
     computed: {
@@ -373,6 +374,14 @@ export default {
          * **/
         computedOptions() {
             let options = this.options
+            // Если в options нет опции с выбранным значением, то добавляем в общий список
+            if (Array.isArray(this.selected_options)) {
+                [...(this.selected_options || [])]?.forEach(selectedOption => {
+                    if (selectedOption?.value && !options.some(option => option.value === selectedOption.value)) {
+                        options.push(selectedOption)
+                    }
+                })
+            }
             if (this.searchValueInOptions && this.taggable) {
                 const search = this.searchValue
                 return search && search.length ? [{ name: search, value: search }, ...options] : options
@@ -431,14 +440,20 @@ export default {
                 if (this.value === null) return []
                 let result = []
                 for (let value of this.value) {
+                    // Если уже есть выбранные опции, то добавляем их
+                    if (value.hasOwnProperty('value')) {
+                        this.selected_options = [...this.selected_options, value]
+                    }
                     const options = [
-                        ...(this.groupKeys ? this.options.map(o => o[this.groupKeys.values]).flat() : this.options),
+                        ...(this.groupKeys
+                            ? this.options.map(o => o[this.groupKeys.values]).flat()
+                            : this.computedOptions),
                     ]
                     let option = options.find(o => {
-                        if (o.value?.hasOwnProperty('id') && o.value.id == value.id) {
+                        if (o.value?.hasOwnProperty('id') && o.value.id === value.id) {
                             return true
                         }
-                        return o.value == value
+                        return o.value === value?.value || o.value === value
                     })
                     if (option !== null) result.push(option)
                 }
@@ -532,6 +547,7 @@ export default {
             /**
              * Истинное значение инпута
              */
+            this.selected_options = value
             this.$emit('original-input', value)
             if (value !== null) {
                 if (this.multiple) {
