@@ -374,6 +374,8 @@ export default {
          * **/
         computedOptions() {
             let options = this.options
+            const is_option_selected =
+                this.selected_options && this.value !== null && !options.some(option => option.value === this.value)
             // Если в options нет опции с выбранным значением, то добавляем в общий список
             if (Array.isArray(this.selected_options)) {
                 [...(this.selected_options || [])]?.forEach(selectedOption => {
@@ -381,11 +383,7 @@ export default {
                         options.push(selectedOption)
                     }
                 })
-            } else if (
-                this.selected_options &&
-                this.value !== null &&
-                !options.some(option => option.value === this.value)
-            ) {
+            } else if (is_option_selected) {
                 options.push(this.selected_options)
             }
             if (this.searchValueInOptions && this.taggable) {
