@@ -381,6 +381,12 @@ export default {
                         options.push(selectedOption)
                     }
                 })
+            } else if (
+                this.selected_options &&
+                this.value !== null &&
+                !options.some(option => option.value === this.value)
+            ) {
+                options.push(this.selected_options)
             }
             if (this.searchValueInOptions && this.taggable) {
                 const search = this.searchValue
