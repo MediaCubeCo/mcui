@@ -375,7 +375,9 @@ export default {
         computedOptions() {
             let options = this.options
             const is_option_selected =
-                this.selected_options && this.value !== null && !options.some(option => option.value === this.value)
+                this.selected_options &&
+                this.value !== null &&
+                !options.some(option => String(option.value) === String(this.value))
             // Если в options нет опции с выбранным значением, то добавляем в общий список
             if (Array.isArray(this.selected_options)) {
                 [...(this.selected_options || [])]?.forEach(selectedOption => {
