@@ -4,7 +4,7 @@
         <span class="mc-field-radio-button__icon_wrapper">
             <mc-svg-icon
                 :name="checkedDefault ? activeIcon : 'circle'"
-                :color="checkedDefault ? color : 'gray'"
+                :color="iconColor"
                 :size="iconSize"
                 class="mc-field-radio-button__icon"
             />
@@ -116,6 +116,16 @@ export default {
                 }
             }
         },
+        iconColor() {
+            switch (true) {
+                case this.disabled:
+                    return 'outline-gray'
+                case this.checkedDefault:
+                    return this.color
+                default:
+                    return 'gray'
+            }
+        },
         inputProps() {
             return {
                 disabled: this.disabled,
@@ -173,18 +183,10 @@ export default {
         cursor: auto;
 
         #{$block-name}__input {
-            & ~ #{$block-name}__icon {
-                &::before {
+            & ~ #{$block-name}__icon_wrapper {
+                .mc-svg-icon {
+                    border-radius: $radius-circle;
                     background-color: $color-hover-gray;
-                    border-color: $color-outline-gray;
-                }
-                &::after {
-                    background-color: $color-hover-gray;
-                }
-            }
-            &:checked ~ #{$block-name}__icon {
-                &::after {
-                    background-color: $color-outline-gray;
                 }
             }
         }
