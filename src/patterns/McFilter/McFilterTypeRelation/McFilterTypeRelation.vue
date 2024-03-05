@@ -5,6 +5,7 @@
         :options="computedOptions"
         :internal-search="!isAjax"
         :placeholder="computedPlaceholder"
+        :loading="loading"
         :disabled="relationType === 'exists'"
         class="mc-filter-type-relation"
         name="relation_select"
@@ -81,6 +82,7 @@ export default {
             relations: ['is', 'is_not', 'exists'],
             relationType: 'is',
             ajaxOptions: [],
+            loading: false,
         }
     },
     computed: {
@@ -156,7 +158,9 @@ export default {
             this.setValue(this.selectedOptionValue)
         },
         async setAjaxOptions(value) {
+            this.loading = true
             this.ajaxOptions = await this.filter.getAjaxOptions(value)
+            this.loading = false
         },
         async addAjaxOption(value) {
             const option = await this.filter.getAjaxOne(value)
