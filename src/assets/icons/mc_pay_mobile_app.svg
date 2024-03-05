@@ -1,0 +1,21 @@
+<svg data-token-name="mc_pay_mobile_app" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
+<defs>
+<linearGradient id="linear0" gradientUnits="userSpaceOnUse" x1="29.3597" y1="3.08534" x2="3.09748" y2="28.4464" gradientTransform="matrix(0.75,0,0,0.75,0,0)">
+<stop offset="0" style="stop-color:rgb(43.921569%,28.235294%,96.470588%);stop-opacity:1;"/>
+<stop offset="0.28" style="stop-color:rgb(41.960784%,26.666667%,92.54902%);stop-opacity:1;"/>
+<stop offset="0.32" style="stop-color:rgb(41.568627%,26.27451%,91.764706%);stop-opacity:1;"/>
+<stop offset="0.73" style="stop-color:rgb(36.862745%,22.352941%,83.137255%);stop-opacity:1;"/>
+<stop offset="1" style="stop-color:rgb(35.294118%,21.176471%,80%);stop-opacity:1;"/>
+</linearGradient>
+<linearGradient id="linear1" gradientUnits="userSpaceOnUse" x1="7.4502" y1="16.0008" x2="24.547" y2="16.0008" gradientTransform="matrix(0.75,0,0,0.75,0,0)">
+<stop offset="0" style="stop-color:rgb(43.921569%,28.235294%,96.470588%);stop-opacity:1;"/>
+<stop offset="0.22" style="stop-color:rgb(41.960784%,26.666667%,92.54902%);stop-opacity:1;"/>
+<stop offset="1" style="stop-color:rgb(35.294118%,21.176471%,80%);stop-opacity:1;"/>
+</linearGradient>
+</defs>
+<g id="surface1">
+<path style=" stroke:none;fill-rule:nonzero;fill:url(#linear0);" d="M 6 0 L 18 0 C 21.3125 0 24 2.6875 24 6 L 24 18 C 24 21.3125 21.3125 24 18 24 L 6 24 C 2.6875 24 0 21.3125 0 18 L 0 6 C 0 2.6875 2.6875 0 6 0 Z M 6 0 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;" d="M 13.105469 2.929688 L 5.976562 14.269531 L 10.734375 14.269531 L 10.683594 21.078125 L 18.011719 9.71875 L 13.105469 9.769531 Z M 13.105469 2.929688 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:url(#linear1);" d="M 10.464844 21.820312 L 10.519531 14.484375 L 5.585938 14.484375 L 13.320312 2.183594 L 13.320312 9.550781 L 18.410156 9.5 Z M 6.367188 14.054688 L 10.953125 14.054688 L 10.90625 20.339844 L 17.613281 9.9375 L 12.890625 9.988281 L 12.890625 3.675781 Z M 6.367188 14.054688 "/>
+</g>
+</svg>
