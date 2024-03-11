@@ -4,7 +4,7 @@
             <!-- @slot активатора переключения состояния -->
             <slot name="activator" />
         </div>
-        <div :style="dropdownBodyStyles" class="mc-dropdown__body">
+        <div ref="dropdown_body" :style="dropdownBodyStyles" class="mc-dropdown__body">
             <!-- @slot контента -->
             <slot />
         </div>
@@ -29,7 +29,7 @@ export default {
         },
         /**
          * Выравнивание
-         * контента: 'left', 'right'
+         * контента: 'left', 'right', 'auto'
          */
         position: {
             type: String,
@@ -37,7 +37,7 @@ export default {
         },
         /**
          * Направление отображения
-         * контента: 'top', 'bottom'
+         * контента: 'top', 'bottom', 'auto'
          */
         listPosition: {
             type: String,
@@ -59,12 +59,17 @@ export default {
             default: true,
         },
     },
-
+    data() {
+        return {
+            local_list_position: null,
+            local_position: null,
+        }
+    },
     computed: {
         dropdownClasses() {
             return {
-                [`mc-dropdown--position-${this.position}`]: this.position,
-                [`mc-dropdown--list-position-${this.listPosition}`]: this.listPosition,
+                [`mc-dropdown--position-${this.local_position}`]: this.local_position,
+                [`mc-dropdown--list-position-${this.local_list_position}`]: this.local_list_position,
                 ['mc-dropdown--is-open']: this.value,
             }
         },
@@ -86,6 +91,11 @@ export default {
     watch: {
         $route() {
             this.value && this.closeDropdown()
+        },
+        value() {
+            this.$nextTick(() => {
+                this.calculateDropdownPosition()
+            })
         },
     },
 
@@ -111,6 +121,18 @@ export default {
         },
         closeDropdown() {
             this.$emit('input', false)
+        },
+        calculateDropdownPosition() {
+            const rect = this.activator.getBoundingClientRect()
+            const space_below = window.innerHeight - rect.bottom
+            const space_left = window.innerWidth - rect.left
+            const { offsetHeight: dropdown_height, offsetWidth: dropdown_width } = this.$refs.dropdown_body
+            // Определяем направление отображения списка
+            const auto_list_position = space_below < dropdown_height ? 'top' : 'bottom'
+            const auto_position = space_left > dropdown_width ? 'left' : 'right'
+            // Устанавливаем значения в зависимости от position
+            this.local_list_position = this.listPosition === 'auto' ? auto_list_position : this.listPosition
+            this.local_position = this.position === 'auto' ? auto_position : this.position
         },
     },
 }
