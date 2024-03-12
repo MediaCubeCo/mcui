@@ -13,6 +13,7 @@
 
 <script>
 import VueClickOutside from 'vue-click-outside'
+import _throttle from 'lodash/throttle'
 
 export default {
     name: 'McDropdown',
@@ -101,10 +102,14 @@ export default {
 
     mounted() {
         this.activator.addEventListener('click', this.toggleDropdown)
+        window.addEventListener('resize', this.throttledCalculateDropdownPosition)
+        window.addEventListener('transitionrun', this.throttledCalculateDropdownPosition)
     },
 
     beforeDestroy() {
         this.activator.removeEventListener('click', this.toggleDropdown)
+        window.removeEventListener('resize', this.throttledCalculateDropdownPosition)
+        window.removeEventListener('transitionrun', this.throttledCalculateDropdownPosition)
     },
 
     methods: {
@@ -123,6 +128,7 @@ export default {
             this.$emit('input', false)
         },
         calculateDropdownPosition() {
+            if (!this.$refs.dropdown_body) return
             const rect = this.activator.getBoundingClientRect()
             const space_below = window.innerHeight - rect.bottom
             const space_left = window.innerWidth - rect.left
@@ -134,6 +140,9 @@ export default {
             this.local_list_position = this.listPosition === 'auto' ? auto_list_position : this.listPosition
             this.local_position = this.position === 'auto' ? auto_position : this.position
         },
+        throttledCalculateDropdownPosition: _throttle(function() {
+            this.calculateDropdownPosition()
+        }, 200),
     },
 }
 </script>
