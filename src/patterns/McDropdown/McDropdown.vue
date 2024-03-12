@@ -101,10 +101,14 @@ export default {
 
     mounted() {
         this.activator.addEventListener('click', this.toggleDropdown)
+        window.addEventListener('resize', this.calculateDropdownPosition)
+        window.addEventListener('transitionrun', this.calculateDropdownPosition)
     },
 
     beforeDestroy() {
         this.activator.removeEventListener('click', this.toggleDropdown)
+        window.removeEventListener('resize', this.calculateDropdownPosition)
+        window.removeEventListener('transitionrun', this.calculateDropdownPosition)
     },
 
     methods: {
