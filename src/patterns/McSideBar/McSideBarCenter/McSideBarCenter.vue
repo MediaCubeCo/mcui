@@ -289,6 +289,16 @@ export default {
                         }
                     }
                 }
+                .mc-side-bar-button {
+                    &__tooltip {
+                        width: calc(100% - #{$space-250});
+                        .mc-button {
+                            &__text {
+                                margin-inline-end: $space-zero;
+                            }
+                        }
+                    }
+                }
             }
             &__head {
                 display: flex;
