@@ -380,7 +380,7 @@ export default {
                 !options.some(option => String(option.value) === String(this.value))
             // Если в options нет опции с выбранным значением, то добавляем в общий список
             if (Array.isArray(this.selected_options)) {
-                [...(this.selected_options || [])]?.forEach(selectedOption => {
+                ;[...(this.selected_options || [])]?.forEach(selectedOption => {
                     if (selectedOption?.value && !options.some(option => option.value === selectedOption.value)) {
                         options.push(selectedOption)
                     }
@@ -490,6 +490,14 @@ export default {
             return this.avatar || this.icon
         },
     },
+    watch: {
+        options: {
+            immediate: true,
+            handler(val) {
+                this.selected_options.push(...val)
+            },
+        },
+    },
     methods: {
         handleOpen() {
             if (!this.renderAbsoluteList) return
@@ -553,13 +561,15 @@ export default {
             /**
              * Истинное значение инпута
              */
-            this.selected_options = value
             this.$emit('original-input', value)
             if (value !== null) {
                 if (this.multiple) {
                     value = value.map(v => v.value)
+                    this.selected_options = value
                 } else {
+                    const orig_value = value
                     value = value.value
+                    this.selected_options = [orig_value]
                 }
             }
             this.emitInput(value)
