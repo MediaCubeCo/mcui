@@ -338,7 +338,7 @@ export default {
             key: `field_select_${Date.now()}`,
             closest_scroll_element: null,
             scroll_resize_observer: null,
-            selected_options: [],
+            local_options: [],
         }
     },
     computed: {
@@ -373,21 +373,9 @@ export default {
          * Если режим taggable && searchValueInOptions то добавлять введенный тег в опции
          * **/
         computedOptions() {
-            let options = this.options
-            const is_option_selected =
-                this.selected_options &&
-                this.value !== null &&
-                !options.some(option => String(option.value) === String(this.value))
-            // Если в options нет опции с выбранным значением, то добавляем в общий список
-            if (Array.isArray(this.selected_options)) {
-                ;[...(this.selected_options || [])]?.forEach(selectedOption => {
-                    if (selectedOption?.value && !options.some(option => option.value === selectedOption.value)) {
-                        options.push(selectedOption)
-                    }
-                })
-            } else if (is_option_selected) {
-                options.push(this.selected_options)
-            }
+            let options = [...this.options, ...this.local_options].filter(
+                (v, i, a) => a.findIndex(afi => afi.value === v.value) === i,
+            )
             if (this.searchValueInOptions && this.taggable) {
                 const search = this.searchValue
                 return search && search.length ? [{ name: search, value: search }, ...options] : options
@@ -446,20 +434,14 @@ export default {
                 if (this.value === null) return []
                 let result = []
                 for (let value of this.value) {
-                    // Если уже есть выбранные опции, то добавляем их
-                    if (value.hasOwnProperty('value')) {
-                        this.selected_options = [...this.selected_options, value]
-                    }
                     const options = [
-                        ...(this.groupKeys
-                            ? this.options.map(o => o[this.groupKeys.values]).flat()
-                            : this.computedOptions),
+                        ...(this.groupKeys ? this.options.map(o => o[this.groupKeys.values]).flat() : this.options),
                     ]
                     let option = options.find(o => {
-                        if (o.value?.hasOwnProperty('id') && o.value.id === value.id) {
+                        if (o.value?.hasOwnProperty('id') && o.value.id == value.id) {
                             return true
                         }
-                        return o.value === value?.value || o.value === value
+                        return o.value == value
                     })
                     if (option !== null) result.push(option)
                 }
@@ -494,11 +476,33 @@ export default {
         options: {
             immediate: true,
             handler(val) {
-                this.selected_options.push(...val)
+                //Пушим все входящие опции в локальные опции
+                this.local_options.push(...val)
+                this.actualizeSavedOptions()
+            },
+        },
+        value: {
+            deep: true,
+            immediate: true,
+            handler() {
+                this.actualizeSavedOptions()
             },
         },
     },
     methods: {
+        actualizeSavedOptions() {
+            //Фильтруем локальные опции и оставляем только те, значения которых выбраны в селекте
+            this.local_options = this.local_options.filter(lo =>
+                this.value?.constructor === Array
+                    ? this.value.map(v => String(v)).includes(String(lo.value))
+                    : String(lo.value) === String(this.value),
+            )
+
+            //Делаем Юник, что бы опции не повторялись
+            this.local_options = this.local_options.filter(
+                (v, i, a) => a.findIndex(afi => String(afi.value) === String(v.value)) === i,
+            )
+        },
         handleOpen() {
             if (!this.renderAbsoluteList) return
             this.repositionDropDown()
@@ -565,11 +569,8 @@ export default {
             if (value !== null) {
                 if (this.multiple) {
                     value = value.map(v => v.value)
-                    this.selected_options = value
                 } else {
-                    const orig_value = value
                     value = value.value
-                    this.selected_options = [orig_value]
                 }
             }
             this.emitInput(value)
