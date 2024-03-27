@@ -460,14 +460,14 @@ export default {
         },
 
         isEmptyOptionsList() {
-            if ((this.hideSelected && !this.searchValue) || !this.computedOptions.length) {
+            if ((this.hideSelected && !this.searchValue) || !this.options.length) {
                 if (this.multiple) {
                     if (this.groupKeys) return false
                     return this.options.length === this._value.length
                 } else {
-                    return this._value && this.options.length === 1
+                    return this._value && this.computedOptions.length === 1 && !this.searchValue
                 }
-            } else if (this.computedOptions.length === 0) return !this.computedOptions.length
+            } else if (this.options.length === 0) return !this.options.length
             return false
         },
         hasPrepend() {
