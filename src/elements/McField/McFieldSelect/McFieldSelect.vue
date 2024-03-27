@@ -166,7 +166,7 @@ export default {
          */
         hideSelected: {
             type: Boolean,
-            default: false,
+            default: true,
         },
         /**
          *  Допустимо ли
@@ -435,7 +435,9 @@ export default {
                 let result = []
                 for (let value of this.value) {
                     const options = [
-                        ...(this.groupKeys ? this.options.map(o => o[this.groupKeys.values]).flat() : this.options),
+                        ...(this.groupKeys
+                            ? this.options.map(o => o[this.groupKeys.values]).flat()
+                            : this.computedOptions),
                     ]
                     let option = options.find(o => {
                         if (o.value?.hasOwnProperty('id') && o.value.id == value.id) {
@@ -454,7 +456,7 @@ export default {
                 }
                 return ungruppedOptions.find(o => o.value == this.value)
             }
-            return this.options.find(o => o.value == this.value)
+            return this.computedOptions.find(o => o.value == this.value)
         },
 
         isEmptyOptionsList() {
