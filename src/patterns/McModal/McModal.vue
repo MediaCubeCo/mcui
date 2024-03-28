@@ -434,7 +434,7 @@ export default {
     &__header {
         flex-shrink: 0;
         transition: $duration-s all;
-        padding: var(--mc-modal-padding) $space-200 $space-250;
+        padding: var(--mc-modal-padding) $space-200 $space-350;
         border-color: $border-color;
         @media #{$media-query-s} {
             padding: $space-350;
@@ -460,7 +460,7 @@ export default {
     }
 
     &__body {
-        padding: $space-50 $space-200;
+        padding: $space-50 $space-200 $space-200;
         flex-grow: 1;
         min-height: 0;
         overflow-x: hidden;
@@ -468,7 +468,7 @@ export default {
             min-height: 100%;
         }
         @media #{$media-query-s} {
-            padding: $space-50 $space-400;
+            padding: $space-50 $space-400 $space-200;
             overflow: visible;
         }
     }
@@ -535,7 +535,7 @@ export default {
         @media #{$media-query-s} {
             #{$block-name} {
                 &__control {
-                    padding-bottom: var(--mc-modal-padding-small) !important;
+                    padding-block: var(--mc-modal-padding-small) !important;
                     .mc-button {
                         height: var(--mc-modal-button-height-small);
                     }
@@ -548,6 +548,9 @@ export default {
                         line-height: var(--mc-modal-header-line-height-small);
                         align-items: center;
                     }
+                }
+                &__body {
+                    padding-bottom: $space-50;
                 }
                 &__btn {
                     &-back,
@@ -587,10 +590,10 @@ export default {
         flex-shrink: 0;
         display: flex;
         justify-content: center;
-        padding: $space-250 $space-200 $space-400;
+        padding: $space-200 $space-200 $space-400;
         transition: $duration-s all;
         @media #{$media-query-s} {
-            padding: $space-150 $space-300 $space-300;
+            padding: $space-200 $space-300 $space-400;
         }
         .mc-button {
             width: 100%;
@@ -609,6 +612,13 @@ export default {
         }
         &:not(:empty) {
             border-color: $border-color;
+        }
+    }
+    &:has(&__control:empty) {
+        #{$block-name} {
+            &__body {
+                padding-bottom: $space-50;
+            }
         }
     }
     &--variation {
@@ -637,8 +647,15 @@ export default {
                     }
                 }
                 &__body {
+                    padding-bottom: $space-50;
                     @media #{$media-query-s} {
                         padding-inline: $space-300;
+                    }
+                }
+                &__control {
+                    padding-top: $space-250;
+                    @media #{$media-query-s} {
+                        padding-top: $space-150;
                     }
                 }
             }
