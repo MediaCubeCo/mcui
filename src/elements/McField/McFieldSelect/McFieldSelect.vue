@@ -394,7 +394,7 @@ export default {
                 'mc-field-select--error': this.errorText,
                 'mc-field-select--disabled': this.disabled,
                 [`mc-field-select--bg-${this.backgroundColor}`]: this.backgroundColor,
-                'mc-field-select--is-empty-options-list': this.isEmptyOptionsList,
+                'mc-field-select--is-empty-options-list': this.isEmptyOptionsList || this.loading,
                 'mc-field-select--with-preview': this.optionWithPreview,
                 'mc-field-select--max-height': this.maxHeight,
                 'mc-field-select--rtl': this.rtl,
