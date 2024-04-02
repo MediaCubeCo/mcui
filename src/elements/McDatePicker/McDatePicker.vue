@@ -18,6 +18,7 @@
                     :confirm="$attrs.range"
                     :input-attr="{ name, id: `${name}-id` }"
                     :lang="lang"
+                    :placeholder="placeholder"
                     :format="format"
                     :editable="editable"
                     :popup-class="popupClass"
@@ -179,6 +180,10 @@ export default {
             default: false,
         },
 
+        placeholder: {
+            type: String,
+            default: null,
+        },
         /**
          *  Значение
          */
