@@ -563,7 +563,6 @@ export default {
             this.isScrolling = true
         },
         handleTouchEnd(event) {
-            if (!event) return
             if (!this.isScrolling && !this.isTouchEnd) {
                 this.isTouchEnd = true
                 event.preventDefault()
