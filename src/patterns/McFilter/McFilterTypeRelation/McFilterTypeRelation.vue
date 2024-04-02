@@ -7,6 +7,7 @@
         :placeholder="computedPlaceholder"
         :loading="loading"
         :disabled="relationType === 'exists'"
+        hide-selected
         class="mc-filter-type-relation"
         name="relation_select"
         @search-change="handleSearchChange"

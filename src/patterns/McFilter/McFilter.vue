@@ -35,6 +35,7 @@
                             :title="placeholders.value"
                             :options="regularFilters"
                             :placeholder="placeholders.choose"
+                            :hide-selected="false"
                             class="mc-filter__main-select"
                             name="filter_value_name"
                         />

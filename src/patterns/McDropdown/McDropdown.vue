@@ -4,7 +4,7 @@
             <!-- @slot активатора переключения состояния -->
             <slot name="activator" />
         </div>
-        <div :style="dropdownBodyStyles" class="mc-dropdown__body">
+        <div ref="dropdown_body" :style="dropdownBodyStyles" class="mc-dropdown__body">
             <!-- @slot контента -->
             <slot />
         </div>
@@ -13,6 +13,7 @@
 
 <script>
 import VueClickOutside from 'vue-click-outside'
+import _throttle from 'lodash/throttle'
 
 export default {
     name: 'McDropdown',
@@ -29,7 +30,7 @@ export default {
         },
         /**
          * Выравнивание
-         * контента: 'left', 'right'
+         * контента: 'left', 'right', 'auto'
          */
         position: {
             type: String,
@@ -37,7 +38,7 @@ export default {
         },
         /**
          * Направление отображения
-         * контента: 'top', 'bottom'
+         * контента: 'top', 'bottom', 'auto'
          */
         listPosition: {
             type: String,
@@ -59,12 +60,17 @@ export default {
             default: true,
         },
     },
-
+    data() {
+        return {
+            local_list_position: null,
+            local_position: null,
+        }
+    },
     computed: {
         dropdownClasses() {
             return {
-                [`mc-dropdown--position-${this.position}`]: this.position,
-                [`mc-dropdown--list-position-${this.listPosition}`]: this.listPosition,
+                [`mc-dropdown--position-${this.local_position}`]: this.local_position,
+                [`mc-dropdown--list-position-${this.local_list_position}`]: this.local_list_position,
                 ['mc-dropdown--is-open']: this.value,
             }
         },
@@ -87,14 +93,23 @@ export default {
         $route() {
             this.value && this.closeDropdown()
         },
+        value() {
+            this.$nextTick(() => {
+                this.calculateDropdownPosition()
+            })
+        },
     },
 
     mounted() {
         this.activator.addEventListener('click', this.toggleDropdown)
+        window.addEventListener('resize', this.throttledCalculateDropdownPosition)
+        window.addEventListener('transitionrun', this.throttledCalculateDropdownPosition)
     },
 
     beforeDestroy() {
         this.activator.removeEventListener('click', this.toggleDropdown)
+        window.removeEventListener('resize', this.throttledCalculateDropdownPosition)
+        window.removeEventListener('transitionrun', this.throttledCalculateDropdownPosition)
     },
 
     methods: {
@@ -112,6 +127,22 @@ export default {
         closeDropdown() {
             this.$emit('input', false)
         },
+        calculateDropdownPosition() {
+            if (!this.$refs.dropdown_body) return
+            const rect = this.activator.getBoundingClientRect()
+            const space_below = window.innerHeight - rect.bottom
+            const space_left = window.innerWidth - rect.left
+            const { offsetHeight: dropdown_height, offsetWidth: dropdown_width } = this.$refs.dropdown_body
+            // Определяем направление отображения списка
+            const auto_list_position = space_below < dropdown_height ? 'top' : 'bottom'
+            const auto_position = space_left > dropdown_width ? 'left' : 'right'
+            // Устанавливаем значения в зависимости от position
+            this.local_list_position = this.listPosition === 'auto' ? auto_list_position : this.listPosition
+            this.local_position = this.position === 'auto' ? auto_position : this.position
+        },
+        throttledCalculateDropdownPosition: _throttle(function() {
+            this.calculateDropdownPosition()
+        }, 200),
     },
 }
 </script>

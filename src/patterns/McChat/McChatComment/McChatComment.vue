@@ -241,6 +241,9 @@ export default {
         padding: $space-150 $space-200;
         border-radius: $radius-100;
         background-color: $color-hover-gray;
+        .mc-title__text {
+            word-break: break-all;
+        }
     }
     &--editable {
         cursor: pointer;
