@@ -18,6 +18,7 @@
                     :confirm="$attrs.range"
                     :input-attr="{ name, id: `${name}-id` }"
                     :lang="lang"
+                    :placeholder="placeholder"
                     :format="format"
                     :editable="editable"
                     :popup-class="popupClass"
@@ -179,6 +180,10 @@ export default {
             default: false,
         },
 
+        placeholder: {
+            type: String,
+            default: null,
+        },
         /**
          *  Значение
          */
@@ -425,14 +430,14 @@ export default {
         },
     },
     mounted() {
-        document.addEventListener('touchstart', this.handleTouchStart)
-        document.addEventListener('touchend', this.handleTouchEnd)
-        document.addEventListener('touchmove', this.handleTouchMove)
+        this.$el.addEventListener('touchstart', this.handleTouchStart)
+        this.$el.addEventListener('touchend', this.handleTouchEnd)
+        this.$el.addEventListener('touchmove', this.handleTouchMove)
     },
     beforeDestroy() {
-        document.removeEventListener('touchstart', this.handleTouchStart)
-        document.removeEventListener('touchend', this.handleTouchEnd)
-        document.addEventListener('touchmove', this.handleTouchMove)
+        this.$el.removeEventListener('touchstart', this.handleTouchStart)
+        this.$el.removeEventListener('touchend', this.handleTouchEnd)
+        this.$el.removeEventListener('touchmove', this.handleTouchMove)
     },
     methods: {
         async setupDayjsLocale() {
@@ -558,11 +563,14 @@ export default {
             this.isScrolling = true
         },
         handleTouchEnd(event) {
+            if (!event) return
             if (!this.isScrolling && !this.isTouchEnd) {
                 this.isTouchEnd = true
                 event.preventDefault()
                 event.stopPropagation()
-                event.target.click()
+                if (event.target.click !== undefined) {
+                    event.target.click()
+                }
                 this.isTouchEnd = false
             }
         },
