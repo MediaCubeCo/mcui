@@ -430,14 +430,14 @@ export default {
         },
     },
     mounted() {
-        this.$el.addEventListener('touchstart', this.handleTouchStart)
-        this.$el.addEventListener('touchend', this.handleTouchEnd)
-        this.$el.addEventListener('touchmove', this.handleTouchMove)
+        document.addEventListener('touchstart', this.handleTouchStart)
+        document.addEventListener('touchend', this.handleTouchEnd)
+        document.addEventListener('touchmove', this.handleTouchMove)
     },
     beforeDestroy() {
-        this.$el.removeEventListener('touchstart', this.handleTouchStart)
-        this.$el.removeEventListener('touchend', this.handleTouchEnd)
-        this.$el.removeEventListener('touchmove', this.handleTouchMove)
+        document.removeEventListener('touchstart', this.handleTouchStart)
+        document.removeEventListener('touchend', this.handleTouchEnd)
+        document.addEventListener('touchmove', this.handleTouchMove)
     },
     methods: {
         async setupDayjsLocale() {
@@ -568,9 +568,7 @@ export default {
                 this.isTouchEnd = true
                 event.preventDefault()
                 event.stopPropagation()
-                if (event.target.click !== undefined) {
-                    event.target.click()
-                }
+                event.target.click()
                 this.isTouchEnd = false
             }
         },
