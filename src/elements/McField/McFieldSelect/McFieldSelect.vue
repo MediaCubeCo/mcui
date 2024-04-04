@@ -594,6 +594,7 @@ export default {
              * @property {string}
              */
             this.$emit('search-change', value)
+            this.renderAbsoluteList && this.$nextTick(() => this.repositionDropDown())
         },
 
         emitInput(value) {
