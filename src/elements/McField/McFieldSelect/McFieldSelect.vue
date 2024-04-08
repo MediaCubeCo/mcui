@@ -373,9 +373,11 @@ export default {
          * Если режим taggable && searchValueInOptions то добавлять введенный тег в опции
          * **/
         computedOptions() {
-            let options = [...this.options, ...this.local_options].filter(
-                (v, i, a) => a.findIndex(afi => afi.value === v.value) === i,
-            )
+            let options = !this.groupKeys
+                ? [...this.options, ...this.local_options].filter(
+                      (v, i, a) => a.findIndex(afi => afi.value === v.value) === i,
+                  )
+                : this.options
             if (this.searchValueInOptions && this.taggable) {
                 const search = this.searchValue
                 return search && search.length ? [{ name: search, value: search }, ...options] : options
