@@ -239,7 +239,8 @@ export default {
              * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
              */
             const indentDifferences =
-                (this.modal_params?.['--mc-modal-padding'] - this.modal_params?.['--mc-modal-padding-small']) * 3
+                (this.modal_params?.['--mc-modal-padding'] - this.modal_params?.['--mc-modal-padding-small']) * 3 +
+                this.modal_params?.['--mc-modal-padding-small']
             const lineHeightDifferences =
                 this.modal_params?.['--mc-modal-header-line-height'] -
                 this.modal_params?.['--mc-modal-header-line-height-small']
