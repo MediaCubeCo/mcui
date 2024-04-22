@@ -125,7 +125,7 @@ export default {
             return nl2br ? nl2br(this.commentWithLinks) : this.commentWithLinks
         },
         commentWithLinks() {
-            const regExp = /((http|https):\/\/)?(([0-9a-zA-Zа-яА-Я.-]*)\.([a-zA-Zа-яА-Я]+[^\s,.;])(.*)?)/gi
+            const regExp = /((http|https):\/\/)?(([0-9a-zA-Zа-яА-Я.-]*)\.([a-zA-Zа-яА-Я]+[^\s,.;:'"\])]+)(\/[^ ,.;\/\])]*)?)/gi
             return this.comment.content.replace(regExp, match => {
                 const url = /^http/.test(match) ? match : `http://${match}`
                 return `<a class="mc-chat-comment__link" href='${url}' target="_blank">${match.trim()}</a>`
