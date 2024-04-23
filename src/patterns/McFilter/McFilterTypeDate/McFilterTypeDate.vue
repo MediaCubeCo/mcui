@@ -3,8 +3,7 @@
         v-model="period"
         :placeholders="placeholders.calendar"
         :placeholder="filter.placeholder || placeholders.choose"
-        :use-timezone="filter.useTimezone"
-        to-format="YYYY-MM-DD"
+        use-timezone
         name="condition_dates"
         class="mc-filter-type-date"
         range
