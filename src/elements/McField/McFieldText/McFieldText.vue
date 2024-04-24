@@ -48,6 +48,7 @@
                             :maxlength="maxLength"
                             v-on="listeners"
                             @input="prepareHandleInput"
+                            @keydown="prepareHandleKeyDown"
                         />
                     </template>
                 </label>
@@ -611,6 +612,18 @@ export default {
             }
 
             this.handleInput(value)
+        },
+        prepareHandleKeyDown(e) {
+            switch (this.type) {
+                case 'amount_format':
+                case 'num': {
+                    if (e.key === '.' && typeof this.value === 'string' && this.value?.includes('.')) {
+                        e.preventDefault()
+                    }
+                    break
+                }
+            }
+            this.$emit('keydown', e)
         },
         formattedToNumber(value) {
             const [first] =
