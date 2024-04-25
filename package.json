@@ -43,7 +43,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "dayjs": "^1.11.9",
-    "dompurify": "^3.1.0",
+    "isomorphic-dompurify": "1.2.0",
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",
     "portal-vue": "^2.1.7",
