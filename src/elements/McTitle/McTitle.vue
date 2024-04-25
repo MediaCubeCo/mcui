@@ -1,5 +1,6 @@
 <script>
 import _upperFirst from 'lodash/upperFirst'
+import DOMPurify from 'dompurify'
 
 const values = ['variation', 'weight']
 const sizes = ['xs', 's', 'm', 'l', 'xl', 'xxl']
@@ -106,7 +107,7 @@ export default {
         }
         if (data.domProps && data.domProps.innerHTML) {
             contentOptions.domProps = {
-                innerHTML: data.domProps.innerHTML,
+                innerHTML: DOMPurify.sanitize(data.domProps.innerHTML),
             }
         }
         const responsivePropsClasses = {}
