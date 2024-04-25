@@ -1,6 +1,6 @@
 <script>
 import _upperFirst from 'lodash/upperFirst'
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 
 const values = ['variation', 'weight']
 const sizes = ['xs', 's', 'm', 'l', 'xl', 'xxl']
