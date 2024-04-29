@@ -947,6 +947,10 @@ export default {
             &__tags {
                 max-height: var(--mc-field-select-max-height);
                 overflow-y: auto;
+                position: initial;
+            }
+            &__spinner {
+                background: transparent;
             }
         }
     }
