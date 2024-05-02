@@ -951,6 +951,8 @@ export default {
             }
             &__spinner {
                 background: transparent;
+                right: calc(#{$space-50} / 2);
+                top: calc(#{$space-50} / 2);
             }
         }
     }
