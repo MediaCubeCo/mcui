@@ -139,9 +139,10 @@ export default {
                         const from = value.more
                             ? `${this.placeholders.from} ${this.getFormattedVal(value.more, filter)}`
                             : ''
+
                         const to = value.less
                             ? `${this.placeholders.to} ${this.getFormattedVal(
-                                  filter.type === 'date' && filter.useTimezone
+                                  filter.type === 'date'
                                       ? dayjs(value.less)
                                             .subtract(1, 'days')
                                             .format()
