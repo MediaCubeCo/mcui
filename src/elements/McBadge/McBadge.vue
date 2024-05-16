@@ -23,7 +23,7 @@ export default {
             default: false,
         },
     },
-    render(h, { props, slots, data }) {
+    render(h, { props, slots, data, listeners }) {
         const variation = `${props.variation}${props.modern ? '-modern' : ''}`
         const classes = {
             'mc-badge': true,
@@ -74,6 +74,7 @@ export default {
             {
                 class: classes,
                 style,
+                on: listeners,
             },
             [
                 h(
