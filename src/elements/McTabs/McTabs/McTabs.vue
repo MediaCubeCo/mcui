@@ -13,7 +13,7 @@
                     <a
                         :aria-controls="tab.hash"
                         :aria-selected="tab.isActive"
-                        :href="tab.to || tab.href || tab.hash"
+                        :href="getHref(tab)"
                         class="tabs-component-tab-a"
                         role="tab"
                         @click="selectTab(tab.hash, $event)"
@@ -273,6 +273,11 @@ export default {
 
             const selectedTab = this.findTab(selectedTabHash)
 
+            if (selectedTab.$listeners && selectedTab.$listeners.click) {
+                selectedTab.$emit('click', event)
+                return
+            }
+
             if (!selectedTab) {
                 return
             }
@@ -350,6 +355,10 @@ export default {
 
         getActiveTabIndex() {
             return this.getTabIndex(this.activeTabHash)
+        },
+
+        getHref(tab) {
+            return tab.$listeners.click ? null : tab.to || tab.href || tab.hash
         },
     },
 }
@@ -492,6 +501,7 @@ export default {
         text-decoration: none;
         padding-bottom: $space-150;
         margin: 0 $space-150;
+        cursor: pointer;
 
         @include child-indent-right($space-50);
         @include border();
