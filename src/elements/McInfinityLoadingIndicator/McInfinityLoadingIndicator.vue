@@ -65,7 +65,7 @@ export default {
                     }
                 },
                 {
-                    ...(this.root ? { root: document.querySelector(this.root) } : {}),
+                    ...(this.root ? { root: this.$el.closest(this.root) } : {}),
                     rootMargin: `${this.overlap}px`,
                     threshold: 0.1,
                 },
