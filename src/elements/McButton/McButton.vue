@@ -727,12 +727,8 @@ export default {
         box-shadow: 0 3px 10px var(--mc-button-background-color);
     }
     &--underline-link {
-        #{$block-name} {
-            &-link {
-                #{$block-name}__text {
-                    text-decoration: underline !important;
-                }
-            }
+        #{$block-name}__text {
+            text-decoration: underline !important;
         }
     }
 
