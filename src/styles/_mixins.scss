@@ -382,18 +382,21 @@
     &, & * {
       font-size: 40px !important;
       line-height: $line-height-600;
+      font-weight: $font-weight-bold;
     }
   }
   h2 {
     &, & * {
       font-size: $font-size-600 !important;
       line-height: $line-height-500;
+      font-weight: $font-weight-bold;
     }
   }
   h3, h4, h5, h6 {
     &, & * {
       font-size: $font-size-400 !important;
       line-height: $line-height-400;
+      font-weight: $font-weight-bold;
     }
   }
   h1, h2, h3, h4, h5, h6 {
