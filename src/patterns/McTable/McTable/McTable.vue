@@ -522,7 +522,6 @@ export default {
                         default:
                             return !isFixedCol
                     }
-                    return !isFixedCol
                 })
                 hideColumns.forEach(col => (col.visible = false))
                 this.$refs.xTable.refreshColumn()
@@ -587,11 +586,14 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
+@import '../../../tokens/font-families';
+@import '../../../tokens/animations';
+
 @import '~vxe-table/styles/variable.scss';
 
 //override variables:
 @import '../../../styles/table.scss';
-
 @import '~vxe-table/styles/modules.scss';
 
 .vxe-table {

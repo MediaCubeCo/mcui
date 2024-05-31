@@ -182,6 +182,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
 .mc-side-bar-button {
     $block-name: &;
     &__tooltip {

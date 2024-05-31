@@ -181,6 +181,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
 .mc-side-bar-top {
     $block-name: &;
     @include reset-text-indents();

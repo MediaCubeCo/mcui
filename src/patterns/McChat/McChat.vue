@@ -261,6 +261,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
 .slideout-panel .slideout-wrapper .slideout {
     height: auto;
 }

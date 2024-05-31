@@ -365,6 +365,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
+@import '../../../tokens/z-indexes';
+@import '../../../tokens/font-families';
 .mc-tabs {
     $block-name: &;
 

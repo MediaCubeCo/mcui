@@ -341,6 +341,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
 .mc-side-bar {
     $block-name: &;
 

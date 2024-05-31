@@ -160,6 +160,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
+@import '../../tokens/durations';
 .mc-collapse {
     $block-name: &;
 

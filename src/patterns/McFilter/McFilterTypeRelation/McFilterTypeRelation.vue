@@ -1,7 +1,7 @@
 <template>
     <component
-        v-model="selectedOptionValue"
         :is="component"
+        v-model="selectedOptionValue"
         :options="computedOptions"
         :internal-search="!isAjax"
         :placeholder="computedPlaceholder"
@@ -177,7 +177,6 @@ export default {
             let currentValueName = null
             const hasVal = value || Number.isInteger(value)
             if (this.relationType !== 'exists' && hasVal) {
-
                 const name = this.filter.is_text
                     ? value
                     : this.computedOptions.find(o => String(o.value) === String(value))?.name
@@ -199,6 +198,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
 .mc-filter-type-relation {
     $block-name: &;
     width: 300px;

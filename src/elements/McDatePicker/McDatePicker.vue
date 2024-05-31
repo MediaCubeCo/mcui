@@ -580,6 +580,9 @@ export default {
 
 <style lang="scss">
 @import '~vue2-datepicker/scss/index.scss';
+@import '../../styles/mixins';
+@import '../../tokens/font-families';
+@import '../../tokens/box-shadows';
 .mc-date-picker {
     $block-name: &;
 

@@ -407,6 +407,12 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
+@import '../../tokens/durations';
+@import '../../tokens/opacities';
+@import '../../tokens/font-families';
+@import '../../tokens/letter-spacings';
+@import '../../tokens/animations';
 .mc-button {
     $block-name: &;
     @include reset();

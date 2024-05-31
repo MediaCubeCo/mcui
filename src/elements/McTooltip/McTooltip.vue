@@ -125,18 +125,23 @@ export default {
     methods: {
         handleHide() {
             setTimeout(() => {
-                const tooltipID =this.$refs.tooltipTarget?.getAttribute('aria-describedby')
+                const tooltipID = this.$refs.tooltipTarget?.getAttribute('aria-describedby')
                 const tooltips = document.documentElement.querySelectorAll('.tooltip.mc-tooltip')
                 tooltips.forEach(tooltip => {
                     tooltip.style.visibility = tooltip.id === tooltipID ? 'visible' : 'hidden'
                 })
             }, 1)
         },
-    }
+    },
 }
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
+@import '../../styles/spacing';
+@import '../../tokens/durations';
+@import '../../tokens/font-families';
+@import '../../tokens/box-shadows';
 .mc-tooltip-target {
     display: inline-flex;
 }

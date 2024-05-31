@@ -120,6 +120,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
 .mc-separator {
     $block-name: &;
     --mc-separator-color: initial;

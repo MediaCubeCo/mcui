@@ -113,6 +113,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
 .mc-chat-form {
     $block-name: &;
     line-height: $line-height-200;

@@ -120,6 +120,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
 .mc-filter-type-range {
     $block-name: &;
     display: flex;

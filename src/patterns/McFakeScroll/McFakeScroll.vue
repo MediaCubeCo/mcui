@@ -213,6 +213,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
 @mixin track-visibility() {
     right: 0;
     width: 7px;

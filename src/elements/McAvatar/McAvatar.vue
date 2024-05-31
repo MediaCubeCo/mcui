@@ -186,6 +186,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../styles/mixins';
+@import '../../tokens/durations';
 $color-borders: $token-colors;
 $dot-colors: $token-colors;
 

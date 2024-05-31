@@ -73,6 +73,7 @@ export default {
 <style lang="scss">
 @import '../../../styles/toast';
 @import '../../../styles/global';
+@import '../../../styles/mixins';
 .mc-main {
     $block-name: &;
 

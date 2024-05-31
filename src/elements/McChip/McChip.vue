@@ -120,6 +120,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
+@import '../../tokens/durations';
+@import '../../tokens/font-families';
 .mc-chip {
     $block-name: &;
     --mc-chip-text-color: #{$color-black};

@@ -30,6 +30,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../tokens/z-indexes';
 .mc-overlay {
     $block-name: &;
     --mc-overlay-spinner-size: initial;

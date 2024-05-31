@@ -89,6 +89,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../tokens/durations';
 .mc-side-bar-bottom {
     $block-name: &;
 

@@ -10,14 +10,7 @@
                 <span class="mc-field-toggle__slider"></span>
             </span>
         </label>
-        <mc-title
-            v-if="errorText"
-            tag-name="div"
-            color="red"
-            variation="overline"
-            max-width="100%"
-            :ellipsis="false"
-        >
+        <mc-title v-if="errorText" tag-name="div" color="red" variation="overline" max-width="100%" :ellipsis="false">
             {{ errorText }}
         </mc-title>
     </div>
@@ -32,6 +25,7 @@ export default {
     components: {
         McTitle,
     },
+    mixins: [fieldErrors],
     props: {
         /**
          *  Значение
@@ -103,7 +97,6 @@ export default {
             type: [String, Number],
         },
     },
-    mixins: [fieldErrors],
     computed: {
         _value() {
             return this.value === this.checkedValue
@@ -160,6 +153,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
+@import '../../../tokens/durations';
 .mc-field-toggle {
     $block-name: &;
     $toggle-indent: calc(#{$space-50} / 2);

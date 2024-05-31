@@ -1,4 +1,7 @@
-@import "toast";
+@import "./toast";
+@import "../tokens/font-families";
+@import "../tokens/border-radius";
+@import "../tokens/box-shadows";
 
 html {
   box-sizing: border-box;

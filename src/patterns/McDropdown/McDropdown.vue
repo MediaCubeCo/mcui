@@ -148,6 +148,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
+@import '../../tokens/z-indexes';
+@import '../../tokens/durations';
 .mc-dropdown {
     $block-name: &;
 

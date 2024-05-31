@@ -222,6 +222,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
 .mc-field-checkbox {
     $block-name: &;
     position: relative;

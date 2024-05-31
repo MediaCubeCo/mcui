@@ -1,30 +1,25 @@
 <template>
-  <div id="app">
-    <img alt="MediaCube logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+    <div id="app">
+        <img alt="MediaCube logo" src="./assets/logo.png" />
+    </div>
 </template>
 
 <script>
-import HelloWorld from "./service/HelloWorld.vue";
-
 export default {
-  name: "App",
-  components: {
-    HelloWorld
-  }
-};
+    name: 'App',
+    components: {},
+}
 </script>
 
 <style>
-  body,
-  html {
+body,
+html {
     height: 100%;
     margin: 0;
     padding: 0;
-  }
+}
 
-  #app {
+#app {
     height: 100%;
-  }
+}
 </style>

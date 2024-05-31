@@ -34,9 +34,10 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/global';
+@import '../../../tokens/box-shadows';
 .mc-root {
     $block-name: &;
-    @import '../../../styles/global';
     .slideout {
         box-shadow: $shadow-s;
     }

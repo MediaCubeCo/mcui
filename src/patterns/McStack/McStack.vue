@@ -1,9 +1,9 @@
 <template>
-    <div class="mc-stack" ref="stack">
-        <div v-show="loaded" class="mc-stack__body" ref="mc-stack-body">
+    <div ref="stack" class="mc-stack">
+        <div v-show="loaded" ref="mc-stack-body" class="mc-stack__body">
             <slot />
         </div>
-        <div v-if="more" class="mc-stack__counter" ref="counter">
+        <div v-if="more" ref="counter" class="mc-stack__counter">
             {{ counterText }}
         </div>
     </div>
@@ -65,14 +65,14 @@ export default {
             }
         },
         calcLimit(showAll, limit) {
-            if(showAll) this.toggleChilds()
+            if (showAll) this.toggleChilds()
             this.custom_limit = Infinity
             let childWidth = 0
             // ширина родителя без учета счетчика
             const parentWidth = +this.$refs.stack?.clientWidth - (+this.$refs.counter?.clientWidth || 0)
             for (let i = 0; i < this.children?.length; i++) {
                 const elemStyle = window.getComputedStyle(this.children[i])
-                childWidth += (+this.children[i]?.clientWidth + +parseInt(elemStyle.marginRight))
+                childWidth += +this.children[i]?.clientWidth + +parseInt(elemStyle.marginRight)
                 // считаем занимаемую дочерними элементами ширину, если превышает родительскую, то выходим из цикла и ставим лимит
                 if (childWidth > parentWidth) {
                     this.custom_limit = i
@@ -91,7 +91,7 @@ export default {
             this.loaded = true
             this.more = 0
             this.children = this.$refs?.['mc-stack-body']?.children
-            let elementsLimit = hide ? (limit - 1) : this.children.length
+            let elementsLimit = hide ? limit - 1 : this.children.length
             for (let i = 0; i < this.children?.length; i++) {
                 this.setStyles(this.children[i])
                 if (i > elementsLimit) {
@@ -107,6 +107,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
+@import '../../tokens/font-families';
 .mc-stack {
     $block-name: &;
 

@@ -61,6 +61,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
 .mc-cell {
     $block-name: &;
     @include reset-text-indents();

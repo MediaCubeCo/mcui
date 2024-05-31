@@ -152,6 +152,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../tokens/border-radius';
+@import '../../tokens/font-families';
 .mc-progress {
     $block-name: &;
     --mc-progress-color: #{$color-dark-gray};

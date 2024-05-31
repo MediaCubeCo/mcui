@@ -166,6 +166,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
+@import '../../tokens/font-families';
+@import '../../tokens/letter-spacings';
 .mc-title {
     $block-name: &;
     --mc-title-color: initial;

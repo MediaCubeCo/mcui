@@ -720,6 +720,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
 .mc-filter {
     $block-name: &;
     flex-grow: 1;

@@ -146,6 +146,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../tokens/box-shadows';
 .mc-range-slider {
     $block-name: &;
     --mc-range-slider-color: #{$color-purple};

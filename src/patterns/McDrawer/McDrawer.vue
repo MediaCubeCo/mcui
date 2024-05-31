@@ -82,6 +82,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
 .mc-drawer {
     $block-name: &;
 

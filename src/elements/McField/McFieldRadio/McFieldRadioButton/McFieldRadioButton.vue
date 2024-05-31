@@ -151,6 +151,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../../styles/mixins';
 .mc-field-radio-button {
     $block-name: &;
     display: inline-block;

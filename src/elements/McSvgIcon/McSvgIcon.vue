@@ -99,6 +99,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
 .mc-svg-icon {
     --mc-svg-icon-size: #{$size-250};
     --mc-svg-icon-weight: 1.5;

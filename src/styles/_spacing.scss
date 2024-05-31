@@ -24,29 +24,6 @@ $spacing-ratio: $line-height-250;
   padding: round($value / $spacing-ratio - 1px) $value round($value / $spacing-ratio);
 }
 
-// Create stack-space
-@mixin child-indent-bottom($space) {
-  > *:not(:last-child) {
-    margin-bottom: $space;
-  }
-}
-@mixin child-indent-top($space) {
-  > *:not(:first-child) {
-    margin-top: $space;
-  }
-}
-
-@mixin child-indent-right($space) {
-  > *:not(:last-child) {
-    margin-inline-end: $space;
-  }
-}
-@mixin child-indent-left($space) {
-  > *:not(:first-child) {
-    margin-inline-start: $space;
-  }
-}
-
 @mixin indent-top($space: $space-xs, $indent-type: "margin") {
   #{$indent-type}-top: $space;
 }

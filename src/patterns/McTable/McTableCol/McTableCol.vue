@@ -194,6 +194,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
 @import '~vxe-table/styles/variable.scss';
 //override variables:
 @import '../../../styles/table.scss';

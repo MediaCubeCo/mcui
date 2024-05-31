@@ -126,6 +126,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
 .mc-notification {
     $block-name: &;
     --mc-notification-color: #{$color-orange};

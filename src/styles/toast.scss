@@ -1,5 +1,7 @@
 .toasted-container {
   $toasted-container-name: &;
+  @import './mixins';
+  @import '../tokens/z-indexes';
   z-index: $z-index-toasted !important;
   .toasted {
     &.mc-toast {

@@ -94,6 +94,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
+@import '../../tokens/font-families';
+@import '../../tokens/letter-spacings';
 .mc-badge {
     $block-name: &;
     --mc-badge-color: #{$color-white};

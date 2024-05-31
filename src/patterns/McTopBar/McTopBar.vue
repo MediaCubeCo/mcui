@@ -113,6 +113,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
 .mc-top-bar {
     $block-name: &;
 

@@ -734,9 +734,11 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
+@import '../../../tokens/durations';
+@import '../../../tokens/font-families';
 .mc-field-text {
     $block-name: &;
-
     display: block;
 
     &__header {

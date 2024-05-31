@@ -12,6 +12,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
+@import '../../../tokens/box-shadows';
 .mc-dropdown-panel {
     $block-name: &;
 

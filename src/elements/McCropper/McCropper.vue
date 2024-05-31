@@ -75,6 +75,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../tokens/border-radius';
+@import '../../tokens/opacities';
 .mc-cropper {
     $block-name: &;
 

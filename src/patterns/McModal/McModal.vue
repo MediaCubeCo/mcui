@@ -284,6 +284,10 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
+@import '../../tokens/z-indexes';
+@import '../../tokens/durations';
+@import '../../tokens/font-families';
 .v--modal-block-scroll {
     width: 100%;
 }

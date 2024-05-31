@@ -259,6 +259,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
 .mc-side-bar-center {
     $block-name: &;
     margin-bottom: $space-150;

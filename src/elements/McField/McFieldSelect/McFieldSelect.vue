@@ -612,6 +612,10 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../styles/mixins';
+@import '../../../tokens/durations';
+@import '../../../tokens/font-families';
+@import '../../../tokens/box-shadows';
 .mc-field-select {
     $block-name: &;
     --mc-field-select-color: initial;
