@@ -13,7 +13,7 @@
                     <a
                         :aria-controls="tab.hash"
                         :aria-selected="tab.isActive"
-                        :href="getHref(tab)"
+                        :href="tab.to || tab.href || tab.hash"
                         class="tabs-component-tab-a"
                         role="tab"
                         @click="selectTab(tab.hash, $event)"
@@ -355,10 +355,6 @@ export default {
 
         getActiveTabIndex() {
             return this.getTabIndex(this.activeTabHash)
-        },
-
-        getHref(tab) {
-            return tab.$listeners.click ? null : tab.to || tab.href || tab.hash
         },
     },
 }
