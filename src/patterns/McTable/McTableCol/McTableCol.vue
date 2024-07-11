@@ -117,6 +117,7 @@ export default {
                 ...classes,
                 ...this.$attrs,
                 params: {
+                    ...this.$attrs.params,
                     modifyTotal: this.modifyTotal,
                 },
             }
