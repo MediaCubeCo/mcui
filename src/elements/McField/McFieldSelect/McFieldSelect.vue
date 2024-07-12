@@ -561,7 +561,7 @@ export default {
                     case 'bottom':
                         ref.$refs.list.style.bottom = 'auto'
                         // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
-                        ref.$refs.list.style.top = `${top + window.visualViewport?.offsetTop + height}px`
+                        ref.$refs.list.style.top = `${top + (window.visualViewport?.offsetTop || 0) + height}px`
                         break
                 }
             }
