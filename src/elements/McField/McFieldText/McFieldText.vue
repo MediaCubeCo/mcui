@@ -234,7 +234,19 @@ export default {
             type: String,
             required: true,
         },
-
+        /**
+         *  плейсхолдеры для короткого обозначения даты (для маски dd.mm.yyyy)
+         *  {
+         *      date: 'd',
+         *      month: 'm',
+         *      year: 'y',
+         *  }
+         *
+         */
+        dateMaskPlaceholder: {
+            type: Object,
+            default: () => ({}),
+        },
         /**
          *  textarea-autosize Min height
          *
@@ -426,9 +438,27 @@ export default {
                 mask: Date,
                 autofix: true,
                 blocks: {
-                    d: { mask: IMask.MaskedRange, placeholderChar: 'd', from: 1, to: 31, maxLength: 2 },
-                    m: { mask: IMask.MaskedRange, placeholderChar: 'm', from: 1, to: 12, maxLength: 2 },
-                    Y: { mask: IMask.MaskedRange, placeholderChar: 'y', from: 1900, to: 2999, maxLength: 4 },
+                    d: {
+                        mask: IMask.MaskedRange,
+                        placeholderChar: this.dateMaskPlaceholder.date || 'd',
+                        from: 1,
+                        to: 31,
+                        maxLength: 2,
+                    },
+                    m: {
+                        mask: IMask.MaskedRange,
+                        placeholderChar: this.dateMaskPlaceholder.month || 'm',
+                        from: 1,
+                        to: 12,
+                        maxLength: 2,
+                    },
+                    Y: {
+                        mask: IMask.MaskedRange,
+                        placeholderChar: this.dateMaskPlaceholder.year || 'y',
+                        from: 1900,
+                        to: 2999,
+                        maxLength: 4,
+                    },
                 },
             }
         },
