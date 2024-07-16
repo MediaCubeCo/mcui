@@ -98,7 +98,6 @@
 
 <script>
 import MultiSelect from 'vue-multiselect'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
 import McTitle from '../../McTitle/McTitle'
 import McTooltip from '../../McTooltip/McTooltip'
 import McAvatar from '../../McAvatar/McAvatar'
@@ -663,6 +662,12 @@ export default {
         color: var(--mc-field-select-label-color);
         &--indent-left {
             margin-inline-start: $space-300;
+        }
+    }
+
+    .mx-scrollbar-track {
+        @media #{$media-mobile} {
+            opacity: 1 !important;
         }
     }
 
