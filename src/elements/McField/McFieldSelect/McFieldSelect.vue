@@ -98,7 +98,6 @@
 
 <script>
 import MultiSelect from 'vue-multiselect'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
 import McTitle from '../../McTitle/McTitle'
 import McTooltip from '../../McTooltip/McTooltip'
 import McAvatar from '../../McAvatar/McAvatar'
@@ -613,6 +612,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'vue-multiselect/dist/vue-multiselect.min.css';
 @import '../../../styles/mixins';
 @import '../../../tokens/durations';
 @import '../../../tokens/font-families';
@@ -667,6 +667,14 @@ export default {
         color: var(--mc-field-select-label-color);
         &--indent-left {
             margin-inline-start: $space-300;
+        }
+    }
+
+    //Фикс Бага пакета, при клике на время сначала отрабатывает ховер с появлением скроллбара
+    //Из-за этого на айфоне требуется даблклик для выбора времени
+    .mx-scrollbar-track {
+        @media #{$media-mobile} {
+            opacity: 1 !important;
         }
     }
 
