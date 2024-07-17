@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.297](https://github.com/MediaCubeCo/mcui/compare/v0.1.296...v0.1.297) (2024-07-17)
+
 ### [0.1.296](https://github.com/MediaCubeCo/mcui/compare/v0.1.295...v0.1.296) (2024-07-16)
 
 ### [0.1.295](https://github.com/MediaCubeCo/mcui/compare/v0.1.294...v0.1.295) (2024-07-15)
