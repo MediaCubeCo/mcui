@@ -612,6 +612,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'vue-multiselect/dist/vue-multiselect.min.css';
 .mc-field-select {
     $block-name: &;
     --mc-field-select-color: initial;
