@@ -132,7 +132,7 @@ export default {
                 })
             }, 1)
         },
-    }
+    },
 }
 </script>
 
@@ -143,6 +143,7 @@ export default {
 
 .mc-tooltip {
     $arrow-size: $space-100 - 1;
+    $arrow-position: $arrow-size - 2; // наслаивает стрелку на тултип и прячет рандомные бордеры между ними
     --mc-tooltip-arrow-color: #{$color-black};
     --mc-tooltip-color: #{$color-white};
     --mc-tooltip-background-color: #{$color-black};
@@ -183,7 +184,7 @@ export default {
                 border-left-color: transparent !important;
                 border-right-color: transparent !important;
                 border-bottom-color: transparent !important;
-                bottom: -$arrow-size;
+                bottom: -$arrow-position;
                 left: calc(50% - #{$arrow-size});
                 margin-top: 0;
                 margin-bottom: 0;
@@ -198,7 +199,7 @@ export default {
                 border-left-color: transparent !important;
                 border-right-color: transparent !important;
                 border-top-color: transparent !important;
-                top: -$arrow-size;
+                top: -$arrow-position;
                 left: calc(50% - #{$arrow-size});
                 margin-top: 0;
                 margin-bottom: 0;
@@ -213,7 +214,7 @@ export default {
                 border-left-color: transparent !important;
                 border-top-color: transparent !important;
                 border-bottom-color: transparent !important;
-                left: -$arrow-size;
+                left: -$arrow-position;
                 top: calc(50% - #{$arrow-size});
                 margin-left: 0;
                 margin-right: 0;
@@ -228,7 +229,7 @@ export default {
                 border-top-color: transparent !important;
                 border-right-color: transparent !important;
                 border-bottom-color: transparent !important;
-                right: -$arrow-size;
+                right: -$arrow-position;
                 top: calc(50% - #{$arrow-size});
                 margin-left: 0;
                 margin-right: 0;
