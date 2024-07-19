@@ -550,7 +550,7 @@ export default {
                 let openDirection = this.openDirection
                 if (openDirection === 'auto') openDirection = ref?.isAbove ? 'top' : 'bottom'
                 // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
-                const iosViewportIndent = (window.visualViewport?.offsetTop || 0)
+                const iosViewportIndent = window.visualViewport?.offsetTop || 0
                 switch (openDirection) {
                     case 'top':
                         ref.$refs.list.style.top = `${top +
