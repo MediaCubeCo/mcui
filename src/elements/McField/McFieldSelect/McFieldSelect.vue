@@ -549,18 +549,20 @@ export default {
                 const title_margin = 8
                 let openDirection = this.openDirection
                 if (openDirection === 'auto') openDirection = ref?.isAbove ? 'top' : 'bottom'
+                // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
+                const iosViewportIndent = window.visualViewport?.offsetTop || 0
                 switch (openDirection) {
                     case 'top':
                         ref.$refs.list.style.top = `${top +
-                            (this.hasTitle ? title_height + title_margin : 0) -
+                            (this.hasTitle ? title_height + title_margin : 0) +
+                            iosViewportIndent -
                             ref.$refs.list.getBoundingClientRect().height -
                             8}px`
                         ref.$refs.list.style.bottom = 'auto'
                         break
                     case 'bottom':
                         ref.$refs.list.style.bottom = 'auto'
-                        // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
-                        ref.$refs.list.style.top = `${top + (window.visualViewport?.offsetTop || 0) + height}px`
+                        ref.$refs.list.style.top = `${top + iosViewportIndent + height}px`
                         break
                 }
             }
