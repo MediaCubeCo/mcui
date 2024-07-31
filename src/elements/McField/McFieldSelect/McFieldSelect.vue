@@ -534,12 +534,14 @@ export default {
         repositionDropDown() {
             const { top, height, width, left } = this.$el.getBoundingClientRect()
             const ref = this.$refs[this.key]
+            // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
+            const iosViewportIndent = window.visualViewport?.offsetTop || 0
             // if field hides under scrolled element borders -> blur select to prevent overlap
             const scrolledHeight = this.closest_scroll_element?.scrollTop
             const fieldHeght = this.$refs.field.clientHeight
             const scrolledElementTop = this.closest_scroll_element?.getBoundingClientRect().top
 
-            if (scrolledHeight - fieldHeght - scrolledElementTop - top > 0) return ref.deactivate()
+            if (scrolledHeight - fieldHeght - scrolledElementTop - top - iosViewportIndent > 0) return ref.deactivate()
 
             if (ref) {
                 ref.$refs.list.style.width = `${width}px`
@@ -549,8 +551,6 @@ export default {
                 const title_margin = 8
                 let openDirection = this.openDirection
                 if (openDirection === 'auto') openDirection = ref?.isAbove ? 'top' : 'bottom'
-                // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
-                const iosViewportIndent = window.visualViewport?.offsetTop || 0
                 switch (openDirection) {
                     case 'top':
                         ref.$refs.list.style.top = `${top +
