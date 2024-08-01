@@ -49,6 +49,8 @@
                             v-on="listeners"
                             @input="prepareHandleInput"
                             @keydown="prepareHandleKeyDown"
+                            @focus="handleFocus"
+                            @blur="handleBlur"
                         />
                     </template>
                 </label>
@@ -156,6 +158,7 @@ export default {
          * кастомный amount_format - форматирует ввод числовых данных разделяя на разряды(1 000 000)
          * date - добавляет placeholder, маску и ограничения ввода
          * uppercase\lowercase - форматирует текст согласну значению (верхний\нижний регистр)
+         * phone_number - добавляет '+' к номеру телефона при фокусе без возможности удалить его
          */
         type: {
             type: String,
@@ -639,9 +642,24 @@ export default {
                     e.target.value = value
                     this.setCaretPos(e.target, cursor_position, cursor_position)
                     break
+                case 'phone_number':
+                    if (value.length === 0) value = '+'
+                    value = value.replace(/[^+\d]/g, '')
+                    e.target.value = value
+                    break
             }
 
             this.handleInput(value)
+        },
+        handleFocus(e) {
+            if (this.type === 'phone_number' && e.target.value.length === 0) {
+                e.target.value = '+'
+            }
+        },
+        handleBlur(e) {
+            if (this.type === 'phone_number' && e.target.value === '+') {
+                e.target.value = ''
+            }
         },
         prepareHandleKeyDown(e) {
             switch (this.type) {
