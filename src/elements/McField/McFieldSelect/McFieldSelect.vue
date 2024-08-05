@@ -534,8 +534,9 @@ export default {
         repositionDropDown() {
             const { top, height, width, left } = this.$el.getBoundingClientRect()
             const ref = this.$refs[this.key]
+            const ios_devices = ['iPhone', 'iPad']
             // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
-            const iosViewportIndent = window.visualViewport?.offsetTop || 0
+            const iosViewportIndent = ios_devices?.some(device => navigator?.platform?.includes(device)) ? window.visualViewport?.offsetTop || 0 : 0
             // if field hides under scrolled element borders -> blur select to prevent overlap
             const scrolledHeight = this.closest_scroll_element?.scrollTop
             const fieldHeght = this.$refs.field.clientHeight
@@ -669,14 +670,6 @@ export default {
         color: var(--mc-field-select-label-color);
         &--indent-left {
             margin-inline-start: $space-300;
-        }
-    }
-
-    //Фикс Бага пакета, при клике на время сначала отрабатывает ховер с появлением скроллбара
-    //Из-за этого на айфоне требуется даблклик для выбора времени
-    .mx-scrollbar-track {
-        @media #{$media-mobile} {
-            opacity: 1 !important;
         }
     }
 
