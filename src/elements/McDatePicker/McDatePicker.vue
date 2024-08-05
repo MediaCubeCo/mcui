@@ -682,6 +682,14 @@ export default {
     }
 }
 
+//Фикс Бага пакета, при клике на время сначала отрабатывает ховер с появлением скроллбара
+//Из-за этого на айфоне требуется даблклик для выбора времени
+.mx-scrollbar-track {
+    @media #{$media-mobile} {
+        opacity: 1 !important;
+    }
+}
+
 .mx-input-wrapper:hover .mx-icon-clear + .mx-icon-calendar {
     display: block;
 }
