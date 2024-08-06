@@ -1,5 +1,5 @@
 <template>
-    <div ref="field" :dir="dir" :class="classes" :style="styles">
+    <div :ref="field_key" :dir="dir" :class="classes" :style="styles">
         <div :for="name" class="mc-field-select__header">
             <!-- @slot Слот заголовка -->
             <slot name="header">
@@ -335,6 +335,7 @@ export default {
         return {
             searchValue: null,
             key: `field_select_${Date.now()}`,
+            field_key: `field-${this.name}`,
             closest_scroll_element: null,
             scroll_resize_observer: null,
             local_options: [],
@@ -508,7 +509,6 @@ export default {
         },
         handleOpen() {
             if (!this.renderAbsoluteList) return
-            this.repositionDropDown()
             this.initScroll()
         },
         handleClose() {
@@ -526,25 +526,22 @@ export default {
         },
         initScroll() {
             // looking for closest scroll elemen to track select list position dynamically
-            this.closest_scroll_element = this.findClosestScrollElement(this.$refs.field)
+            this.closest_scroll_element = this.findClosestScrollElement(this.$refs[this.field_key])
             this.closest_scroll_element.addEventListener('scroll', this.repositionDropDown)
             this.scroll_resize_observer = new ResizeObserver(this.repositionDropDown)
             this.scroll_resize_observer.observe(this.closest_scroll_element)
         },
         repositionDropDown() {
-            const { top, height, width, left } = this.$el.getBoundingClientRect()
+            const { top, bottom, height, width, left } = this.$el.getBoundingClientRect()
             const ref = this.$refs[this.key]
             const ios_devices = ['iPhone', 'iPad']
             // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
             const iosViewportIndent = ios_devices?.some(device => navigator?.platform?.includes(device)) ? window.visualViewport?.offsetTop || 0 : 0
             // if field hides under scrolled element borders -> blur select to prevent overlap
             const scrolledHeight = this.closest_scroll_element?.scrollTop
-            const fieldHeght = this.$refs.field.clientHeight
-            const scrolledElementTop = this.closest_scroll_element?.getBoundingClientRect().top
-
-            if (scrolledHeight - fieldHeght - scrolledElementTop - top - iosViewportIndent > 0) return ref.deactivate()
-
-            if (ref) {
+            const fieldHeght = this.$refs[this.field_key]?.clientHeight || 0
+            const scrolledElementTop = this.closest_scroll_element?.getBoundingClientRect().top 
+            if (ref && top >= -height && bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
                 ref.$refs.list.style.width = `${width}px`
                 ref.$refs.list.style.position = 'fixed'
                 ref.$refs.list.style.left = `${left}px`
@@ -566,6 +563,10 @@ export default {
                         ref.$refs.list.style.top = `${top + iosViewportIndent + height}px`
                         break
                 }
+            }
+            else {
+                // прячем селект, если его не видно юзеру
+                return ref.deactivate()
             }
         },
         handleChange(value) {
