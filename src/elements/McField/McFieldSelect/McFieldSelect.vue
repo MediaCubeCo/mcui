@@ -525,7 +525,7 @@ export default {
                 : this.findClosestScrollElement(element.parentNode)
         },
         initScroll() {
-            // looking for closest scroll elemen to track sbelect list position dynamically
+            // looking for closest scroll elemen to track select list position dynamically
             this.closest_scroll_element = this.findClosestScrollElement(this.$refs[this.field_key])
             this.closest_scroll_element.addEventListener('scroll', this.repositionDropDown)
             this.scroll_resize_observer = new ResizeObserver(this.repositionDropDown)
@@ -540,7 +540,7 @@ export default {
             // if field hides under scrolled element borders -> blur select to prevent overlap
             const scrolledHeight = this.closest_scroll_element?.scrollTop
             const fieldHeght = this.$refs[this.field_key]?.clientHeight || 0
-            const scrolledElementTop = this.closest_scroll_element?.getBoundingClientRect().top
+            const scrolledElementTop = this.closest_scroll_element?.getBoundingClientRect().top 
             if (ref && top >= -height && bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
                 ref.$refs.list.style.width = `${width}px`
                 ref.$refs.list.style.position = 'fixed'
@@ -565,6 +565,7 @@ export default {
                 }
             }
             else {
+                // прячем селект, если его не видно юзеру
                 return ref.deactivate()
             }
         },
