@@ -49,8 +49,6 @@
                             v-on="listeners"
                             @input="prepareHandleInput"
                             @keydown="prepareHandleKeyDown"
-                            @focus="handleFocus"
-                            @blur="handleBlur"
                         />
                     </template>
                 </label>
@@ -628,14 +626,20 @@ export default {
                     this.setCaretPos(e.target, cursor_position + space_length, cursor_position + space_length)
                     break
                 }
-                case 'uppercase':
+                case 'uppercase': {
+                    const cursor_position = this.getCaretPos(e.target)?.start
                     value = value?.toUpperCase()
                     e.target.value = value
+                    this.setCaretPos(e.target, cursor_position, cursor_position)
                     break
-                case 'lowercase':
+                }
+                case 'lowercase': {
+                    const cursor_position = this.getCaretPos(e.target)?.start
                     value = value?.toLowerCase()
                     e.target.value = value
+                    this.setCaretPos(e.target, cursor_position, cursor_position)
                     break
+                }
                 case 'password':
                     const cursor_position = this.getCaretPos(e.target)?.start
                     value = value?.replace(/ /gm, '')
@@ -644,22 +648,13 @@ export default {
                     break
                 case 'phone_number':
                     if (value.length === 0) value = '+'
-                    value = value.replace(/[^+\d]/g, '')
+                    if (value.charAt(0) !== '+') value = '+' + value
+                    value = value.replace(/(?!^)\D/g, '')
                     e.target.value = value
                     break
             }
 
             this.handleInput(value)
-        },
-        handleFocus(e) {
-            if (this.type === 'phone_number' && e.target.value.length === 0) {
-                e.target.value = '+'
-            }
-        },
-        handleBlur(e) {
-            if (this.type === 'phone_number' && e.target.value === '+') {
-                e.target.value = ''
-            }
         },
         prepareHandleKeyDown(e) {
             switch (this.type) {
