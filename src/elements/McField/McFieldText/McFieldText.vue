@@ -648,7 +648,8 @@ export default {
                     break
                 case 'phone_number':
                     if (value.length === 0) value = '+'
-                    value = value.replace(/[^+\d]/g, '')
+                    if (value.charAt(0) !== '+') value = '+' + value
+                    value = value.replace(/(?!^)\D/g, '')
                     e.target.value = value
                     break
             }
