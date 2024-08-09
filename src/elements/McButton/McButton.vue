@@ -77,6 +77,14 @@ export default {
             default: false,
         },
         /**
+         *  Дизэйблить не меняя внешнего вида
+         *
+         */
+        inactive: {
+            type: Boolean,
+            default: false,
+        },
+        /**
          *  Индикация загрузки
          *
          */
@@ -271,6 +279,7 @@ export default {
                 'mc-button--underline-link': this.underlineLink,
                 'mc-button--bg-flat': this.bgFlat,
                 [`mc-button--type-${this.buttonVariation.type}`]: this.buttonVariation.type,
+                'mc-button--inactive': this.inactive,
             }
         },
         buttonVariation() {
@@ -817,6 +826,10 @@ export default {
                 border-color: $color-hover-gray;
             }
         }
+    }
+
+    &--inactive {
+        pointer-events: none;
     }
 }
 </style>
