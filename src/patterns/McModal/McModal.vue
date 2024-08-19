@@ -189,9 +189,10 @@ export default {
              * @property {Object}
              */
             this.$emit('beforeClose', event)
-
-            this.resize_observer?.unobserve(this.$refs.mcModalBody)
-            this.$refs.mcModalBody.removeEventListener('scroll', this.calculateSeparators)
+            if (this.$refs.mcModalBody) {
+                this.resize_observer?.unobserve(this.$refs.mcModalBody)
+                this.$refs.mcModalBody.removeEventListener('scroll', this.calculateSeparators)
+            }
         },
         handleOpened(event) {
             if (this.separators) {
