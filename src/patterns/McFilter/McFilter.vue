@@ -336,7 +336,11 @@ export default {
             handler(val) {
                 this.currentValues = { ...val.filter }
                 if (val.filter_name) {
-                    this.currentValuesName = JSON.parse(decodeURI(atob(val.filter_name)))
+                    try {
+                        this.currentValuesName = JSON.parse(decodeURI(atob(val.filter_name)))
+                    } catch (e) {
+                        console.error(`Can't parse filters`)
+                    }
                 }
                 this.buttonConfirmIsDisable = _isEmpty(val.filter) || _isEmpty(val.filter_name)
             },
@@ -554,7 +558,7 @@ export default {
             this.setEmptyCondition()
         },
         setEmptyCondition() {
-            switch (this.currentFilter.type) {
+            switch (this.currentFilter?.type) {
                 case 'relation':
                 case 'date':
                     this.handleConditionChange()
