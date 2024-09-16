@@ -534,6 +534,7 @@ export default {
         repositionDropDown() {
             const { top, bottom, height, width, left } = this.$el.getBoundingClientRect()
             const ref = this.$refs[this.key]
+            if (!ref) return
             const ios_devices = ['iPhone', 'iPad']
             // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
             const iosViewportIndent = ios_devices?.some(device => navigator?.platform?.includes(device)) ? window.visualViewport?.offsetTop || 0 : 0
@@ -541,7 +542,7 @@ export default {
             const scrolledHeight = this.closest_scroll_element?.scrollTop
             const fieldHeght = this.$refs[this.field_key]?.clientHeight || 0
             const scrolledElementTop = this.closest_scroll_element?.getBoundingClientRect().top 
-            if (ref && top >= -height && bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
+            if (top >= -height && bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
                 ref.$refs.list.style.width = `${width}px`
                 ref.$refs.list.style.position = 'fixed'
                 ref.$refs.list.style.left = `${left}px`
