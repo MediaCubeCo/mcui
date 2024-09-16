@@ -362,6 +362,8 @@ export default {
             }
 
             if (this.activePreset) {
+                // Обновляем пресеты из стореджа до того, как записывать новые, чтобы случайно не сбросить
+                this.updatePresets()
                 const mappedPresets = this.presets[this.name].map(p => {
                     if (p.name === this.activePreset.name) {
                         return {
@@ -380,7 +382,7 @@ export default {
         },
     },
     mounted() {
-        this.presets = JSON.parse(window.localStorage.mcFilterPresets || '{}')
+        this.updatePresets()
         document.documentElement.addEventListener('mousemove', this.onMouseMove)
         document.documentElement.addEventListener('mouseup', this.onMouseUp)
     },
@@ -389,6 +391,9 @@ export default {
         document.documentElement.removeEventListener('mouseup', this.onMouseUp)
     },
     methods: {
+        updatePresets() {
+            this.presets = JSON.parse(window.localStorage.mcFilterPresets || '{}')
+        },
         handlerSetFastFilter(tag) {
             const filterValue = tag.relation ? { [tag.relation]: tag.default } : tag.default
             this.selectedOptionFilter = tag.value
