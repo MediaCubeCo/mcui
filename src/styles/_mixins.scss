@@ -436,6 +436,47 @@
   }
 }
 
+@mixin editor-notification-styles {
+  @include editor-default-styles;
+  h1 {
+    margin-bottom: $space-250;
+    img {
+      object-fit: cover;
+      margin: $space-zero auto $space-50;
+      @media #{$media-query-s} {
+        margin: $space-zero auto $space-250;
+      }
+    }
+  }
+  h2 {
+    margin-bottom: $space-200;
+  }
+  h3, strong {
+    margin-bottom: $space-100;
+  }
+  img {
+    object-fit: cover;
+    margin: $space-250 $space-zero;
+  }
+  img.horizontal {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+  }
+  img.vertical {
+    display: block;
+    max-height: 180px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  blockquote {
+    margin-top: $space-100;
+    font-size: $font-size-300;
+    font-weight: $font-weight-normal;
+    line-height: $line-height-300;
+  }
+}
+
 @mixin common-slide-styles {
   &-enter-active,
   &-leave-active {
