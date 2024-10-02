@@ -21,12 +21,8 @@
                 <template v-if="isShowLimitToggle" slot="caret">
                     <div :class="computedCaretClass" @click="toggleOptions" />
                 </template>
-                <template v-if="collapsed" slot="limit">
-                    <mc-title
-                        v-if="collapsed && !is_show_all_options"
-                        variation="body"
-                        class="mc-field-select__limit-text"
-                    >
+                <template v-if="collapsed && !is_show_all_options" slot="limit">
+                    <mc-title variation="body" class="mc-field-select__limit-text">
                         {{ limitText }}
                     </mc-title>
                 </template>
@@ -369,7 +365,7 @@ export default {
                 trackBy: 'value',
                 value: this._value,
                 loading: this.loading,
-                options: !this.collapsed ? this.computedOptions : this.visibleOptions,
+                options: this.collapsed ? this.visibleOptions : this.computedOptions,
                 searchable: this.searchable,
                 showLabels: this.showLabels,
                 multiple: this.multiple,
@@ -522,7 +518,7 @@ export default {
                 //Пушим все входящие опции в локальные опции
                 this.local_options.push(...val)
                 this.actualizeSavedOptions()
-                this.collapsed && this.calcLimit()
+                this.calcLimit()
             },
         },
         value: {
@@ -530,7 +526,7 @@ export default {
             immediate: true,
             handler() {
                 this.actualizeSavedOptions()
-                this.collapsed && this.calcLimit()
+                this.calcLimit()
             },
         },
     },
@@ -657,6 +653,7 @@ export default {
          * Вычисляем custom_limit, которое ограничивает кол-во дочерних элементов внутри родительского, чтобы они не превышали его ширину
          * */
         calcLimit() {
+            if (!this.collapsed) return
             this.$nextTick(() => {
                 this.custom_limit = Infinity
                 let child_width = 0
