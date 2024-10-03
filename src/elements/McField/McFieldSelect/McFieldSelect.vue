@@ -537,11 +537,10 @@ export default {
             if (!ref) return
             const ios_devices = ['iPhone', 'iPad']
             // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
-            const iosViewportIndent = ios_devices?.some(device => navigator?.platform?.includes(device)) ? window.visualViewport?.offsetTop || 0 : 0
+            const iosViewportIndent = ios_devices?.some(device => navigator?.platform?.includes(device))
+                ? window.visualViewport?.offsetTop || 0
+                : 0
             // if field hides under scrolled element borders -> blur select to prevent overlap
-            const scrolledHeight = this.closest_scroll_element?.scrollTop
-            const fieldHeght = this.$refs[this.field_key]?.clientHeight || 0
-            const scrolledElementTop = this.closest_scroll_element?.getBoundingClientRect().top 
             if (top >= -height && bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
                 ref.$refs.list.style.width = `${width}px`
                 ref.$refs.list.style.position = 'fixed'
@@ -564,8 +563,10 @@ export default {
                         ref.$refs.list.style.top = `${top + iosViewportIndent + height}px`
                         break
                 }
-            }
-            else {
+                // Задержка для предотвращения закрытия выпадающего списка на android
+                const is_android = /Android/i.test(navigator.userAgent)
+                is_android && setTimeout(() => ref.activate(), 100) // переактивировать, если выпадающий список должен быть открыт
+            } else {
                 // прячем селект, если его не видно юзеру
                 return ref.deactivate()
             }
