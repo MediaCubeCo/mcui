@@ -18,6 +18,14 @@
                 @open="handleOpen"
                 @close="handleClose"
             >
+                <template v-if="isShowLimitToggle" slot="caret">
+                    <div :class="computedCaretClass" @click="toggleOptions" />
+                </template>
+                <template v-if="collapsed && !is_show_all_options" slot="limit">
+                    <mc-title variation="body" class="mc-field-select__limit-text">
+                        {{ limitText }}
+                    </mc-title>
+                </template>
                 <template slot="singleLabel" slot-scope="{ option }">
                     <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
                         <mc-svg-icon slot="left" :name="option.icon" size="400" />
@@ -330,6 +338,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Ограничить ли отображение выбранных опций
+         */
+        collapsed: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -339,6 +354,8 @@ export default {
             closest_scroll_element: null,
             scroll_resize_observer: null,
             local_options: [],
+            custom_limit: 0,
+            is_show_all_options: false,
         }
     },
     computed: {
@@ -348,7 +365,7 @@ export default {
                 trackBy: 'value',
                 value: this._value,
                 loading: this.loading,
-                options: this.computedOptions,
+                options: this.collapsed ? this.visibleOptions : this.computedOptions,
                 searchable: this.searchable,
                 showLabels: this.showLabels,
                 multiple: this.multiple,
@@ -364,7 +381,25 @@ export default {
                 tabindex: +this.tabindex,
                 ...(this.groupKeys ? { groupLabel: this.groupKeys.label } : {}),
                 ...(this.groupKeys ? { groupValues: this.groupKeys.values } : {}),
+                ...(this.collapsed ? { limit: this.is_show_all_options ? this.value?.length : this.custom_limit } : {}),
+                class: this.collapsed ? 'mc-field-select__limit' : '',
             }
+        },
+        visibleOptions() {
+            return this.is_show_all_options ? this.computedOptions : this.computedOptions.slice(0, this.custom_limit)
+        },
+        computedCaretClass() {
+            return {
+                multiselect__select: true,
+                'mc-field-select__limit-toggle': true,
+                'mc-field-select__limit-toggle--close': this.is_show_all_options,
+            }
+        },
+        limitText() {
+            return `+${+this.value?.length - +this.custom_limit}`
+        },
+        isShowLimitToggle() {
+            return this.collapsed && this.value?.length > this.custom_limit
         },
         hasTitle() {
             return !!this.title
@@ -483,6 +518,7 @@ export default {
                 //Пушим все входящие опции в локальные опции
                 this.local_options.push(...val)
                 this.actualizeSavedOptions()
+                this.calcLimit()
             },
         },
         value: {
@@ -490,6 +526,7 @@ export default {
             immediate: true,
             handler() {
                 this.actualizeSavedOptions()
+                this.calcLimit()
             },
         },
     },
@@ -537,11 +574,10 @@ export default {
             if (!ref) return
             const ios_devices = ['iPhone', 'iPad']
             // Добавляем к позиции отступ visualViewport?.offsetTop, который добавляет iOs при открытии вирутальной клавиатуры
-            const iosViewportIndent = ios_devices?.some(device => navigator?.platform?.includes(device)) ? window.visualViewport?.offsetTop || 0 : 0
+            const iosViewportIndent = ios_devices?.some(device => navigator?.platform?.includes(device))
+                ? window.visualViewport?.offsetTop || 0
+                : 0
             // if field hides under scrolled element borders -> blur select to prevent overlap
-            const scrolledHeight = this.closest_scroll_element?.scrollTop
-            const fieldHeght = this.$refs[this.field_key]?.clientHeight || 0
-            const scrolledElementTop = this.closest_scroll_element?.getBoundingClientRect().top 
             if (top >= -height && bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
                 ref.$refs.list.style.width = `${width}px`
                 ref.$refs.list.style.position = 'fixed'
@@ -564,8 +600,10 @@ export default {
                         ref.$refs.list.style.top = `${top + iosViewportIndent + height}px`
                         break
                 }
-            }
-            else {
+                // Задержка для предотвращения закрытия выпадающего списка на android
+                const is_android = /Android/i.test(navigator.userAgent)
+                is_android && setTimeout(() => ref.activate(), 100) // переактивировать, если выпадающий список должен быть открыт
+            } else {
                 // прячем селект, если его не видно юзеру
                 return ref.deactivate()
             }
@@ -611,6 +649,30 @@ export default {
              * @property {array, number}
              */
             this.$emit('input', value)
+        },
+        /**
+         * Вычисляем custom_limit, которое ограничивает кол-во дочерних элементов внутри родительского, чтобы они не превышали его ширину
+         * */
+        calcLimit() {
+            if (!this.collapsed) return
+            this.$nextTick(() => {
+                this.custom_limit = Infinity
+                let child_width = 0
+                const parent = this.$refs[this.key]?.$refs?.tags?.firstChild
+                for (let i = 0; i < this.value?.length; i++) {
+                    const children = parent?.children?.[i]
+                    const elemStyle = window.getComputedStyle(children)
+                    child_width += +children?.clientWidth + +parseInt(elemStyle.marginRight)
+                    // считаем занимаемую дочерними элементами ширину, если превышает родительскую, то выходим из цикла и ставим лимит
+                    if (child_width > +parent?.clientWidth) {
+                        this.custom_limit = i
+                        break
+                    }
+                }
+            })
+        },
+        toggleOptions() {
+            this.is_show_all_options = !this.is_show_all_options
         },
     },
 }
@@ -975,6 +1037,28 @@ export default {
 
     &--rtl {
         direction: rtl;
+    }
+
+    &__limit {
+        &-text {
+            position: relative;
+            z-index: 1;
+            width: auto;
+        }
+        &-toggle {
+            pointer-events: auto;
+            &:before {
+                border-color: black transparent transparent !important;
+            }
+            &--close {
+                transform: rotate(180deg);
+            }
+        }
+        .multiselect__tags {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     }
 }
 </style>
