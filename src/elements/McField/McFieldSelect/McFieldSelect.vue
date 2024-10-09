@@ -431,11 +431,14 @@ export default {
                 'mc-field-select--error': this.errorText,
                 'mc-field-select--disabled': this.disabled,
                 [`mc-field-select--bg-${this.backgroundColor}`]: this.backgroundColor,
-                'mc-field-select--is-empty-options-list': this.isEmptyOptionsList || this.loading,
+                'mc-field-select--is-empty-options-list': this.isEmptyOptions,
                 'mc-field-select--with-preview': this.optionWithPreview,
                 'mc-field-select--max-height': this.maxHeight,
                 'mc-field-select--rtl': this.rtl,
             }
+        },
+        isEmptyOptions() {
+            return this.isEmptyOptionsList || this.loading || this.computedOptions?.length === this._value?.length
         },
         computedTitle() {
             return `${this.title}${this.required ? ' *' : ''}`
@@ -659,17 +662,30 @@ export default {
                 this.custom_limit = Infinity
                 let child_width = 0
                 const parent = this.$refs[this.key]?.$refs?.tags?.firstChild
+                if (!this.value?.length) return
+                const limit_text_width = this.getLimitTextWidth() // Получаем ширину текста лимита
+                const total_width = +parent?.clientWidth - +limit_text_width
                 for (let i = 0; i < this.value?.length; i++) {
                     const children = parent?.children?.[i]
-                    const elemStyle = window.getComputedStyle(children)
-                    child_width += +children?.clientWidth + +parseInt(elemStyle.marginRight)
+                    const elem_style = window.getComputedStyle(children)
+                    child_width += children?.clientWidth + (parseInt(elem_style?.marginRight) || 0)
                     // считаем занимаемую дочерними элементами ширину, если превышает родительскую, то выходим из цикла и ставим лимит
-                    if (child_width > +parent?.clientWidth) {
+                    if (+child_width > +total_width) {
                         this.custom_limit = i
                         break
                     }
                 }
             })
+        },
+        getLimitTextWidth() {
+            const temp_limit_element = document.createElement('div')
+            temp_limit_element.style.visibility = 'hidden'
+            temp_limit_element.style.position = 'absolute'
+            temp_limit_element.innerText = `+${this.value?.length}` // Устанавливаем текст лимита
+            document.body.appendChild(temp_limit_element)
+            const limit_text_width = temp_limit_element.clientWidth
+            document.body.removeChild(temp_limit_element)
+            return limit_text_width
         },
         toggleOptions() {
             this.is_show_all_options = !this.is_show_all_options
@@ -817,6 +833,7 @@ export default {
         }
 
         &__tags-wrap {
+            width: 100%;
             position: relative;
             padding-top: 4px;
             padding-bottom: 3px;
