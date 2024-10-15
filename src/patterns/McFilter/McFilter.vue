@@ -393,7 +393,6 @@ export default {
     methods: {
         updatePresets() {
             this.presets = JSON.parse(window.localStorage.mcFilterPresets || '{}')
-            console.log('update presets', this.presets)
         },
         handlerSetFastFilter(tag) {
             const filterValue = tag.relation ? { [tag.relation]: tag.default } : tag.default
@@ -730,7 +729,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../styles/mixins';
 .mc-filter {
     $block-name: &;
     flex-grow: 1;
