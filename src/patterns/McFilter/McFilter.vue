@@ -362,8 +362,6 @@ export default {
             }
 
             if (this.activePreset) {
-                // Обновляем пресеты из стореджа до того, как записывать новые, чтобы случайно не сбросить
-                this.updatePresets()
                 const mappedPresets = this.presets[this.name].map(p => {
                     if (p.name === this.activePreset.name) {
                         return {
@@ -385,10 +383,12 @@ export default {
         this.updatePresets()
         document.documentElement.addEventListener('mousemove', this.onMouseMove)
         document.documentElement.addEventListener('mouseup', this.onMouseUp)
+        window.addEventListener('storage', this.updatePresets)
     },
     beforeDestroy() {
         document.documentElement.removeEventListener('mousemove', this.onMouseMove)
         document.documentElement.removeEventListener('mouseup', this.onMouseUp)
+        window.removeEventListener('storage', this.updatePresets)
     },
     methods: {
         updatePresets() {
