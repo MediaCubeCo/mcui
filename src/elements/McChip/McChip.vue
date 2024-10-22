@@ -292,7 +292,7 @@ export default {
             color: $color-black;
             &:before {
                 background-color: var(--mc-chip-color);
-                opacity: 0.15;
+                opacity: 0.10;
             }
         }
     }
