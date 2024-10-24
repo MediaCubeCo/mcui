@@ -58,8 +58,11 @@ export default {
         init() {
             if (this.isAutoLimit) {
                 window.addEventListener('resize', this.calcLimit)
+                this.calcLimit()
                 // setTimeout из-за случаев, когда элемент рендерится с 0 шириной, а потом она устанавливается динамически
-                setTimeout(() => this.calcLimit(), 1)
+                if (!this.$refs.stack?.clientWidth) {
+                    setTimeout(() => this.calcLimit(), 1)
+                }
             } else {
                 this.toggleChilds(true, this.limit)
             }
