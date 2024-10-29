@@ -8,6 +8,12 @@
         </label>
         <div class="mc-date-picker__inner">
             <div class="mc-date-picker__input-wrapper" :style="{ minWidth }">
+                <mc-svg-icon
+                    v-if="!isTime"
+                    class="mc-date-picker__icon-calendar mx-icon-calendar"
+                    name="calendar"
+                    size="300"
+                />
                 <date-picker
                     ref="input"
                     :type="type"
@@ -101,11 +107,6 @@
                                 </mc-button>
                             </div>
                         </slot>
-                    </template>
-
-                    <!-- @slot Слот для вставки пользовательской иконки календаря -->
-                    <template slot="icon-calendar">
-                        <mc-svg-icon class="mc-date-picker__icon" name="calendar" />
                     </template>
                 </date-picker>
             </div>
@@ -604,6 +605,7 @@ export default {
     }
 
     &__input-wrapper {
+        position: relative;
         width: 100%;
     }
 
@@ -659,6 +661,15 @@ export default {
         }
         .mx-icon-calendar {
             color: $color-outline-gray;
+        }
+    }
+    &__icon-calendar {
+        position: absolute;
+        z-index: 1;
+    }
+    &__date-picker {
+        .mx-icon-calendar {
+            display: none;
         }
     }
 }
