@@ -121,7 +121,6 @@
                         <mc-field-text
                             v-model="newPresetName"
                             :placeholder="placeholders.enter_preset_name"
-                            :max-length="20"
                             class="mc-filter__preset-input"
                             name="preset_name"
                         />
@@ -328,7 +327,7 @@ export default {
             return !_isEmpty(this.currentCondition)
         },
         buttonCreateIsDisable() {
-            return !this.newPresetName.trim()
+            return !(this.newPresetName.trim() && Object.keys(this.currentValues)?.length)
         },
     },
     watch: {
@@ -359,23 +358,6 @@ export default {
             }
             if (_isEmpty(this.value.filter) && _isEmpty(newVal)) {
                 this.buttonConfirmIsDisable = true
-            }
-
-            if (this.activePreset) {
-                const mappedPresets = this.presets[this.name].map(p => {
-                    if (p.name === this.activePreset.name) {
-                        return {
-                            name: p.name,
-                            filter: _cloneDeep(this.currentValues),
-                            filter_name: _cloneDeep(this.currentValuesName),
-                        }
-                    }
-                    return p
-                })
-                this.presets[this.name] = [...mappedPresets]
-                window.localStorage.mcFilterPresets = JSON.stringify({
-                    ...this.presets,
-                })
             }
         },
     },
@@ -670,6 +652,22 @@ export default {
             this.$emit('confirm')
             if (_isEmpty(this.currentValues)) {
                 this.buttonConfirmIsDisable = true
+            }
+            if (this.activePreset) {
+                const mappedPresets = this.presets[this.name].map(p => {
+                    if (p.name === this.activePreset.name) {
+                        return {
+                            name: p.name,
+                            filter: _cloneDeep(this.currentValues),
+                            filter_name: _cloneDeep(this.currentValuesName),
+                        }
+                    }
+                    return p
+                })
+                this.presets[this.name] = [...mappedPresets]
+                window.localStorage.mcFilterPresets = JSON.stringify({
+                    ...this.presets,
+                })
             }
         },
         handleDeletePreset(preset) {

@@ -337,6 +337,7 @@ export default {
         border-radius: $radius-100;
         background-color: $color-white;
         min-height: $space-500;
+        overflow-x: auto;
         &-left {
             flex-grow: 1;
         }
