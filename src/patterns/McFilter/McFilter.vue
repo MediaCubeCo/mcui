@@ -20,7 +20,6 @@
                         :variation="getPresetButtonVariation(preset)"
                         :tooltip="preset.tooltip"
                         secondary-color="purple"
-                        class="mc-filter__presets_button"
                         @mouseup="() => handlePresetMouseUp(preset)"
                     >
                         {{ preset.name }}
@@ -745,6 +744,7 @@ export default {
             background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, $color-white);
             pointer-events: none;
         }
+
         &-inner {
             display: flex;
             flex-wrap: nowrap;
