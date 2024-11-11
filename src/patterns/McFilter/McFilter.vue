@@ -360,23 +360,6 @@ export default {
             if (_isEmpty(this.value.filter) && _isEmpty(newVal)) {
                 this.buttonConfirmIsDisable = true
             }
-
-            if (this.activePreset) {
-                const mappedPresets = this.presets[this.name].map(p => {
-                    if (p.name === this.activePreset.name) {
-                        return {
-                            name: p.name,
-                            filter: _cloneDeep(this.currentValues),
-                            filter_name: _cloneDeep(this.currentValuesName),
-                        }
-                    }
-                    return p
-                })
-                this.presets[this.name] = [...mappedPresets]
-                window.localStorage.mcFilterPresets = JSON.stringify({
-                    ...this.presets,
-                })
-            }
         },
     },
     mounted() {
