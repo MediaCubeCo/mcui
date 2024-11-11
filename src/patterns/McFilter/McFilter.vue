@@ -12,13 +12,15 @@
                     <mc-svg-icon slot="icon-prepend" name="filter_list" />
                 </mc-button>
             </mc-tooltip>
-            <div v-if="presets[name]" class="mc-filter__presets">
+            <div v-if="currentPresets?.length" class="mc-filter__presets">
                 <div ref="dragArea" class="mc-filter__presets-inner" @mousedown="onMouseDown">
                     <mc-button
-                        v-for="preset in presets[name]"
+                        v-for="preset in currentPresets"
                         :key="preset.name"
                         :variation="getPresetButtonVariation(preset)"
+                        :tooltip="preset.tooltip"
                         secondary-color="purple"
+                        class="mc-filter__presets_button"
                         @mouseup="() => handlePresetMouseUp(preset)"
                     >
                         {{ preset.name }}
@@ -46,6 +48,7 @@
                                 :filter="currentFilter"
                                 :placeholders="placeholders"
                                 :current-values="!activeTag ? currentValues : {}"
+                                :use-timezone="useTimezone"
                                 @input="handleConditionChange"
                             />
                             <mc-button v-if="hasButtonAdd" variation="purple-outline" @click.native="handleStoreTag">
@@ -64,6 +67,7 @@
                     :filters="filters"
                     :placeholders="placeholders"
                     :active-tag="activeTag"
+                    :use-timezone="useTimezone"
                     @tag-change="onTagsChange"
                     @tag-click="onTagClick"
                     @clear="allTagsClear"
@@ -121,7 +125,6 @@
                         <mc-field-text
                             v-model="newPresetName"
                             :placeholder="placeholders.enter_preset_name"
-                            :max-length="20"
                             class="mc-filter__preset-input"
                             name="preset_name"
                         />
@@ -233,6 +236,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        useTimezone: {
+            type: Boolean,
+            default: true,
+        },
         /**
          *  Переводы локализаций
          */
@@ -293,6 +300,7 @@ export default {
             currentConditionName: null,
             buttonConfirmIsDisable: false,
             newPresetName: '',
+            preset_max_size: 40,
             dragOptions: {
                 scrollPos: 0,
                 startClientPos: 0,
@@ -328,7 +336,17 @@ export default {
             return !_isEmpty(this.currentCondition)
         },
         buttonCreateIsDisable() {
-            return !this.newPresetName.trim()
+            return !(this.newPresetName.trim() && Object.keys(this.currentValues)?.length)
+        },
+        currentPresets() {
+            return this.presets[this.name]?.map(preset => {
+                const hasLongName = preset?.name?.length > this.preset_max_size
+                return {
+                    ...preset,
+                    name: hasLongName ? `${preset.name.slice(0, this.preset_max_size)}...` : preset.name,
+                    tooltip: hasLongName ? preset?.name : null,
+                }
+            })
         },
     },
     watch: {
@@ -654,6 +672,22 @@ export default {
             if (_isEmpty(this.currentValues)) {
                 this.buttonConfirmIsDisable = true
             }
+            if (this.activePreset) {
+                const mappedPresets = this.presets[this.name].map(p => {
+                    if (p.name === this.activePreset.name) {
+                        return {
+                            name: p.name,
+                            filter: _cloneDeep(this.currentValues),
+                            filter_name: _cloneDeep(this.currentValuesName),
+                        }
+                    }
+                    return p
+                })
+                this.presets[this.name] = [...mappedPresets]
+                window.localStorage.mcFilterPresets = JSON.stringify({
+                    ...this.presets,
+                })
+            }
         },
         handleDeletePreset(preset) {
             const filteredPresets = this.presets[this.name].filter(p => p.name !== preset.name)
@@ -712,8 +746,10 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../styles/mixins';
 .mc-filter {
     $block-name: &;
+    --mc-filter-preset-size: 25ch;
     flex-grow: 1;
     min-width: 0;
     &__header {
@@ -732,7 +768,6 @@ export default {
             background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, $color-white);
             pointer-events: none;
         }
-
         &-inner {
             display: flex;
             flex-wrap: nowrap;
