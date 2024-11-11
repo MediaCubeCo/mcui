@@ -12,12 +12,13 @@
                     <mc-svg-icon slot="icon-prepend" name="filter_list" />
                 </mc-button>
             </mc-tooltip>
-            <div v-if="presets[name]" class="mc-filter__presets">
+            <div v-if="currentPresets?.length" class="mc-filter__presets">
                 <div ref="dragArea" class="mc-filter__presets-inner" @mousedown="onMouseDown">
                     <mc-button
-                        v-for="preset in presets[name]"
+                        v-for="preset in currentPresets"
                         :key="preset.name"
                         :variation="getPresetButtonVariation(preset)"
+                        :tooltip="preset.tooltip"
                         secondary-color="purple"
                         @mouseup="() => handlePresetMouseUp(preset)"
                     >
@@ -292,6 +293,7 @@ export default {
             currentConditionName: null,
             buttonConfirmIsDisable: false,
             newPresetName: '',
+            preset_max_size: 40,
             dragOptions: {
                 scrollPos: 0,
                 startClientPos: 0,
@@ -328,6 +330,16 @@ export default {
         },
         buttonCreateIsDisable() {
             return !(this.newPresetName.trim() && Object.keys(this.currentValues)?.length)
+        },
+        currentPresets() {
+            return this.presets[this.name]?.map(preset => {
+                const hasLongName = preset?.name?.length > this.preset_max_size
+                return {
+                    ...preset,
+                    name: hasLongName ? `${preset.name.slice(0, this.preset_max_size)}...` : preset.name,
+                    tooltip: hasLongName ? preset?.name : null,
+                }
+            })
         },
     },
     watch: {
