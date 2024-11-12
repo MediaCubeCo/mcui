@@ -451,8 +451,14 @@
   h2 {
     margin-bottom: $space-200;
   }
+  * + h2 {
+    margin-top: $space-300;
+  }
   h3, strong {
     margin-bottom: $space-100;
+  }
+  * + h3 {
+    margin-top: $space-250;
   }
   img {
     object-fit: cover;
