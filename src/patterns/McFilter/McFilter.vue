@@ -22,7 +22,7 @@
                         secondary-color="purple"
                         @mouseup="() => handlePresetMouseUp(preset)"
                     >
-                        {{ preset.name }}
+                        {{ preset.visibleName }}
                     </mc-button>
                 </div>
             </div>
@@ -336,7 +336,7 @@ export default {
                 const hasLongName = preset?.name?.length > this.preset_max_size
                 return {
                     ...preset,
-                    name: hasLongName ? `${preset.name.slice(0, this.preset_max_size)}...` : preset.name,
+                    visibleName: hasLongName ? `${preset.name.slice(0, this.preset_max_size)}...` : preset.name,
                     tooltip: hasLongName ? preset?.name : null,
                 }
             })
@@ -371,6 +371,9 @@ export default {
             if (_isEmpty(this.value.filter) && _isEmpty(newVal)) {
                 this.buttonConfirmIsDisable = true
             }
+            if (!_isEqual(this.activePreset?.filter, newVal)) {
+                this.activePreset = null
+            }
         },
     },
     mounted() {
@@ -386,7 +389,10 @@ export default {
     },
     methods: {
         updatePresets() {
-            this.presets = JSON.parse(window.localStorage.mcFilterPresets || '{}')
+            this.presets = {
+                [this.name]: [],
+                ...JSON.parse(window.localStorage.mcFilterPresets || '{}'),
+            }
         },
         handlerSetFastFilter(tag) {
             const filterValue = tag.relation ? { [tag.relation]: tag.default } : tag.default
@@ -664,22 +670,6 @@ export default {
             this.$emit('confirm')
             if (_isEmpty(this.currentValues)) {
                 this.buttonConfirmIsDisable = true
-            }
-            if (this.activePreset) {
-                const mappedPresets = this.presets[this.name].map(p => {
-                    if (p.name === this.activePreset.name) {
-                        return {
-                            name: p.name,
-                            filter: _cloneDeep(this.currentValues),
-                            filter_name: _cloneDeep(this.currentValuesName),
-                        }
-                    }
-                    return p
-                })
-                this.presets[this.name] = [...mappedPresets]
-                window.localStorage.mcFilterPresets = JSON.stringify({
-                    ...this.presets,
-                })
             }
         },
         handleDeletePreset(preset) {
