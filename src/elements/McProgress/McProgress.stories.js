@@ -9,7 +9,7 @@ export default {
     parameters: {
         componentSubtitle: 'Status: Ready',
         design: {
-        type: 'figma',
+            type: 'figma',
             url: 'https://www.figma.com/file/LXNkU1vlAYmydEiC0l0gDa/MC-Design-System?node-id=88%3A0',
         },
     },

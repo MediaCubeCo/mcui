@@ -177,6 +177,12 @@ export default {
                     this.checkInitTab()
                 })
         },
+        activeTab(val, oldVal) {
+            if (val !== oldVal)
+                this.$nextTick(() => {
+                    this.checkInitTab()
+                })
+        },
     },
     created() {
         this.children = this.$children
@@ -207,12 +213,14 @@ export default {
             return
         }
 
-        if (this.tabs.length) {
+        if (this.tabs.length && !this.activeTab) {
             this.selectTab(this.tabs[0].hash)
         }
     },
     updated() {
-        this.switchingDisableTab()
+        this.$nextTick(() => {
+            this.switchingDisableTab()
+        })
     },
     methods: {
         checkInitTab() {
@@ -262,7 +270,7 @@ export default {
             firstAvailableTab && this.setActiveTab(firstAvailableTab.hash)
         },
         findTab(hash) {
-            return this.tabs.find(tab => tab.hash === hash)
+            return this.tabs.find(tab => tab.hash === hash) || this.visibleTabs?.[0]
         },
 
         selectTab(selectedTabHash, event) {

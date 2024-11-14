@@ -107,6 +107,10 @@ export default {
             type: Object,
             default: null,
         },
+        useTimezone: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -127,7 +131,15 @@ export default {
             !_isEmpty(this.simpleValues) &&
                 Object.entries(this.simpleValues).forEach(([key, value]) => {
                     const filter = this.filters.find(f => f.value === key)
-                    if (filter && filter.type === 'fast') {
+                    if (filter && filter.type === 'simple') {
+                        tags.push({
+                            id: _XEUtils.uniqueId(),
+                            categoryName: filter?.name,
+                            category: key,
+                            ...filter,
+                            title: filter.options.find(o => String(o.value) === String(value))?.name,
+                        })
+                    } else if (filter && filter.type === 'fast') {
                         tags.push({
                             id: _XEUtils.uniqueId(),
                             categoryName: filter?.name,
@@ -143,9 +155,11 @@ export default {
                         const to = value.less
                             ? `${this.placeholders.to} ${this.getFormattedVal(
                                   filter.type === 'date'
-                                      ? dayjs(value.less)
-                                            .subtract(1, 'days')
-                                            .format()
+                                      ? this.useTimezone
+                                          ? dayjs(value.less)
+                                                .subtract(1, 'days')
+                                                .format()
+                                          : dayjs(value.less).format()
                                       : value.less,
                                   filter,
                               )}`

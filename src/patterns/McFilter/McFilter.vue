@@ -47,6 +47,7 @@
                                 :filter="currentFilter"
                                 :placeholders="placeholders"
                                 :current-values="!activeTag ? currentValues : {}"
+                                :use-timezone="useTimezone"
                                 @input="handleConditionChange"
                             />
                             <mc-button v-if="hasButtonAdd" variation="purple-outline" @click.native="handleStoreTag">
@@ -65,6 +66,7 @@
                     :filters="filters"
                     :placeholders="placeholders"
                     :active-tag="activeTag"
+                    :use-timezone="useTimezone"
                     @tag-change="onTagsChange"
                     @tag-click="onTagClick"
                     @clear="allTagsClear"
@@ -156,6 +158,7 @@ import McFilterTypeRelation from './McFilterTypeRelation/McFilterTypeRelation'
 import McFilterTypeText from './McFilterTypeText/McFilterTypeText'
 import McFilterTypeRange from './McFilterTypeRange/McFilterTypeRange'
 import McFilterTypeDate from './McFilterTypeDate/McFilterTypeDate'
+import McFilterTypeSimple from './McFilterTypeSimple/McFilterTypeSimple'
 import McFilterTags from './McFilterTags/McFilterTags'
 import McChip from '../../elements/McChip/McChip'
 
@@ -167,6 +170,7 @@ export default {
         McFilterTypeText,
         McFilterTypeRange,
         McFilterTypeDate,
+        McFilterTypeSimple,
         McSvgIcon,
         McButton,
         McTitle,
@@ -198,7 +202,7 @@ export default {
        *  [{
                 name: Filter title,
                 value: [String] - Filter value(key),
-                type: [String] - Filter type(relation / date / text / fast / labels),
+                type: [String] - Filter type(relation / date / text / fast / labels / simple),
                 options: [Array] - Filter options,
                 getAjaxOne: [Function] - Method for get selected options when filter initialize,
                 getAjaxOptions: [Function] - Method for get options by API,
@@ -232,6 +236,10 @@ export default {
         disabledOpen: {
             type: Boolean,
             default: false,
+        },
+        useTimezone: {
+            type: Boolean,
+            default: true,
         },
         /**
          *  Переводы локализаций

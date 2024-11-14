@@ -191,7 +191,7 @@ export default {
                 border-bottom-color: transparent !important;
                 bottom: -$arrow-position;
                 left: calc(50% - #{$arrow-size});
-                margin-top: 0;
+                margin-top: -1px !important;
                 margin-bottom: 0;
             }
         }

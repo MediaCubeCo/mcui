@@ -378,7 +378,7 @@ export default {
          */
         maxDecimals: {
             type: Number,
-            default: null,
+            default: 2,
         },
     },
 

@@ -3,7 +3,7 @@
         v-model="period"
         :placeholders="placeholders.calendar"
         :placeholder="filter.placeholder || placeholders.choose"
-        use-timezone
+        :use-timezone="useTimezone"
         name="condition_dates"
         class="mc-filter-type-date"
         range
@@ -39,6 +39,10 @@ export default {
         placeholders: {
             type: Object,
             required: true,
+        },
+        useTimezone: {
+            type: Boolean,
+            default: false,
         },
     },
     computed: {

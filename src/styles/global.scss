@@ -166,41 +166,17 @@ pre {
 // Spaces
 @each $space, $value in $token-spaces {
   .pb-#{$space} {
-    padding-bottom: $value;
-    @media #{$media-query-m} {
-      padding-bottom: $value;
-    }
-    @media #{$media-query-l} {
-      padding-bottom: $value;
-    }
+    padding-bottom: $value !important;
   }
   .pt-#{$space} {
-    padding-top: $value;
-    @media #{$media-query-m} {
-      padding-top: $value;
-    }
-    @media #{$media-query-l} {
-      padding-top: $value;
-    }
+    padding-top: $value !important;
   }
 
   .mb-#{$space} {
-    margin-bottom: $value;
-    @media #{$media-query-m} {
-      margin-bottom: $value;
-    }
-    @media #{$media-query-l} {
-      margin-bottom: $value;
-    }
+    margin-bottom: $value !important;
   }
   .mt-#{$space} {
-    margin-top: $value;
-    @media #{$media-query-m} {
-      margin-top: $value;
-    }
-    @media #{$media-query-l} {
-      margin-top: $value;
-    }
+    margin-top: $value !important;
   }
 }
 

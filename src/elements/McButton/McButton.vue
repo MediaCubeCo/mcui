@@ -372,7 +372,7 @@ export default {
                 ? {
                       content: this.tooltip,
                       placement: 'top',
-                      classes: 'mc-tooltip mc-tooltip--width-s mc-tooltip--size-s',
+                      classes: 'mc-tooltip mc-tooltip--width-m mc-tooltip--size-s',
                       trigger: 'hover focus',
                       show: false,
                       container: 'body',
