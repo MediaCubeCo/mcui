@@ -10,7 +10,7 @@
         @search-change="handleSearchChange"
     >
         <div slot="header" class="mc-filter-type-simple__header">
-            <mc-title>{{ placeholders.simple }}simple</mc-title>
+            <mc-title>{{ placeholders.simple }}</mc-title>
         </div>
     </mc-field-select>
 </template>
