@@ -590,6 +590,9 @@ export default {
         },
         prepareHandleInput(e) {
             let value = e.target.value
+            const number_types = ['num', 'amount_format']
+            // For number types add possibility to write ","
+            if (number_types.includes(this.type)) value = value?.replace(',', '.')
             switch (this.type) {
                 case 'num': {
                     let [num] = /-?\d*[\.]?\d*/.exec(String(value)) || []
@@ -660,7 +663,9 @@ export default {
             switch (this.type) {
                 case 'amount_format':
                 case 'num': {
-                    if (e.key === '.' && typeof this.value === 'string' && this.value?.includes('.')) {
+                    const exluded_symbols = ['.', ',']
+                    const already_has_symbol = exluded_symbols.some(symbol => this.value.includes(symbol))
+                    if (exluded_symbols.includes(e.key) && typeof this.value === 'string' && already_has_symbol) {
                         e.preventDefault()
                     }
                     break
