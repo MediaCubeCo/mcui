@@ -38,7 +38,7 @@ const getUniqueProps = key => {
         },
         placeholders: {
             default: object('placeholders', placeholders, key),
-        }
+        },
     }
 }
 
@@ -92,21 +92,11 @@ export const Default = () => ({
         },
         onDeleteFilterPreset(message) {
             const filter = this.$refs.filter
-            filter &&
-                handleConfirmAction(
-                  filter.savePresetsToLocalStorage,
-                  filter.getPresetsFromLocalStorage,
-                  message,
-                )
+            filter && handleConfirmAction(filter.savePresetsToLocalStorage, filter.getPresetsFromLocalStorage, message)
         },
         onAllTagsClear(message) {
             const filter = this.$refs.filter
-            filter &&
-            handleConfirmAction(
-                filter.clearTemporaryValues,
-                filter.revertClearedValues,
-                message,
-            )
+            filter && handleConfirmAction(filter.clearTemporaryValues, filter.revertClearedValues, message)
         },
     },
     template: `
