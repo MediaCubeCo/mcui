@@ -74,16 +74,13 @@ const getUniqueProps = key => {
             default: select('componentTag', tags, 'grid', key),
         },
         hasMore: {
-            default: boolean('hasMore', false, key),
+            default: boolean('hasMore', true, key),
         },
         loading: {
             default: boolean('loading', false, key),
         },
         checkboxConfig: {
             default: object('checkboxConfig', { labelField: 'user', showHeader: false, highlight: true }, key),
-        },
-        nativeSort: {
-            default: boolean('nativeSort', true, key),
         },
         sortLoading: {
             default: boolean('sortLoading', false, key),
@@ -152,11 +149,11 @@ const getCommonTags = ctx => {
         placeholders: ctx.placeholders,
         cellClassName: ctx.handleCellClassName,
         checkboxConfig: ctx.checkboxConfig,
-        nativeSort: ctx.nativeSort,
         footerInfo: ctx.footerInfo,
         totalFooter: ctx.totalFooter,
         headerBreakWord: ctx.headerBreakWord,
         monoFont: ctx.monoFont,
+        mergeCells: ctx.merge_cells,
     }
 }
 
@@ -189,7 +186,10 @@ export const Default = () => ({
     },
     data() {
         return {
+            table_data: body,
+            has_more: true,
             total: 424,
+            merge_cells: [{ row: 6, col: 4, rowspan: 1, colspan: 5 }],
             placeholders: {
                 no_data: 'Данных вообще нет!',
                 loading: 'Секундочку...',
@@ -205,32 +205,34 @@ export const Default = () => ({
     },
     computed: {
         tagBind() {
-            return getCommonTags(this)
+            return {
+                ...getCommonTags(this),
+                items: this.items,
+                hasMore: this.has_more,
+            }
         },
         items() {
             return !this.removeItems
-                ? body
-                      .map(item => ({
-                          ...item,
-                          avatar: item.image_small,
-                          views_count: num(item.views_count, 0),
-                          average_views_per_video: num(item.average_views_per_video, 0),
-                          subscribers_count: num(item.subscribers_count, 0),
-                          categories: item.categories.map(c => c.title).join(', '),
-                          language: item.language.name,
-                          country: item.country.name,
-                          roles: ['Одмен', 'Петух', 'Лопух'],
-                          price: item.agency_channels.filter(item => item.type === 2).length
-                              ? num(
-                                    _minBy(
-                                        item.agency_channels.filter(item => item.type === 2),
-                                        'total',
-                                    ).total,
-                                    0,
-                                ) + ' $'
-                              : null,
-                      }))
-                      .slice(0, 50)
+                ? this.table_data.map(item => ({
+                      ...item,
+                      avatar: item.image_small,
+                      views_count: num(item.views_count, 0),
+                      average_views_per_video: num(item.average_views_per_video, 0),
+                      subscribers_count: num(item.subscribers_count, 0),
+                      categories: item.categories.map(c => c.title).join(', '),
+                      language: item.language.name,
+                      country: item.country.name,
+                      roles: ['Одмен', 'Петух', 'Лопух'],
+                      price: item.agency_channels.filter(item => item.type === 2).length
+                          ? num(
+                                _minBy(
+                                    item.agency_channels.filter(item => item.type === 2),
+                                    'total',
+                                ).total,
+                                0,
+                            ) + ' $'
+                          : null,
+                  }))
                 : []
         },
     },
@@ -242,8 +244,10 @@ export const Default = () => ({
         handleCellClassName() {
             return '' //'mc-table-col--border-bottom'
         },
-        sortNameMethod(a, b) {
-            return a - b
+        loadExtra() {
+            this.has_more = false
+            this.table_data.push(...this.table_data?.map(item => ({ ...item, id: item.id * 50 })))
+            this.merge_cells.push({ row: 56, col: 4, rowspan: 1, colspan: 5 })
         },
     },
     template: `
@@ -251,7 +255,7 @@ export const Default = () => ({
             ref="table"
             v-bind="tagBind"
             @checkbox-change="handleCheckboxChange"
-            @load="handleLoad"
+            @load="loadExtra"
             @sort-change="handleSorted"
             @cell-click="cellClickEvent"
         >
@@ -288,7 +292,6 @@ export const Default = () => ({
                 min-width="130"
                 align="right"
                 sortable
-                :sortMethod="sortNameMethod"
             />
     
             <mc-table-col field="roles" title="Роль (здесь уточнение)" width="120">

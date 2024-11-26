@@ -75,15 +75,7 @@ export default {
     },
     provide() {
         const provideData = {}
-        const properties = [
-            'canShowLoader',
-            'cardIsOpen',
-            'placeholders',
-            'nativeSort',
-            'sortedBy',
-            'sortedDescending',
-            'footerInfo',
-        ]
+        const properties = ['canShowLoader', 'cardIsOpen', 'placeholders', 'sortedBy', 'sortedDescending', 'footerInfo']
         properties.forEach(property => {
             Object.defineProperty(provideData, property, {
                 enumerable: true,
@@ -109,13 +101,6 @@ export default {
          *  собственный скролл
          */
         scrollable: {
-            type: Boolean,
-            default: false,
-        },
-        /**
-         *  Сортировка таблицей, без api
-         */
-        nativeSort: {
             type: Boolean,
             default: false,
         },
@@ -262,6 +247,22 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Конфиг ячеек, которые нужно мержить
+         * нужно явно передавать индикатор ячейки
+         * row - строка на которой находится ячейка
+         * col - колонка на которой находится ячейка
+         * colspan - сколько колонок должна занимать ячейка
+         * rowspan - сколько строк должна занимать ячейк
+         * Например при динамической подгрузке данных в таблицу нужно постоянно обновлять св-во,
+         * если нужно добавлять новые ячейки (пример использования в stories.js файле фильтра)
+         * { row: 1, col: 1, colspan: 1, rowspan: 1 }
+         * docs - https://vxetable.cn/v2/#/table/advanced/mergeCell
+         * */
+        mergeCells: {
+            type: Array,
+            default: () => [],
+        },
         isRtl: {
             type: Boolean,
             default: false,
@@ -290,7 +291,7 @@ export default {
                 'show-footer': this.canShowFooter,
                 'footer-method': this.footerMethod,
                 'sort-config': {
-                    remote: !this.nativeSort,
+                    remote: true,
                     showIcon: false,
                     trigger: 'cell',
                     orders: this.sortOrders,
@@ -414,11 +415,13 @@ export default {
         window.removeEventListener('resize', this.checkHorizontalScroll)
     },
     methods: {
-        loadData(force = false) {
+        async loadData(force = false) {
             if ((this.items && this.items.length) || force) {
-                this.$refs.xTable.loadData(this.items)
+                await this.$refs.xTable.loadData(this.items)
                 !this.scrollable && this.setObserveElement()
                 this.hasMore && this.checkOccupancy()
+                // После обновления данных в таблице обязательно мержим ячейки, если они указаны
+                if (this.mergeCells?.length) this.$refs.xTable.setMergeCells(this.mergeCells)
             }
         },
         reloadData() {

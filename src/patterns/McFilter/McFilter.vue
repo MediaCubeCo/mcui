@@ -12,7 +12,7 @@
                     <mc-svg-icon slot="icon-prepend" name="filter_list" />
                 </mc-button>
             </mc-tooltip>
-            <div v-if="currentPresets?.length" class="mc-filter__presets">
+            <div v-if="currentPresets.length" class="mc-filter__presets">
                 <div ref="dragArea" class="mc-filter__presets-inner" @mousedown="onMouseDown">
                     <mc-button
                         v-for="preset in currentPresets"
@@ -340,14 +340,16 @@ export default {
             return !(this.newPresetName.trim() && Object.keys(this.currentValues)?.length)
         },
         currentPresets() {
-            return this.presets[this.name]?.map(preset => {
-                const hasLongName = preset?.name?.length > this.preset_max_size
-                return {
-                    ...preset,
-                    visibleName: hasLongName ? `${preset.name.slice(0, this.preset_max_size)}...` : preset.name,
-                    tooltip: hasLongName ? preset?.name : null,
-                }
-            })
+            return (
+                this.presets[this.name]?.map(preset => {
+                    const hasLongName = preset?.name?.length > this.preset_max_size
+                    return {
+                        ...preset,
+                        visibleName: hasLongName ? `${preset.name.slice(0, this.preset_max_size)}...` : preset.name,
+                        tooltip: hasLongName ? preset?.name : null,
+                    }
+                }) || []
+            )
         },
     },
     watch: {
@@ -738,6 +740,9 @@ export default {
 
 <style lang="scss">
 @import '../../styles/mixins';
+@import '../../tokens/spacings';
+@import '../../tokens/colors';
+@import '../../tokens/sizes';
 .mc-filter {
     $block-name: &;
     flex-grow: 1;

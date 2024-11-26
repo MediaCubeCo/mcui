@@ -61,7 +61,7 @@
     "vue2-slideout-panel": "^2.12.0",
     "vue2-textarea-autosize": "^1.0.1",
     "vuex": "^3.4.0",
-    "vxe-table": "2.9.17",
+    "vxe-table": "2.11.0",
     "webfontloader": "^1.6.28",
     "xe-utils": "2.7.2"
   },
@@ -103,7 +103,7 @@
     "node-sass": "^4.14.1",
     "numeral": "^2.0.6",
     "prettier": "^1.19.1",
-    "sass-export": "^1.0.6",
+    "sass-export": "^1.0.8",
     "sass-loader": "^8.0.2",
     "sass-resources-loader": "^2.0.3",
     "standard-version": "^8.0.0",

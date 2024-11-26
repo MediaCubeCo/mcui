@@ -695,11 +695,17 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'vue-multiselect/dist/vue-multiselect.min.css';
+@import 'vue-multiselect/dist/vue-multiselect.min';
 @import '../../../styles/mixins';
 @import '../../../tokens/durations';
 @import '../../../tokens/font-families';
 @import '../../../tokens/box-shadows';
+@import '../../../tokens/colors';
+@import '../../../tokens/font-sizes';
+@import '../../../tokens/line-heights';
+@import '../../../tokens/font-weights';
+@import '../../../tokens/sizes';
+@import '../../../tokens/spacings';
 .mc-field-select {
     $block-name: &;
     --mc-field-select-color: initial;
