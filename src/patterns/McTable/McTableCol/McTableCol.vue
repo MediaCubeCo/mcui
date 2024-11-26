@@ -157,23 +157,16 @@ export default {
             return columnIndex === index
         },
         getSortIcon(column) {
-            if (!this.provideData.nativeSort) {
-                if (this.provideData.sortedBy && column.property === this.provideData.sortedBy) {
-                    return this.provideData.sortedDescending ? 'arrow_downward' : 'arrow_upward'
-                }
-                return 'arrow_up_down'
+            if (this.provideData.sortedBy && column.property === this.provideData.sortedBy) {
+                return this.provideData.sortedDescending ? 'arrow_downward' : 'arrow_upward'
             }
-            if (!column.order) return 'arrow_up_down'
-            return column.order === 'desc' ? 'arrow_downward' : 'arrow_upward'
+            return 'arrow_up_down'
         },
         getSortColor(column) {
-            if (!this.provideData.nativeSort) {
-                if (this.provideData.sortedBy && column.property === this.provideData.sortedBy) {
-                    return 'black'
-                }
-                return 'outline-gray'
+            if (this.provideData.sortedBy && column.property === this.provideData.sortedBy) {
+                return 'black'
             }
-            return column.order ? 'black' : 'outline-gray'
+            return 'outline-gray'
         },
         handleClassName() {
             const classes = []
