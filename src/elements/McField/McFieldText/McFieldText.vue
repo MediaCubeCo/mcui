@@ -664,8 +664,9 @@ export default {
                 case 'amount_format':
                 case 'num': {
                     const exluded_symbols = ['.', ',']
-                    const already_has_symbol = exluded_symbols.some(symbol => this.value.includes(symbol))
-                    if (exluded_symbols.includes(e.key) && typeof this.value === 'string' && already_has_symbol) {
+                    const already_has_symbol =
+                        typeof this.value === 'string' && exluded_symbols.some(symbol => this.value.includes(symbol))
+                    if (exluded_symbols.includes(e.key) && already_has_symbol) {
                         e.preventDefault()
                     }
                     break
