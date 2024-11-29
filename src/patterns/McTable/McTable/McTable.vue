@@ -23,7 +23,7 @@
         <component
             :is="tag"
             v-bind="attrs"
-            v-on="$listeners"
+            v-on="{ ...$listeners, 'sort-change': this.handleSort }"
             @scroll="handleScroll"
             @context-menu-click="contextMenuClickEvent"
         >
@@ -506,6 +506,12 @@ export default {
             if (leftFixedColumnsWidth) {
                 this.firstColsWidth = leftFixedColumnsWidth + 5 // 5 - ширина скролла
             }
+        },
+        handleSort({ property, ...other } = {}) {
+            this.$emit('sort-change', {
+                field: property,
+                ...other,
+            })
         },
         toggleColumns(val) {
             if (val) {
