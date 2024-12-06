@@ -9,7 +9,7 @@
         <div class="mc-date-picker__inner">
             <div class="mc-date-picker__input-wrapper" :style="{ minWidth }">
                 <mc-svg-icon
-                    v-if="!isTime"
+                    v-if="!isTime && !inline"
                     class="mc-date-picker__icon-calendar mx-icon-calendar"
                     name="calendar"
                     size="300"
