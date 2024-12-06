@@ -513,7 +513,7 @@ export default {
         },
 
         passwordIcon() {
-            return this.isPasswordType ? 'visibility' : 'visibility_off'
+            return this.isPasswordType ? 'visibility_off' : 'visibility'
         },
 
         charCounter() {
