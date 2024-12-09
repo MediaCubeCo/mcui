@@ -317,17 +317,14 @@ export default {
             return !this.scrollable && this.hasMore
         },
         canShowFooter() {
-            if (this.scrollable) {
-                switch (this.footerInfo) {
-                    case 'total':
-                        return !this.cardIsOpen
-                    case 'loaded':
-                        return !this.hasMore && !this.$attrs.loading && !!this.items.length
-                    default:
-                        return false
-                }
+            switch (this.footerInfo) {
+                case 'total':
+                    return true
+                case 'loaded':
+                    return !this.hasMore && !this.$attrs.loading && !!this.items.length
+                default:
+                    return false
             }
-            return !!this.items.length
         },
         tag() {
             return `vxe-${this.componentTag}`
@@ -696,6 +693,9 @@ export default {
         .vxe-table--body-wrapper,
         .vxe-table--footer-wrapper {
             overflow-x: hidden;
+        }
+        .vxe-table--footer {
+            display: none;
         }
     }
     &--clickable {
