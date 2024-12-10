@@ -56,6 +56,7 @@
 import noTableDataIcon from '../../../assets/img/no_table_data.png'
 import _throttle from 'lodash/throttle'
 import _isEmpty from 'lodash/isEmpty'
+import _isEqual from 'lodash/isEqual'
 
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
@@ -340,7 +341,7 @@ export default {
         },
         wrapperStyles() {
             return {
-                width: this.cardIsOpen ? `${this.firstColsWidth}px` : 'auto',
+                width: 'auto',
                 height: this.$attrs.height ? this.getFixedHeight(this.$attrs.height) : 'auto',
                 'max-height': this.$attrs['max-height'] ? this.getFixedHeight(this.$attrs['max-height']) : 'none',
             }
@@ -388,9 +389,14 @@ export default {
             deep: true,
         },
         items: {
-            handler: async function(newVal) {
-                newVal && (await this.loadData(true))
-                newVal && (await this.setFirstColsWidth())
+            handler: async function(newVal, oldVal) {
+                if (_isEqual(newVal, oldVal)) return
+                if (newVal.length !== oldVal.length) {
+                    newVal && (await this.loadData(true))
+                } else {
+                    newVal && (await this.setFirstColsWidth())
+                    await this.reloadData()
+                }
             },
             deep: true,
         },
@@ -424,8 +430,8 @@ export default {
         reloadData() {
             this.$refs.xTable.reloadData(this.items)
         },
-        updateData() {
-            this.$refs.xTable.updateData()
+        async updateData() {
+            await this.$refs.xTable.updateData()
         },
         checkOccupancy() {
             if (!this.$refs.xTable || !this.items?.length) return
@@ -513,29 +519,14 @@ export default {
         toggleColumns(val) {
             if (val) {
                 const columns = this.$refs.xTable.getColumns()
-                let fixedColNeigbhorIndex
-                const hideColumns = columns.filter((col, i) => {
-                    const isFixedCol = col.fixed === 'left'
-                    /**
-                     * Скрываем все столбцы кроме фиксированного и его соседа, чтобы не было рассинхрона при выходе из карточки
-                     * т.к. когда остается 1 столбец, то фикс - размаунтится, а потом при выходе из карточки перерендеривается
-                     * и скроллит в самый верх
-                     * */
-                    if (isFixedCol) fixedColNeigbhorIndex = i + 1
-                    switch (true) {
-                        case i === fixedColNeigbhorIndex:
-                            return
-                        default:
-                            return !isFixedCol
-                    }
-                })
+                const hideColumns = columns.filter(col => col.fixed !== 'left')
                 hideColumns.forEach(col => (col.visible = false))
                 this.$refs.xTable.refreshColumn()
             } else {
                 this.$refs.xTable.resetColumn()
             }
-            // this.$refs.xTable.recalculate()
-            // this.$refs.xTable.syncData()
+            this.$refs.xTable.recalculate()
+            this.$refs.xTable.syncData() // Синхронит данные таблиц (фикс колонка === отдельная таблица)
             this.checkHorizontalScroll()
         },
         getFixedHeight(val) {
@@ -693,6 +684,7 @@ export default {
         .vxe-table--body-wrapper,
         .vxe-table--footer-wrapper {
             overflow-x: hidden;
+            width: fit-content;
         }
         .vxe-table--footer {
             display: none;
