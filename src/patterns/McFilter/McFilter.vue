@@ -200,16 +200,16 @@ export default {
          *  Типы фильтров
          *
          *  [{
-         name: Filter title,
-         value: [String] - Filter value(key),
-         type: [String] - Filter type(relation / date / text / fast / labels / simple),
-         options: [Array] - Filter options,
-         getAjaxOne: [Function] - Method for get selected options when filter initialize,
-         getAjaxOptions: [Function] - Method for get options by API,
-         [relation]: [String] - Filter relation, only for fast filter,
-         [default]: [String, Number, Boolean] - Only for fast filter type. Fast filter haven't options, we set default value
-         [description]: [String] - Only for fast filter type. Description of fast filter
-         }, ...]
+                 name: Filter title,
+                 value: [String] - Filter value(key),
+                 type: [String] - Filter type(relation / date / text / fast / labels / simple),
+                 options: [Array] - Filter options,
+                 getAjaxOne: [Function] - Method for get selected options when filter initialize,
+                 getAjaxOptions: [Function] - Method for get options by API,
+                 [relation]: [String] - Filter relation, only for fast filter,
+                 [default]: [String, Number, Boolean] - Only for fast filter type. Fast filter haven't options, we set default value
+                 [description]: [String] - Only for fast filter type. Description of fast filter
+            }, ...]
          */
         filters: {
             type: Array,
@@ -355,7 +355,7 @@ export default {
     watch: {
         value: {
             handler(val) {
-                this.currentValues = {...val.filter}
+                this.currentValues = { ...val.filter }
                 if (val.filter_name) {
                     try {
                         this.currentValuesName = JSON.parse(decodeURI(atob(val.filter_name)))
@@ -405,7 +405,7 @@ export default {
             }
         },
         handlerSetFastFilter(tag) {
-            const filterValue = tag.relation ? {[tag.relation]: tag.default} : tag.default
+            const filterValue = tag.relation ? { [tag.relation]: tag.default } : tag.default
             this.selectedOptionFilter = tag.value
             this.handleConditionChange(filterValue, tag.name)
             this.handleStoreTag()
@@ -502,7 +502,7 @@ export default {
                 this.$emit('error', this.placeholders.messages.same_filter)
                 return
             }
-            const {category, categoryName} = this.getCategoriesWithNewRelation()
+            const { category, categoryName } = this.getCategoriesWithNewRelation()
             if (this.activeTag.relationKey === 'exists') {
                 delete category[this.activeTag.relationKey]
                 delete categoryName[this.activeTag.relationKey]
@@ -515,14 +515,14 @@ export default {
 
                     delete categoryName[this.activeTag.relationKey][this.activeTag.value]
                     _isEmpty(categoryName[this.activeTag.relationKey]) &&
-                    delete categoryName[this.activeTag.relationKey]
+                        delete categoryName[this.activeTag.relationKey]
                 }
             }
 
             this.setFilterValues(category, categoryName)
         },
         addRelationValue() {
-            const {category, categoryName} = this.getCategoriesWithNewRelation()
+            const { category, categoryName } = this.getCategoriesWithNewRelation()
             this.setFilterValues(category, categoryName)
         },
         getCategoriesWithNewRelation() {
@@ -533,24 +533,24 @@ export default {
             const selectedCategoryName = valuesName[this.selectedOptionFilter]
 
             selectedCategory &&
-            relationKeys.forEach(k => {
-                if (k === 'exists') {
-                    selectedCategory[k] = [0]
-                    selectedCategoryName[k] = [0]
-                } else {
-                    if (k in selectedCategory) {
-                        selectedCategory[k] = _uniq([...selectedCategory[k], ...this.currentCondition[k]])
-                        selectedCategoryName[k] = {
-                            ...selectedCategoryName[k],
-                            ...this.currentConditionName[k],
-                        }
+                relationKeys.forEach(k => {
+                    if (k === 'exists') {
+                        selectedCategory[k] = [0]
+                        selectedCategoryName[k] = [0]
                     } else {
-                        selectedCategory[k] = this.currentCondition[k]
-                        selectedCategoryName[k] = this.currentConditionName[k]
+                        if (k in selectedCategory) {
+                            selectedCategory[k] = _uniq([...selectedCategory[k], ...this.currentCondition[k]])
+                            selectedCategoryName[k] = {
+                                ...selectedCategoryName[k],
+                                ...this.currentConditionName[k],
+                            }
+                        } else {
+                            selectedCategory[k] = this.currentCondition[k]
+                            selectedCategoryName[k] = this.currentConditionName[k]
+                        }
                     }
-                }
-            })
-            return {category: selectedCategory, categoryName: selectedCategoryName}
+                })
+            return { category: selectedCategory, categoryName: selectedCategoryName }
         },
         setFilterValues(val, valName) {
             const newVal = {
@@ -655,7 +655,7 @@ export default {
                     [tag.relationKey]: tag.relationKey === 'exists' ? [0] : [String(tag.value)],
                 }
                 conditionName = {
-                    [tag.relationKey]: tag.relationKey === 'exists' ? [0] : {[tag.value]: tag.title},
+                    [tag.relationKey]: tag.relationKey === 'exists' ? [0] : { [tag.value]: tag.title },
                 }
             } else {
                 condition = tag.value?.constructor === Object ? tag.value : String(tag.value)
@@ -695,7 +695,7 @@ export default {
             this.$emit('delete-preset', this.placeholders.messages.accidentally_deleted)
         },
         savePresetsToLocalStorage() {
-            window.localStorage.mcFilterPresets = JSON.stringify({...this.presets})
+            window.localStorage.mcFilterPresets = JSON.stringify({ ...this.presets })
         },
         getPresetsFromLocalStorage() {
             this.activePreset = _cloneDeep(this.temporaryActivePreset)
@@ -727,9 +727,9 @@ export default {
             } else {
                 this.presets[this.name] = [preset]
             }
-            window.localStorage.mcFilterPresets = JSON.stringify({...this.presets})
+            window.localStorage.mcFilterPresets = JSON.stringify({ ...this.presets })
             this.newPresetName = ''
-            this.activePreset = {...preset}
+            this.activePreset = { ...preset }
         },
         getPresetButtonVariation(preset) {
             return this.activePreset && this.activePreset.name === preset.name ? 'main-invert' : 'gray-outline'
@@ -743,22 +743,18 @@ export default {
 @import '../../tokens/spacings';
 @import '../../tokens/colors';
 @import '../../tokens/sizes';
-
 .mc-filter {
     $block-name: &;
     flex-grow: 1;
     min-width: 0;
-
     &__header {
         display: flex;
         @include child-indent-right($space-100);
     }
-
     &__presets {
         position: relative;
         flex-grow: 1;
         min-width: 0;
-
         &::after {
             @include pseudo();
             @include position(null, 0 0 0 null);
@@ -766,82 +762,68 @@ export default {
             background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, $color-white);
             pointer-events: none;
         }
-
         &-inner {
             display: flex;
             flex-wrap: nowrap;
             overflow-x: auto;
             @include child-indent-right($space-100);
             @include hide-scrollbar();
-
             &::after {
                 @include pseudo(block, static);
                 min-width: $space-300;
             }
         }
     }
-
     &__body {
         padding: $space-200 $space-200 $space-300 $space-200;
         background-color: $color-hover-gray;
         @include child-indent-bottom($space-200);
-
         &-top {
             display: flex;
             @include child-indent-right($space-400);
-
             &-left,
             &-right {
                 @include child-indent-right($space-100);
             }
-
             &-left {
                 display: flex;
                 align-items: flex-end;
             }
         }
-
         &-bottom {
             display: flex;
             align-items: center;
             justify-content: space-between;
             @include child-indent-right($space-400);
-
             &-left {
                 > *:not(:first-child) {
                     margin-inline-start: $space-200;
                 }
             }
-
             &-right {
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;
                 @include child-indent-right($space-100);
             }
-
             .mc-button {
                 &--disabled {
                     opacity: 1;
                     background-color: fade-out($color-dark-gray, 0.8);
                     color: $color-dark-gray;
                     border-color: fade-out($color-dark-gray, 1);
-
                     .mc-button__background {
                         display: none;
                     }
                 }
             }
         }
-
         &-fast-tags-wrapper {
             margin: -($space-50);
-
             & > .mc-tooltip-target {
                 .mc-chip {
                     cursor: pointer;
                     margin: calc(#{$space-100} / 2) calc(#{$space-50} / 2);
-
                     &:hover {
                         background-color: $color-outline-gray;
                     }
@@ -849,12 +831,10 @@ export default {
             }
         }
     }
-
     &__main-select,
     &__preset-input {
         width: 270px;
     }
-
     &__preset-input-title {
         width: auto;
     }

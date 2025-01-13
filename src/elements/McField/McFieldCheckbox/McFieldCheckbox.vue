@@ -213,8 +213,8 @@ export default {
                         ? this.value.filter(v => v !== this.checkedValue)
                         : [...this.value, this.checkedValue]
                     : e.target.checked
-                        ? this.checkedValue
-                        : this.uncheckedValue,
+                    ? this.checkedValue
+                    : this.uncheckedValue,
             )
         },
     },

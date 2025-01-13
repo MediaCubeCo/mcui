@@ -9,7 +9,7 @@ import McTitle from '../../../elements/McTitle/McTitle'
 import McChip from '../../../elements/McChip/McChip'
 export default {
     name: 'McFilterChip',
-    components: {McChip, McTitle},
+    components: { McChip, McTitle },
     props: {
         /**
          *  Объект тэга

@@ -410,8 +410,8 @@ export default {
         computedOptions() {
             let options = !this.groupKeys
                 ? [...this.options, ...this.local_options].filter(
-                    (v, i, a) => a.findIndex(afi => afi.value === v.value) === i,
-                )
+                        (v, i, a) => a.findIndex(afi => afi.value === v.value) === i,
+                    )
                 : this.options
             if (this.searchValueInOptions && this.taggable) {
                 const search = this.searchValue
@@ -592,11 +592,11 @@ export default {
                 switch (openDirection) {
                     case 'top':
                         ref.$refs.list.style.top = `${top +
-                        (this.hasTitle ? title_height + title_margin : 0) +
-                        iosViewportIndent -
-                        ref.$refs.list.getBoundingClientRect().height -
-                        8}px`
-                        ref.$refs.list.style.bottom = 'auto'
+                            (this.hasTitle ? title_height + title_margin : 0) +
+                            iosViewportIndent -
+                            ref.$refs.list.getBoundingClientRect().height -
+                            8}px`
+                            ref.$refs.list.style.bottom = 'auto'
                         break
                     case 'bottom':
                         ref.$refs.list.style.bottom = 'auto'
@@ -859,7 +859,7 @@ export default {
             margin-top: $space-50;
             margin-bottom: $space-50;
             margin-right: unset;
-            background-color: var(--color-hover);
+            background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
             color: $color-black;
             padding: $size-50 $size-50 $size-50 $size-100;
             border-radius: 100px;
@@ -933,7 +933,7 @@ export default {
                 color: $color-black;
             }
             &--selected {
-                background-color: var(--color-hover) !important;
+                background-color: color-mix(in srgb, var(--color-main) 10%, transparent) !important;
                 color: $color-black !important;
                 font-weight: $font-weight-medium;
             }
