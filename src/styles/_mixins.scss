@@ -233,7 +233,7 @@
   }
 
   &:active {
-    color: color-mix(in srgb, var(#{$second-color}) 108%, transparent) if($is-important, !important, null);
+    filter: var(#{$second-color}) if($is-important, !important, null);
   }
 }
 
@@ -241,7 +241,7 @@
   @include default-link('--color-black', '--color-red');
 }
 @mixin text-link($is-important: false) {
-  @include default-link('--color-main', '--color-hover', $is-important);
+  @include default-link('--color-main', '--color-main-dark', $is-important);
 }
 @mixin close-link() {
   @include default-link('--color-gray', '--color-black');

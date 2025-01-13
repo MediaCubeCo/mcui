@@ -817,7 +817,7 @@ export default {
         }
         &:hover {
             color: var(--color-main);
-            background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
+            background-color: var(--color-main-10);
             border-radius: $radius-100;
         }
         &.today {
@@ -837,17 +837,17 @@ export default {
             }
         }
         &.hover-in-range {
-            background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
+            background-color: var(--color-main-10);
         }
         &.in-range {
-            background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
+            background-color: var(--color-main-10);
             color: $color-black;
             border-radius: 0;
 
             &:hover {
                 div {
                     color: var(--color-main);
-                    background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
+                    background-color: var(--color-main-10);
                     border-radius: $radius-100;
                 }
             }

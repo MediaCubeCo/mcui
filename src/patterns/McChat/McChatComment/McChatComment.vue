@@ -204,11 +204,11 @@ export default {
         color: $color-purple;
         &:hover,
         &:focus {
-            color: $color-hover-purple;
+            color: var(--color-main-dark);
         }
 
         &:active {
-            color: $color-hover-purple;
+            color: var(--color-main-dark);
         }
     }
 

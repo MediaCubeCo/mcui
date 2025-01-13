@@ -195,7 +195,7 @@ export default {
         }
         @at-root #{$block-name}--checked#{$block-name}--disabled#{$block-name}--colored-text {
             #{$block-name}__text {
-                color: var(--color-hover);
+                color: var(--color-main-light);
             }
         }
     }

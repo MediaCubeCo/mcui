@@ -290,7 +290,11 @@ pre {
   }
   // Default main project colors
   --color-main: $color-purple;
-  --color-hover: $color-light-purple;
+  --color-main-dark: $color-hover-purple;
+  --color-main-10: rgba($color-purple, 0.1);
+  --color-main-20: rgba($color-purple, 0.2);
+  --color-main-40: rgba($color-purple, 0.4);
+  --color-main-light: $color-light-purple;
   @each $name, $size in $token-icon-sizes {
     #{'--size-'}#{$name}: #{$size};
   }

@@ -280,7 +280,7 @@ export default {
         }
     }
     &.row--current {
-        background-color: color-mix(in srgb, var(--color-main) 10%, transparent) !important;
+        background-color: var(--color-main-10) !important;
         @include col-right-color($vxe-table-row-current-background-color);
     }
     // описка названия в библиотеке таблицы
