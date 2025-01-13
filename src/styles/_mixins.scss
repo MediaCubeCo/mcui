@@ -51,7 +51,7 @@
   position: $position;
 
   @each $offset, $value in $offsets {
-      #{$offset}: $value;
+    #{$offset}: $value;
   }
 }
 
@@ -225,26 +225,26 @@
   }
 }
 
-@mixin default-link($main-color: $color-black, $second-color: $color-purple, $is-important: false) {
-  color: $main-color if($is-important, !important, null);
+@mixin default-link($main-color: '--color-black', $second-color: ('--color-purple'), $is-important: false) {
+  color: var(#{$main-color}) if($is-important, !important, null);
   &:hover,
   &:focus {
-    color: $second-color if($is-important, !important, null);
+    color: var(#{$second-color}) if($is-important, !important, null);
   }
 
   &:active {
-    color: darken($second-color, 8%) if($is-important, !important, null);
+    color: color-mix(in srgb, var(#{$second-color}) 108%, transparent) if($is-important, !important, null);
   }
 }
 
 @mixin delete-link() {
-  @include default-link($color-black, $color-red);
+  @include default-link('--color-black', '--color-red');
 }
 @mixin text-link($is-important: false) {
-  @include default-link($color-purple, $color-hover-purple, $is-important);
+  @include default-link('--color-main', '--color-hover', $is-important);
 }
 @mixin close-link() {
-  @include default-link($color-gray, $color-black);
+  @include default-link('--color-gray', '--color-black');
 }
 
 @mixin field-error() {
@@ -430,7 +430,7 @@
     border-radius: $radius-200;
   }
   blockquote {
-    border-left: $space-50 solid $color-purple !important;
+    border-left: $space-50 solid var(--color-main) !important;
     margin: $space-zero;
     padding-left: $space-200;
   }
@@ -517,12 +517,12 @@
   }
 }
 
-@mixin animation-border-spinner($duration: 2s, $border-color: $color-purple, $border-size: $space-100) {
+@mixin animation-border-spinner($duration: 2s, $border-color: '--color-main', $border-size: $space-100) {
   background-repeat: no-repeat;
-  background-image: linear-gradient(to right, $border-color 100%, $border-color 100%),
-    linear-gradient(to bottom, $border-color 100%, $border-color 100%),
-    linear-gradient(to right, $border-color 100%, $border-color 100%),
-    linear-gradient(to bottom, $border-color 100%, $border-color 100%);
+  background-image: linear-gradient(to right, var(#{$border-color}) 100%, var(#{$border-color}) 100%),
+  linear-gradient(to bottom, var(#{$border-color}) 100%, var(#{$border-color}) 100%),
+  linear-gradient(to right, var(#{$border-color}) 100%, var(#{$border-color}) 100%),
+  linear-gradient(to bottom, var(#{$border-color}) 100%, var(#{$border-color}) 100%);
   background-position: 0 0, 100% 0, 100% 100%, 0 100%;
   background-size: 100% $border-size, $border-size 100%, 100% $border-size, $border-size 100%;
   animation: spin-border $duration linear;

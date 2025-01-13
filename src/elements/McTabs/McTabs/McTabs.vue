@@ -99,7 +99,7 @@ export default {
          */
         accentColor: {
             type: String,
-            default: 'purple',
+            default: 'main',
         },
         /**
          *  Заглавные буквы

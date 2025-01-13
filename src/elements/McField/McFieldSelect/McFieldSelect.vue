@@ -410,8 +410,8 @@ export default {
         computedOptions() {
             let options = !this.groupKeys
                 ? [...this.options, ...this.local_options].filter(
-                      (v, i, a) => a.findIndex(afi => afi.value === v.value) === i,
-                  )
+                    (v, i, a) => a.findIndex(afi => afi.value === v.value) === i,
+                )
                 : this.options
             if (this.searchValueInOptions && this.taggable) {
                 const search = this.searchValue
@@ -451,7 +451,7 @@ export default {
             let backgroundColor = this.backgroundColor
             let labelColor
             if (!this.backgroundColor || lightColors.includes(this.backgroundColor)) {
-                borderColor = 'purple'
+                borderColor = 'main'
             }
             if (darkColors.includes(this.backgroundColor)) {
                 labelColor = 'white'
@@ -592,10 +592,10 @@ export default {
                 switch (openDirection) {
                     case 'top':
                         ref.$refs.list.style.top = `${top +
-                            (this.hasTitle ? title_height + title_margin : 0) +
-                            iosViewportIndent -
-                            ref.$refs.list.getBoundingClientRect().height -
-                            8}px`
+                        (this.hasTitle ? title_height + title_margin : 0) +
+                        iosViewportIndent -
+                        ref.$refs.list.getBoundingClientRect().height -
+                        8}px`
                         ref.$refs.list.style.bottom = 'auto'
                         break
                     case 'bottom':
@@ -825,7 +825,7 @@ export default {
             overflow: hidden;
             text-align: start;
             &:hover {
-                border-color: $color-purple;
+                border-color: var(--color-main);
             }
             &:before {
                 content: '';
@@ -859,7 +859,7 @@ export default {
             margin-top: $space-50;
             margin-bottom: $space-50;
             margin-right: unset;
-            background-color: $color-lighter-purple;
+            background-color: var(--color-hover);
             color: $color-black;
             padding: $size-50 $size-50 $size-50 $size-100;
             border-radius: 100px;
@@ -876,7 +876,7 @@ export default {
         &__tag-icon {
             @include size($size-200);
             position: relative;
-            background-color: $color-purple;
+            background-color: var(--color-main);
             border-radius: $radius-circle;
             flex: 0 0 auto;
             margin-inline-start: $space-100;
@@ -933,7 +933,7 @@ export default {
                 color: $color-black;
             }
             &--selected {
-                background-color: $color-lighter-purple !important;
+                background-color: var(--color-hover) !important;
                 color: $color-black !important;
                 font-weight: $font-weight-medium;
             }
@@ -953,7 +953,7 @@ export default {
                 }
                 &__select {
                     &::before {
-                        border-color: $color-purple $color-transparent $color-transparent;
+                        border-color: var(--color-main) $color-transparent $color-transparent;
                     }
                 }
             }
@@ -961,7 +961,7 @@ export default {
         &__spinner {
             &:after,
             &:before {
-                border-top-color: $color-purple;
+                border-top-color: var(--color-main);
                 @include size($space-300);
                 top: calc(50% - 5px);
                 left: calc(50% - 2px);

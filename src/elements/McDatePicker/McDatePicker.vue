@@ -56,7 +56,7 @@
                                             v-for="preset in customPresets"
                                             :key="preset.title"
                                             variation="black-link"
-                                            secondary-color="purple"
+                                            secondary-color="main"
                                             @click="handlerPreselectRange(preset.period)"
                                         >
                                             {{ preset.title }}
@@ -66,7 +66,7 @@
                                         <mc-button
                                             v-if="placeholders.week"
                                             variation="black-link"
-                                            secondary-color="purple"
+                                            secondary-color="main"
                                             @click="selectPeriod('week')"
                                         >
                                             {{ placeholders.week }}
@@ -74,7 +74,7 @@
                                         <mc-button
                                             v-if="placeholders.month"
                                             variation="black-link"
-                                            secondary-color="purple"
+                                            secondary-color="main"
                                             @click="selectPeriod('month')"
                                         >
                                             {{ placeholders.month }}
@@ -82,7 +82,7 @@
                                         <mc-button
                                             v-if="placeholders.quarter"
                                             variation="black-link"
-                                            secondary-color="purple"
+                                            secondary-color="main"
                                             @click="selectPeriod('quarter')"
                                         >
                                             {{ placeholders.quarter }}
@@ -90,7 +90,7 @@
                                         <mc-button
                                             v-if="placeholders.year"
                                             variation="black-link"
-                                            secondary-color="purple"
+                                            secondary-color="main"
                                             @click="selectPeriod('year')"
                                         >
                                             {{ placeholders.year }}
@@ -99,7 +99,7 @@
                                 </div>
                                 <mc-button
                                     v-if="placeholders.confirm"
-                                    variation="purple-outline"
+                                    variation="main-outline"
                                     size="xs"
                                     @click="() => handleSubmit(emit)"
                                 >
@@ -635,7 +635,7 @@ export default {
         color: $color-black;
         &:hover,
         &:focus {
-            border-color: $color-purple;
+            border-color: var(--color-main);
         }
         &::placeholder {
             color: $color-gray;
@@ -762,7 +762,7 @@ export default {
             .mx-btn-text {
                 color: $color-black;
                 &:hover {
-                    color: $color-purple;
+                    color: var(--color-main);
                 }
             }
             .mx-icon {
@@ -816,19 +816,19 @@ export default {
             border-radius: $radius-100;
         }
         &:hover {
-            color: $color-purple;
-            background-color: fade-out($color-purple, 0.9);
+            color: var(--color-main);
+            background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
             border-radius: $radius-100;
         }
         &.today {
-            color: $color-purple;
+            color: var(--color-main);
         }
         &.active {
             color: $color-white;
             background-color: $color-white;
 
             div {
-                background-color: $color-purple;
+                background-color: var(--color-main);
                 height: 100%;
                 display: flex;
                 align-items: center;
@@ -837,17 +837,17 @@ export default {
             }
         }
         &.hover-in-range {
-            background-color: rgba($color-purple, 0.1);
+            background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
         }
         &.in-range {
-            background-color: rgba($color-purple, 0.1);
+            background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
             color: $color-black;
             border-radius: 0;
 
             &:hover {
                 div {
-                    color: $color-purple;
-                    background-color: fade-out($color-purple, 0.9);
+                    color: var(--color-main);
+                    background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
                     border-radius: $radius-100;
                 }
             }
@@ -870,7 +870,7 @@ export default {
             border-radius: 0;
             background-color: $color-hover-gray;
             &.today {
-                color: $color-purple;
+                color: var(--color-main);
             }
         }
     }

@@ -114,7 +114,7 @@ export default {
          */
         variation: {
             type: String,
-            default: 'purple',
+            default: 'main',
         },
         /**
          *  Размеры:
@@ -765,7 +765,7 @@ export default {
 
     &--is-active,
     &.nuxt-link-active {
-        color: $color-purple;
+        color: var(--color-main);
         background-color: transparent;
         border-color: transparent;
         pointer-events: none;

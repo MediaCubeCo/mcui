@@ -92,7 +92,7 @@ export default {
          */
         color: {
             type: String,
-            default: 'purple',
+            default: 'main',
         },
         iconSize: {
             type: String,

@@ -612,7 +612,7 @@ export default {
         }
     }
     .vxe-body--row.row--cheched {
-        background-color: rgba($color-purple, 0.05);
+        background-color: color-mix(in srgb, var(--color-main) 5%, transparent);
     }
     .fixed-left--wrapper {
         scrollbar-width: none;
@@ -726,14 +726,14 @@ export default {
         z-index: 1;
         &:hover {
             .vxe-checkbox--icon::before {
-                border-color: $color-purple !important;
+                border-color: var(--color-main) !important;
             }
         }
         &.is--checked,
         &.is--indeterminate {
             .vxe-checkbox--icon::before {
-                border-color: $color-purple;
-                background-color: $color-purple;
+                border-color: var(--color-main);
+                background-color: var(--color-main);
             }
         }
     }

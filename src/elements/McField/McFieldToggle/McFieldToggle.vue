@@ -77,7 +77,7 @@ export default {
          */
         color: {
             type: String,
-            default: 'purple',
+            default: 'main',
         },
 
         /**
@@ -114,8 +114,8 @@ export default {
             let disabledColor
             let saturateValue
             switch (this.color) {
-                case 'purple': {
-                    disabledColor = 'light-purple'
+                case 'main': {
+                    disabledColor = 'hover'
                     break
                 }
                 default: {
@@ -185,7 +185,7 @@ export default {
 
         @at-root #{$block-name}--checked#{$block-name}--colored-text {
             #{$block-name}__text {
-                color: $color-purple;
+                color: var(--color-main);
             }
         }
         @at-root #{$block-name}--disabled#{$block-name}--colored-text {
@@ -195,7 +195,7 @@ export default {
         }
         @at-root #{$block-name}--checked#{$block-name}--disabled#{$block-name}--colored-text {
             #{$block-name}__text {
-                color: $color-light-purple;
+                color: var(--color-hover);
             }
         }
     }
@@ -221,7 +221,7 @@ export default {
             @include size(0);
 
             &:checked + #{$block-name}__slider {
-                background-color: $color-purple;
+                background-color: var(--color-main);
 
                 &:before {
                     inset-inline-start: calc(#{$space-300} + #{$toggle-indent});

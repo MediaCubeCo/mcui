@@ -122,19 +122,19 @@ a {
 }
 
 ::selection {
-  background: fade-out($color-purple, 0);
+  background: var(--color-main);
   color: $color-white;
 }
 
 ::-moz-selection {
-  background: fade-out($color-purple, 0);
+  background: var(--color-main);
   color: $color-white;
 }
 
 input,
 textarea,
 [contenteditable] {
-  caret-color: $color-purple;
+  caret-color: var(--color-main);
 }
 
 button {
@@ -288,6 +288,9 @@ pre {
   @each $name, $color in $token-colors {
     #{'--color-'}#{$name}: #{$color};
   }
+  // Default main project colors
+  --color-main: $color-purple;
+  --color-hover: $color-light-purple;
   @each $name, $size in $token-icon-sizes {
     #{'--size-'}#{$name}: #{$size};
   }

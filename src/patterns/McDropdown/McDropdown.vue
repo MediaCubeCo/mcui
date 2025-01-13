@@ -182,7 +182,7 @@ export default {
                     .mc-button__background {
                         opacity: 0 !important;
                     }
-                    background-color: fade-out($color-purple, 0.9);
+                    background-color: color-mix(in srgb, var(--color-main) 10%, transparent);
                 }
             }
         }

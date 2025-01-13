@@ -29,9 +29,9 @@
                     />{{
                         $attrs.type === 'seq' ? '#' : column.title
                     }}<div slot="icon-append" class="mc-table-col__header-append">
-                        <!-- @slot Слот для вставки в конец после заголовка столбца -->
-                        <slot name="header-append" />
-                    </div>
+                    <!-- @slot Слот для вставки в конец после заголовка столбца -->
+                    <slot name="header-append" />
+                </div>
                 </mc-title>
                 <div v-if="$scopedSlots['header-right'] || headerRight" class="mc-table-col__header-right">
                     <!-- @slot Слот справа в ячейке хедера (абсолютно спозиционированный, с бэкграундом) -->
@@ -196,23 +196,28 @@ export default {
 @mixin col-right-color($color) {
     .mc-table-col__right {
         background-color: $color;
+
         &::before {
             background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, $color);
         }
     }
 }
+
 .mc-table-col {
     $block-name: &;
 
     &--border-right {
         border-inline-end: 1px solid $color-hover-gray;
     }
+
     &--border-top {
         border-top: 1px solid $color-hover-gray;
     }
+
     &--border-bottom {
         border-bottom: 1px solid $color-hover-gray;
     }
+
     &--overflow-visible {
         .vxe-cell {
             overflow: visible !important;
@@ -228,10 +233,12 @@ export default {
         width: auto;
         max-width: 101%;
     }
+
     &__header-append {
         display: flex;
         align-items: center;
     }
+
     &__right {
         display: flex;
         opacity: 0;
@@ -249,6 +256,7 @@ export default {
             background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, $color-white);
         }
     }
+
     &__header-right {
         @extend .mc-table-col__right;
         display: flex;
@@ -261,14 +269,17 @@ export default {
     &--title {
         font-weight: $font-weight-semi-bold;
     }
+
     &.c--tooltip,
     &.c--title {
         text-overflow: clip !important;
         white-space: normal !important;
     }
 }
+
 .vxe-body--row {
     transition: background-color 0s;
+
     &.row--stripe {
         @include col-right-color($vxe-table-row-striped-background-color);
     }
@@ -282,9 +293,12 @@ export default {
             @include col-right-color($vxe-table-row-hover-current-background-color);
         }
     }
+
     &.row--current {
+        background-color: color-mix(in srgb, var(--color-main) 10%, transparent) !important;
         @include col-right-color($vxe-table-row-current-background-color);
     }
+
     // описка названия в библиотеке таблицы
     &.row--cheched {
         @include col-right-color($vxe-table-row-cheched-background-color);

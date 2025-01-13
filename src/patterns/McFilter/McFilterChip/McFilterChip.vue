@@ -9,7 +9,7 @@ import McTitle from '../../../elements/McTitle/McTitle'
 import McChip from '../../../elements/McChip/McChip'
 export default {
     name: 'McFilterChip',
-    components: { McChip, McTitle },
+    components: {McChip, McTitle},
     props: {
         /**
          *  Объект тэга
@@ -39,7 +39,7 @@ export default {
             return `${this.tag.categoryName}${append}`
         },
         computedVariation() {
-            return this.closable ? 'purple-invert' : 'hover-gray'
+            return this.closable ? 'main-invert' : 'hover-gray'
         },
         classes() {
             return {
@@ -67,13 +67,15 @@ export default {
 
     &--closable {
         border-radius: $space-150;
+
         &:hover {
             cursor: pointer;
-            background-color: fade-out($color-purple, 0.6);
+            background-color: color-mix(in srgb, var(--color-main) 40%, transparent);
         }
     }
+
     &--is-active {
-        background-color: fade-out($color-purple, 0.6);
+        background-color: color-mix(in srgb, var(--color-main) 40%, transparent);
     }
 
     .mc-title {

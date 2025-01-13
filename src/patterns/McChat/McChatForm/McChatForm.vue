@@ -19,7 +19,7 @@
                     <mc-button
                         slot="append"
                         class="mc-chat-form__btn"
-                        variation="purple-link"
+                        variation="main-link"
                         size="m-compact"
                         type="submit"
                         rounded

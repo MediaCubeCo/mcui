@@ -63,7 +63,7 @@ export default {
          */
         variation: {
             type: String,
-            default: 'purple',
+            default: 'main',
         },
         /**
          * Заголовок блока
