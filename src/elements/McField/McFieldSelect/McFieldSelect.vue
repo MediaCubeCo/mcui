@@ -859,7 +859,7 @@ export default {
             margin-top: $space-50;
             margin-bottom: $space-50;
             margin-right: unset;
-            background-color: var(--color-main-10);
+            background-color: var(--color-main-lighter);
             color: $color-black;
             padding: $size-50 $size-50 $size-50 $size-100;
             border-radius: 100px;
@@ -933,7 +933,7 @@ export default {
                 color: $color-black;
             }
             &--selected {
-                background-color: var(--color-main-10) !important;
+                background-color: var(--color-main-lighter) !important;
                 color: $color-black !important;
                 font-weight: $font-weight-medium;
             }

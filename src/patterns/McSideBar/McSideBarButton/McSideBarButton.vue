@@ -212,7 +212,7 @@ export default {
             @include size($size-300);
         }
         &.main-hover:hover {
-            background-color: var(--color-main-10);
+            background-color: var(--color-main-lighter);
         }
 
         .mc-button__text {
@@ -244,7 +244,7 @@ export default {
         &.mc-button--is-active,
         &.mc-button.nuxt-link-active {
             color: var(--color-main);
-            background-color: var(--color-main-10);
+            background-color: var(--color-main-lighter);
             pointer-events: auto;
         }
     }

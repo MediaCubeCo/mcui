@@ -295,6 +295,7 @@ pre {
   --color-main-20: rgba($color-purple, 0.2);
   --color-main-40: rgba($color-purple, 0.4);
   --color-main-light: $color-light-purple;
+  --color-main-lighter: $color-lighter-purple;
   @each $name, $size in $token-icon-sizes {
     #{'--size-'}#{$name}: #{$size};
   }
