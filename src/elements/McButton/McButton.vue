@@ -308,9 +308,10 @@ export default {
         /**
          * Так как сейчас мы используем светлую тему, то проверяем контраст цвета на основе белого
          * Проверяем только для main цветов, так как остальные должны подходить по стандарту
-         * TODO: сделать проверку контраста для темных тем
+         * TODO: сделать проверку контраста для темных тем + убрать проверку на process.client
          * */
         isContrast() {
+            if (!process.client) return
             let [color] = this.variation.split('-') || []
             return color.includes('main') && checkContrastColor(color, [255, 255, 255])
         },
