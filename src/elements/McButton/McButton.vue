@@ -710,21 +710,21 @@ export default {
                 }
             }
             // TODO check contast colors
-            &#{$block-name}--contrast {
-                #{$block-name} {
-                    &__background {
-                        opacity: 0.4 !important;
-                    }
-                }
-            }
+            //&#{$block-name}--contrast {
+            //    #{$block-name} {
+            //        &__background {
+            //            opacity: 0.4 !important;
+            //        }
+            //    }
+            //}
             @include hoverMixin {
                 opacity: 0.2 !important;
             }
-            &#{$block-name}--contrast {
-                @include hoverMixin {
-                    opacity: 0.6 !important;
-                }
-            }
+            //&#{$block-name}--contrast {
+            //    @include hoverMixin {
+            //        opacity: 0.6 !important;
+            //    }
+            //}
         }
         &-flat {
             color: var(--mc-button-background-color);
