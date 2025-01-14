@@ -26,9 +26,8 @@
                         :name="getSortIcon(column)"
                         :color="getSortColor(column)"
                         size="200"
-                    />{{
-                        $attrs.type === 'seq' ? '#' : column.title
-                    }}<div slot="icon-append" class="mc-table-col__header-append">
+                    />{{ $attrs.type === 'seq' ? '#' : column.title }}
+                    <div slot="icon-append" class="mc-table-col__header-append">
                         <!-- @slot Слот для вставки в конец после заголовка столбца -->
                         <slot name="header-append" />
                     </div>
@@ -201,9 +200,9 @@ export default {
         }
     }
 }
+
 .mc-table-col {
     $block-name: &;
-
     &--border-right {
         border-inline-end: 1px solid $color-hover-gray;
     }
@@ -218,12 +217,10 @@ export default {
             overflow: visible !important;
         }
     }
-
     &__total {
         margin-inline-start: auto;
         color: $color-gray;
     }
-
     &__title {
         width: auto;
         max-width: 101%;
@@ -241,7 +238,6 @@ export default {
         @include position(absolute, 0 $space-200 0 null);
         @include child-indent-right($space-50);
         background-color: $color-white;
-
         &::before {
             @include pseudo();
             @include position(null, 0 100% 0 null);
@@ -267,6 +263,7 @@ export default {
         white-space: normal !important;
     }
 }
+
 .vxe-body--row {
     transition: background-color 0s;
     &.row--stripe {
@@ -283,6 +280,7 @@ export default {
         }
     }
     &.row--current {
+        background-color: var(--color-main-alpha-10) !important;
         @include col-right-color($vxe-table-row-current-background-color);
     }
     // описка названия в библиотеке таблицы

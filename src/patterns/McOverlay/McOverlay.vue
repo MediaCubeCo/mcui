@@ -55,7 +55,7 @@ export default {
     }
     &__spinner {
         display: block;
-        border: 2px solid $color-purple;
+        border: 2px solid var(--color-main);
         border-inline-start-color: transparent;
         border-radius: 50%;
         animation: rotate 1.5s infinite linear;

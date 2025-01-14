@@ -149,7 +149,7 @@ export default {
 @import '../../tokens/box-shadows';
 .mc-range-slider {
     $block-name: &;
-    --mc-range-slider-color: #{$color-purple};
+    --mc-range-slider-color: var(--color-main);
 
     .vue-slider-dot-tooltip-inner {
         line-height: $line-height-200;

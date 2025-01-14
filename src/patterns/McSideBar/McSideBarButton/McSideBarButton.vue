@@ -23,7 +23,7 @@
                 <mc-chip
                     v-if="info || withIndicator"
                     slot="icon-append"
-                    variation="purple"
+                    variation="main"
                     class="mc-side-bar-button__chip"
                     :class="{ indicator: withIndicator }"
                 >
@@ -159,7 +159,7 @@ export default {
             return {
                 'mc-side-bar-button': true,
                 [`mc-side-bar--${this.themeConfig.mode || 'black'}__button`]: true,
-                'purple-hover': !this.secondaryColor && this.themeConfig.mainMenuLinks.variable === 'black-flat',
+                'main-hover': !this.secondaryColor && this.themeConfig.mainMenuLinks.variable === 'black-flat',
             }
         },
         btnAttrs() {
@@ -191,7 +191,7 @@ export default {
     &__dot {
         @include position(absolute, $space-100 6px null null);
         @include size($size-100);
-        background-color: $color-purple;
+        background-color: var(--color-main);
         border-radius: $radius-circle;
     }
     &__chip {
@@ -211,8 +211,8 @@ export default {
         .mc-svg-icon {
             @include size($size-300);
         }
-        &.purple-hover:hover {
-            background-color: $color-lighter-purple;
+        &.main-hover:hover {
+            background-color: var(--color-main-lighter);
         }
 
         .mc-button__text {
@@ -243,8 +243,8 @@ export default {
     &--white__button {
         &.mc-button--is-active,
         &.mc-button.nuxt-link-active {
-            color: $color-purple;
-            background-color: $color-lighter-purple;
+            color: var(--color-main);
+            background-color: var(--color-main-lighter);
             pointer-events: auto;
         }
     }

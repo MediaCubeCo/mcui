@@ -114,7 +114,7 @@ export const Default = () => ({
             <mc-tab
                 name="with counter"
                 :append-count="5"
-                append-count-color="purple"
+                append-count-color="main"
             >
                 Этот контент мы не увидим
             </mc-tab>
