@@ -35,6 +35,7 @@
 <script>
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
 import { VTooltip } from 'v-tooltip'
+import { checkContrastColor } from '../../utils/checkColor'
 
 VTooltip.options.defaultBoundariesElement = 'window'
 export default {
@@ -272,6 +273,7 @@ export default {
                 'mc-button--disabled': this.disabled,
                 'mc-button--rounded': this.rounded && /-compact$/.test(this.size),
                 'mc-button--semi-rounded': this.semiRounded,
+                'mc-button--contrast': this.isContrast,
                 'mc-button--full-width': this.fullWidth,
                 'mc-button--uppercase': this.uppercase,
                 'mc-button--shadow': this.shadow,
@@ -288,12 +290,11 @@ export default {
             const currentStyle = texts[texts.length - 1]
             let color = variation.replace(`-${currentStyle}`, '')
             switch (currentStyle) {
-                case 'link':
                 case 'flat':
                 case 'outline':
-                case 'invert': {
+                case 'invert':
+                case 'link':
                     break
-                }
                 default: {
                     color = variation
                     break
@@ -304,16 +305,28 @@ export default {
                 type: currentStyle,
             }
         },
+        /**
+         * Так как сейчас мы используем светлую тему, то проверяем контраст цвета на основе белого
+         * Проверяем только для main цветов, так как остальные должны подходить по стандарту
+         * TODO: сделать проверку контраста для темных тем
+         * */
+        isContrast() {
+            let [color] = this.variation.split('-') || []
+            return color.includes('main') && checkContrastColor(color, [255, 255, 255])
+        },
         styles() {
             let hoverBrightness
             let textColor
             switch (this.buttonVariation.type) {
-                case 'link':
                 case 'flat':
                 case 'outline':
                 case 'invert': {
+                    if (this.isContrast) textColor = 'black'
                     break
                 }
+                case 'link':
+                    textColor = this.buttonVariation.color
+                    break
                 default: {
                     switch (this.buttonVariation.color) {
                         case 'yellow':
@@ -325,7 +338,7 @@ export default {
                             break
                         }
                         default: {
-                            textColor = 'white'
+                            textColor = this.isContrast ? 'black' : 'white'
                         }
                     }
                     break
@@ -467,7 +480,18 @@ export default {
         align-items: center;
         z-index: 1;
     }
-
+    &--contrast {
+        color: var(--mc-button-text-color) !important;
+        #{$block-name} {
+            &--is-active,
+            &.nuxt-link-active {
+                color: var(--color-main-dark);
+                background-color: transparent;
+                border-color: transparent;
+                pointer-events: none;
+            }
+        }
+    }
     &__text {
         @include ellipsis($display: inline-block);
         @include layout-flex-fix();
@@ -685,8 +709,20 @@ export default {
                     opacity: 0.1 !important;
                 }
             }
+            &#{$block-name}--contrast {
+                #{$block-name} {
+                    &__background {
+                        opacity: 0.4 !important;
+                    }
+                }
+            }
             @include hoverMixin {
                 opacity: 0.2 !important;
+            }
+            &#{$block-name}--contrast {
+                @include hoverMixin {
+                    opacity: 0.6 !important;
+                }
             }
         }
         &-flat {
@@ -706,6 +742,9 @@ export default {
             user-select: text;
             &#{$block-name}--size-l {
                 line-height: $line-height-250;
+            }
+            &#{$block-name}--contrast {
+                filter:  brightness(80%);
             }
             &#{$block-name} {
                 &--disabled {

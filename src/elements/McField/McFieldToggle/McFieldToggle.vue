@@ -115,7 +115,7 @@ export default {
             let saturateValue
             switch (this.color) {
                 case 'main': {
-                    disabledColor = 'hover'
+                    disabledColor = 'main-light'
                     break
                 }
                 default: {
