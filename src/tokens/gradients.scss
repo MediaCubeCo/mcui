@@ -3,17 +3,17 @@
   * @presenter Gradient
   */
 $gradient-pink: linear-gradient(180deg, #F5576C 0%, #F093FB 100%); /* Фирменный цвет личного кабинета */
-$gradient-violet: linear-gradient(180deg, #E41AFE 0%, #8035F8 100%); /* Столбики в графике 5 порядка */
+$gradient-violet: linear-gradient(180deg, #E41AFE 0%, var(--color-main-dark) 100%); /* Столбики в графике 5 порядка */
 $gradient-blue: linear-gradient(180deg, #1ADBFE 0%, #3580F8 100%); /* Нотификации и столбики в графике 4 порядка */
 $gradient-yellow: linear-gradient(180deg, #FEE41A 0%, #F89B35 100%); /* Столбики в графике 3 порядка */
 $gradient-green: linear-gradient(180deg, #C9DD4C 0%, #63BE7E 100%); /* Столбики в графике 2 порядка */
 $gradient-red: linear-gradient(180deg, #F26567 0%, #F79440 100%); /* Столбики в графике 1 порядка */
-$gradient-purple: linear-gradient(270deg, #9a47ed 0%, #8446ff 100%); /* Основной градиент для MCPay */
-$gradient-purple-pink: linear-gradient(90deg, #722eff 2%, #fe6ffc 100%); /*Градиент промоакции*/
-$gradient-blue-purple: linear-gradient(90deg, #18bfe3 20%, #8756ff 70%); /*Градиент промоакции*/
-$gradient-dark-blue: linear-gradient(90deg, #5550EF 0%, #7F4EFF 100%); /*Градиент автоплатежей*/
+$gradient-purple: linear-gradient(270deg, var(--color-main-dark) 0%, var(--color-main) 100%); /* Основной градиент для MCPay */
+$gradient-purple-pink: linear-gradient(90deg, var(--color-main) 2%, #fe6ffc 100%); /*Градиент промоакции*/
+$gradient-blue-purple: linear-gradient(90deg, #18bfe3 20%, var(--color-main) 70%); /*Градиент промоакции*/
+$gradient-dark-blue: linear-gradient(90deg, #5550EF 0%, var(--color-main) 100%); /*Градиент автоплатежей*/
 $gradient-light-blue: linear-gradient(277.29deg, #d6e8ff 5.67%, #efe9ff 94.33%); /*Градиент новых криптовалют*/
-$gradient-purple-blue: linear-gradient(272.54deg, #18bfe3 17.19%, #8756ff 70.31%); /*Градиент баннера для криптовалют*/
+$gradient-purple-blue: linear-gradient(272.54deg, #18bfe3 17.19%, var(--color-main) 70.31%); /*Градиент баннера для криптовалют*/
 
 $gradient-primary-radial: radial-gradient(rgb(179, 211, 255), rgb(62, 132, 244)); /* Radial gradient example */
 
