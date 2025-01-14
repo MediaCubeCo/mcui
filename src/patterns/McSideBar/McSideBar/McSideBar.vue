@@ -275,11 +275,11 @@ export default {
                     dropdownActivator: 'black',
                     mainMenuLinks: {
                         variable: 'black-flat',
-                        secondaryColor: 'purple',
+                        secondaryColor: 'main',
                     },
                     closeButton: {
                         variable: 'black-link',
-                        secondaryColor: 'purple',
+                        secondaryColor: 'main',
                     },
                 },
             }

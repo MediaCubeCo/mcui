@@ -19,7 +19,7 @@
                         :key="preset.name"
                         :variation="getPresetButtonVariation(preset)"
                         :tooltip="preset.tooltip"
-                        secondary-color="purple"
+                        secondary-color="main"
                         @mouseup="() => handlePresetMouseUp(preset)"
                     >
                         {{ preset.visibleName }}
@@ -50,7 +50,7 @@
                                 :use-timezone="useTimezone"
                                 @input="handleConditionChange"
                             />
-                            <mc-button v-if="hasButtonAdd" variation="purple-outline" @click.native="handleStoreTag">
+                            <mc-button v-if="hasButtonAdd" variation="main-outline" @click.native="handleStoreTag">
                                 {{ placeholders.actions[activeTag ? 'save' : 'add'] }}
                             </mc-button>
                         </template>
@@ -129,7 +129,7 @@
                         />
                         <mc-button
                             :disabled="buttonCreateIsDisable"
-                            variation="purple-outline"
+                            variation="main-outline"
                             size="s"
                             @click.native="handleCreatePreset"
                         >
@@ -197,20 +197,20 @@ export default {
             required: true,
         },
         /**
-       *  Типы фильтров
-       *
-       *  [{
-                name: Filter title,
-                value: [String] - Filter value(key),
-                type: [String] - Filter type(relation / date / text / fast / labels / simple),
-                options: [Array] - Filter options,
-                getAjaxOne: [Function] - Method for get selected options when filter initialize,
-                getAjaxOptions: [Function] - Method for get options by API,
-                [relation]: [String] - Filter relation, only for fast filter,
-                [default]: [String, Number, Boolean] - Only for fast filter type. Fast filter haven't options, we set default value
-                [description]: [String] - Only for fast filter type. Description of fast filter
+         *  Типы фильтров
+         *
+         *  [{
+                 name: Filter title,
+                 value: [String] - Filter value(key),
+                 type: [String] - Filter type(relation / date / text / fast / labels / simple),
+                 options: [Array] - Filter options,
+                 getAjaxOne: [Function] - Method for get selected options when filter initialize,
+                 getAjaxOptions: [Function] - Method for get options by API,
+                 [relation]: [String] - Filter relation, only for fast filter,
+                 [default]: [String, Number, Boolean] - Only for fast filter type. Fast filter haven't options, we set default value
+                 [description]: [String] - Only for fast filter type. Description of fast filter
             }, ...]
-       */
+         */
         filters: {
             type: Array,
             required: true,
@@ -324,7 +324,7 @@ export default {
             return this.filters.filter(f => f.type !== 'fast')
         },
         visibilityToggleVariation() {
-            return this.isOpen || !this.buttonConfirmIsDisable ? 'purple-invert' : 'black-flat'
+            return this.isOpen || !this.buttonConfirmIsDisable ? 'main-invert' : 'black-flat'
         },
         currentFilter() {
             return this.filters.find(f => f.value === this.selectedOptionFilter)
@@ -732,7 +732,7 @@ export default {
             this.activePreset = { ...preset }
         },
         getPresetButtonVariation(preset) {
-            return this.activePreset && this.activePreset.name === preset.name ? 'purple-invert' : 'gray-outline'
+            return this.activePreset && this.activePreset.name === preset.name ? 'main-invert' : 'gray-outline'
         },
     },
 }
@@ -751,7 +751,6 @@ export default {
         display: flex;
         @include child-indent-right($space-100);
     }
-
     &__presets {
         position: relative;
         flex-grow: 1;
@@ -763,7 +762,6 @@ export default {
             background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, $color-white);
             pointer-events: none;
         }
-
         &-inner {
             display: flex;
             flex-wrap: nowrap;
@@ -776,7 +774,6 @@ export default {
             }
         }
     }
-
     &__body {
         padding: $space-200 $space-200 $space-300 $space-200;
         background-color: $color-hover-gray;
@@ -784,7 +781,6 @@ export default {
         &-top {
             display: flex;
             @include child-indent-right($space-400);
-
             &-left,
             &-right {
                 @include child-indent-right($space-100);
@@ -799,7 +795,6 @@ export default {
             align-items: center;
             justify-content: space-between;
             @include child-indent-right($space-400);
-
             &-left {
                 > *:not(:first-child) {
                     margin-inline-start: $space-200;

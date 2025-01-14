@@ -11,7 +11,7 @@
                 <mc-svg-icon
                     class="mc-field-checkbox__icon"
                     :name="isChecked ? 'checkbox--checked' : 'checkbox'"
-                    :color="isChecked ? 'purple' : 'gray'"
+                    :color="isChecked ? 'main' : 'gray'"
                     :size="checkboxSize"
                 />
                 <input v-bind="inputProps" @change="handleChange" />
@@ -258,7 +258,7 @@ export default {
     &__icon {
         z-index: 1;
         &:hover {
-            color: $color-purple;
+            color: var(--color-main);
         }
     }
 

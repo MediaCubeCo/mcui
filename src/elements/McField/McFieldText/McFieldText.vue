@@ -879,7 +879,7 @@ export default {
         &:focus,
         &:hover {
             outline: 0;
-            border-color: $color-purple;
+            border-color: var(--color-main);
         }
 
         &::-webkit-search-cancel-button,

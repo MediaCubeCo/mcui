@@ -3,7 +3,7 @@
         <div class="mc-table-card-header__left">
             <!-- @slot Слот контента -->
             <slot>
-                <mc-button :to="backTo" exact variation="purple-link" size="xs">
+                <mc-button :to="backTo" exact variation="main-link" size="xs">
                     <mc-svg-icon slot="icon-prepend" name="keyboard_arrow_left" />
                     {{ buttonBackText }}
                 </mc-button>
