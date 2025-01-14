@@ -34,5 +34,5 @@ export function checkContrastColor(colorName, bgColor) {
         return (brightest + 0.05) / (darkest + 0.05)
     }
     const color = getComputedStyle(document.querySelector(':root')).getPropertyValue(`--color-${colorName}`)
-    return contrast(hexToRGB(color, null, true), bgColor) < 3
+    return contrast(hexToRGB(color, null, true), bgColor) < 4
 }
