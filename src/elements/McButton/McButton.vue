@@ -311,6 +311,7 @@ export default {
          * TODO: сделать проверку контраста для темных тем
          * */
         isContrast() {
+            if (!process.client) return
             let [color] = this.variation.split('-') || []
             return color.includes('main') && checkContrastColor(color, [255, 255, 255])
         },
