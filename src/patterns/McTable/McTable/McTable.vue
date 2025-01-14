@@ -612,7 +612,7 @@ export default {
         }
     }
     .vxe-body--row.row--cheched {
-        background-color: var(--color-main-10);
+        background-color: var(--color-main-alpha-10);
     }
     .fixed-left--wrapper {
         scrollbar-width: none;

@@ -182,7 +182,7 @@ export default {
                     .mc-button__background {
                         opacity: 0 !important;
                     }
-                    background-color: var(--color-main-10);
+                    background-color: var(--color-main-alpha-10);
                 }
             }
         }

@@ -70,12 +70,12 @@ export default {
 
         &:hover {
             cursor: pointer;
-            background-color: var(--color-main-40);
+            background-color: var(--color-main-alpha-40);
         }
     }
 
     &--is-active {
-        background-color: var(--color-main-40);
+        background-color: var(--color-main-alpha-40);
     }
 
     .mc-title {

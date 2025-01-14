@@ -709,6 +709,7 @@ export default {
                     opacity: 0.1 !important;
                 }
             }
+            // TODO check contast colors
             &#{$block-name}--contrast {
                 #{$block-name} {
                     &__background {
