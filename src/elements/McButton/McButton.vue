@@ -421,7 +421,6 @@ export default {
 @import '../../tokens/font-families';
 @import '../../tokens/letter-spacings';
 @import '../../tokens/animations';
-
 .mc-button {
     $block-name: &;
     @include reset();
@@ -452,34 +451,28 @@ export default {
     -webkit-appearance: none;
     -webkit-text-fill-color: currentColor;
     z-index: 0;
-
     &__loader {
         display: none;
         @include align(true, true, absolute);
         z-index: 1;
-
         &-icon {
             animation: $animation-spinner;
         }
     }
-
     &__prepend,
     &__append {
         display: inline-flex;
         align-items: center;
         z-index: 1;
     }
-
     &__text {
         @include ellipsis($display: inline-block);
         @include layout-flex-fix();
         z-index: 1;
-
         &:empty {
             display: none;
         }
     }
-
     @mixin hoverMixin {
         @media #{$media-desktop} {
             &:hover {
@@ -488,7 +481,6 @@ export default {
                 }
             }
         }
-
         &:active {
             #{$block-name}__background {
                 @content;
@@ -498,7 +490,6 @@ export default {
     @include hoverMixin {
         filter: brightness(var(--mc-button-hover-brightness));
     }
-
     &--size {
         &-xxs {
             height: $size-300;
@@ -506,153 +497,123 @@ export default {
             letter-spacing: normal;
             font-size: $font-size-200;
             line-height: $line-height-200;
-
             &-compact {
                 @include size($size-300);
                 padding: $space-50;
-
                 .mc-svg-icon {
                     @include size($size-200);
                 }
             }
-
             .mc-svg-icon {
                 @include size($size-200);
             }
-
             #{$block-name} {
                 &__prepend {
                     margin-inline-end: $space-50;
                 }
-
                 &__append {
                     margin-inline-start: $space-50;
                 }
             }
         }
-
         &-xs {
             height: $size-400;
             padding: 0 $space-150;
             letter-spacing: normal;
             font-size: $font-size-200;
             line-height: $line-height-200;
-
             &-compact {
                 @include size($size-400);
                 padding: 6px;
-
                 .mc-svg-icon {
                     @include size($size-250);
                 }
             }
-
             .mc-svg-icon {
                 @include size($size-250);
             }
-
             #{$block-name} {
                 &__prepend {
                     margin-inline-end: $space-50;
                 }
-
                 &__append {
                     margin-inline-start: $space-50;
                 }
             }
         }
-
         &-s {
             height: $size-500;
             padding: 0 $space-200;
             letter-spacing: normal;
             font-size: $font-size-200;
             line-height: $line-height-200;
-
             &-compact {
                 @include size($size-500);
                 padding: $space-150;
-
                 .mc-svg-icon {
                     @include size($size-250);
                 }
             }
-
             .mc-svg-icon {
                 @include size($size-250);
             }
-
             #{$block-name} {
                 &__prepend {
                     margin-inline-end: $space-50;
                 }
-
                 &__append {
                     margin-inline-start: $space-50;
                 }
             }
         }
-
         &-m {
             height: $size-500;
             padding: 0 $space-200;
             font-size: $font-size-200;
             line-height: $line-height-200;
-
             &-compact {
                 @include size($size-500);
                 padding: $space-100;
-
                 .mc-svg-icon {
                     @include size($size-300);
                 }
             }
-
             .mc-svg-icon {
                 @include size($size-300);
             }
-
             #{$block-name} {
                 &__prepend {
                     margin-inline-end: $space-50;
                 }
-
                 &__append {
                     margin-inline-start: $space-50;
                 }
             }
         }
-
         &-l {
             height: $size-600;
             padding: $space-150 $space-300;
             font-size: $font-size-200;
             line-height: $line-height-200;
-
             &-compact {
                 @include size($size-600);
                 padding: $space-150;
-
                 .mc-svg-icon {
                     @include size($size-300);
                 }
             }
-
             .mc-svg-icon {
                 @include size($size-300);
             }
-
             #{$block-name} {
                 &__prepend {
                     margin-inline-end: $space-100;
                 }
-
                 &__append {
                     margin-inline-start: $space-100;
                 }
             }
         }
-
         &-s,
         &-m,
         &-l {
@@ -666,7 +627,6 @@ export default {
             }
         }
     }
-
     &__background {
         position: absolute;
         top: 0;
@@ -678,17 +638,14 @@ export default {
         background-color: var(--mc-button-background-color);
         transition: all $duration-s;
     }
-
     &--type {
         &-outline {
             color: var(--mc-button-background-color);
-
             #{$block-name}__background {
                 opacity: 0.6 !important;
                 background-color: $color-transparent;
                 border-color: var(--mc-button-background-color);
             }
-
             @media #{$media-desktop} {
                 &:hover {
                     #{$block-name}__background {
@@ -704,44 +661,35 @@ export default {
                 }
             }
         }
-
         &-invert {
             color: var(--mc-button-background-color);
-
             #{$block-name} {
                 &__background {
                     opacity: 0.1 !important;
                 }
             }
-
             @include hoverMixin {
                 opacity: 0.2 !important;
             }
         }
-
         &-flat {
             color: var(--mc-button-background-color);
-
             #{$block-name}__background {
                 opacity: 0 !important;
             }
-
             @include hoverMixin {
                 opacity: 0.1 !important;
             }
         }
-
         &-link {
             color: var(--mc-button-background-color);
             padding: 0;
             @include size(auto);
             border: none;
             user-select: text;
-
             &#{$block-name}--size-l {
                 line-height: $line-height-250;
             }
-
             &#{$block-name} {
                 &--disabled {
                     opacity: $opacity-disabled;
@@ -750,17 +698,14 @@ export default {
                     border-color: transparent !important;
                 }
             }
-
             @media #{$media-desktop} {
                 &:hover {
                     filter: brightness(0.85);
                 }
             }
-
             &:active {
                 filter: brightness(0.85);
             }
-
             #{$block-name} {
                 &__background {
                     display: none;
@@ -768,7 +713,6 @@ export default {
             }
         }
     }
-
     &--bg-flat {
         #{$block-name} {
             &__background {
@@ -776,34 +720,28 @@ export default {
             }
         }
     }
-
     &--shadow {
         box-shadow: 0 3px 10px var(--mc-button-background-color);
     }
-
     &--underline-link {
         #{$block-name}__text {
             text-decoration: underline !important;
         }
     }
-
     &--secondary-color {
         @media #{$media-desktop} {
             &:hover {
                 color: var(--mc-button-secondary-color);
             }
         }
-
         &:active {
             color: var(--mc-button-secondary-color);
         }
     }
-
     &--uppercase {
         text-transform: uppercase;
         letter-spacing: $letter-spacing-m;
     }
-
     &--is-active,
     &.nuxt-link-active {
         color: var(--color-main);
@@ -811,51 +749,41 @@ export default {
         border-color: transparent;
         pointer-events: none;
     }
-
     &--rounded {
         border-radius: $radius-circle;
     }
-
     &--semi-rounded {
         border-radius: 50px;
     }
-
     &--full-width {
         width: 100%;
     }
-
     &--text-align {
         &-left {
             justify-content: flex-start;
         }
-
         &-center {
             justify-content: center;
         }
-
         &-right {
             justify-content: flex-end;
         }
     }
-
     &--loading,
     &--icon-loading,
     &--disabled {
         pointer-events: none;
     }
-
     &--loading {
         #{$block-name} {
             &__loader {
                 display: inline-block;
             }
         }
-
         > *:not(#{$block-name}__loader) {
             opacity: 0;
         }
     }
-
     &--icon-loading {
         #{$block-name} {
             &__append,
@@ -866,11 +794,9 @@ export default {
             }
         }
     }
-
     &--disabled {
         color: $color-outline-gray;
         cursor: not-allowed;
-
         #{$block-name} {
             &__background {
                 background-color: $color-hover-gray;
@@ -878,7 +804,6 @@ export default {
             }
         }
     }
-
     &--inactive {
         pointer-events: none;
     }
