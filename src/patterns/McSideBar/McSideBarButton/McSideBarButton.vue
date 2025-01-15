@@ -24,6 +24,7 @@
                     v-if="info || withIndicator"
                     slot="icon-append"
                     variation="main"
+                    text-color="main-contrast"
                     class="mc-side-bar-button__chip"
                     :class="{ indicator: withIndicator }"
                 >

@@ -35,7 +35,6 @@
 <script>
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
 import { VTooltip } from 'v-tooltip'
-import { checkContrastColor } from '../../utils/checkColor'
 
 VTooltip.options.defaultBoundariesElement = 'window'
 export default {
@@ -273,7 +272,6 @@ export default {
                 'mc-button--disabled': this.disabled,
                 'mc-button--rounded': this.rounded && /-compact$/.test(this.size),
                 'mc-button--semi-rounded': this.semiRounded,
-                'mc-button--contrast': this.isContrast,
                 'mc-button--full-width': this.fullWidth,
                 'mc-button--uppercase': this.uppercase,
                 'mc-button--shadow': this.shadow,
@@ -305,26 +303,13 @@ export default {
                 type: currentStyle,
             }
         },
-        /**
-         * Так как сейчас мы используем светлую тему, то проверяем контраст цвета на основе белого
-         * Проверяем только для main цветов, так как остальные должны подходить по стандарту
-         * TODO: сделать проверку контраста для темных тем + убрать проверку на process.client
-         * */
-        isContrast() {
-            if (!process.client) return
-            let [color] = this.variation.split('-') || []
-            return color.includes('main') && checkContrastColor(color, [255, 255, 255])
-        },
         styles() {
             let hoverBrightness
             let textColor
             switch (this.buttonVariation.type) {
                 case 'flat':
                 case 'outline':
-                case 'invert': {
-                    if (this.isContrast) textColor = 'black'
-                    break
-                }
+                case 'invert':
                 case 'link':
                     textColor = this.buttonVariation.color
                     break
@@ -339,7 +324,7 @@ export default {
                             break
                         }
                         default: {
-                            textColor = this.isContrast ? 'black' : 'white'
+                            textColor = 'main-contrast'
                         }
                     }
                     break
@@ -384,15 +369,15 @@ export default {
         tooltipOptions() {
             return this.tooltip
                 ? {
-                      content: this.tooltip,
-                      placement: 'top',
-                      classes: 'mc-tooltip mc-tooltip--width-m mc-tooltip--size-s',
-                      trigger: 'hover focus',
-                      show: false,
-                      container: 'body',
-                      template: `<div class="tooltip" role="tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner"><div class="tooltip-inner__content"></div></div> </div>`,
-                      innerSelector: '.tooltip-inner__content',
-                  }
+                    content: this.tooltip,
+                    placement: 'top',
+                    classes: 'mc-tooltip mc-tooltip--width-m mc-tooltip--size-s',
+                    trigger: 'hover focus',
+                    show: false,
+                    container: 'body',
+                    template: `<div class="tooltip" role="tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner"><div class="tooltip-inner__content"></div></div> </div>`,
+                    innerSelector: '.tooltip-inner__content',
+                }
                 : null
         },
     },
@@ -405,7 +390,7 @@ export default {
         animateUp() {
             if (this.animation) {
                 this.customAnimation?.text &&
-                    (this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = this.customAnimation?.text)
+                (this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = this.customAnimation?.text)
                 this.custom_background = this.customAnimation?.background
             }
         },
@@ -466,7 +451,6 @@ export default {
     -webkit-appearance: none;
     -webkit-text-fill-color: currentColor;
     z-index: 0;
-
     &__loader {
         display: none;
         @include align(true, true, absolute);
@@ -480,18 +464,6 @@ export default {
         display: inline-flex;
         align-items: center;
         z-index: 1;
-    }
-    &--contrast {
-        color: var(--mc-button-text-color) !important;
-        #{$block-name} {
-            &--is-active,
-            &.nuxt-link-active {
-                color: var(--color-main-dark);
-                background-color: transparent;
-                border-color: transparent;
-                pointer-events: none;
-            }
-        }
     }
     &__text {
         @include ellipsis($display: inline-block);
@@ -509,7 +481,6 @@ export default {
                 }
             }
         }
-
         &:active {
             #{$block-name}__background {
                 @content;
@@ -519,7 +490,6 @@ export default {
     @include hoverMixin {
         filter: brightness(var(--mc-button-hover-brightness));
     }
-
     &--size {
         &-xxs {
             height: $size-300;
@@ -527,7 +497,6 @@ export default {
             letter-spacing: normal;
             font-size: $font-size-200;
             line-height: $line-height-200;
-
             &-compact {
                 @include size($size-300);
                 padding: $space-50;
@@ -538,7 +507,6 @@ export default {
             .mc-svg-icon {
                 @include size($size-200);
             }
-
             #{$block-name} {
                 &__prepend {
                     margin-inline-end: $space-50;
@@ -554,7 +522,6 @@ export default {
             letter-spacing: normal;
             font-size: $font-size-200;
             line-height: $line-height-200;
-
             &-compact {
                 @include size($size-400);
                 padding: 6px;
@@ -565,7 +532,6 @@ export default {
             .mc-svg-icon {
                 @include size($size-250);
             }
-
             #{$block-name} {
                 &__prepend {
                     margin-inline-end: $space-50;
@@ -581,7 +547,6 @@ export default {
             letter-spacing: normal;
             font-size: $font-size-200;
             line-height: $line-height-200;
-
             &-compact {
                 @include size($size-500);
                 padding: $space-150;
@@ -592,7 +557,6 @@ export default {
             .mc-svg-icon {
                 @include size($size-250);
             }
-
             #{$block-name} {
                 &__prepend {
                     margin-inline-end: $space-50;
@@ -607,7 +571,6 @@ export default {
             padding: 0 $space-200;
             font-size: $font-size-200;
             line-height: $line-height-200;
-
             &-compact {
                 @include size($size-500);
                 padding: $space-100;
@@ -618,7 +581,6 @@ export default {
             .mc-svg-icon {
                 @include size($size-300);
             }
-
             #{$block-name} {
                 &__prepend {
                     margin-inline-end: $space-50;
@@ -633,7 +595,6 @@ export default {
             padding: $space-150 $space-300;
             font-size: $font-size-200;
             line-height: $line-height-200;
-
             &-compact {
                 @include size($size-600);
                 padding: $space-150;
@@ -644,7 +605,6 @@ export default {
             .mc-svg-icon {
                 @include size($size-300);
             }
-
             #{$block-name} {
                 &__prepend {
                     margin-inline-end: $space-100;
@@ -654,7 +614,6 @@ export default {
                 }
             }
         }
-
         &-s,
         &-m,
         &-l {
@@ -668,7 +627,6 @@ export default {
             }
         }
     }
-
     &__background {
         position: absolute;
         top: 0;
@@ -710,22 +668,9 @@ export default {
                     opacity: 0.1 !important;
                 }
             }
-            // TODO check contast colors
-            //&#{$block-name}--contrast {
-            //    #{$block-name} {
-            //        &__background {
-            //            opacity: 0.4 !important;
-            //        }
-            //    }
-            //}
             @include hoverMixin {
                 opacity: 0.2 !important;
             }
-            //&#{$block-name}--contrast {
-            //    @include hoverMixin {
-            //        opacity: 0.6 !important;
-            //    }
-            //}
         }
         &-flat {
             color: var(--mc-button-background-color);
@@ -745,9 +690,6 @@ export default {
             &#{$block-name}--size-l {
                 line-height: $line-height-250;
             }
-            &#{$block-name}--contrast {
-                filter:  brightness(80%);
-            }
             &#{$block-name} {
                 &--disabled {
                     opacity: $opacity-disabled;
@@ -761,7 +703,6 @@ export default {
                     filter: brightness(0.85);
                 }
             }
-
             &:active {
                 filter: brightness(0.85);
             }
@@ -787,7 +728,6 @@ export default {
             text-decoration: underline !important;
         }
     }
-
     &--secondary-color {
         @media #{$media-desktop} {
             &:hover {
@@ -798,12 +738,10 @@ export default {
             color: var(--mc-button-secondary-color);
         }
     }
-
     &--uppercase {
         text-transform: uppercase;
         letter-spacing: $letter-spacing-m;
     }
-
     &--is-active,
     &.nuxt-link-active {
         color: var(--color-main);
@@ -811,19 +749,15 @@ export default {
         border-color: transparent;
         pointer-events: none;
     }
-
     &--rounded {
         border-radius: $radius-circle;
     }
-
     &--semi-rounded {
         border-radius: 50px;
     }
-
     &--full-width {
         width: 100%;
     }
-
     &--text-align {
         &-left {
             justify-content: flex-start;
@@ -835,20 +769,17 @@ export default {
             justify-content: flex-end;
         }
     }
-
     &--loading,
     &--icon-loading,
     &--disabled {
         pointer-events: none;
     }
-
     &--loading {
         #{$block-name} {
             &__loader {
                 display: inline-block;
             }
         }
-
         > *:not(#{$block-name}__loader) {
             opacity: 0;
         }
@@ -863,7 +794,6 @@ export default {
             }
         }
     }
-
     &--disabled {
         color: $color-outline-gray;
         cursor: not-allowed;
@@ -874,7 +804,6 @@ export default {
             }
         }
     }
-
     &--inactive {
         pointer-events: none;
     }

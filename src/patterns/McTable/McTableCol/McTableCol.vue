@@ -276,12 +276,12 @@ export default {
         }
         @include col-right-color($vxe-table-row-hover-background-color);
         &.row--current {
-            @include col-right-color($vxe-table-row-hover-current-background-color);
+            @include col-right-color(transparent);
         }
     }
     &.row--current {
         background-color: var(--color-main-alpha-10) !important;
-        @include col-right-color($vxe-table-row-current-background-color);
+        @include col-right-color(transparent);
     }
     // описка названия в библиотеке таблицы
     &.row--cheched {
