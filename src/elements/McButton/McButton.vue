@@ -35,7 +35,6 @@
 <script>
 import McSvgIcon from '../McSvgIcon/McSvgIcon'
 import { VTooltip } from 'v-tooltip'
-import { checkContrastColor } from '../../utils/checkColor'
 
 VTooltip.options.defaultBoundariesElement = 'window'
 export default {
@@ -273,7 +272,6 @@ export default {
                 'mc-button--disabled': this.disabled,
                 'mc-button--rounded': this.rounded && /-compact$/.test(this.size),
                 'mc-button--semi-rounded': this.semiRounded,
-                'mc-button--contrast': this.isContrast,
                 'mc-button--full-width': this.fullWidth,
                 'mc-button--uppercase': this.uppercase,
                 'mc-button--shadow': this.shadow,
@@ -305,26 +303,13 @@ export default {
                 type: currentStyle,
             }
         },
-        /**
-         * Так как сейчас мы используем светлую тему, то проверяем контраст цвета на основе белого
-         * Проверяем только для main цветов, так как остальные должны подходить по стандарту
-         * TODO: сделать проверку контраста для темных тем + убрать проверку на process.client
-         * */
-        isContrast() {
-            if (!process.client) return
-            let [color] = this.variation.split('-') || []
-            return color.includes('main') && checkContrastColor(color, [255, 255, 255])
-        },
         styles() {
             let hoverBrightness
             let textColor
             switch (this.buttonVariation.type) {
                 case 'flat':
                 case 'outline':
-                case 'invert': {
-                    if (this.isContrast) textColor = 'black'
-                    break
-                }
+                case 'invert':
                 case 'link':
                     textColor = this.buttonVariation.color
                     break
@@ -339,7 +324,7 @@ export default {
                             break
                         }
                         default: {
-                            textColor = this.isContrast ? 'black' : 'white'
+                            textColor = 'main-contrast'
                         }
                     }
                     break
@@ -384,15 +369,15 @@ export default {
         tooltipOptions() {
             return this.tooltip
                 ? {
-                      content: this.tooltip,
-                      placement: 'top',
-                      classes: 'mc-tooltip mc-tooltip--width-m mc-tooltip--size-s',
-                      trigger: 'hover focus',
-                      show: false,
-                      container: 'body',
-                      template: `<div class="tooltip" role="tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner"><div class="tooltip-inner__content"></div></div> </div>`,
-                      innerSelector: '.tooltip-inner__content',
-                  }
+                    content: this.tooltip,
+                    placement: 'top',
+                    classes: 'mc-tooltip mc-tooltip--width-m mc-tooltip--size-s',
+                    trigger: 'hover focus',
+                    show: false,
+                    container: 'body',
+                    template: `<div class="tooltip" role="tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner"><div class="tooltip-inner__content"></div></div> </div>`,
+                    innerSelector: '.tooltip-inner__content',
+                }
                 : null
         },
     },
@@ -405,7 +390,7 @@ export default {
         animateUp() {
             if (this.animation) {
                 this.customAnimation?.text &&
-                    (this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = this.customAnimation?.text)
+                (this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = this.customAnimation?.text)
                 this.custom_background = this.customAnimation?.background
             }
         },
@@ -436,6 +421,7 @@ export default {
 @import '../../tokens/font-families';
 @import '../../tokens/letter-spacings';
 @import '../../tokens/animations';
+
 .mc-button {
     $block-name: &;
     @include reset();
@@ -471,36 +457,29 @@ export default {
         display: none;
         @include align(true, true, absolute);
         z-index: 1;
+
         &-icon {
             animation: $animation-spinner;
         }
     }
+
     &__prepend,
     &__append {
         display: inline-flex;
         align-items: center;
         z-index: 1;
     }
-    &--contrast {
-        color: var(--mc-button-text-color) !important;
-        #{$block-name} {
-            &--is-active,
-            &.nuxt-link-active {
-                color: var(--color-main-dark);
-                background-color: transparent;
-                border-color: transparent;
-                pointer-events: none;
-            }
-        }
-    }
+
     &__text {
         @include ellipsis($display: inline-block);
         @include layout-flex-fix();
         z-index: 1;
+
         &:empty {
             display: none;
         }
     }
+
     @mixin hoverMixin {
         @media #{$media-desktop} {
             &:hover {
@@ -531,10 +510,12 @@ export default {
             &-compact {
                 @include size($size-300);
                 padding: $space-50;
+
                 .mc-svg-icon {
                     @include size($size-200);
                 }
             }
+
             .mc-svg-icon {
                 @include size($size-200);
             }
@@ -543,11 +524,13 @@ export default {
                 &__prepend {
                     margin-inline-end: $space-50;
                 }
+
                 &__append {
                     margin-inline-start: $space-50;
                 }
             }
         }
+
         &-xs {
             height: $size-400;
             padding: 0 $space-150;
@@ -558,10 +541,12 @@ export default {
             &-compact {
                 @include size($size-400);
                 padding: 6px;
+
                 .mc-svg-icon {
                     @include size($size-250);
                 }
             }
+
             .mc-svg-icon {
                 @include size($size-250);
             }
@@ -570,11 +555,13 @@ export default {
                 &__prepend {
                     margin-inline-end: $space-50;
                 }
+
                 &__append {
                     margin-inline-start: $space-50;
                 }
             }
         }
+
         &-s {
             height: $size-500;
             padding: 0 $space-200;
@@ -585,10 +572,12 @@ export default {
             &-compact {
                 @include size($size-500);
                 padding: $space-150;
+
                 .mc-svg-icon {
                     @include size($size-250);
                 }
             }
+
             .mc-svg-icon {
                 @include size($size-250);
             }
@@ -597,11 +586,13 @@ export default {
                 &__prepend {
                     margin-inline-end: $space-50;
                 }
+
                 &__append {
                     margin-inline-start: $space-50;
                 }
             }
         }
+
         &-m {
             height: $size-500;
             padding: 0 $space-200;
@@ -611,10 +602,12 @@ export default {
             &-compact {
                 @include size($size-500);
                 padding: $space-100;
+
                 .mc-svg-icon {
                     @include size($size-300);
                 }
             }
+
             .mc-svg-icon {
                 @include size($size-300);
             }
@@ -623,11 +616,13 @@ export default {
                 &__prepend {
                     margin-inline-end: $space-50;
                 }
+
                 &__append {
                     margin-inline-start: $space-50;
                 }
             }
         }
+
         &-l {
             height: $size-600;
             padding: $space-150 $space-300;
@@ -637,10 +632,12 @@ export default {
             &-compact {
                 @include size($size-600);
                 padding: $space-150;
+
                 .mc-svg-icon {
                     @include size($size-300);
                 }
             }
+
             .mc-svg-icon {
                 @include size($size-300);
             }
@@ -649,6 +646,7 @@ export default {
                 &__prepend {
                     margin-inline-end: $space-100;
                 }
+
                 &__append {
                     margin-inline-start: $space-100;
                 }
@@ -680,14 +678,17 @@ export default {
         background-color: var(--mc-button-background-color);
         transition: all $duration-s;
     }
+
     &--type {
         &-outline {
             color: var(--mc-button-background-color);
+
             #{$block-name}__background {
                 opacity: 0.6 !important;
                 background-color: $color-transparent;
                 border-color: var(--mc-button-background-color);
             }
+
             @media #{$media-desktop} {
                 &:hover {
                     #{$block-name}__background {
@@ -703,51 +704,44 @@ export default {
                 }
             }
         }
+
         &-invert {
             color: var(--mc-button-background-color);
+
             #{$block-name} {
                 &__background {
                     opacity: 0.1 !important;
                 }
             }
-            // TODO check contast colors
-            //&#{$block-name}--contrast {
-            //    #{$block-name} {
-            //        &__background {
-            //            opacity: 0.4 !important;
-            //        }
-            //    }
-            //}
+
             @include hoverMixin {
                 opacity: 0.2 !important;
             }
-            //&#{$block-name}--contrast {
-            //    @include hoverMixin {
-            //        opacity: 0.6 !important;
-            //    }
-            //}
         }
+
         &-flat {
             color: var(--mc-button-background-color);
+
             #{$block-name}__background {
                 opacity: 0 !important;
             }
+
             @include hoverMixin {
                 opacity: 0.1 !important;
             }
         }
+
         &-link {
             color: var(--mc-button-background-color);
             padding: 0;
             @include size(auto);
             border: none;
             user-select: text;
+
             &#{$block-name}--size-l {
                 line-height: $line-height-250;
             }
-            &#{$block-name}--contrast {
-                filter:  brightness(80%);
-            }
+
             &#{$block-name} {
                 &--disabled {
                     opacity: $opacity-disabled;
@@ -756,6 +750,7 @@ export default {
                     border-color: transparent !important;
                 }
             }
+
             @media #{$media-desktop} {
                 &:hover {
                     filter: brightness(0.85);
@@ -765,6 +760,7 @@ export default {
             &:active {
                 filter: brightness(0.85);
             }
+
             #{$block-name} {
                 &__background {
                     display: none;
@@ -772,6 +768,7 @@ export default {
             }
         }
     }
+
     &--bg-flat {
         #{$block-name} {
             &__background {
@@ -779,9 +776,11 @@ export default {
             }
         }
     }
+
     &--shadow {
         box-shadow: 0 3px 10px var(--mc-button-background-color);
     }
+
     &--underline-link {
         #{$block-name}__text {
             text-decoration: underline !important;
@@ -794,6 +793,7 @@ export default {
                 color: var(--mc-button-secondary-color);
             }
         }
+
         &:active {
             color: var(--mc-button-secondary-color);
         }
@@ -828,9 +828,11 @@ export default {
         &-left {
             justify-content: flex-start;
         }
+
         &-center {
             justify-content: center;
         }
+
         &-right {
             justify-content: flex-end;
         }
@@ -853,6 +855,7 @@ export default {
             opacity: 0;
         }
     }
+
     &--icon-loading {
         #{$block-name} {
             &__append,
@@ -867,6 +870,7 @@ export default {
     &--disabled {
         color: $color-outline-gray;
         cursor: not-allowed;
+
         #{$block-name} {
             &__background {
                 background-color: $color-hover-gray;

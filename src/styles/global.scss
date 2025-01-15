@@ -123,12 +123,12 @@ a {
 
 ::selection {
   background: var(--color-main);
-  color: $color-white;
+  color: var(--color-main-contrast);
 }
 
 ::-moz-selection {
   background: var(--color-main);
-  color: $color-white;
+  color: var(--color-main-contrast);
 }
 
 input,
@@ -289,6 +289,7 @@ pre {
     #{'--color-'}#{$name}: #{$color};
   }
   // Default main project colors
+  --color-main-contrast: $color-white;
   --color-main: $color-purple;
   --color-main-dark: $color-hover-purple;
   @for $i from 1 through 10 {

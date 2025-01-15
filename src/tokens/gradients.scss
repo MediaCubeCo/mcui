@@ -8,7 +8,7 @@ $gradient-blue: linear-gradient(180deg, #1ADBFE 0%, #3580F8 100%); /* Нотиф
 $gradient-yellow: linear-gradient(180deg, #FEE41A 0%, #F89B35 100%); /* Столбики в графике 3 порядка */
 $gradient-green: linear-gradient(180deg, #C9DD4C 0%, #63BE7E 100%); /* Столбики в графике 2 порядка */
 $gradient-red: linear-gradient(180deg, #F26567 0%, #F79440 100%); /* Столбики в графике 1 порядка */
-$gradient-purple: linear-gradient(270deg, var(--color-main-dark) 0%, var(--color-main) 100%); /* Основной градиент для MCPay */
+$gradient-purple: linear-gradient(270deg, var(--color-main) 0%, var(--color-main-dark) 100%); /* Основной градиент для MCPay */
 $gradient-purple-pink: linear-gradient(90deg, var(--color-main) 2%, #fe6ffc 100%); /*Градиент промоакции*/
 $gradient-blue-purple: linear-gradient(90deg, #18bfe3 20%, var(--color-main) 70%); /*Градиент промоакции*/
 $gradient-dark-blue: linear-gradient(90deg, #5550EF 0%, var(--color-main) 100%); /*Градиент автоплатежей*/
