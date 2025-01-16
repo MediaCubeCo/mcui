@@ -1,8 +1,11 @@
 <script>
-import defaultImage from '../../assets/img/no_user.png'
+import McSvgIcon from '../McSvgIcon/McSvgIcon.vue'
 export default {
     name: 'McAvatar',
     functional: true,
+    components: {
+        McSvgIcon,
+    },
     props: {
         /**
          *  Путь до изображения
@@ -10,7 +13,7 @@ export default {
          */
         src: {
             type: String,
-            default: defaultImage,
+            default: null,
         },
         /**
          *  Отложенная подгрузка
@@ -133,7 +136,7 @@ export default {
             name: 'lazy',
             value: {
                 src: props.src,
-                error: defaultImage,
+                error: 'error',
                 attempt: 1,
             },
         }
@@ -149,23 +152,35 @@ export default {
                     },
                 },
                 [
-                    h('img', {
+                    props?.src &&
+                        h('img', {
+                            class: 'mc-avatar__img',
+                            attrs: {
+                                alt: props.alt,
+                                ...(!props.lazy ? { src: props.src } : {}),
+                                draggable: props.draggable,
+                            },
+                            directives,
+                            key: props.src,
+                            on: {
+                                error(e) {
+                                    if (!e.target) return
+                                    e.target.style.display = 'none'
+                                    e.target.nextSibling.style.display = 'block'
+                                },
+                            },
+                        }),
+                    h('mc-svg-icon', {
                         class: 'mc-avatar__img',
                         attrs: {
-                            alt: props.alt,
-                            ...(!props.lazy ? { src: props.src || defaultImage } : {}),
-                            draggable: props.draggable,
+                            name: 'avatar-square',
+                            color: 'main',
                         },
-                        directives,
-                        key: props.src,
-                        on: {
-                            error(e) {
-                                if (!e.target) return
-                                e.target.src = defaultImage
-                            },
+                        style: {
+                            display: props?.src ? 'none' : 'block',
                         },
                     }),
-                ],
+                ].filter(Boolean),
             )
         }
 
@@ -188,6 +203,7 @@ export default {
 <style lang="scss">
 @import '../../styles/mixins';
 @import '../../tokens/durations';
+
 $color-borders: $token-colors;
 $dot-colors: $token-colors;
 
