@@ -65,6 +65,7 @@
                                     <template v-else>
                                         <mc-button
                                             v-if="placeholders.week"
+                                            :disabled="checkDisablePeriod('week')"
                                             variation="black-link"
                                             secondary-color="main"
                                             @click="selectPeriod('week')"
@@ -73,6 +74,7 @@
                                         </mc-button>
                                         <mc-button
                                             v-if="placeholders.month"
+                                            :disabled="checkDisablePeriod('month')"
                                             variation="black-link"
                                             secondary-color="main"
                                             @click="selectPeriod('month')"
@@ -81,6 +83,7 @@
                                         </mc-button>
                                         <mc-button
                                             v-if="placeholders.quarter"
+                                            :disabled="checkDisablePeriod('quarter')"
                                             variation="black-link"
                                             secondary-color="main"
                                             @click="selectPeriod('quarter')"
@@ -89,6 +92,7 @@
                                         </mc-button>
                                         <mc-button
                                             v-if="placeholders.year"
+                                            :disabled="checkDisablePeriod('year')"
                                             variation="black-link"
                                             secondary-color="main"
                                             @click="selectPeriod('year')"
@@ -503,7 +507,14 @@ export default {
                 }
             }
         },
-        selectPeriod(key) {
+        /**
+         * Проверяем доступность выбора периода по досупной дате, если есть ограничения
+         * */
+        checkDisablePeriod(period) {
+            const [start] = this.selectPeriod(period)
+            return this.disabledDate(start)
+        },
+        selectPeriod(key, isReturn = false) {
             let start = new Date()
             const end = this.pickDate || new Date()
             switch (key) {
@@ -536,7 +547,9 @@ export default {
                     start.setFullYear(end.getFullYear() - 1, end.getMonth(), end.getDate())
                     break
             }
-            this.$refs.input.currentValue = [dayjs ? start.toDate() : start, end]
+            const period = [dayjs ? start.toDate() : start, end]
+            if (isReturn) return period
+            this.$refs.input.currentValue = period
         },
         handlerPreselectRange(period) {
             const [start, end] = period
@@ -717,10 +730,23 @@ export default {
         left: $space-200 !important;
         right: $space-200;
         width: fit-content;
+        .mx-range-wrapper {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .mx-datepicker-footer {
+            position: sticky;
+            bottom: 0;
+            background-color: $color-white;
+        }
     }
 
     .mx-calendar + .mx-calendar {
         border-left: none;
+    }
+
+    .mx-range-wrapper {
+        align-items: center;
     }
 
     .mx-calendar {
@@ -793,6 +819,14 @@ export default {
             @include child-indent-right($space-200);
             > * {
                 @include child-indent-right($space-300);
+            }
+            &-periods {
+                @include child-indent-right(0);
+                column-gap: $space-300;
+                row-gap: $space-100;
+                align-items: center;
+                display: flex;
+                flex-wrap: wrap;
             }
             .mc-button {
                 @include child-indent-right($space-zero);
