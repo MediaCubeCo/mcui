@@ -27,7 +27,7 @@
                 <slot />
             </div>
             <!-- @slot Слот футера -->
-            <div class="mc-modal__control"><slot name="footer" /><portal-target name="mcModalFooter" slim /></div>
+            <div ref="mcModalFooter" class="mc-modal__control"><slot name="footer" /><portal-target name="mcModalFooter" slim /></div>
         </div>
         <button v-if="arrowVisible" type="button" class="mc-modal__btn-back" @click.prevent="handleBack">
             <mc-svg-icon name="arrow_leftward" class="mc-modal__icon-back" />
@@ -133,6 +133,7 @@ export default {
         indent: {
             regular: 400,
             small: 150,
+            extra_small: 50,
         },
         footer: {
             button: {
@@ -168,6 +169,7 @@ export default {
             return {
                 '--mc-modal-padding': `var(--space-${this.indent.regular})`,
                 '--mc-modal-padding-small': `var(--space-${this.indent.small})`,
+                '--mc-modal-padding-extra-small': `var(--space-${this.indent.extra_small})`,
                 '--mc-modal-header-line-height': `var(--line-height-${this.header.title.line_height.regular})`,
                 '--mc-modal-header-line-height-small': `var(--line-height-${this.header.title.line_height.small})`,
                 '--mc-modal-button-height': `var(--size-${this.footer.button.regular})`,
@@ -236,19 +238,32 @@ export default {
         },
 
         calculateIndents() {
-            /* Если шапка уже маленькая, то отключаем при отключении сепаратора
-             * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
-             */
-            const indentDifferences =
-                (this.modal_params?.['--mc-modal-padding'] - this.modal_params?.['--mc-modal-padding-small']) * 3 +
-                this.modal_params?.['--mc-modal-padding-small']
-            const lineHeightDifferences =
-                this.modal_params?.['--mc-modal-header-line-height'] -
-                this.modal_params?.['--mc-modal-header-line-height-small']
-            const buttonDifferences =
-                this.modal_params?.['--mc-modal-button-height'] - this.modal_params?.['--mc-modal-button-height-small']
-            const sizeDifferences = indentDifferences + lineHeightDifferences + buttonDifferences
             if (!this.small_indents) {
+                /* Если шапка уже маленькая, то отключаем при отключении сепаратора
+                 * Иначе смотрим, чтобы отступ был > чем убираемые отступы, т.к. нет смысла сжимать шапку, если <
+                 * 1,2 - отступы в шапке уменьшаются с 32 до 12 сверху и снизу
+                 * 3 - отступы в футере: нижний уменьшается с 32 до 12
+                 * 4 - отступ в футере верхний уменьшается с 16 до 12
+                 * 5 - отступ в боди уменьшается с 16 до 4
+                 * итого (32 - 12) * 3 + 12 + 4 - тотал уменьшения отступов
+                 * если футер пустой, то умножаем на 2
+                 */
+                const totalBtns = this.$refs.mcModalFooter?.querySelectorAll('.mc-button')?.length
+                const smallerElementsAmount = totalBtns ? 3 : 2
+                const indentDifferences =
+                    (this.modal_params?.['--mc-modal-padding'] - this.modal_params?.['--mc-modal-padding-small']) *
+                        smallerElementsAmount +
+                    (this.modal_params?.['--mc-modal-padding-small'] +
+                        this.modal_params?.['--mc-modal-padding-extra-small'])
+                const lineHeightDifferences =
+                    this.modal_params?.['--mc-modal-header-line-height'] -
+                    this.modal_params?.['--mc-modal-header-line-height-small']
+                const buttonDifferences =
+                    this.modal_params?.['--mc-modal-button-height'] -
+                    this.modal_params?.['--mc-modal-button-height-small']
+                // Смотрим разницу размеров с учетом кол-ва кнопок в модалке + добавляем за каждую кнопку 1px погрешности для отображения бордера
+                const sizeDifferences =
+                    indentDifferences + lineHeightDifferences + buttonDifferences * totalBtns + totalBtns
                 const body = this.$refs.mcModalBody
                 this.can_shorten_modal = body?.scrollHeight - body?.clientHeight > sizeDifferences
             }
