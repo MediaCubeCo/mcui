@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.355](https://github.com/MediaCubeCo/mcui/compare/v0.1.354...v0.1.355) (2025-01-16)
+
 ### [0.1.354](https://github.com/MediaCubeCo/mcui/compare/v0.1.353...v0.1.354) (2025-01-15)
 
 ### [0.1.353](https://github.com/MediaCubeCo/mcui/compare/v0.1.352...v0.1.353) (2025-01-14)
