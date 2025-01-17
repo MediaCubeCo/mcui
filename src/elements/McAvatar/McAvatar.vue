@@ -1,11 +1,7 @@
 <script>
-import McSvgIcon from '../McSvgIcon/McSvgIcon.vue'
 export default {
     name: 'McAvatar',
     functional: true,
-    components: {
-        McSvgIcon,
-    },
     props: {
         /**
          *  Путь до изображения
@@ -170,16 +166,48 @@ export default {
                                 },
                             },
                         }),
-                    h('mc-svg-icon', {
-                        class: 'mc-avatar__img',
-                        attrs: {
-                            name: 'avatar-square',
-                            color: 'main',
+                    h(
+                        'svg',
+                        {
+                            class: 'mc-avatar__img',
+                            attrs: {
+                                name: 'avatar-square',
+                                color: 'main',
+                                width: '104',
+                                height: '104',
+                                viewBox: '0 0 104 104',
+                                fill: 'none',
+                                xmlns: 'http://www.w3.org/2000/svg',
+                            },
+                            style: {
+                                display: props?.src ? 'none' : 'block',
+                            },
                         },
-                        style: {
-                            display: props?.src ? 'none' : 'block',
-                        },
-                    }),
+                        [
+                            h('rect', {
+                                attrs: {
+                                    width: '104',
+                                    height: '104',
+                                    rx: '8',
+                                    fill: 'currentColor',
+                                },
+                            }),
+                            h('path', {
+                                attrs: {
+                                    d:
+                                        'M33.3078 40.2381C33.3078 29.9814 41.6764 21.6667 51.9997 21.6667C62.3229 21.6667 70.6916 29.9814 70.6916 40.2381V42.7143C70.6916 52.971 62.3229 61.2857 51.9997 61.2857C41.6764 61.2857 33.3078 52.971 33.3078 42.7143V40.2381Z',
+                                    fill: 'white',
+                                },
+                            }),
+                            h('path', {
+                                attrs: {
+                                    d:
+                                        'M86.6663 84.6684C78.021 93.8955 65.6887 99.6667 51.9997 99.6667C38.3107 99.6667 25.9783 93.8955 17.333 84.6684C24.1962 75.69 37.15 69.9524 51.9997 69.9524C66.8493 69.9524 79.8032 75.69 86.6663 84.6684Z',
+                                    fill: 'white',
+                                },
+                            }),
+                        ],
+                    ),
                 ].filter(Boolean),
             )
         }
