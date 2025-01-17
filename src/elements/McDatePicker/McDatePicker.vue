@@ -511,7 +511,7 @@ export default {
          * Проверяем доступность выбора периода по досупной дате, если есть ограничения
          * */
         checkDisablePeriod(period) {
-            const [start] = this.selectPeriod(period)
+            const [start] = this.selectPeriod(period, true)
             return this.disabledDate(start)
         },
         selectPeriod(key, isReturn = false) {
