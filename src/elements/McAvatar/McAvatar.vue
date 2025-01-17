@@ -303,6 +303,7 @@ $dot-colors: $token-colors;
         width: 100%;
         height: 100%;
         object-fit: cover;
+        color: var(--color-main);
     }
     &--rounded {
         border-radius: $radius-circle;
