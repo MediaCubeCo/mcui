@@ -438,7 +438,14 @@ export default {
             }
         },
         isEmptyOptions() {
-            return this.isEmptyOptionsList || this.loading || this.computedOptions?.length === this._value?.length
+            let options = this.computedOptions
+            if (this.groupKeys) {
+                options = []
+                for (let option of this.computedOptions) {
+                    options.push(...option[this.groupKeys.values])
+                }
+            }
+            return this.isEmptyOptionsList || this.loading || options?.length === this._value?.length
         },
         computedTitle() {
             return `${this.title}${this.required ? ' *' : ''}`
