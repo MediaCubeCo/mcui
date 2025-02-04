@@ -580,6 +580,7 @@ export default {
         },
         repositionDropDown() {
             const { top, bottom, height, width, left } = this.$el.getBoundingClientRect()
+            const scrollElementRect = this.closest_scroll_element.getBoundingClientRect()
             const ref = this.$refs[this.key]
             if (!ref) return
             const ios_devices = ['iPhone', 'iPad']
@@ -587,8 +588,11 @@ export default {
             const iosViewportIndent = ios_devices?.some(device => navigator?.platform?.includes(device))
                 ? window.visualViewport?.offsetTop || 0
                 : 0
+            // Высчитываем реальную позицию селекта относительно первого скроллящегося родителя
+            const actualTop = top - scrollElementRect.top
+            const actualBottom = bottom - scrollElementRect.bottom
             // if field hides under scrolled element borders -> blur select to prevent overlap
-            if (top >= -height && bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
+            if (actualTop >= -height && actualBottom < height) {
                 ref.$refs.list.style.width = `${width}px`
                 ref.$refs.list.style.position = 'fixed'
                 ref.$refs.list.style.left = `${left}px`
@@ -610,10 +614,9 @@ export default {
                         ref.$refs.list.style.top = `${top + iosViewportIndent + height}px`
                         break
                 }
-                // Задержка для предотвращения закрытия выпадающего списка на android
-                const is_android = /Android/i.test(navigator.userAgent)
-                is_android && setTimeout(() => ref.activate(), 100) // переактивировать, если выпадающий список должен быть открыт
-            } else {
+                // Для андроидов не прячем селект при оверлапе, так как там работает все криво
+                //  при открытии из нижней позиции клавиатура его перекрывает и он сразу сам закрывается
+            } else if (!/Android/i.test(navigator.userAgent)) {
                 // прячем селект, если его не видно юзеру
                 return ref.deactivate()
             }
