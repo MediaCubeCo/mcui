@@ -123,12 +123,12 @@ a {
 
 ::selection {
   background: var(--color-main);
-  color: var(--color-main-contrast);
+  color: var(--color-white);
 }
 
 ::-moz-selection {
   background: var(--color-main);
-  color: var(--color-main-contrast);
+  color: var(--color-white);
 }
 
 input,
@@ -289,14 +289,12 @@ pre {
     #{'--color-'}#{$name}: #{$color};
   }
   // Default main project colors
-  --color-main-contrast: $color-white;
   --color-main: $color-purple;
   --color-main-dark: $color-hover-purple;
   @for $i from 1 through 10 {
     #{'--color-main-alpha-'}#{$i * 10}: #{rgba($color-purple, $i / 10)};
   }
   --color-main-light: $color-light-purple;
-  --color-main-lighter: $color-lighter-purple;
   @each $name, $size in $token-icon-sizes {
     #{'--size-'}#{$name}: #{$size};
   }

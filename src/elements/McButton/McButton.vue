@@ -324,7 +324,7 @@ export default {
                             break
                         }
                         default: {
-                            textColor = 'main-contrast'
+                            textColor = 'white'
                         }
                     }
                     break
