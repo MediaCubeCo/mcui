@@ -24,7 +24,6 @@
                     v-if="info || withIndicator"
                     slot="icon-append"
                     variation="main"
-                    text-color="main-contrast"
                     class="mc-side-bar-button__chip"
                     :class="{ indicator: withIndicator }"
                 >
@@ -213,7 +212,7 @@ export default {
             @include size($size-300);
         }
         &.main-hover:hover {
-            background-color: var(--color-main-lighter);
+            background-color: var(--color-main-alpha-10);
         }
 
         .mc-button__text {
@@ -245,7 +244,7 @@ export default {
         &.mc-button--is-active,
         &.mc-button.nuxt-link-active {
             color: var(--color-main);
-            background-color: var(--color-main-lighter);
+            background-color: var(--color-main-alpha-10);
             pointer-events: auto;
         }
     }
