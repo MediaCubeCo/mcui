@@ -26,6 +26,7 @@
             v-on="{ ...$listeners, 'sort-change': this.handleSort }"
             @scroll="handleScroll"
             @context-menu-click="contextMenuClickEvent"
+            :empty-render="{ name: 'noData' }"
         >
             <!-- @slot Слот дочерних mc-table-col -->
             <slot />
