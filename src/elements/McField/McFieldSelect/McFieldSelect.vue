@@ -28,7 +28,10 @@
                 </template>
                 <template slot="singleLabel" slot-scope="{ option }">
                     <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
-                        <mc-svg-icon slot="left" :name="option.icon" size="400" />
+                        <template #left>
+                            <mc-avatar v-if="option.image" :src="option.image" size="400" />
+                            <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
+                        </template>
                         <mc-title slot="top" weight="semi-bold" v-html="option.name" />
                         <!-- Слот для замены стандартной стрелки при выведенном превью -->
                         <slot slot="right" name="arrow" />
@@ -51,13 +54,17 @@
                 </template>
 
                 <template v-if="optionsTooltip || optionWithPreview" slot="option" slot-scope="{ option }">
-                    <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
-                        <mc-svg-icon slot="left" :name="option.icon" size="400" />
+                    <mc-preview v-if="optionWithPreview && option.icon" class="option__desc" size="l">
+                        <template #left>
+                            <mc-avatar v-if="option.image" :src="option.image" size="400" />
+                            <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
+                        </template>
                         <mc-title slot="top" weight="semi-bold" v-html="option.name" />
-                        <mc-title slot="bottom" color="gray">
-                            {{ option.text }}
-                        </mc-title>
+                        <mc-title slot="bottom" color="gray" :pre-line="option.preLine">{{ option.text }}</mc-title>
                     </mc-preview>
+                    <mc-title v-else-if="optionWithPreview && option.$isLabel" weight="semi-bold" variation="subtitle">
+                        {{ option.$groupLabel }}
+                    </mc-title>
                     <mc-tooltip
                         v-else
                         class="mc-field-select__options-tooltip-target"
@@ -433,7 +440,9 @@ export default {
                 [`mc-field-select--bg-${this.backgroundColor}`]: this.backgroundColor,
                 'mc-field-select--is-empty-options-list': this.isEmptyOptions,
                 'mc-field-select--with-preview': this.optionWithPreview,
+                'mc-field-select--grouped': this.groupKeys,
                 'mc-field-select--max-height': this.maxHeight,
+                'mc-field-select--empty': !this._value,
                 'mc-field-select--rtl': this.rtl,
             }
         },
@@ -708,6 +717,7 @@ export default {
 @import 'vue-multiselect/dist/vue-multiselect.min';
 @import '../../../styles/mixins';
 @import '../../../tokens/durations';
+@import '../../../tokens/border-radius';
 @import '../../../tokens/font-families';
 @import '../../../tokens/box-shadows';
 @import '../../../tokens/colors';
@@ -1023,6 +1033,29 @@ export default {
         .mc-preview {
             align-items: center;
         }
+        &#{$block-name} {
+            &--grouped {
+                .multiselect {
+                    &__content {
+                        padding: $space-200;
+                    }
+                }
+            }
+            &--empty {
+                .multiselect {
+                    &__tags {
+                        padding: 0;
+                        border-radius: $radius-100 !important;
+                    }
+                    &__placeholder {
+                        padding-inline-start: $space-150;
+                    }
+                    &__select {
+                        display: block;
+                    }
+                }
+            }
+        }
         .multiselect {
             &__content {
                 padding: 0;
@@ -1043,6 +1076,20 @@ export default {
             &__content-wrapper,
             &__tags {
                 border-radius: $radius-200 !important;
+            }
+            &__option {
+                padding: $space-200 $space-150;
+                &--group {
+                    padding: 0 0 $space-100 0;
+                    min-height: auto;
+                }
+            }
+            &__element {
+                &:not([role='option']) {
+                    &:not(:first-of-type) {
+                        margin-top: $space-300;
+                    }
+                }
             }
         }
     }
