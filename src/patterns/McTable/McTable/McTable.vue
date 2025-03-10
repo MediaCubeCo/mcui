@@ -23,7 +23,7 @@
         <component
             :is="tag"
             v-bind="attrs"
-            v-on="{ ...$listeners, 'sort-change': this.handleSort }"
+            v-on="{ ...$listeners, 'sort-change': handleSort }"
             @scroll="handleScroll"
             @context-menu-click="contextMenuClickEvent"
             :empty-render="{ name: 'noData' }"
@@ -428,8 +428,13 @@ export default {
                 if (this.mergeCells?.length) this.$refs.xTable.setMergeCells(this.mergeCells)
             }
         },
-        reloadData() {
-            this.$refs.xTable.reloadData(this.items)
+        async reloadData() {
+            // Доастаем отсортированную колонку и выполняем сортировку вручную, чтобы предотвратить сброс на релоаде
+            const [sortState] = this.$refs.xTable.getSortColumns() || []
+            await this.$refs.xTable.reloadData(this.items)
+            if (sortState) {
+                this.$refs.xTable.sort(sortState.property, sortState.order)
+            }
         },
         async updateData() {
             await this.$refs.xTable.updateData()
