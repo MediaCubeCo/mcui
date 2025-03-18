@@ -126,10 +126,9 @@ export default {
         },
         commentWithLinks() {
             const regExp = /((http|https):\/\/)?(([0-9a-zA-Zа-яА-Я.-]*)\.([a-zA-Zа-яА-Я]+[^\s,.;:'"\])]+)(\/[^ ,.;\/\])]*)?)/gi
-            if (/\.(jpg|jpeg|png|svg|pdf|csv|webp|doc|docx)$/i.test(match)) {
-                return match
-            }
             return this.comment.content.replace(regExp, match => {
+                // Проверяем, является ли match файлом
+                if (/\.(jpg|jpeg|png|svg|pdf|csv|webp|doc|docx)$/i.test(match)) return match
                 const url = /^http/.test(match) ? match : `http://${match}`
                 return `<a class="mc-chat-comment__link" href='${url}' target="_blank">${match.trim()}</a>`
             })
