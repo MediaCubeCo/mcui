@@ -244,6 +244,9 @@ export default {
             width: $size-300;
             background: linear-gradient(90deg, hsla(0, 0%, 100%, 0) 0, $color-white);
         }
+        &:empty {
+            display: none;
+        }
     }
     &__header-right {
         @extend .mc-table-col__right;
