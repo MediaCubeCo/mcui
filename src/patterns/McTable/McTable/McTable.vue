@@ -776,17 +776,18 @@ export default {
     }
 
     .vxe-body--row {
-        &.row--current {
-            td,
-            th {
-                background-color: color-mix(in srgb, var(--color-main) 10%, #fff 90%) !important;
+        &.row {
+            &--current {
+                td,
+                th {
+                    background-color: color-mix(in srgb, var(--color-main) 10%, #fff 90%) !important;
+                }
             }
-        }
-
-        &:hover {
-            td,
-            th {
-                background-color: $color-hover-gray;
+            &--hover {
+                td:last-child,
+                td:first-child {
+                    background-color: $color-hover-gray;
+                }
             }
         }
     }
