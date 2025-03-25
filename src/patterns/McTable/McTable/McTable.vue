@@ -44,7 +44,11 @@
         </component>
         <div v-if="sortLoading || $attrs.loading" :class="footerClasses" class="mc-table-wrapper__footer">
             <div v-if="footerInfo !== 'total'" class="mc-table-wrapper__tint"></div>
-            <div v-if="($attrs.loading && scrollIsBottom) || sortLoading" class="mc-table-wrapper__loading">
+            <div
+                v-if="($attrs.loading && scrollIsBottom) || sortLoading"
+                :style="loadingWrapperStyle"
+                class="mc-table-wrapper__loading"
+            >
                 <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader" />
                 <mc-title color="outline-gray">{{ placeholders.loading }}</mc-title>
             </div>
@@ -330,6 +334,11 @@ export default {
             }
             return attrs
         },
+        loadingWrapperStyle() {
+            return {
+                width: this.cardIsOpen ? `${this.firstColsWidth}px` : '100%',
+            }
+        },
         canShowLoader() {
             return !this.scrollable && this.hasMore
         },
@@ -404,6 +413,13 @@ export default {
         },
         '$attrs.loading'() {
             this.checkHorizontalScroll()
+        },
+        totalFooter() {
+            if (this.footerInfo === 'total') {
+                this.$nextTick(() => {
+                    this.api.updateFooter()
+                })
+            }
         },
     },
     mounted() {
@@ -491,6 +507,7 @@ export default {
                     ? columns.filter((c, i) => !!i)
                     : columns.filter(col => col.fixed !== 'left')
                 hideColumns.forEach(col => (col.visible = false))
+                this.tableBodyScrollLeft = false
                 this.$refs.xTable.refreshColumn()
             } else {
                 this.$refs.xTable.resetColumn()
