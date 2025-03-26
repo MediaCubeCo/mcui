@@ -61,13 +61,11 @@
 import noTableDataIcon from '../../../assets/img/no_table_data.png'
 import _throttle from 'lodash/throttle'
 import _isEmpty from 'lodash/isEmpty'
-import _isEqual from 'lodash/isEqual'
 
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
 import McTableCol from '../McTableCol/McTableCol'
 import McOverlay from '../../McOverlay/McOverlay.vue'
-import McInfinityLoadingIndicator from 'mediacube-ui/src/elements/McInfinityLoadingIndicator/McInfinityLoadingIndicator.vue'
 
 /**
  *  More info: https://xuliangzhan.com/vxe-table, https://xuliangzhan.github.io/vxe-table
@@ -75,7 +73,6 @@ import McInfinityLoadingIndicator from 'mediacube-ui/src/elements/McInfinityLoad
 export default {
     name: 'McTable',
     components: {
-        McInfinityLoadingIndicator,
         McTitle,
         McSvgIcon,
         McTableCol,
