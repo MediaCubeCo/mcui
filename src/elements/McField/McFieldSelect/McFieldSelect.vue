@@ -440,6 +440,7 @@ export default {
                 [`mc-field-select--bg-${this.backgroundColor}`]: this.backgroundColor,
                 'mc-field-select--is-empty-options-list': this.isEmptyOptions,
                 'mc-field-select--with-preview': this.optionWithPreview,
+                'mc-field-select--hide-arrow': !!this.$slots.arrow,
                 'mc-field-select--grouped': this.groupKeys,
                 'mc-field-select--max-height': this.maxHeight,
                 'mc-field-select--empty': !this._value,
@@ -996,6 +997,13 @@ export default {
             }
         }
     }
+    &--hide-arrow {
+        .multiselect {
+            &__select {
+                display: none !important;
+            }
+        }
+    }
 
     &--is-empty-options-list {
         .multiselect {
@@ -1060,8 +1068,14 @@ export default {
             &__content {
                 padding: 0;
             }
+            &--active {
+                .multiselect__select {
+                    transform: translateY(-50%) rotate(180deg);
+                }
+            }
             &__select {
-                display: none;
+                top: 50%;
+                transform: translateY(-50%);
             }
             &__single {
                 margin: 0;
