@@ -358,7 +358,7 @@ export default {
                     height: 42px;
                 }
                 &.open {
-                    max-height: 230px;
+                    max-height: calc((8 * 46px) - 4px);
                 }
             }
         }
