@@ -352,6 +352,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Спрятать ли селект
+         */
+        hideSelect: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -445,6 +452,7 @@ export default {
                 'mc-field-select--max-height': this.maxHeight,
                 'mc-field-select--empty': !this._value,
                 'mc-field-select--rtl': this.rtl,
+                'mc-field-select--hide-select': this.hideSelect,
             }
         },
         isEmptyOptions() {
@@ -998,6 +1006,15 @@ export default {
         }
     }
     &--hide-arrow {
+        .multiselect {
+            &__select {
+                display: none !important;
+            }
+        }
+    }
+    
+    &--hide-select {
+        pointer-events: none;
         .multiselect {
             &__select {
                 display: none !important;
