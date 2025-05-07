@@ -304,9 +304,6 @@ export default {
 @import '../../tokens/z-indexes';
 @import '../../tokens/durations';
 @import '../../tokens/font-families';
-.v--modal-block-scroll {
-    width: 100%;
-}
 
 .mc-modal {
     $block-name: &;
@@ -687,6 +684,15 @@ export default {
             #{$block-name} {
                 &__btn-back {
                     transform: rotate(180deg);
+                }
+            }
+        }
+        .v--modal-block-scroll {
+            width: 100%;
+            // При открытой модалке на мобилках, когда она занимает весь экран - прячем весь другой контент, чтобы на ios при скроллах не видеть его
+            @media #{$media-query-s-down} {
+                *:has(> #{$block-name}) > *:not(#{$block-name}) {
+                    opacity: 0;
                 }
             }
         }
