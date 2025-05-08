@@ -2,6 +2,70 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.377](https://github.com/MediaCubeCo/mcui/compare/v0.1.376...v0.1.377) (2025-05-08)
+
+### [0.1.376](https://github.com/MediaCubeCo/mcui/compare/v0.1.375...v0.1.376) (2025-05-07)
+
+### [0.1.375](https://github.com/MediaCubeCo/mcui/compare/v0.1.374...v0.1.375) (2025-05-06)
+
+### [0.1.374](https://github.com/MediaCubeCo/mcui/compare/v0.1.373...v0.1.374) (2025-05-05)
+
+### [0.1.373](https://github.com/MediaCubeCo/mcui/compare/v0.1.372...v0.1.373) (2025-04-24)
+
+### [0.1.372](https://github.com/MediaCubeCo/mcui/compare/v0.1.371...v0.1.372) (2025-04-21)
+
+### [0.1.371](https://github.com/MediaCubeCo/mcui/compare/v0.1.370...v0.1.371) (2025-04-04)
+
+### [0.1.370](https://github.com/MediaCubeCo/mcui/compare/v0.1.369...v0.1.370) (2025-04-01)
+
+### [0.1.369](https://github.com/MediaCubeCo/mcui/compare/v0.1.368...v0.1.369) (2025-03-25)
+
+### [0.1.368](https://github.com/MediaCubeCo/mcui/compare/v0.1.367...v0.1.368) (2025-03-25)
+
+### [0.1.367](https://github.com/MediaCubeCo/mcui/compare/v0.1.366...v0.1.367) (2025-03-24)
+
+### [0.1.366](https://github.com/MediaCubeCo/mcui/compare/v0.1.365...v0.1.366) (2025-03-18)
+
+### [0.1.365](https://github.com/MediaCubeCo/mcui/compare/v0.1.364...v0.1.365) (2025-03-17)
+
+### [0.1.364](https://github.com/MediaCubeCo/mcui/compare/v0.1.363...v0.1.364) (2025-03-10)
+
+### [0.1.363](https://github.com/MediaCubeCo/mcui/compare/v0.1.362...v0.1.363) (2025-03-05)
+
+### [0.1.362](https://github.com/MediaCubeCo/mcui/compare/v0.1.361...v0.1.362) (2025-02-18)
+
+### [0.1.361](https://github.com/MediaCubeCo/mcui/compare/v0.1.360...v0.1.361) (2025-02-11)
+
+### [0.1.360](https://github.com/MediaCubeCo/mcui/compare/v0.1.359...v0.1.360) (2025-02-07)
+
+### [0.1.359](https://github.com/MediaCubeCo/mcui/compare/v0.1.358...v0.1.359) (2025-02-04)
+
+### [0.1.358](https://github.com/MediaCubeCo/mcui/compare/v0.1.357...v0.1.358) (2025-01-31)
+
+### [0.1.357](https://github.com/MediaCubeCo/mcui/compare/v0.1.356...v0.1.357) (2025-01-17)
+
+### [0.1.356](https://github.com/MediaCubeCo/mcui/compare/v0.1.355...v0.1.356) (2025-01-17)
+
+### [0.1.355](https://github.com/MediaCubeCo/mcui/compare/v0.1.354...v0.1.355) (2025-01-16)
+
+### [0.1.354](https://github.com/MediaCubeCo/mcui/compare/v0.1.353...v0.1.354) (2025-01-15)
+
+### [0.1.353](https://github.com/MediaCubeCo/mcui/compare/v0.1.352...v0.1.353) (2025-01-14)
+
+### [0.1.352](https://github.com/MediaCubeCo/mcui/compare/v0.1.351...v0.1.352) (2025-01-14)
+
+### [0.1.351](https://github.com/MediaCubeCo/mcui/compare/v0.1.350...v0.1.351) (2025-01-08)
+
+### [0.1.350](https://github.com/MediaCubeCo/mcui/compare/v0.1.349...v0.1.350) (2025-01-08)
+
+### [0.1.349](https://github.com/MediaCubeCo/mcui/compare/v0.1.348...v0.1.349) (2024-12-18)
+
+### [0.1.348](https://github.com/MediaCubeCo/mcui/compare/v0.1.347...v0.1.348) (2024-12-18)
+
+### [0.1.347](https://github.com/MediaCubeCo/mcui/compare/v0.1.346...v0.1.347) (2024-12-18)
+
+### [0.1.346](https://github.com/MediaCubeCo/mcui/compare/v0.1.345...v0.1.346) (2024-12-11)
+
 ### [0.1.345](https://github.com/MediaCubeCo/mcui/compare/v0.1.344...v0.1.345) (2024-12-10)
 
 ### [0.1.344](https://github.com/MediaCubeCo/mcui/compare/v0.1.343...v0.1.344) (2024-12-09)

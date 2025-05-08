@@ -99,7 +99,7 @@
                 max-width="100%"
                 :ellipsis="false"
                 class="mc-field-text__error-text"
-                v-html="errorText.replace(/-/gm, '&#x2011;')"
+                v-html="errorText.replace(/\u2011|\u2014|%E2%80%91/gm, '-')"
             />
             <br v-if="errorText" />
             <!-- @slot Слот доп. текста под инпутом -->

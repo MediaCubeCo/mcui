@@ -23,9 +23,10 @@
         <component
             :is="tag"
             v-bind="attrs"
+            :empty-render="{ name: 'noData' }"
             v-on="{ ...$listeners, 'sort-change': handleSort }"
-            @scroll="handleScroll"
             @context-menu-click="contextMenuClickEvent"
+            @scroll="handleScroll"
         >
             <!-- @slot Слот дочерних mc-table-col -->
             <slot />
@@ -43,7 +44,11 @@
         </component>
         <div v-if="sortLoading || $attrs.loading" :class="footerClasses" class="mc-table-wrapper__footer">
             <div v-if="footerInfo !== 'total'" class="mc-table-wrapper__tint"></div>
-            <div v-if="($attrs.loading && scrollIsBottom) || sortLoading" class="mc-table-wrapper__loading">
+            <div
+                v-if="($attrs.loading && scrollIsBottom) || sortLoading"
+                :style="loadingWrapperStyle"
+                class="mc-table-wrapper__loading"
+            >
                 <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader" />
                 <mc-title color="outline-gray">{{ placeholders.loading }}</mc-title>
             </div>
@@ -56,7 +61,6 @@
 import noTableDataIcon from '../../../assets/img/no_table_data.png'
 import _throttle from 'lodash/throttle'
 import _isEmpty from 'lodash/isEmpty'
-import _isEqual from 'lodash/isEqual'
 
 import McTitle from '../../../elements/McTitle/McTitle'
 import McSvgIcon from '../../../elements/McSvgIcon/McSvgIcon'
@@ -102,6 +106,14 @@ export default {
          *  собственный скролл
          */
         scrollable: {
+            type: Boolean,
+            default: false,
+        },
+        fixedFirstColumn: {
+            type: Boolean,
+            default: false,
+        },
+        fixedLastColumn: {
             type: Boolean,
             default: false,
         },
@@ -276,6 +288,8 @@ export default {
             firstColsWidth: 253,
             hasHorizontalScroll: false,
             scrollIsBottom: false,
+            tableBodyScrollLeft: false,
+            tableBodyScrollRight: true,
         }
     },
     computed: {
@@ -285,10 +299,12 @@ export default {
         attrs() {
             const attrs = {
                 ref: 'xTable',
+                data: this.items,
+                'merge-cells': this.mergeCells,
                 'context-menu': this.tableMenu,
                 class: this.classes,
                 'sync-resize': this.cardIsOpen,
-                'scroll-y': this.scrollY,
+                'scroll-y': { ...this.scrollY, offset: 30, mode: 'slide' },
                 'show-footer': this.canShowFooter,
                 'footer-method': this.footerMethod,
                 'sort-config': {
@@ -301,6 +317,7 @@ export default {
                     theme: 'mcui-black',
                 },
                 'row-id': 'id',
+                'key-field': 'id',
                 'highlight-hover-row': !this.skeletonLoad,
                 'highlight-current-row': true,
                 'show-header-overflow': 'tooltip',
@@ -313,6 +330,11 @@ export default {
                 delete attrs.loading
             }
             return attrs
+        },
+        loadingWrapperStyle() {
+            return {
+                width: this.cardIsOpen ? `${this.firstColsWidth}px` : '100%',
+            }
         },
         canShowLoader() {
             return !this.scrollable && this.hasMore
@@ -337,6 +359,10 @@ export default {
                 'mc-table--clickable': this.$listeners['cell-click'],
                 'mc-table--header-break-word': this.headerBreakWord,
                 'mc-table--mono-font': this.monoFont,
+                'mc-table--fixed-first-col': this.fixedFirstColumn,
+                'mc-table--fixed-last-col': this.fixedLastColumn,
+                'mc-table--scrolled-left-x-axis': !!this.tableBodyScrollLeft,
+                'mc-table--scrolled-right-x-axis': !!this.tableBodyScrollRight,
             }
         },
         wrapperStyles() {
@@ -379,37 +405,21 @@ export default {
         },
     },
     watch: {
-        canShowFooter(newValue) {
-            newValue && this.updateData()
-        },
-        totalFooter: {
-            handler: async function(newVal) {
-                newVal && (await this.loadData(true))
-            },
-            deep: true,
-        },
-        items: {
-            handler: async function(newVal, oldVal) {
-                if (_isEqual(newVal, oldVal)) return
-                if (newVal.length !== oldVal.length) {
-                    newVal && (await this.loadData(true))
-                } else {
-                    newVal && (await this.setFirstColsWidth())
-                    await this.reloadData()
-                }
-            },
-            deep: true,
-        },
         cardIsOpen(newVal) {
             this.toggleColumns(newVal)
         },
         '$attrs.loading'() {
             this.checkHorizontalScroll()
         },
+        totalFooter() {
+            if (this.footerInfo === 'total') {
+                this.$nextTick(() => {
+                    this.api.updateFooter()
+                })
+            }
+        },
     },
     mounted() {
-        this.loadData()
-        !this.scrollable && this.createObserver()
         this.setFirstColsWidth()
         window.addEventListener('resize', this.checkHorizontalScroll)
     },
@@ -418,34 +428,6 @@ export default {
         window.removeEventListener('resize', this.checkHorizontalScroll)
     },
     methods: {
-        async loadData(force = false) {
-            if ((this.items && this.items.length) || force) {
-                await this.$refs.xTable.loadData(this.items)
-                !this.scrollable && this.setObserveElement()
-                this.hasMore && this.checkOccupancy()
-                // После обновления данных в таблице обязательно мержим ячейки, если они указаны
-                if (this.mergeCells?.length) this.$refs.xTable.setMergeCells(this.mergeCells)
-            }
-        },
-        async reloadData() {
-            // Доастаем отсортированную колонку и выполняем сортировку вручную, чтобы предотвратить сброс на релоаде
-            const [sortState] = this.$refs.xTable.getSortColumns() || []
-            await this.$refs.xTable.reloadData(this.items)
-            if (sortState) {
-                this.$refs.xTable.sort(sortState.property, sortState.order)
-            }
-        },
-        async updateData() {
-            await this.$refs.xTable.updateData()
-        },
-        checkOccupancy() {
-            if (!this.$refs.xTable || !this.items?.length) return
-            const tableHeight = this.$refs.xTable.$el.getBoundingClientRect().height
-            const tableDataHeight = this.$refs.xTable.rowHeight * this.items.length
-            if (tableHeight >= tableDataHeight) {
-                this.load()
-            }
-        },
         formattedNumber(value, decimals = 2, is_rtl = false) {
             if (value == null) return null
 
@@ -472,14 +454,6 @@ export default {
                 }),
             ]
         },
-        handleScroll: _throttle(function({ scrollTop, $event, type, isY, $table }) {
-            const bottomPos = Math.ceil($event.target.scrollHeight - $event.target.clientHeight)
-            const isLoadArea = bottomPos - scrollTop <= $table._data.rowHeight * this.rowsToStartLoad
-            this.scrollIsBottom = scrollTop / bottomPos > 0.95
-            if (isLoadArea && !this.$attrs.loading && this.hasMore && type === 'body' && isY) {
-                this.load()
-            }
-        }, 200),
         load() {
             /**
              * Событие по подгрузке данных
@@ -487,22 +461,24 @@ export default {
              */
             this.$emit('load')
         },
-        createObserver() {
-            this.observer = new IntersectionObserver(
-                entries => {
-                    const entry = entries[0]
-                    if (entry.isIntersecting) {
-                        this.load()
-                    }
-                },
-                { threshold: 0.1 },
-            )
-            this.setObserveElement()
+        handleScroll({ $event, type, isY, isX }) {
+            if (type === 'body' && isX) {
+                this.tableBodyScrollLeft = !!$event.target.scrollLeft
+                this.tableBodyScrollRight =
+                    $event.target.scrollLeft + $event.target.clientWidth < $event.target.scrollWidth
+            }
+            if (type === 'body' && isY) {
+                this.checkVerticalScroll(...arguments)
+            }
         },
-        setObserveElement() {
-            const loader = this.$refs.xTable.$el.getElementsByClassName('mc-table-col__loader')
-            this.observer && loader.length && this.observer.observe(loader[0])
-        },
+        checkVerticalScroll: _throttle(function({ scrollTop, $event, type, isY, isX, $table }) {
+            const bottomPos = Math.ceil($event.target.scrollHeight - $event.target.clientHeight)
+            const isLoadArea = bottomPos - scrollTop <= $table._data.rowHeight * this.rowsToStartLoad
+            this.scrollIsBottom = scrollTop / bottomPos > 0.95
+            if (isLoadArea && !this.$attrs.loading && this.hasMore) {
+                this.load()
+            }
+        }, 200),
         setFirstColsWidth() {
             const columns = this.$refs.xTable.getColumns()
             const leftFixedColumnsWidth = columns.reduce((sum, curr) => {
@@ -524,14 +500,17 @@ export default {
         toggleColumns(val) {
             if (val) {
                 const columns = this.$refs.xTable.getColumns()
-                const hideColumns = columns.filter(col => col.fixed !== 'left')
+                const hideColumns = this.fixedFirstColumn
+                    ? columns.filter((c, i) => !!i)
+                    : columns.filter(col => col.fixed !== 'left')
                 hideColumns.forEach(col => (col.visible = false))
+                this.tableBodyScrollLeft = false
                 this.$refs.xTable.refreshColumn()
             } else {
                 this.$refs.xTable.resetColumn()
             }
-            this.$refs.xTable.recalculate()
-            this.$refs.xTable.syncData() // Синхронит данные таблиц (фикс колонка === отдельная таблица)
+            // this.$refs.xTable.recalculate()
+            // this.$refs.xTable.syncData() // Синхронит данные таблиц (фикс колонка === отдельная таблица)
             this.checkHorizontalScroll()
         },
         getFixedHeight(val) {
@@ -591,6 +570,7 @@ export default {
 @import '../../../styles/mixins';
 @import '../../../tokens/font-families';
 @import '../../../tokens/animations';
+@import '../../../tokens/z-indexes';
 
 @import '~vxe-table/styles/variable.scss';
 
@@ -600,10 +580,12 @@ export default {
 
 .vxe-table {
     font-family: $font-family-main;
+
     &--tooltip-wrapper {
         .vxe-table--tooltip-content {
             white-space: normal;
         }
+
         &.theme--mcui-black {
             background: $color-black;
             color: $color-white;
@@ -616,26 +598,39 @@ export default {
             padding: $space-100 $space-150;
         }
     }
+
     .vxe-body--row.row--cheched {
         background-color: var(--color-main-alpha-10);
     }
+
     .fixed-left--wrapper {
         scrollbar-width: none;
     }
+
+    &--empty-block {
+        display: block !important;
+        height: 1px;
+        min-height: 1px !important;
+    }
 }
+
 .mc-table-wrapper {
     position: relative;
+
     &__footer {
         @include position(absolute, null 0 0 0);
-        z-index: 2;
+        z-index: 3;
+
         &--indent-bottom {
             bottom: 5px;
         }
     }
+
     &__tint {
         height: $size-900;
         background: linear-gradient(0deg, $color-white 0%, rgba(255, 255, 255, 0) 100%);
     }
+
     &__loading {
         display: flex;
         align-items: center;
@@ -644,13 +639,16 @@ export default {
         background-color: $color-white;
         color: $color-outline-gray;
         @include child-indent-right($space-100);
+
         .mc-title {
             width: auto;
         }
     }
+
     &__load-icon {
         animation: $animation-spinner;
     }
+
     .skeleton-load {
         &-wrapper {
             display: flex;
@@ -658,7 +656,7 @@ export default {
             max-width: 100%;
             position: absolute;
             height: 100%;
-            z-index: 19;
+            z-index: $z-index-modal;
             background-color: $color-white;
             user-select: none;
         }
@@ -673,11 +671,13 @@ export default {
                     padding: $space-50 0;
                 }
             }
+
             .vxe-body--row {
                 font-feature-settings: 'tnum';
                 font-variant-numeric: tabular-nums;
             }
         }
+
         .vxe-table--footer {
             .vxe-footer--row {
                 font-feature-settings: 'tnum';
@@ -685,16 +685,122 @@ export default {
             }
         }
     }
+
+    &--fixed-first-col {
+        .vxe-header--row,
+        .vxe-body--row,
+        .vxe-footer--row {
+            td:first-child,
+            th:first-child {
+                position: sticky;
+                left: 0;
+                background-color: white;
+                z-index: 3;
+            }
+        }
+
+        .vxe-footer--row {
+            td {
+                border-block-start: 1px solid $color-hover-gray;
+            }
+        }
+    }
+
+    &--fixed-last-col {
+        .vxe-header--row,
+        .vxe-body--row,
+        .vxe-footer--row {
+            td:last-child,
+            th:last-child {
+                position: sticky;
+                right: 0;
+                background-color: white;
+                z-index: 3;
+
+                &:empty {
+                    display: none;
+                }
+            }
+        }
+
+        .vxe-footer--row {
+            td {
+                border-block-start: 1px solid $color-hover-gray;
+            }
+        }
+    }
+
+    &--scrolled-left-x-axis {
+        &.mc-table--fixed-first-col {
+            .vxe-header--row,
+            .vxe-body--row,
+            .vxe-footer--row {
+                td:first-child,
+                th:first-child {
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 100%;
+                        width: 12px;
+                        height: 100%;
+                        background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.12) 100%);
+                    }
+                }
+            }
+        }
+    }
+
+    &--scrolled-right-x-axis {
+        &.mc-table--fixed-last-col {
+            .vxe-header--row,
+            .vxe-body--row,
+            .vxe-footer--row {
+                td:last-child,
+                th:last-child {
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        right: 100%;
+                        width: 12px;
+                        height: 100%;
+                        background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.12) 100%);
+                    }
+                }
+            }
+        }
+    }
+
+    .vxe-body--row {
+        &.row {
+            &--current {
+                td,
+                th {
+                    background-color: color-mix(in srgb, var(--color-main) 10%, #fff 90%) !important;
+                }
+            }
+            &--hover {
+                td:last-child,
+                td:first-child {
+                    background-color: $color-hover-gray;
+                }
+            }
+        }
+    }
+
     &--open-card {
         .vxe-table--body-wrapper,
         .vxe-table--footer-wrapper {
             overflow-x: hidden;
             width: fit-content;
         }
+
         .vxe-table--footer {
             display: none;
         }
     }
+
     &--clickable {
         .vxe-table--body {
             .vxe-body--row {
@@ -702,6 +808,7 @@ export default {
             }
         }
     }
+
     &--header-break-word {
         .vxe-header--column {
             .vxe-cell--title {
@@ -712,12 +819,15 @@ export default {
             }
         }
     }
+
     &__context-menu {
         width: 250px;
+
         .vxe-context-menu--link {
             width: 100%;
         }
     }
+
     .vxe-header--row {
         .col--checkbox {
             .vxe-cell {
@@ -727,13 +837,16 @@ export default {
             }
         }
     }
+
     .vxe-cell--checkbox {
         z-index: 1;
+
         &:hover {
             .vxe-checkbox--icon::before {
                 border-color: var(--color-main) !important;
             }
         }
+
         &.is--checked,
         &.is--indeterminate {
             .vxe-checkbox--icon::before {
@@ -742,6 +855,7 @@ export default {
             }
         }
     }
+
     .vxe-header--column {
         .vxe-cell {
             &--title {
@@ -749,22 +863,31 @@ export default {
                 align-items: center;
             }
         }
+
         &.is--sortable {
             cursor: pointer;
         }
     }
+
     .vxe-table--footer {
         border-bottom: 1px solid $color-hover-gray;
+
+        &-wrapper {
+            border: none;
+        }
     }
+
     .vxe-cell {
         padding-inline-start: $space-200;
         padding-inline-end: $space-200;
         word-break: break-word;
+
         &--checkbox {
             display: flex;
             align-items: center;
             max-width: 100%;
             padding-inline-start: 1.8em;
+
             .vxe-checkbox--icon {
                 margin-inline-end: $space-50;
                 top: 50%;
@@ -772,8 +895,10 @@ export default {
             }
         }
     }
+
     @include custom-scroll();
 }
+
 @mixin gradient() {
     background: $color-hover-gray;
     background-image: -webkit-gradient(
@@ -802,6 +927,7 @@ export default {
         margin: 0 auto;
         width: 100%;
         overflow: hidden;
+
         &:after {
             content: '';
             position: absolute;
@@ -810,12 +936,14 @@ export default {
         }
     }
 }
+
 .loader {
     width: 100%;
     display: flex;
     align-items: center;
     height: $space-500;
     padding: $space-100 $space-200;
+
     .avatar {
         display: block;
         float: left;
@@ -826,12 +954,14 @@ export default {
         margin-inline-end: $space-50;
         @include gradient();
     }
+
     .preview-content {
         display: flex;
         flex-direction: column;
         width: 100%;
         @include child-indent-bottom($space-50);
     }
+
     .line {
         display: block;
         position: relative;
@@ -839,6 +969,7 @@ export default {
         width: 100%;
         @include gradient();
     }
+
     &--more-height {
         .line {
             height: 12px;
