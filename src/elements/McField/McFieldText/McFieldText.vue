@@ -496,7 +496,7 @@ export default {
 
         inputAttrs() {
             return {
-                class: 'mc-field-text__input',
+                class: this.inputClasses,
                 style: this.inputStyles,
                 placeholder: this.placeholder,
                 value: this.computedValue,
@@ -506,6 +506,16 @@ export default {
                 autocomplete: this.autocomplete,
                 tabindex: this.tabindex,
             }
+        },
+        inputClasses() {
+            return {
+              'mc-field-text__input': true,
+              'mc-field-text__input--text-normalized': this.isPhoneType && this.isRtl,
+            }
+        },
+        
+        isPhoneType() {
+          return this.type === 'phone_number'
         },
 
         isPasswordType() {
@@ -891,6 +901,10 @@ export default {
 
         @include input-placeholder() {
             color: $color-gray;
+        }
+        &--text-normalized {
+            text-align: right;
+            unicode-bidi: plaintext;
         }
     }
 
