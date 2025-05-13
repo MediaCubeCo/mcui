@@ -816,17 +816,27 @@ export default {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            @include child-indent-right($space-200);
-            > * {
-                @include child-indent-right($space-300);
+            flex-direction: column;
+            row-gap: $space-150;
+            @media #{$media-query-m} {
+                flex-direction: row;
+                @include child-indent-right($space-200);
+                > * {
+                    @include child-indent-right($space-300);
+                }
             }
             &-periods {
-                @include child-indent-right(0);
-                column-gap: $space-300;
                 row-gap: $space-100;
                 align-items: center;
                 display: flex;
                 flex-wrap: wrap;
+                width: 100%;
+                justify-content: space-between;
+                @media #{$media-query-m} {
+                    width: auto;
+                    column-gap: $space-300;
+                    @include child-indent-right($space-zero);
+                }
             }
             .mc-button {
                 @include child-indent-right($space-zero);
