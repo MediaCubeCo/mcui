@@ -34,7 +34,10 @@
             margin-inline-end: $space-50;
           }
           &:first-of-type {
-            margin-inline-start: $space-600;
+            margin-inline-start: auto;
+            @media #{$media-query-s} {
+              margin-inline-start: $space-600;
+            }
           }
           &:last-child {
             margin-inline-end: -$space-300; // TODO: refactor negative margin
