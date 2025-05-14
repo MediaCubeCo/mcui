@@ -635,7 +635,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: $size-700;
+        height: $size-500;
         background-color: $color-white;
         color: $color-outline-gray;
         @include child-indent-right($space-100);
