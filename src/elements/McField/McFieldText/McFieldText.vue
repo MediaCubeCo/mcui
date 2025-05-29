@@ -599,7 +599,7 @@ export default {
          * Remove leading zero from input if length > 1 && number isn't decimal
          * */
         handleRemoveLeadingZero(val) {
-            if (!this.removeLeadingZero) return
+            if (!this.removeLeadingZero) return val
             let result = val
             const [first_char] = val || []
             if (val.length > 1 && +first_char === 0 && val.indexOf('.') === -1) result = val.slice(1)
