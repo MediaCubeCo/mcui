@@ -607,7 +607,6 @@ export default {
                 case 'num': {
                     let [num] = /-?\d*[\.]?\d*/.exec(String(value)) || []
                     num = this.setDecimalsLimit(num)
-                    num = this.removeLeadingZero(num)
                     value = num
                     e.target.value = num
                     break
