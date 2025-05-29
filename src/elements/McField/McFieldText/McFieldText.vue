@@ -380,8 +380,14 @@ export default {
             type: Number,
             default: 2,
         },
+        /**
+         * Убираем ли лидирующий 0 01 -> 1 для числовых инпутов num/int/amount_format
+         */
+        removeLeadingZero: {
+            type: Boolean,
+            default: true,
+        },
     },
-
     data() {
         return {
             prependWidth: 0,
@@ -592,7 +598,8 @@ export default {
         /**
          * Remove leading zero from input if length > 1 && number isn't decimal
          * */
-        removeLeadingZero(val) {
+        handleRemoveLeadingZero(val) {
+            if (!this.removeLeadingZero) return val
             let result = val
             const [first_char] = val || []
             if (val.length > 1 && +first_char === 0 && val.indexOf('.') === -1) result = val.slice(1)
@@ -607,21 +614,21 @@ export default {
                 case 'num': {
                     let [num] = /-?\d*[\.]?\d*/.exec(String(value)) || []
                     num = this.setDecimalsLimit(num)
-                    num = this.removeLeadingZero(num)
+                    num = this.handleRemoveLeadingZero(num)
                     value = num
                     e.target.value = num
                     break
                 }
                 case 'int': {
                     let [int] = /-?\d*/.exec(String(e.target.value)) || []
-                    int = this.removeLeadingZero(int)
+                    int = this.handleRemoveLeadingZero(int)
                     value = int
                     e.target.value = int
                     break
                 }
                 case 'amount_format': {
                     value = this.setDecimalsLimit(value)
-                    value = this.removeLeadingZero(value)
+                    value = this.handleRemoveLeadingZero(value)
                     const cursor_position = this.getCaretPos(e.target)?.start
                     const prepared_value = this.formattedToNumber(value)
 
