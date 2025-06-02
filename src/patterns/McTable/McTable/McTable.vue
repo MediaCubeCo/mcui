@@ -418,6 +418,12 @@ export default {
                 })
             }
         },
+        items: {
+            handler(value) {
+                if (value && value.length) this.checkOccupancy()
+            },
+            immediate: true,
+        },
     },
     mounted() {
         this.setFirstColsWidth()
@@ -453,6 +459,14 @@ export default {
                     return null
                 }),
             ]
+        },
+        checkOccupancy() {
+            if (!this.$refs.xTable) return
+            const tableHeight = this.$refs.xTable.$el.getBoundingClientRect().height
+            const tableDataHeight = this.$refs.xTable.rowHeight * this.items.length
+            if (tableHeight >= tableDataHeight && this.hasMore) {
+                this.load()
+            }
         },
         load() {
             /**
