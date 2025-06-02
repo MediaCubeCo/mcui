@@ -290,8 +290,8 @@ pre {
     #{'--color-'}#{$name}: #{$color};
   }
   // Default main project colors
-  --color-main: $color-purple;
-  --color-main-dark: $color-hover-purple;
+  --color-main: #{$color-purple};
+  --color-main-dark: #{$color-hover-purple};
   @for $i from 1 through 10 {
     #{'--color-main-alpha-'}#{$i * 10}: #{rgba($color-purple, $i / 10)};
   }
