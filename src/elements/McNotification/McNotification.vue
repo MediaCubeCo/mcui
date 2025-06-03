@@ -24,9 +24,7 @@
                 <div slot="bottom" class="mc-notification__text">
                     <!-- @slot Слот для контента -->
                     <slot>
-                        <mc-title :color="variation" :ellipsis="false" max-width="100%">
-                            {{ content }}
-                        </mc-title>
+                        <mc-title :color="variation" pre-line :ellipsis="false" max-width="100%" v-html="content" />
                     </slot>
                 </div>
 
