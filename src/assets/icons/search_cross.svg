@@ -1,0 +1,6 @@
+<svg data-token-name="search_cross" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 5.0L16.0 8.0" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M19 8.0L16.0 5.0" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M21 21L15.65 15.65" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M13.35 3.6C11.88 2.98 10.26 2.83 8.70 3.2C7.14 3.57 5.76 4.43 4.74 5.65C3.72 6.87 3.09 8.38 3.0 10.0C2.91 11.62 3.35 13.2 4.21 14.51C5.07 15.83 6.32 16.84 7.83 17.39C9.34 17.94 11.03 18.0 12.62 17.56C14.21 17.12 15.68 16.2 16.78 14.84C17.88 13.48 18.46 11.74 18.46 10.0" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

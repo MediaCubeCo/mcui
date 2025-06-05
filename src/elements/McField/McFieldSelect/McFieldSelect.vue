@@ -28,7 +28,7 @@
                 </template>
                 <template slot="singleLabel" slot-scope="{ option }">
                     <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
-                        <template #left>
+                        <template #left v-if="option?.icon || option?.image">
                             <mc-avatar v-if="option.image" :src="option.image" size="400" />
                             <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
                         </template>
@@ -54,8 +54,8 @@
                 </template>
 
                 <template v-if="optionsTooltip || optionWithPreview" slot="option" slot-scope="{ option }">
-                    <mc-preview v-if="optionWithPreview && option.icon" class="option__desc" size="l">
-                        <template #left>
+                    <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
+                        <template v-if="option?.icon || option?.image" #left>
                             <mc-avatar v-if="option.image" :src="option.image" size="400" />
                             <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
                         </template>
