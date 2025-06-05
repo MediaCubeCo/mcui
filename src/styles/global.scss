@@ -292,10 +292,11 @@ pre {
   // Default main project colors
   --color-main: #{$color-purple};
   --color-main-dark: #{$color-hover-purple};
+  --color-main-light: #{$color-light-purple};
+
   @for $i from 1 through 10 {
     #{'--color-main-alpha-'}#{$i * 10}: #{rgba($color-purple, $i / 10)};
   }
-  --color-main-light: $color-light-purple;
   @each $name, $size in $token-icon-sizes {
     #{'--size-'}#{$name}: #{$size};
   }
