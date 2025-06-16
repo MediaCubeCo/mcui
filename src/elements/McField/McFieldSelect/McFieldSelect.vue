@@ -28,7 +28,7 @@
                 </template>
                 <template slot="singleLabel" slot-scope="{ option }">
                     <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
-                        <template #left v-if="option?.icon || option?.image">
+                        <template v-if="option?.icon || option?.image" #left>
                             <mc-avatar v-if="option.image" :src="option.image" size="400" />
                             <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
                         </template>
@@ -53,16 +53,26 @@
                     </div>
                 </template>
 
-                <template v-if="optionsTooltip || optionWithPreview" slot="option" slot-scope="{ option }">
-                    <mc-preview v-if="optionWithPreview" class="option__desc" size="l">
+                <template
+                    v-if="optionsTooltip || optionWithPreview || optionWithPreviewOnly"
+                    slot="option"
+                    slot-scope="{ option }"
+                >
+                    <mc-preview v-if="optionWithPreview || optionWithPreviewOnly" class="option__desc" size="l">
                         <template v-if="option?.icon || option?.image" #left>
                             <mc-avatar v-if="option.image" :src="option.image" size="400" />
                             <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
                         </template>
                         <mc-title slot="top" weight="semi-bold" v-html="option.name" />
-                        <mc-title slot="bottom" color="gray" :pre-line="option.preLine">{{ option.text }}</mc-title>
+                        <mc-title v-if="!!option.text" slot="bottom" color="gray" :pre-line="option.preLine"
+                            >{{ option.text }}
+                        </mc-title>
                     </mc-preview>
-                    <mc-title v-else-if="optionWithPreview && option.$isLabel" weight="semi-bold" variation="subtitle">
+                    <mc-title
+                        v-else-if="(optionWithPreview || optionWithPreviewOnly) && option.$isLabel"
+                        weight="semi-bold"
+                        variation="subtitle"
+                    >
                         {{ option.$groupLabel }}
                     </mc-title>
                     <mc-tooltip
@@ -121,6 +131,7 @@ import McPreview from '../../../patterns/McPreview/McPreview'
 import fieldErrors from '../../../mixins/fieldErrors'
 import equalFieldHeight from '../../../mixins/equalFieldHeight'
 import { LANGUAGES } from '../../../helpers/consts'
+
 export default {
     name: 'McFieldSelect',
     components: { McSvgIcon, McAvatar, McTitle, McTooltip, MultiSelect, McPreview },
@@ -306,6 +317,14 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         *  Если айтемам в селекте нужны превью с иконками и описанием
+         *  (только в выпадающем списке. Выбранное значение будет выводиться без описания)
+         */
+        optionWithPreviewOnly: {
+            type: Boolean,
+            default: false,
+        },
         tabindex: {
             type: [String, Number],
             default: null,
@@ -417,8 +436,8 @@ export default {
         computedOptions() {
             let options = !this.groupKeys
                 ? [...this.options, ...this.local_options].filter(
-                        (v, i, a) => a.findIndex(afi => afi.value === v.value) === i,
-                    )
+                      (v, i, a) => a.findIndex(afi => afi.value === v.value) === i,
+                  )
                 : this.options
             if (this.searchValueInOptions && this.taggable) {
                 const search = this.searchValue
@@ -617,7 +636,7 @@ export default {
                             iosViewportIndent -
                             ref.$refs.list.getBoundingClientRect().height -
                             8}px`
-                            ref.$refs.list.style.bottom = 'auto'
+                        ref.$refs.list.style.bottom = 'auto'
                         break
                     case 'bottom':
                         ref.$refs.list.style.bottom = 'auto'
@@ -727,6 +746,7 @@ export default {
 @import '../../../tokens/font-weights';
 @import '../../../tokens/sizes';
 @import '../../../tokens/spacings';
+
 .mc-field-select {
     $block-name: &;
     --mc-field-select-color: initial;
@@ -775,6 +795,7 @@ export default {
         line-height: $line-height-200;
         padding-inline-start: $space-50;
         color: var(--mc-field-select-label-color);
+
         &--indent-left {
             margin-inline-start: $space-300;
         }
@@ -825,6 +846,7 @@ export default {
             top: 6px;
             padding: 0;
             z-index: 1;
+
             &::before {
                 direction: ltr;
                 width: 0;
@@ -845,9 +867,11 @@ export default {
             padding-inline: $space-100 $space-500;
             overflow: hidden;
             text-align: start;
+
             &:hover {
                 border-color: var(--color-main);
             }
+
             &:before {
                 content: '';
                 position: absolute;
@@ -953,6 +977,7 @@ export default {
                 background-color: $color-hover-gray;
                 color: $color-black;
             }
+
             &--selected {
                 background-color: var(--color-main-alpha-10) !important;
                 color: $color-black !important;
@@ -962,6 +987,12 @@ export default {
             &--group.multiselect__option--disabled {
                 background-color: $color-white !important;
             }
+
+            .option__desc {
+                .mc-preview__bottom {
+                    margin-top: 0;
+                }
+            }
         }
 
         &--active {
@@ -970,8 +1001,10 @@ export default {
                     &:before {
                         background-color: $color-transparent;
                     }
+
                     border-color: var(--mc-field-select-border-color);
                 }
+
                 &__select {
                     &::before {
                         border-color: var(--color-main) $color-transparent $color-transparent;
@@ -979,6 +1012,7 @@ export default {
                 }
             }
         }
+
         &__spinner {
             &:after,
             &:before {
@@ -997,6 +1031,7 @@ export default {
             }
         }
     }
+
     &--hide-arrow {
         .multiselect {
             &__select {
@@ -1015,20 +1050,25 @@ export default {
 
     &--disabled {
         cursor: not-allowed;
+
         .multiselect--disabled {
             opacity: 1;
             background: transparent;
+
             .multiselect {
                 &__placeholder {
                     color: $color-gray;
                 }
+
                 &__single {
                     & #{$block-name}__label-text {
                         color: $color-gray;
                     }
                 }
+
                 &__select {
                     background-color: transparent;
+
                     &::before {
                         border-color: $color-outline-gray transparent transparent;
                     }
@@ -1041,6 +1081,7 @@ export default {
         .mc-preview {
             align-items: center;
         }
+
         &#{$block-name} {
             &--grouped {
                 .multiselect {
@@ -1049,55 +1090,67 @@ export default {
                     }
                 }
             }
+
             &--empty {
                 .multiselect {
                     &__tags {
                         padding: 0;
                         border-radius: $radius-100 !important;
                     }
+
                     &__placeholder {
                         padding-inline-start: $space-150;
                     }
+
                     &__select {
                         display: block;
                     }
                 }
             }
         }
+
         .multiselect {
             &__content {
                 padding: 0;
             }
+
             &--active {
                 .multiselect__select {
                     transform: translateY(-50%) rotate(180deg);
                 }
             }
+
             &__select {
                 top: 50%;
                 transform: translateY(-50%);
             }
+
             &__single {
                 margin: 0;
             }
+
             &__tags {
                 padding: $space-200 0;
                 padding-inline: $space-150;
                 cursor: pointer;
                 border-color: $color-outline-light;
             }
+
             &__option,
             &__content-wrapper,
             &__tags {
                 border-radius: $radius-200 !important;
             }
+
             &__option {
                 padding: $space-200 $space-150;
+
                 &--group {
                     padding: 0 0 $space-100 0;
                     min-height: auto;
                 }
             }
+
             &__element {
                 &:not([role='option']) {
                     &:not(:first-of-type) {
@@ -1115,6 +1168,7 @@ export default {
                 overflow-y: auto;
                 position: initial;
             }
+
             &__spinner {
                 background: transparent;
                 right: calc(#{$space-50} / 2);
@@ -1139,15 +1193,19 @@ export default {
             z-index: 1;
             width: auto;
         }
+
         &-toggle {
             pointer-events: auto;
+
             &:before {
                 border-color: black transparent transparent !important;
             }
+
             &--close {
                 transform: rotate(180deg);
             }
         }
+
         .multiselect__tags {
             display: flex;
             justify-content: space-between;
