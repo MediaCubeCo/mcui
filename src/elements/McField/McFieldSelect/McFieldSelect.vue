@@ -436,7 +436,13 @@ export default {
         computedOptions() {
             let options = !this.groupKeys
                 ? [...this.options, ...this.local_options].filter(
-                      (v, i, a) => a.findIndex(afi => afi.value === v.value) === i,
+                      (v, i, a) =>
+                          a.findIndex(afi => {
+                              if (typeof afi.value === 'object') {
+                                  return JSON.stringify(afi.value) === JSON.stringify(v.value)
+                              }
+                              return String(afi.value) === String(v.value)
+                          }) === i,
                   )
                 : this.options
             if (this.searchValueInOptions && this.taggable) {
@@ -580,7 +586,13 @@ export default {
 
             //Делаем Юник, что бы опции не повторялись
             this.local_options = this.local_options.filter(
-                (v, i, a) => a.findIndex(afi => String(afi.value) === String(v.value)) === i,
+                (v, i, a) =>
+                    a.findIndex(afi => {
+                        if (typeof afi.value === 'object') {
+                            return JSON.stringify(afi.value) === JSON.stringify(v.value)
+                        }
+                        return String(afi.value) === String(v.value)
+                    }) === i,
             )
         },
         handleOpen() {
