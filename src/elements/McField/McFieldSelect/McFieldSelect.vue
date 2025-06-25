@@ -64,7 +64,7 @@
                             <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
                         </template>
                         <mc-title slot="top" weight="semi-bold" v-html="option.name" />
-                        <mc-title v-if="!!option.text" slot="bottom" color="gray" :pre-line="option.preLine"
+                        <mc-title v-if="!!option.text" slot="bottom" color="dark-gray" :pre-line="option.preLine"
                             >{{ option.text }}
                         </mc-title>
                     </mc-preview>
