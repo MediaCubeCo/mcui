@@ -164,6 +164,9 @@ export default {
             box-shadow: $shadow-s;
             padding: $space-100 $space-150;
             background-color: var(--mc-tooltip-background-color);
+            ul {
+                padding-left: $space-150;
+            }
             &__content {
                 color: var(--mc-tooltip-color);
                 font-family: $font-family-main;
