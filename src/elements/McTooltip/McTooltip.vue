@@ -165,7 +165,9 @@ export default {
             padding: $space-100 $space-150;
             background-color: var(--mc-tooltip-background-color);
             ul {
-                padding-left: $space-150;
+                margin: 0;
+                padding: 0;
+                list-style-position: inside;
             }
             &__content {
                 color: var(--mc-tooltip-color);
