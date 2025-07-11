@@ -58,7 +58,14 @@
                     slot="option"
                     slot-scope="{ option }"
                 >
-                    <mc-preview v-if="optionWithPreview || optionWithPreviewOnly" class="option__desc" size="l">
+                    <mc-title
+                        v-if="(optionWithPreview || optionWithPreviewOnly) && option.$isLabel"
+                        weight="semi-bold"
+                        variation="subtitle"
+                    >
+                        {{ option.$groupLabel }}
+                    </mc-title>
+                    <mc-preview v-else-if="optionWithPreview || optionWithPreviewOnly" class="option__desc" size="l">
                         <template v-if="option?.icon || option?.image" #left>
                             <mc-avatar v-if="option.image" :src="option.image" size="400" />
                             <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
@@ -68,13 +75,6 @@
                             >{{ option.text }}
                         </mc-title>
                     </mc-preview>
-                    <mc-title
-                        v-else-if="(optionWithPreview || optionWithPreviewOnly) && option.$isLabel"
-                        weight="semi-bold"
-                        variation="subtitle"
-                    >
-                        {{ option.$groupLabel }}
-                    </mc-title>
                     <mc-tooltip
                         v-else
                         class="mc-field-select__options-tooltip-target"
