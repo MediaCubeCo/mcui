@@ -802,6 +802,20 @@ export default {
             }
         }
     }
+    .vxe-table--body-wrapper {
+        > table {
+            position: relative;
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background: $color-hover-gray;
+            }
+        }
+    }
 
     &--open-card {
         .vxe-table--body-wrapper,
