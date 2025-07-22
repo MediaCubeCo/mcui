@@ -807,11 +807,8 @@ export default {
             position: relative;
             &:after {
                 content: '';
-                position: absolute;
-                bottom: -1px;
-                left: 0;
-                width: 100%;
-                height: 1px;
+                @include position(absolute, null 0 -1px 0);
+                @include size(100%, 1px);
                 background: $color-hover-gray;
             }
         }
