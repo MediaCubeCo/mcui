@@ -783,6 +783,12 @@ export default {
         margin-top: $space-50;
         line-height: $line-height-150;
 
+        & ol,
+        ul {
+            margin: $space-zero;
+            padding-left: $space-200;
+        }
+
         &:empty {
             display: none;
         }
