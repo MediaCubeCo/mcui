@@ -403,12 +403,13 @@ export default {
         },
         prettyValue() {
             if (!this.useTimezone) {
-                if (this.isRange && this.value) return this.value.map(item => new Date(item))
+                if (this.isRange && this.value?.filter(Boolean)?.length)
+                    return this.value.map(item => dayjs.tz(item, 'Europe/London').$d)
                 return this.useFormat || (!this.setDefaultToday && !this.value)
                     ? this.value
                     : this.value
-                        ? new Date(this.value)
-                        : new Date()
+                    ? new Date(this.value)
+                    : new Date()
             }
             const formattingDate = date =>
                 dayjs.tz(dayjs.utc(date, 'YYYY-MM-DD HH:mm:ss'), this.currentTimezone).format(this.format)
