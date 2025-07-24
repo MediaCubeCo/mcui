@@ -295,7 +295,9 @@ export default {
                 return
             }
 
-            if (this.lastActiveTabHash === selectedTab.hash) {
+            const isSameTab = this.lastActiveTabHash === selectedTab.hash
+            const hasActiveTab = this.tabs.some(tab => tab.hash === selectedTabHash && tab.isActive)
+            if (isSameTab && hasActiveTab) {
                 this.$emit('clicked', { tab: selectedTab })
                 return
             }
