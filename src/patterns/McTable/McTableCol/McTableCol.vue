@@ -192,6 +192,7 @@ export default {
 //override variables:
 @import '../../../styles/table.scss';
 
+$current-background-color: color-mix(in srgb, var(--color-main) 10%, #fff 90%);
 @mixin col-right-color($color) {
     .mc-table-col__right {
         background-color: $color;
@@ -279,7 +280,7 @@ export default {
         }
         @include col-right-color($vxe-table-row-hover-background-color);
         &.row--current {
-            @include col-right-color(transparent);
+            @include col-right-color($current-background-color);
         }
     }
     &.row--current {
