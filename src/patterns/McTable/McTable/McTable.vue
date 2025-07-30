@@ -319,7 +319,6 @@ export default {
                 'row-id': 'id',
                 'key-field': 'id',
                 'highlight-hover-row': !this.skeletonLoad,
-                'highlight-current-row': true,
                 'show-header-overflow': 'tooltip',
                 'show-overflow': 'tooltip',
                 'show-footer-overflow': 'tooltip',
