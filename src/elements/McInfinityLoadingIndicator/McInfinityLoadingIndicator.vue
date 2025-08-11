@@ -54,6 +54,7 @@ export default {
     methods: {
         setObserver() {
             this.el = document.getElementById(this.id)
+            if (!this.el) return
             // создаем IntersectionObserver - смотрит за тем когда элемент попадает во viewport
             this.observer = new IntersectionObserver(
                 ([entry]) => {
