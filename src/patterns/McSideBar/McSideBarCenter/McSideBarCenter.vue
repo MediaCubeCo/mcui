@@ -221,6 +221,7 @@ export default {
         this.setMainMenu()
     },
     methods: {
+        // If we have route_name, than we should check originalRoute.name to prevent cases with different params at same route
         checkRoute(route, originalRoute) {
             return !!(route?.route_name
                 ? originalRoute.name.match(route.route_name)
