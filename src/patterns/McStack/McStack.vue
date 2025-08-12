@@ -1,14 +1,3 @@
-<template>
-    <div ref="stack" class="mc-stack">
-        <div v-show="loaded" ref="mc-stack-body" class="mc-stack__body">
-            <slot />
-        </div>
-        <div v-if="more" ref="counter" class="mc-stack__counter">
-            {{ counterText }}
-        </div>
-    </div>
-</template>
-
 <script>
 export default {
     name: 'McStack',
@@ -29,10 +18,14 @@ export default {
         },
     },
     data: () => ({
-        children: null,
+        children: [],
+        visible_children: [],
         more: 0,
         loaded: false,
         custom_limit: 0,
+        containerWidth: 0,
+        counterWidth: 0,
+        resizeTimeout: null,
     }),
     computed: {
         classes() {
@@ -47,64 +40,78 @@ export default {
         counterText() {
             return `+${this.more}`
         },
+        slotDefaultChildren() {
+            return this.$slots.default || []
+        },
     },
     mounted() {
         this.init()
     },
     beforeDestroy() {
-        if (this.isAutoLimit) window.removeEventListener('resize', this.calcLimit)
+        if (this.isAutoLimit) window.removeEventListener('resize', () => this.throttle(this.setResizeWidth))
     },
     methods: {
-        init() {
-            if (this.isAutoLimit) {
-                window.addEventListener('resize', this.calcLimit)
-                this.calcLimit()
-                // setTimeout из-за случаев, когда элемент рендерится с 0 шириной, а потом она устанавливается динамически
-                if (!this.$refs.stack?.clientWidth) {
-                    setTimeout(() => this.calcLimit(), 1)
-                }
-            } else {
-                this.toggleChilds(true, this.limit)
-            }
+        throttle(method) {
+            clearTimeout(this.resizeTimeout)
+            this.resizeTimeout = setTimeout(() => {
+                method()
+                clearTimeout(this.resizeTimeout)
+            }, 100) // 100ms пауза между вызовами
         },
-        calcLimit(showAll, limit) {
-            if (showAll) this.toggleChilds()
-            this.custom_limit = Infinity
-            let childWidth = 0
-            // ширина родителя без учета счетчика
-            const parentWidth = +this.$refs.stack?.clientWidth - (+this.$refs.counter?.clientWidth || 0)
-            for (let i = 0; i < this.children?.length; i++) {
-                const elemStyle = window.getComputedStyle(this.children[i])
-                childWidth += +this.children[i]?.clientWidth + +parseInt(elemStyle.marginRight)
-                // считаем занимаемую дочерними элементами ширину, если превышает родительскую, то выходим из цикла и ставим лимит
-                if (childWidth > parentWidth) {
-                    this.custom_limit = i
+        init() {
+            this.children = this.slotDefaultChildren
+            if (this.isAutoLimit) {
+                window.addEventListener('resize', this.setResizeWidth)
+                this.$nextTick(this.setWidth)
+            } else {
+                this.setFixedChildren(this.limit)
+            }
+            this.loaded = true
+        },
+        setFixedChildren(limit) {
+            this.visible_children = [...this.children].splice(0, limit)
+            this.more = Math.max(this.children.length - limit, 0)
+        },
+        setWidth() {
+            this.containerWidth = this.$refs.stack?.clientWidth
+            if (this.containerWidth === 0) setTimeout(() => this.calcVisibleChildren(), 1)
+            else this.calcVisibleChildren()
+        },
+        setResizeWidth() {
+            if (this.containerWidth === this.$refs.stack?.clientWidth)
+                return console.warn('mc-stack container width no changed')
+            else this.setWidth()
+        },
+        async calcVisibleChildren() {
+            this.containerWidth = this.$refs.stack?.clientWidth
+            if (this.containerWidth === 0) return console.warn('mc-stack container have no width')
+            this.visible_children = []
+            for (let key = 0; key < this.children.length; key++) {
+                this.visible_children.push(this.children[key])
+
+                await this.$nextTick() // ждём DOM
+
+                const total = [...this.$refs['mc-stack-body'].children].reduce((a, c) => (a += c.offsetWidth + 12), 0) // 12 отступ между элементами
+                if (total > this.containerWidth) {
+                    this.setFixedChildren(key)
                     break
                 }
             }
-            // Сравниваем переданный лимит с заново выставленным, если они не равны, то ререндерим потомков
-            if (this.custom_limit !== limit) this.toggleChilds(true, this.custom_limit)
         },
-        setStyles(elem, opacity = 1, visibility = 'visible', position = 'relative') {
-            elem.style.opacity = opacity
-            elem.style.visibility = visibility
-            elem.style.position = position
-        },
-        toggleChilds(hide, limit = 0) {
-            this.loaded = true
-            this.more = 0
-            this.children = this.$refs?.['mc-stack-body']?.children
-            let elementsLimit = hide ? limit - 1 : this.children.length
-            for (let i = 0; i < this.children?.length; i++) {
-                this.setStyles(this.children[i])
-                if (i > elementsLimit) {
-                    this.setStyles(this.children[i], 0, 'hidden', 'absolute')
-                    this.more++
-                }
-            }
-            // Передаем в $nextTick лимит для пересчета, т.к. рендерится counter, который занимает доп место и обрезает элементы
-            if (hide && this.isAutoLimit) this.$nextTick(() => this.calcLimit(false, limit))
-        },
+    },
+    render(h) {
+        return h('div', { ref: 'stack', class: `mc-stack` }, [
+            h(
+                'div',
+                {
+                    ref: 'mc-stack-body',
+                    class: 'mc-stack__body',
+                    directives: [{ name: 'show', value: this.loaded }],
+                },
+                this.visible_children,
+            ),
+            this.more ? h('div', { ref: 'counter', class: 'mc-stack__counter' }, [this.counterText]) : null,
+        ])
     },
 }
 </script>
@@ -112,6 +119,7 @@ export default {
 <style lang="scss">
 @import '../../styles/mixins';
 @import '../../tokens/font-families';
+
 .mc-stack {
     $block-name: &;
 
@@ -121,9 +129,22 @@ export default {
     align-items: center;
     flex-wrap: nowrap;
 
+    &__hidden {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+    }
+
+    &__visible {
+        opacity: 1;
+        visibility: visible;
+        position: relative;
+    }
+
     &--collapsed {
         #{$block-name}__body {
             @include child-indent-right(-$space-200);
+
             > * {
                 border: 2px solid $color-white;
             }
@@ -137,6 +158,7 @@ export default {
         flex-wrap: nowrap;
         flex-direction: row;
         @include child-indent-right($space-150);
+
         > * {
             justify-content: center;
         }
