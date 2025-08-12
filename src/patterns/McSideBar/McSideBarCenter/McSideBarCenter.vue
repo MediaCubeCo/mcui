@@ -210,8 +210,8 @@ export default {
             }
             this.$nextTick(() => {
                 this.preparedMainMenu.forEach(mi => {
-                    const route_menu_match_new_route = mi.menu?.some(mim => checkRoute(mim, newRoute))
-                    if (!(checkRoute(mi, newRoute) || route_menu_match_new_route)) mi.open = false
+                    const route_menu_match_new_route = mi.menu?.some(mim => this.checkRoute(mim, newRoute))
+                    if (!(this.checkRoute(mi, newRoute) || route_menu_match_new_route)) mi.open = false
                 })
                 this.loading = false
             })
@@ -222,7 +222,9 @@ export default {
     },
     methods: {
         checkRoute(route, originalRoute) {
-            return route?.route_name ? originalRoute.name.match(route.route_name) : route.to === originalRoute.path
+            return !!(route?.route_name
+                ? originalRoute.name.match(route.route_name)
+                : originalRoute.path.match(route.to))
         },
         getMenuItemHeadClasses(menuMainItem) {
             return {
@@ -245,14 +247,14 @@ export default {
             this.loading = true
             this.preparedMainMenu = this.menuMain.map(i => {
                 const active = () => {
-                    return i?.menu?.some(r => checkRoute(r, this.$route)) || !!checkRoute(i, this.$route)
+                    return i?.menu?.some(r => this.checkRoute(r, this.$route)) || this.checkRoute(i, this.$route)
                 }
                 return {
                     id: _XEUtils.uniqueId(),
                     ...i,
                     menu: i.menu?.map(item => ({
                         ...item,
-                        active: () => !!checkRoute(item, this.$route),
+                        active: () => this.checkRoute(item, this.$route),
                     })),
                     active,
                     indicator: () => i.menu?.some(r => !!this.counts?.[r.count_key]),
