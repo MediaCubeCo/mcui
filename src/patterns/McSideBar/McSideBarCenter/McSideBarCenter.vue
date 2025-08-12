@@ -55,6 +55,7 @@
                         :href="menuItem.href"
                         :to="menuItem.to"
                         :icon="menuItem.icon"
+                        :is-active="menuItem.active()"
                         :icon-color="menuItem.iconColor"
                         :title="menuItem.name"
                         :compact="compact"
@@ -115,11 +116,13 @@ export default {
          icon: [String] - icon,
          to: [String] - route path (used like link if this route haven't nested menu if they isn't they work like button who open nested menu),
          info: [String] - info badge text
+         route_name?: [String] - extra field if route should be active even if it has extra params applied (route_name === 'page-index-format')
          menu: [
          {
          name: [String] - menu item title,
          to: [String] - route path,
-         info: [String] - info badge text
+         info: [String] - info badge text,
+         route_name?: [String]
          },
          ...
          ]
@@ -199,16 +202,16 @@ export default {
             this.loading = true
             if (oldRoute.path !== newRoute.path) {
                 const route = this.preparedMainMenu.find(
-                    r => r.to === newRoute.path || r.menu?.find(childRoute => childRoute.to === newRoute.path),
+                    r =>
+                        this.checkRoute(r, newRoute) ||
+                        r.menu?.find(childRoute => this.checkRoute(childRoute, newRoute)),
                 )
                 route?.menu && !this.compact && (route.open = true)
             }
             this.$nextTick(() => {
                 this.preparedMainMenu.forEach(mi => {
-                    const exact_route = mi.to === newRoute.path
-                    const route_menu_match_new_route =
-                        mi.menu && mi.menu.some(mim => mim.to?.match(newRoute.path) || newRoute.path?.match(mim.to))
-                    if (!(exact_route || route_menu_match_new_route)) mi.open = false
+                    const route_menu_match_new_route = mi.menu?.some(mim => checkRoute(mim, newRoute))
+                    if (!(checkRoute(mi, newRoute) || route_menu_match_new_route)) mi.open = false
                 })
                 this.loading = false
             })
@@ -218,6 +221,9 @@ export default {
         this.setMainMenu()
     },
     methods: {
+        checkRoute(route, originalRoute) {
+            return route?.route_name ? originalRoute.name.match(route.route_name) : route.to === originalRoute.path
+        },
         getMenuItemHeadClasses(menuMainItem) {
             return {
                 open: menuMainItem.open,
@@ -239,16 +245,17 @@ export default {
             this.loading = true
             this.preparedMainMenu = this.menuMain.map(i => {
                 const active = () => {
-                    return (
-                        (i.menu && i.menu.some(r => this.$route?.fullPath?.match(r.to))) ||
-                        !!this.$route?.fullPath?.match(i.to)
-                    )
+                    return i?.menu?.some(r => checkRoute(r, this.$route)) || !!checkRoute(i, this.$route)
                 }
                 return {
                     id: _XEUtils.uniqueId(),
                     ...i,
+                    menu: i.menu?.map(item => ({
+                        ...item,
+                        active: () => !!checkRoute(item, this.$route),
+                    })),
                     active,
-                    indicator: () => i.menu && i.menu.some(r => !!this.counts?.[r.count_key]),
+                    indicator: () => i.menu?.some(r => !!this.counts?.[r.count_key]),
                     open: !this.compact && active(),
                 }
             })
