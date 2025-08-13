@@ -116,11 +116,13 @@ export default {
          icon: [String] - icon,
          to: [String] - route path (used like link if this route haven't nested menu if they isn't they work like button who open nested menu),
          info: [String] - info badge text
+         is_active? [Boolean] - button active status
          route_name?: [String] - extra field if route should be active even if it has extra params applied (route_name === 'page-index-format')
          menu: [
          {
          name: [String] - menu item title,
          to: [String] - route path,
+         is_active? [Boolean] - button active status
          info: [String] - info badge text,
          route_name?: [String]
          },
@@ -248,14 +250,18 @@ export default {
             this.loading = true
             this.preparedMainMenu = this.menuMain.map(i => {
                 const active = () => {
-                    return i?.menu?.some(r => this.checkRoute(r, this.$route)) || this.checkRoute(i, this.$route)
+                    return (
+                        i?.menu?.some(r => this.checkRoute(r, this.$route)) ||
+                        this.checkRoute(i, this.$route) ||
+                        i.is_active
+                    )
                 }
                 return {
                     id: _XEUtils.uniqueId(),
                     ...i,
                     menu: i.menu?.map(item => ({
                         ...item,
-                        active: () => this.checkRoute(item, this.$route),
+                        active: () => this.checkRoute(item, this.$route) || item.is_active,
                     })),
                     active,
                     indicator: () => i.menu?.some(r => !!this.counts?.[r.count_key]),
