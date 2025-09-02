@@ -1,0 +1,6 @@
+<svg data-token-name="buildings" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.5 22H19.3333C19.9679 22 20.4507 21.8515 20.9583 21.5C21.466 21.1485 21.5 20.5 21.5 20V4C21.5 3.46957 21.2717 2.96086 20.8654 2.58579C20.4591 2.21071 19.908 2 19.3333 2H10.6667C10.092 2 9.54093 2.21071 9.1346 2.58579C8.72827 2.96086 8.5 3.46957 8.5 4V9" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.4366 10.8496L12.5 22H4.99992C4.3369 22 3.70104 21.8043 3.23221 21.456C2.76338 21.1076 2.5 20.6352 2.5 20.1425V12.6914C2.5 12.3464 2.62929 12.0083 2.87338 11.7149C3.11747 11.4214 3.46672 11.1843 3.88198 11.03L8.81873 9.19608C9.19907 9.05479 9.62163 8.98792 10.0465 9.00179C10.4713 9.01567 10.8843 9.10983 11.2465 9.27537C11.6087 9.44091 11.9081 9.67235 12.1163 9.94782C12.3245 10.2233 12.4348 10.5337 12.4366 10.8496Z" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 6.5H18" stroke="currentColor" fill="none" stroke-linecap="round"/>
+<path d="M15 13H18" stroke="currentColor" fill="none" stroke-linecap="round"/>
+</svg>
