@@ -22,7 +22,7 @@ export default {
     },
 }
 
-const mappedCategories = categories.map(c => ({ name: c.title, value: c.id, icon: 'bitcoin', text: 'test' }))
+const mappedCategories = categories.map(c => ({ name: c.title, value: c.id, is_closable: c.title !== 'Autos', icon: 'bitcoin', text: 'test' }))
 const colors = getTokensByType('color')
 
 const directions = {
@@ -249,7 +249,6 @@ export const optionsWithPreview = () => ({
         />
     `,
 })
-
 
 export const Grouped = () => ({
     components: {

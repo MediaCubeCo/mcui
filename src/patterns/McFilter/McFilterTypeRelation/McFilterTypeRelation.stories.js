@@ -47,7 +47,7 @@ export const Default = () => ({
             default: placeholders,
         },
         isText: {
-            default: boolean('isText', false, 'default')
+            default: boolean('isText', false, 'default'),
         },
     },
     methods: {
@@ -57,4 +57,3 @@ export const Default = () => ({
     },
     template: `<mc-filter-type-relation v-bind="tagBind" @input="onRelationChange" />`,
 })
-

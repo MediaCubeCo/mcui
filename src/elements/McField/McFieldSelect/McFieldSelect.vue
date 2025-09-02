@@ -52,7 +52,18 @@
                         </div>
                     </div>
                 </template>
-
+                <template slot="tag" slot-scope="{ option, remove }">
+                    <mc-chip
+                        variation="main-alpha-10-invert"
+                        class="multiselect__tag"
+                        text-color="black"
+                        size="s"
+                        :closable="!option.hasOwnProperty('is_closable') || option.is_closable"
+                        @click="remove(option)"
+                    >
+                        {{ option.name }}
+                    </mc-chip>
+                </template>
                 <template
                     v-if="optionsTooltip || optionWithPreview || optionWithPreviewOnly"
                     slot="option"
@@ -124,6 +135,7 @@
 <script>
 import MultiSelect from 'vue-multiselect'
 import McTitle from '../../McTitle/McTitle'
+import McChip from '../../McChip/McChip'
 import McTooltip from '../../McTooltip/McTooltip'
 import McAvatar from '../../McAvatar/McAvatar'
 import McSvgIcon from '../../McSvgIcon/McSvgIcon'
@@ -134,7 +146,7 @@ import { LANGUAGES } from '../../../helpers/consts'
 
 export default {
     name: 'McFieldSelect',
-    components: { McSvgIcon, McAvatar, McTitle, McTooltip, MultiSelect, McPreview },
+    components: { McSvgIcon, McAvatar, McTitle, McTooltip, MultiSelect, McPreview, McChip },
     mixins: [fieldErrors, equalFieldHeight],
     props: {
         /**
@@ -836,7 +848,28 @@ export default {
                 color: $color-gray;
             }
         }
-
+        &__tag {
+            padding-left: 2px !important;
+            .mc-chip__button {
+                background-color: $color-white;
+                border-radius: $radius-circle;
+                opacity: 1;
+                .mc-svg-icon {
+                    min-width: $space-250;
+                    width: $space-250;
+                    min-height: $space-250;
+                    height: $space-250;
+                }
+                &:hover {
+                    .mc-svg-icon {
+                        fill: var(--color-red);
+                    }
+                }
+                .mc-svg-icon {
+                    fill: var(--color-main);
+                }
+            }
+        }
         &__input {
             padding-inline-start: $space-50;
             margin-bottom: $space-150 - 2px;
