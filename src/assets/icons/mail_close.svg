@@ -1,0 +1,6 @@
+<svg data-token-name="mail_close" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9.16667 15.0026H5C4.33696 15.0026 3.70107 14.7392 3.23223 14.2704C2.76339 13.8015 2.5 13.1656 2.5 12.5026V5.83594C2.5 5.1729 2.76339 4.53701 3.23223 4.06817C3.70107 3.59933 4.33696 3.33594 5 3.33594H15C15.663 3.33594 16.2989 3.59933 16.7678 4.06817C17.2366 4.53701 17.5 5.1729 17.5 5.83594V10.0026" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17.5 12.5L12.5 17.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M12.5 12.5L17.5 17.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17.4676 5.51085L11.2779 9.12653C10.8952 9.35005 10.4601 9.46785 10.0169 9.46785C9.57377 9.46785 9.13859 9.35005 8.75595 9.12653L2.53418 5.49219" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
