@@ -393,6 +393,7 @@ export default {
             prependWidth: 0,
             appendWidth: 0,
             prettyType: this.type,
+            is_backspace: false,
         }
     },
 
@@ -515,13 +516,13 @@ export default {
         },
         inputClasses() {
             return {
-              'mc-field-text__input': true,
-              'mc-field-text__input--text-normalized': this.isPhoneType && this.isRtl,
+                'mc-field-text__input': true,
+                'mc-field-text__input--text-normalized': this.isPhoneType && this.isRtl,
             }
         },
-        
+
         isPhoneType() {
-          return this.type === 'phone_number'
+            return this.type === 'phone_number'
         },
 
         isPasswordType() {
@@ -631,7 +632,6 @@ export default {
                     value = this.handleRemoveLeadingZero(value)
                     const cursor_position = this.getCaretPos(e.target)?.start
                     const prepared_value = this.formattedToNumber(value)
-
                     const float_value = parseFloat(prepared_value)
                     const without_spaces_value = prepared_value.replace(/ /gm, '')
 
@@ -641,9 +641,14 @@ export default {
                             : without_spaces_value || float_value || prepared_value
                         : null
                     const formatted_value = this.getAmountFormat(prepared_value)
+
+                    const value_without_last_symbol = this.getAmountFormat(
+                        prepared_value.slice(0, prepared_value.length - 1),
+                    )
+
+                    const diff = this.is_backspace ? 0 : formatted_value.length - value_without_last_symbol.length - 1
                     e.target.value = this.isRtl ? formatted_value.replace(/ /gm, '') : formatted_value
-                    const space_length = e.target.value?.slice(0, cursor_position).replace(/[^ ]/gm, '')?.length || 0
-                    this.setCaretPos(e.target, cursor_position + space_length, cursor_position + space_length)
+                    this.setCaretPos(e.target, cursor_position + diff, cursor_position + diff)
                     break
                 }
                 case 'uppercase': {
@@ -680,10 +685,17 @@ export default {
             switch (this.type) {
                 case 'amount_format':
                 case 'num': {
-                    const exluded_symbols = ['.', ',']
+                    this.is_backspace = e.key?.match(/Backspace/)
+                    const excluded_symbols = ['.', ',']
+                    const is_excluded_symbol = excluded_symbols.includes(e.key)
+
+                    if (isNaN(+e.key) && !e.key?.match(/Arrow|Backspace|\.,/) && !is_excluded_symbol) {
+                        e.preventDefault()
+                    }
+
                     const already_has_symbol =
-                        typeof this.value === 'string' && exluded_symbols.some(symbol => this.value.includes(symbol))
-                    if (exluded_symbols.includes(e.key) && already_has_symbol) {
+                        typeof this.value === 'string' && excluded_symbols.some(symbol => this.value.includes(symbol))
+                    if (is_excluded_symbol && already_has_symbol) {
                         e.preventDefault()
                     }
                     break
