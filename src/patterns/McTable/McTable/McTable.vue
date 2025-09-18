@@ -427,12 +427,34 @@ export default {
     mounted() {
         this.setFirstColsWidth()
         window.addEventListener('resize', this.checkHorizontalScroll)
+        this.initFooterScroll()
     },
     beforeDestroy() {
         this.observer && this.observer.disconnect()
         window.removeEventListener('resize', this.checkHorizontalScroll)
+        this.removeFooterScroll()
     },
     methods: {
+        // Нужно для горизонтального скрола таблиц с футером, чтобы правильно показывать тень для первой/последней колонки
+        initFooterScroll() {
+            const footerWrapper = this.$refs.xTable?.$el?.querySelector('.vxe-table--footer-wrapper.body--wrapper')
+            if (footerWrapper && !this.cardIsOpen && (this.fixedFirstColumn || this.fixedLastColumn)) {
+                this.footerScrollHandler = e => this.handleScroll({ $event: e, type: 'body', isX: true })
+                footerWrapper.addEventListener('scroll', this.footerScrollHandler)
+            }
+        },
+        removeFooterScroll() {
+            const footerWrapper = this.$refs.xTable?.$el?.querySelector('.vxe-table--footer-wrapper.body--wrapper')
+            if (
+                footerWrapper &&
+                !this.cardIsOpen &&
+                (this.fixedFirstColumn || this.fixedLastColumn) &&
+                this.footerScrollHandler
+            ) {
+                footerWrapper.removeEventListener('scroll', this.footerScrollHandler)
+                this.footerScrollHandler = null
+            }
+        },
         formattedNumber(value, decimals = 2, is_rtl = false) {
             if (value == null) return null
 
