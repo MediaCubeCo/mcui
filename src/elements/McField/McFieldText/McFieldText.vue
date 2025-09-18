@@ -590,8 +590,8 @@ export default {
         setDecimalsLimit(val) {
             if (val && this.maxDecimals) {
                 const [integerPart, decimalPart] = val.split('.')
-                if (decimalPart?.length > this.maxDecimals) {
-                    return `${integerPart}.${decimalPart.slice(0, this.maxDecimals)}`
+                if (decimalPart && decimalPart.replace(/ /gm, '').length > this.maxDecimals) {
+                    return `${integerPart}.${decimalPart.replace(/ /gm, '').slice(0, this.maxDecimals)}`
                 }
             }
             return val
@@ -686,10 +686,12 @@ export default {
                 case 'amount_format':
                 case 'num': {
                     this.is_backspace = e.key?.match(/Backspace/)
+                    const is_space = e.code?.match(/Space/)
+
                     const excluded_symbols = ['.', ',']
                     const is_excluded_symbol = excluded_symbols.includes(e.key)
 
-                    if (isNaN(+e.key) && !e.key?.match(/Arrow|Backspace|\.,/) && !is_excluded_symbol) {
+                    if ((isNaN(+e.key) && !e.key?.match(/Arrow|Backspace|\.,/) && !is_excluded_symbol) || is_space) {
                         e.preventDefault()
                     }
 
