@@ -84,9 +84,14 @@ export default {
         },
     },
     mounted() {
-        this.$nextTick(() => this.triggerSpin())
+        this.init()
     },
     methods: {
+        init() {
+            this.spin_active = false
+            this.offset = this.start
+            requestAnimationFrame(this.triggerSpin)
+        },
         triggerSpin() {
             this.$emit('spin-start', this.start)
             this.spin_active = true
