@@ -2,7 +2,7 @@
     <div :id="id" class="mc-spin-digit-container" :style="containerStyles">
         <!-- фэйк цифра, нужно что бы устанавливать нужную ширину контейнера -->
         <span class="mc-spin-digit-container__target">{{ end }}</span>
-        <div class="mc-spin-digit" :style="{ transform: `translateY(${-(offset * 10)}%)` }">
+        <div :class="computedSpinClasses" :style="digitStyles">
             <span v-for="n in 10" :key="`${id}-${start}-${end}-${n}`" class="mc-spin-digit__digit">
                 {{ (n - 1 + 10) % 10 }}
             </span>
@@ -49,64 +49,55 @@ export default {
     data() {
         return {
             id: String(Date.now()),
+            offset: this.start,
             spin_active: false,
-            offset: 0,
         }
     },
     computed: {
-        computedColor() {
-            return this.color
+        computedSpinClasses() {
+            return {
+                'mc-spin-digit': true,
+                'mc-spin-digit--off': !this.spin_active,
+            }
+        },
+        digitStyles() {
+            return {
+                transform: `translateY(-${this.offset * 100}%)`,
+            }
         },
         containerStyles() {
             return {
                 '--mc-spin-digit-font-size': `var(--font-size-${this.fontSize}, var(--font-size-300))`,
-                '--mc-spin-digit-font-color': `var(--color-${this.computedColor}, var(--color-black))`,
+                '--mc-spin-digit-font-color': `var(--color-${this.color}, var(--color-black))`,
                 '--mc-spin-digit-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-400))`,
+                '--mc-spin-duration': `${this.duration}ms`,
             }
         },
     },
     watch: {
-        start() {
-            this.triggerSpin()
-        },
-        end() {
-            this.triggerSpin()
+        end: {
+            handler(newVal, oldVal) {
+                if (newVal !== oldVal) {
+                    this.triggerSpin()
+                }
+            },
         },
     },
     mounted() {
-        this.$nextTick(() => this.spinDigit())
+        this.$nextTick(() => this.triggerSpin())
     },
     methods: {
-        // Анимация барабана
-        spinDigit() {
-            this.spin_active = true
-            this.offset = this.start
+        triggerSpin() {
             this.$emit('spin-start', this.start)
+            this.spin_active = true
+            this.$nextTick(() => {
+                this.offset = this.end
 
-            const spinConfig = {
-                current_frame: 0,
-                total_frames: Math.floor((this.duration * 2) / 16),
-                indent: this.end - this.start,
-            }
-
-            const animate = () => {
-                const progress = spinConfig.indent / spinConfig.total_frames
-
-                if (spinConfig.current_frame <= spinConfig.total_frames && this.spin_active) {
-                    spinConfig.current_frame++
-                    this.offset = this.offset + progress
-                    requestAnimationFrame(animate)
-                } else {
-                    this.offset = this.end
+                setTimeout(() => {
                     this.spin_active = false
                     this.$emit('spin-end', this.end)
-                }
-            }
-            requestAnimationFrame(animate)
-        },
-        triggerSpin() {
-            this.spin_active = false
-            setTimeout(() => this.spinDigit(), 1)
+                }, this.duration)
+            })
         },
     },
 }
@@ -135,24 +126,33 @@ export default {
     @each $key, $value in $token-font-weights {
         --font-weight-#{$key}: #{$value};
     }
+
     --mc-spin-digit-font-size: var(--font-size-300);
     --mc-spin-digit-font-color: var(--color-black);
     --mc-spin-digit-font-weight: var(--font-weight-400);
+
     font-family: $font-family-main;
     overflow: hidden;
     height: var(--mc-spin-digit-font-size);
     position: relative;
+
     &__target {
         font-size: var(--mc-spin-digit-font-size);
         visibility: hidden;
     }
+
     .mc-spin-digit {
         position: absolute;
         top: 0;
         left: 0;
         display: flex;
         flex-direction: column;
+        height: 100%;
         color: var(--mc-spin-digit-font-color);
+        transition: transform var(--mc-spin-duration) cubic-bezier(0.4, 0, 0.2, 1);
+        &--off {
+            transition: none;
+        }
         &__digit {
             height: var(--mc-spin-digit-font-size);
             line-height: var(--mc-spin-digit-font-size);
@@ -160,6 +160,7 @@ export default {
             font-weight: var(--mc-spin-digit-font-weight);
             color: var(--mc-spin-digit-font-color);
             text-align: center;
+            flex-shrink: 0;
         }
     }
 }

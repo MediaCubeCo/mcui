@@ -12,7 +12,7 @@
                 :end="+currentTo[i]"
                 :duration="duration"
                 :font-size="fontSize"
-                :color="computedColor"
+                :color="color"
                 class="mc-spin-number__digit"
                 @spin-end="actualizeNumbers"
             />
@@ -61,9 +61,6 @@ export default {
         }
     },
     computed: {
-        computedColor() {
-            return this.color
-        },
         currentTo() {
             return this.formatNumber(this.end)
         },
@@ -74,7 +71,7 @@ export default {
         nonDigitStyles() {
             return {
                 '--mc-spin-number-font-size': `var(--font-size-${this.fontSize}, var(--font-size-300))`,
-                '--mc-spin-number-font-color': `var(--color-${this.computedColor}, var(--color-black))`,
+                '--mc-spin-number-font-color': `var(--color-${this.color}, var(--color-black))`,
                 '--mc-spin-number-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-400))`,
             }
         },
