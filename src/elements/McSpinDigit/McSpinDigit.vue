@@ -34,6 +34,12 @@ export default {
         fontSize: {
             type: String,
             default: '300',
+            validator: v => ['100', '200', '300', '400', '500', '600', '700'].includes(v),
+        },
+        weight: {
+            type: String,
+            default: '400',
+            validator: v => ['400', '500', '600', '700'].includes(v),
         },
         color: {
             type: String,
@@ -55,6 +61,7 @@ export default {
             return {
                 '--mc-spin-digit-font-size': `var(--font-size-${this.fontSize}, var(--font-size-300))`,
                 '--mc-spin-digit-font-color': `var(--color-${this.computedColor}, var(--color-black))`,
+                '--mc-spin-digit-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-400))`,
             }
         },
     },
@@ -67,7 +74,7 @@ export default {
         },
     },
     mounted() {
-        this.spinDigit()
+        this.$nextTick(() => this.spinDigit())
     },
     methods: {
         // Анимация барабана
@@ -95,7 +102,7 @@ export default {
                     this.$emit('spin-end', this.end)
                 }
             }
-            animate()
+            requestAnimationFrame(animate)
         },
         triggerSpin() {
             this.spin_active = false
@@ -108,18 +115,29 @@ export default {
 @import '../../tokens/font-sizes';
 @import '../../tokens/colors';
 @import '../../tokens/font-families';
+@import '../../tokens/font-weights';
 
 .mc-spin-digit-container {
     $block-name: &;
     // генерируем css переменный из токенов
+    $token-font-weights: (
+        '400': $font-weight-normal,
+        '500': $font-weight-medium,
+        '600': $font-weight-semi-bold,
+        '700': $font-weight-bold,
+    );
     @each $key, $value in $token-font-sizes {
         --font-size-#{$key}: #{$value};
     }
     @each $key, $value in $token-colors {
         --color-#{$key}: #{$value};
     }
+    @each $key, $value in $token-font-weights {
+        --font-weight-#{$key}: #{$value};
+    }
     --mc-spin-digit-font-size: var(--font-size-300);
     --mc-spin-digit-font-color: var(--color-black);
+    --mc-spin-digit-font-weight: var(--font-weight-400);
     font-family: $font-family-main;
     overflow: hidden;
     height: var(--mc-spin-digit-font-size);
@@ -139,6 +157,7 @@ export default {
             height: var(--mc-spin-digit-font-size);
             line-height: var(--mc-spin-digit-font-size);
             font-size: var(--mc-spin-digit-font-size);
+            font-weight: var(--mc-spin-digit-font-weight);
             color: var(--mc-spin-digit-font-color);
             text-align: center;
         }
