@@ -10,6 +10,10 @@
     </div>
 </template>
 <script>
+const validators = {
+    fontSize: v => ['100', '200', '300', '400', '500', '600', '700'].includes(v),
+    weight: v => ['normal', 'medium', 'semi-bold', 'bold'].includes(v),
+}
 export default {
     name: 'McSpinDigit',
     props: {
@@ -34,12 +38,12 @@ export default {
         fontSize: {
             type: String,
             default: '300',
-            validator: v => ['100', '200', '300', '400', '500', '600', '700'].includes(v),
+            validator: validators.fontSize,
         },
         weight: {
             type: String,
-            default: '400',
-            validator: v => ['400', '500', '600', '700'].includes(v),
+            default: 'normal',
+            validator: validators.weight,
         },
         color: {
             type: String,
@@ -69,7 +73,7 @@ export default {
             return {
                 '--mc-spin-digit-font-size': `var(--font-size-${this.fontSize}, var(--font-size-300))`,
                 '--mc-spin-digit-font-color': `var(--color-${this.color}, var(--color-black))`,
-                '--mc-spin-digit-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-400))`,
+                '--mc-spin-digit-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-normal))`,
                 '--mc-spin-duration': `${this.duration}ms`,
             }
         },
@@ -116,12 +120,7 @@ export default {
 .mc-spin-digit-container {
     $block-name: &;
     // генерируем css переменный из токенов
-    $token-font-weights: (
-        '400': $font-weight-normal,
-        '500': $font-weight-medium,
-        '600': $font-weight-semi-bold,
-        '700': $font-weight-bold,
-    );
+
     @each $key, $value in $token-font-sizes {
         --font-size-#{$key}: #{$value};
     }
@@ -134,7 +133,7 @@ export default {
 
     --mc-spin-digit-font-size: var(--font-size-300);
     --mc-spin-digit-font-color: var(--color-black);
-    --mc-spin-digit-font-weight: var(--font-weight-400);
+    --mc-spin-digit-font-weight: var(--font-weight-normal);
 
     font-family: $font-family-main;
     overflow: hidden;

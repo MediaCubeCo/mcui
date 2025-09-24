@@ -1,6 +1,6 @@
 <template>
     <div :id="id" class="mc-spin-number-container">
-        <div v-for="(digit, i) in currentTo" :key="`mc-spin-number-${id}-${i}-${end}`" class="mc-spin-number">
+        <div v-for="(digit, i) in currentTo" :key="`mc-spin-number-${id}-${i}`" class="mc-spin-number">
             <template v-if="!Number.isFinite(digit)">
                 <span :style="nonDigitStyles" class="mc-spin-number__non-digit">
                     {{ currentTo[i] }}
@@ -13,6 +13,7 @@
                 :duration="duration"
                 :font-size="fontSize"
                 :color="color"
+                :weight="weight"
                 class="mc-spin-number__digit"
                 @spin-end="actualizeNumbers"
             />
@@ -22,6 +23,11 @@
 
 <script>
 import McSpinDigit from '../McSpinDigit/McSpinDigit'
+
+const validators = {
+    fontSize: v => ['100', '200', '300', '400', '500', '600', '700'].includes(v),
+    weight: v => ['normal', 'medium', 'semi-bold', 'bold'].includes(v),
+}
 export default {
     name: 'McSpinNumber',
     components: {
@@ -43,12 +49,12 @@ export default {
         fontSize: {
             type: String,
             default: '300',
-            validator: v => ['100', '200', '300', '400', '500', '600', '700'].includes(v),
+            validator: validators.fontSize,
         },
         weight: {
             type: String,
-            default: '400',
-            validator: v => ['400', '500', '600', '700'].includes(v),
+            default: 'normal',
+            validator: validators.weight,
         },
         color: {
             type: String,
@@ -72,7 +78,7 @@ export default {
             return {
                 '--mc-spin-number-font-size': `var(--font-size-${this.fontSize}, var(--font-size-300))`,
                 '--mc-spin-number-font-color': `var(--color-${this.color}, var(--color-black))`,
-                '--mc-spin-number-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-400))`,
+                '--mc-spin-number-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-normal))`,
             }
         },
     },
@@ -97,12 +103,7 @@ export default {
 
 .mc-spin-number {
     $block-name: &;
-    $token-font-weights: (
-        '400': $font-weight-normal,
-        '500': $font-weight-medium,
-        '600': $font-weight-semi-bold,
-        '700': $font-weight-bold,
-    );
+
     @each $key, $value in $token-font-sizes {
         --font-size-#{$key}: #{$value};
     }
@@ -114,7 +115,7 @@ export default {
     }
     --mc-spin-number-font-size: var(--font-size-300);
     --mc-spin-number-font-color: var(--color-black);
-    --mc-spin-number-font-weight: var(--font-weight-400);
+    --mc-spin-number-font-weight: var(--font-weight-normal);
 
     display: flex;
     align-items: center;
