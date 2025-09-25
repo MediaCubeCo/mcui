@@ -7,3 +7,10 @@ $font-weight-normal: 400;
 $font-weight-medium: 500;
 $font-weight-semi-bold: 600;
 $font-weight-bold: 700;
+
+$token-font-weights: (
+  "normal": $font-weight-normal,
+  "medium": $font-weight-medium,
+  "semi-bold": $font-weight-semi-bold,
+  "bold": $font-weight-bold,
+);

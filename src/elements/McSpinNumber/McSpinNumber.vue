@@ -1,18 +1,25 @@
 <template>
     <div :id="id" class="mc-spin-number-container">
-        <div v-for="(digit, i) in currentTo" :key="`mc-spin-number-${id}-${i}-${end}`" class="mc-spin-number">
+        <div
+            v-for="(digit, i) in currentTo"
+            :key="`mc-spin-number-${id}-${i}`"
+            :class="containerStyles.classes"
+            :style="containerStyles.variables"
+        >
             <template v-if="!Number.isFinite(digit)">
-                <span :style="nonDigitStyles" class="mc-spin-number__non-digit">
+                <span class="mc-spin-number__non-digit">
                     {{ currentTo[i] }}
                 </span>
             </template>
             <mc-spin-digit
                 v-else
+                v-bind="$props"
                 :start="+currentFrom[i]"
                 :end="+currentTo[i]"
                 :duration="duration"
-                :font-size="fontSize"
+                :font-size="size"
                 :color="color"
+                :weight="weight"
                 class="mc-spin-number__digit"
                 @spin-end="actualizeNumbers"
             />
@@ -22,12 +29,28 @@
 
 <script>
 import McSpinDigit from '../McSpinDigit/McSpinDigit'
+const values = ['size', 'weight']
+const validators = {
+    size: v => ['100', '200', '300', '400', '500', '600', '700'].includes(v),
+    weight: v => ['normal', 'medium', 'semi-bold', 'bold'].includes(v),
+}
+
+const sizes = ['xs', 's', 'm', 'l', 'xl']
+const variationProps = {}
+
+values.forEach(value => {
+    const validator = validators[value]
+    sizes.forEach(size => {
+        variationProps[`${value}-${size}`] = { type: String, validator }
+    })
+})
 export default {
     name: 'McSpinNumber',
     components: {
         McSpinDigit,
     },
     props: {
+        ...variationProps,
         start: {
             type: [Number, String],
             required: true,
@@ -40,15 +63,15 @@ export default {
             type: Number,
             default: 500,
         },
-        fontSize: {
+        size: {
             type: String,
             default: '300',
-            validator: v => ['100', '200', '300', '400', '500', '600', '700'].includes(v),
+            validator: validators.size,
         },
         weight: {
             type: String,
-            default: '400',
-            validator: v => ['400', '500', '600', '700'].includes(v),
+            default: 'normal',
+            validator: validators.weight,
         },
         color: {
             type: String,
@@ -68,11 +91,25 @@ export default {
             const from = `000000000${String((this.current_from ?? this.start) || 0)}`.slice(-this.currentTo.length)
             return this.formatNumber(from)
         },
-        nonDigitStyles() {
-            return {
-                '--mc-spin-number-font-size': `var(--font-size-${this.fontSize}, var(--font-size-300))`,
+        containerStyles() {
+            const classes = {
+                'mc-spin-number': true,
+            }
+            const variables = {
+                '--mc-spin-number-font-size': `var(--font-size-${this.size}, var(--font-size-300))`,
                 '--mc-spin-number-font-color': `var(--color-${this.color}, var(--color-black))`,
-                '--mc-spin-number-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-400))`,
+                '--mc-spin-number-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-normal))`,
+            }
+            Object.entries(this.$props).forEach(([key, value]) => {
+                if (key.startsWith('size') && key !== 'size' && value) {
+                    const suffix = key.replace('size', '').toLowerCase()
+                    value && (variables[`--mc-spin-number-font-size-${suffix}`] = `var(--font-size-${value})`)
+                    classes[`mc-spin-number--size-${suffix}`] = true
+                }
+            })
+            return {
+                classes,
+                variables,
             }
         },
     },
@@ -94,15 +131,11 @@ export default {
 @import '../../tokens/colors';
 @import '../../tokens/font-families';
 @import '../../tokens/font-weights';
+@import '../../tokens/media-queries';
 
 .mc-spin-number {
     $block-name: &;
-    $token-font-weights: (
-        '400': $font-weight-normal,
-        '500': $font-weight-medium,
-        '600': $font-weight-semi-bold,
-        '700': $font-weight-bold,
-    );
+
     @each $key, $value in $token-font-sizes {
         --font-size-#{$key}: #{$value};
     }
@@ -114,22 +147,36 @@ export default {
     }
     --mc-spin-number-font-size: var(--font-size-300);
     --mc-spin-number-font-color: var(--color-black);
-    --mc-spin-number-font-weight: var(--font-weight-400);
+    --mc-spin-number-font-weight: var(--font-weight-normal);
 
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: $font-family-main;
+    font-size: var(--mc-spin-number-font-size);
+    font-weight: var(--mc-spin-number-font-weight);
+    line-height: 1;
+    color: var(--mc-spin-number-font-color);
+
+    &__non-digit {
+        display: inline-flex;
+        min-width: 0.1em;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        color: inherit;
+    }
 
     &-container {
         display: flex;
     }
-    &__non-digit {
-        display: inline-flex;
-        min-width: 0.32em;
-        font-size: var(--mc-spin-number-font-size);
-        font-weight: var(--mc-spin-number-font-weight);
-        color: var(--mc-spin-number-font-color);
-        line-height: 1;
+
+    @each $key, $value in $token-media-queries {
+        @media #{$value} {
+            &--size-#{$key} {
+                font-size: var(--mc-spin-number-font-size-#{$key}, var(--mc-spin-number-font-size));
+            }
+        }
     }
 }
 </style>
