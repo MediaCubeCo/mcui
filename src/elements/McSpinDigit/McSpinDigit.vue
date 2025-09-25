@@ -1,5 +1,5 @@
 <template>
-    <div :id="id" :class="containerStyles.classes" :style="containerStyles.variables">
+    <div :id="id" :class="responsivePropsClasses" :style="containerStyles">
         <!-- фэйк цифра, нужно что бы устанавливать нужную ширину контейнера -->
         <span class="mc-spin-digit-container__target">{{ end }}</span>
         <div class="mc-spin-digit" :style="digitStyles">
@@ -10,9 +10,11 @@
     </div>
 </template>
 <script>
-const values = ['size', 'weight']
+import _upperFirst from 'lodash/upperFirst'
+
+const values = ['variation', 'weight']
 const validators = {
-    size: v => ['100', '200', '300', '400', '500', '600', '700'].includes(v),
+    variation: v => ['h1', 'h2', 'h3', 'h4', 'subtitle', 'body', 'overline', 'article', 'info'].includes(v),
     weight: v => ['normal', 'medium', 'semi-bold', 'bold'].includes(v),
 }
 
@@ -47,14 +49,13 @@ export default {
             type: Number,
             default: 500,
         },
-        size: {
+        variation: {
             type: String,
-            default: '300',
-            validator: validators.size,
+            default: 'body',
+            validator: validators.variation,
         },
         weight: {
             type: String,
-            default: 'normal',
             validator: validators.weight,
         },
         color: {
@@ -75,26 +76,26 @@ export default {
                 transform: `translateY(-${this.offset * 100}%)`,
             }
         },
-        containerStyles() {
-            const classes = {
-                'mc-spin-digit-container': true,
-            }
-            const variables = {
-                '--mc-spin-digit-font-size': `var(--font-size-${this.size}, var(--font-size-300))`,
-                '--mc-spin-digit-font-color': `var(--color-${this.color}, var(--color-black))`,
-                '--mc-spin-digit-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-normal))`,
-                '--mc-spin-duration': `${this.duration}ms`,
-            }
-            Object.entries(this.$props).forEach(([key, value]) => {
-                if (key.startsWith('size') && key !== 'size' && value) {
-                    const suffix = key.replace('size', '').toLowerCase()
-                    value && (variables[`--mc-spin-digit-font-size-${suffix}`] = `var(--font-size-${value})`)
-                    classes[`mc-spin-digit-container--size-${suffix}`] = true
-                }
+        responsivePropsClasses() {
+            const responsiveClasses = {}
+            responsiveClasses[`mc-spin-digit-container--variation-${this.variation}`] = this.variation
+            responsiveClasses[`mc-spin-digit-container--weight`] = !!true.weight
+            values.forEach(value => {
+                sizes.forEach(size => {
+                    const sizeValue = this[`${value}${_upperFirst(size)}`]
+                    responsiveClasses[`mc-spin-digit-container--${value}-${size}-${sizeValue}`] = sizeValue
+                })
             })
+            const currentClasses = Object.entries(responsiveClasses)
+                .filter(([, value]) => value)
+                .map(([key]) => key)
+            return ['mc-spin-digit-container', ...currentClasses]
+        },
+        containerStyles() {
             return {
-                classes,
-                variables,
+                '--mc-spin-digit-color': `var(--color-${this.color}, var(--color-black))`,
+                '--mc-spin-digit-weight': `var(--font-weight-${this.weight}, var(--font-weight-normal))`,
+                '--mc-spin-duration': `${this.duration}ms`,
             }
         },
     },
@@ -134,6 +135,7 @@ export default {
 </script>
 <style lang="scss">
 @import '../../tokens/font-sizes';
+@import '../../tokens/line-heights';
 @import '../../tokens/colors';
 @import '../../tokens/font-families';
 @import '../../tokens/font-weights';
@@ -141,9 +143,7 @@ export default {
 
 .mc-spin-digit-container {
     $block-name: &;
-    @each $key, $value in $token-font-sizes {
-        --font-size-#{$key}: #{$value};
-    }
+
     @each $key, $value in $token-colors {
         --color-#{$key}: #{$value};
     }
@@ -151,24 +151,75 @@ export default {
         --font-weight-#{$key}: #{$value};
     }
 
-    --mc-spin-digit-font-size: var(--font-size-300);
-    --mc-spin-digit-font-color: var(--color-black);
-    --mc-spin-digit-font-weight: var(--font-weight-normal);
+    --mc-spin-digit-color: var(--color-black);
+    --mc-spin-digit-weight: var(--font-weight-normal);
 
-    font-family: $font-family-main;
-    font-size: var(--mc-spin-digit-font-size);
-    font-weight: var(--mc-spin-digit-font-weight);
-    color: var(--mc-spin-digit-font-color);
-    overflow: hidden;
-    height: 1em;
+    @mixin variations() {
+        font-family: $font-family-main;
+        &-h1 {
+            font-size: $font-size-700;
+            line-height: $line-height-600;
+            font-weight: $font-weight-semi-bold;
+        }
+        &-h2 {
+            font-size: $font-size-600;
+            line-height: $line-height-500;
+            font-weight: $font-weight-semi-bold;
+        }
+        &-h3 {
+            font-size: $font-size-500;
+            line-height: $line-height-400;
+            font-weight: $font-weight-semi-bold;
+        }
+        &-h4 {
+            font-size: $font-size-400;
+            line-height: $line-height-300;
+            font-weight: $font-weight-bold;
+        }
+
+        &-subtitle {
+            font-size: $font-size-300;
+            line-height: $line-height-250;
+        }
+        &-article {
+            font-size: $font-size-200;
+            line-height: $line-height-250;
+        }
+        &-info {
+            font-size: $font-size-300;
+            line-height: $line-height-300;
+        }
+        &-body {
+            font-size: $font-size-200;
+            line-height: $line-height-200;
+        }
+        &-overline {
+            font-size: $font-size-100;
+            line-height: $line-height-150;
+            font-weight: $font-weight-medium;
+        }
+    }
+
     position: relative;
+    height: 1em;
+    font-family: $font-family-main;
+    font-size: inherit;
+    font-weight: var(--mc-spin-digit-weight);
+    color: var(--mc-spin-digit-color);
     line-height: 1;
+    overflow: hidden;
+
+    &--variation {
+        @include variations;
+    }
+    &--weight {
+        font-weight: var(--mc-spin-digit-weight);
+    }
 
     &__target {
-        font-size: inherit;
-        font-weight: inherit;
-        color: inherit;
         visibility: hidden;
+        font: inherit;
+        color: inherit;
     }
 
     .mc-spin-digit {
@@ -178,25 +229,39 @@ export default {
         display: flex;
         flex-direction: column;
         height: 100%;
+        font: inherit;
         color: inherit;
         will-change: transform;
         transition: transform var(--mc-spin-duration) cubic-bezier(0.4, 0, 0.2, 1);
 
         &__digit {
             height: 1em;
+            font: inherit;
             line-height: 1em;
-            font-size: inherit;
-            font-weight: inherit;
             color: inherit;
             text-align: center;
             flex-shrink: 0;
         }
     }
 
-    @each $key, $value in $token-media-queries {
+    @each $media, $value in $token-media-queries {
         @media #{$value} {
-            &--size-#{$key} {
-                font-size: var(--mc-spin-digit-font-size-#{$key}, var(--mc-spin-digit-font-size));
+            &--variation-#{$media} {
+                @include variations;
+            }
+            &--weight-#{$media} {
+                &-normal {
+                    font-weight: $font-weight-normal;
+                }
+                &-medium {
+                    font-weight: $font-weight-medium;
+                }
+                &-semi-bold {
+                    font-weight: $font-weight-semi-bold;
+                }
+                &-bold {
+                    font-weight: $font-weight-bold;
+                }
             }
         }
     }

@@ -3,8 +3,8 @@
         <div
             v-for="(digit, i) in currentTo"
             :key="`mc-spin-number-${id}-${i}`"
-            :class="containerStyles.classes"
-            :style="containerStyles.variables"
+            :class="responsivePropsClasses"
+            :style="containerStyles"
         >
             <template v-if="!Number.isFinite(digit)">
                 <span class="mc-spin-number__non-digit">
@@ -16,10 +16,6 @@
                 v-bind="$props"
                 :start="+currentFrom[i]"
                 :end="+currentTo[i]"
-                :duration="duration"
-                :font-size="size"
-                :color="color"
-                :weight="weight"
                 class="mc-spin-number__digit"
                 @spin-end="actualizeNumbers"
             />
@@ -29,13 +25,14 @@
 
 <script>
 import McSpinDigit from '../McSpinDigit/McSpinDigit'
-const values = ['size', 'weight']
+import _upperFirst from 'lodash/upperFirst'
+const values = ['variation', 'weight']
 const validators = {
-    size: v => ['100', '200', '300', '400', '500', '600', '700'].includes(v),
+    variation: v => ['h1', 'h2', 'h3', 'h4', 'subtitle', 'body', 'overline', 'article', 'info'].includes(v),
     weight: v => ['normal', 'medium', 'semi-bold', 'bold'].includes(v),
 }
 
-const sizes = ['xs', 's', 'm', 'l', 'xl']
+const sizes = ['xs', 's', 'm', 'l', 'xl', 'xxl']
 const variationProps = {}
 
 values.forEach(value => {
@@ -63,14 +60,13 @@ export default {
             type: Number,
             default: 500,
         },
-        size: {
+        variation: {
             type: String,
-            default: '300',
-            validator: validators.size,
+            default: 'body',
+            validator: validators.variation,
         },
         weight: {
             type: String,
-            default: 'normal',
             validator: validators.weight,
         },
         color: {
@@ -91,25 +87,25 @@ export default {
             const from = `000000000${String((this.current_from ?? this.start) || 0)}`.slice(-this.currentTo.length)
             return this.formatNumber(from)
         },
-        containerStyles() {
-            const classes = {
-                'mc-spin-number': true,
-            }
-            const variables = {
-                '--mc-spin-number-font-size': `var(--font-size-${this.size}, var(--font-size-300))`,
-                '--mc-spin-number-font-color': `var(--color-${this.color}, var(--color-black))`,
-                '--mc-spin-number-font-weight': `var(--font-weight-${this.weight}, var(--font-weight-normal))`,
-            }
-            Object.entries(this.$props).forEach(([key, value]) => {
-                if (key.startsWith('size') && key !== 'size' && value) {
-                    const suffix = key.replace('size', '').toLowerCase()
-                    value && (variables[`--mc-spin-number-font-size-${suffix}`] = `var(--font-size-${value})`)
-                    classes[`mc-spin-number--size-${suffix}`] = true
-                }
+        responsivePropsClasses() {
+            const responsiveClasses = {}
+            responsiveClasses[`mc-spin-number--variation-${this.variation}`] = this.variation
+            responsiveClasses[`mc-spin-number--weight`] = !!true.weight
+            values.forEach(value => {
+                sizes.forEach(size => {
+                    const sizeValue = this[`${value}${_upperFirst(size)}`]
+                    responsiveClasses[`mc-spin-number--${value}-${size}-${sizeValue}`] = sizeValue
+                })
             })
+            const currentClasses = Object.entries(responsiveClasses)
+                .filter(([, value]) => value)
+                .map(([key]) => key)
+            return ['mc-spin-number', ...currentClasses]
+        },
+        containerStyles() {
             return {
-                classes,
-                variables,
+                '--mc-spin-number-color': `var(--color-${this.color}, var(--color-black))`,
+                '--mc-spin-number-weight': `var(--font-weight-${this.weight}, var(--font-weight-normal))`,
             }
         },
     },
@@ -128,6 +124,7 @@ export default {
 
 <style lang="scss">
 @import '../../tokens/font-sizes';
+@import '../../tokens/line-heights';
 @import '../../tokens/colors';
 @import '../../tokens/font-families';
 @import '../../tokens/font-weights';
@@ -136,34 +133,79 @@ export default {
 .mc-spin-number {
     $block-name: &;
 
-    @each $key, $value in $token-font-sizes {
-        --font-size-#{$key}: #{$value};
-    }
     @each $key, $value in $token-colors {
         --color-#{$key}: #{$value};
     }
     @each $key, $value in $token-font-weights {
         --font-weight-#{$key}: #{$value};
     }
-    --mc-spin-number-font-size: var(--font-size-300);
-    --mc-spin-number-font-color: var(--color-black);
-    --mc-spin-number-font-weight: var(--font-weight-normal);
+    --mc-spin-number-color: var(--color-black);
+    --mc-spin-number-weight: var(--font-weight-normal);
+
+    @mixin variations() {
+        font-family: $font-family-main;
+        &-h1 {
+            font-size: $font-size-700;
+            line-height: $line-height-600;
+            font-weight: $font-weight-semi-bold;
+        }
+        &-h2 {
+            font-size: $font-size-600;
+            line-height: $line-height-500;
+            font-weight: $font-weight-semi-bold;
+        }
+        &-h3 {
+            font-size: $font-size-500;
+            line-height: $line-height-400;
+            font-weight: $font-weight-semi-bold;
+        }
+        &-h4 {
+            font-size: $font-size-400;
+            line-height: $line-height-300;
+            font-weight: $font-weight-bold;
+        }
+
+        &-subtitle {
+            font-size: $font-size-300;
+            line-height: $line-height-250;
+        }
+        &-article {
+            font-size: $font-size-200;
+            line-height: $line-height-250;
+        }
+        &-info {
+            font-size: $font-size-300;
+            line-height: $line-height-300;
+        }
+        &-body {
+            font-size: $font-size-200;
+            line-height: $line-height-200;
+        }
+        &-overline {
+            font-size: $font-size-100;
+            line-height: $line-height-150;
+            font-weight: $font-weight-medium;
+        }
+    }
 
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: $font-family-main;
-    font-size: var(--mc-spin-number-font-size);
-    font-weight: var(--mc-spin-number-font-weight);
     line-height: 1;
-    color: var(--mc-spin-number-font-color);
+    color: var(--mc-spin-number-color);
+
+    &--variation {
+        @include variations;
+    }
+    &--weight {
+        font-weight: var(--mc-spin-number-weight);
+    }
 
     &__non-digit {
         display: inline-flex;
         min-width: 0.1em;
-        font-family: inherit;
-        font-size: inherit;
-        font-weight: inherit;
+        font: inherit;
         color: inherit;
     }
 
@@ -171,10 +213,24 @@ export default {
         display: flex;
     }
 
-    @each $key, $value in $token-media-queries {
+    @each $media, $value in $token-media-queries {
         @media #{$value} {
-            &--size-#{$key} {
-                font-size: var(--mc-spin-number-font-size-#{$key}, var(--mc-spin-number-font-size));
+            &--variation-#{$media} {
+                @include variations;
+            }
+            &--weight-#{$media} {
+                &-normal {
+                    font-weight: $font-weight-normal;
+                }
+                &-medium {
+                    font-weight: $font-weight-medium;
+                }
+                &-semi-bold {
+                    font-weight: $font-weight-semi-bold;
+                }
+                &-bold {
+                    font-weight: $font-weight-bold;
+                }
             }
         }
     }
