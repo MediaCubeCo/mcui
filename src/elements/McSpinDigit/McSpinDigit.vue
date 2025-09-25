@@ -2,7 +2,7 @@
     <div :id="id" :class="containerStyles.classes" :style="containerStyles.variables">
         <!-- фэйк цифра, нужно что бы устанавливать нужную ширину контейнера -->
         <span class="mc-spin-digit-container__target">{{ end }}</span>
-        <div :class="computedSpinClasses" :style="digitStyles">
+        <div class="mc-spin-digit" :style="digitStyles">
             <span v-for="n in 10" :key="`${id}-${start}-${end}-${n}`" class="mc-spin-digit__digit">
                 {{ (n - 1 + 10) % 10 }}
             </span>
@@ -70,12 +70,6 @@ export default {
         }
     },
     computed: {
-        computedSpinClasses() {
-            return {
-                'mc-spin-digit': true,
-                'mc-spin-digit--off': !this.spin_active,
-            }
-        },
         digitStyles() {
             return {
                 transform: `translateY(-${this.offset * 100}%)`,
@@ -120,19 +114,20 @@ export default {
         init() {
             this.spin_active = false
             this.offset = this.start
-            requestAnimationFrame(this.triggerSpin)
+            this.triggerSpin()
         },
         triggerSpin() {
             this.$emit('spin-start', this.start)
             this.spin_active = true
-            this.$nextTick(() => {
-                this.offset = this.end
-
-                setTimeout(() => {
-                    this.spin_active = false
-                    this.$emit('spin-end', this.end)
-                }, this.duration)
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    this.offset = this.end
+                })
             })
+            setTimeout(() => {
+                this.spin_active = false
+                this.$emit('spin-end', this.end)
+            }, this.duration)
         },
     },
 }
@@ -184,11 +179,8 @@ export default {
         flex-direction: column;
         height: 100%;
         color: inherit;
+        will-change: transform;
         transition: transform var(--mc-spin-duration) cubic-bezier(0.4, 0, 0.2, 1);
-
-        &--off {
-            transition: none;
-        }
 
         &__digit {
             height: 1em;
