@@ -1,5 +1,5 @@
 <template>
-    <div :id="id" :class="responsivePropsClasses" :style="containerStyles">
+    <div :id="id" :class="containerClasses" :style="containerStyles">
         <!-- фэйк цифра, нужно что бы устанавливать нужную ширину контейнера -->
         <span class="mc-spin-digit-container__target">{{ end }}</span>
         <div class="mc-spin-digit" :style="digitStyles">
@@ -10,27 +10,12 @@
     </div>
 </template>
 <script>
-import _upperFirst from 'lodash/upperFirst'
+import classAndStyleMixin from '../../mixins/classAndStyleMixin'
 
-const values = ['variation', 'weight']
-const validators = {
-    variation: v => ['h1', 'h2', 'h3', 'h4', 'subtitle', 'body', 'overline', 'article', 'info'].includes(v),
-    weight: v => ['normal', 'medium', 'semi-bold', 'bold'].includes(v),
-}
-
-const sizes = ['xs', 's', 'm', 'l', 'xl']
-const variationProps = {}
-
-values.forEach(value => {
-    const validator = validators[value]
-    sizes.forEach(size => {
-        variationProps[`${value}-${size}`] = { type: String, validator }
-    })
-})
 export default {
     name: 'McSpinDigit',
+    mixins: [classAndStyleMixin],
     props: {
-        ...variationProps,
         /**
          * min - 0, max - 9
          * */
@@ -48,15 +33,6 @@ export default {
         duration: {
             type: Number,
             default: 500,
-        },
-        variation: {
-            type: String,
-            default: 'body',
-            validator: validators.variation,
-        },
-        weight: {
-            type: String,
-            validator: validators.weight,
         },
         color: {
             type: String,
@@ -76,26 +52,13 @@ export default {
                 transform: `translateY(-${this.offset * 100}%)`,
             }
         },
-        responsivePropsClasses() {
-            const responsiveClasses = {}
-            responsiveClasses[`mc-spin-digit-container--variation-${this.variation}`] = this.variation
-            responsiveClasses[`mc-spin-digit-container--weight`] = !!true.weight
-            values.forEach(value => {
-                sizes.forEach(size => {
-                    const sizeValue = this[`${value}${_upperFirst(size)}`]
-                    responsiveClasses[`mc-spin-digit-container--${value}-${size}-${sizeValue}`] = sizeValue
-                })
-            })
-            const currentClasses = Object.entries(responsiveClasses)
-                .filter(([, value]) => value)
-                .map(([key]) => key)
-            return ['mc-spin-digit-container', ...currentClasses]
+        containerClasses() {
+            return this.getClassNames('mc-spin-digit-container', this.$props)
         },
         containerStyles() {
             return {
-                '--mc-spin-digit-color': `var(--color-${this.color}, var(--color-black))`,
-                '--mc-spin-digit-weight': `var(--font-weight-${this.weight}, var(--font-weight-normal))`,
                 '--mc-spin-duration': `${this.duration}ms`,
+                ...this.getStyles('mc-spin-digit', this.$props),
             }
         },
     },
@@ -120,10 +83,6 @@ export default {
         triggerSpin() {
             this.$emit('spin-start', this.start)
             this.spin_active = true
-            /**
-             * вложенные requestAnimationFrame нужны для оптимизации работы в браузере FireFox
-             * без них анимация скипается
-             * */
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     this.offset = this.end
@@ -144,6 +103,7 @@ export default {
 @import '../../tokens/font-families';
 @import '../../tokens/font-weights';
 @import '../../tokens/media-queries';
+@import '../../styles/mixins';
 
 .mc-spin-digit-container {
     $block-name: &;
@@ -157,52 +117,6 @@ export default {
 
     --mc-spin-digit-color: var(--color-black);
     --mc-spin-digit-weight: var(--font-weight-normal);
-
-    @mixin variations() {
-        font-family: $font-family-main;
-        &-h1 {
-            font-size: $font-size-700;
-            line-height: $line-height-600;
-            font-weight: $font-weight-semi-bold;
-        }
-        &-h2 {
-            font-size: $font-size-600;
-            line-height: $line-height-500;
-            font-weight: $font-weight-semi-bold;
-        }
-        &-h3 {
-            font-size: $font-size-500;
-            line-height: $line-height-400;
-            font-weight: $font-weight-semi-bold;
-        }
-        &-h4 {
-            font-size: $font-size-400;
-            line-height: $line-height-300;
-            font-weight: $font-weight-bold;
-        }
-
-        &-subtitle {
-            font-size: $font-size-300;
-            line-height: $line-height-250;
-        }
-        &-article {
-            font-size: $font-size-200;
-            line-height: $line-height-250;
-        }
-        &-info {
-            font-size: $font-size-300;
-            line-height: $line-height-300;
-        }
-        &-body {
-            font-size: $font-size-200;
-            line-height: $line-height-200;
-        }
-        &-overline {
-            font-size: $font-size-100;
-            line-height: $line-height-150;
-            font-weight: $font-weight-medium;
-        }
-    }
 
     position: relative;
     height: 1em;
@@ -219,7 +133,6 @@ export default {
     &--weight {
         font-weight: var(--mc-spin-digit-weight);
     }
-
     &__target {
         visibility: hidden;
         font: inherit;
