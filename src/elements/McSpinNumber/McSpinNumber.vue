@@ -1,5 +1,5 @@
 <template>
-    <div :id="id" :class="computedClasses" :style="containerStyles">
+    <div :id="id" :class="computedClasses" :style="computedStyles">
         <div v-for="(digit, i) in currentTo" :key="`mc-spin-number-${id}-${i}`" class="mc-spin-number__container">
             <template v-if="!Number.isFinite(digit)">
                 <span class="mc-spin-number__non-digit">
@@ -61,7 +61,7 @@ export default {
         computedClasses() {
             return this.getClassNames('mc-spin-number', this.$props)
         },
-        containerStyles() {
+        computedStyles() {
             return this.getStyles('mc-spin-number', this.$props)
         },
     },
