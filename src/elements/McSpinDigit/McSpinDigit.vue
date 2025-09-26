@@ -120,6 +120,10 @@ export default {
         triggerSpin() {
             this.$emit('spin-start', this.start)
             this.spin_active = true
+            /**
+             * вложенные requestAnimationFrame нужны для оптимизации работы в браузере FireFox
+             * без них анимация скипается
+             * */
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     this.offset = this.end
