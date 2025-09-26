@@ -128,7 +128,7 @@ export default {
     overflow: hidden;
 
     &--variation {
-        @include variations;
+        @include variations-title;
     }
     &--weight {
         font-weight: var(--mc-spin-digit-weight);
@@ -160,27 +160,6 @@ export default {
             flex-shrink: 0;
         }
     }
-
-    @each $media, $value in $token-media-queries {
-        @media #{$value} {
-            &--variation-#{$media} {
-                @include variations;
-            }
-            &--weight-#{$media} {
-                &-normal {
-                    font-weight: $font-weight-normal;
-                }
-                &-medium {
-                    font-weight: $font-weight-medium;
-                }
-                &-semi-bold {
-                    font-weight: $font-weight-semi-bold;
-                }
-                &-bold {
-                    font-weight: $font-weight-bold;
-                }
-            }
-        }
-    }
+    @include responsive-variations-title;
 }
 </style>

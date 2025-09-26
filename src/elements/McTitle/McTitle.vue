@@ -258,27 +258,7 @@ export default {
     &--weight {
         font-weight: var(--mc-title-weight);
     }
-    @each $media, $value in $token-media-queries {
-        @media #{$value} {
-            &--variation-#{$media} {
-                @include variations-title;
-            }
-            &--weight-#{$media} {
-                &-normal {
-                    font-weight: $font-weight-normal;
-                }
-                &-medium {
-                    font-weight: $font-weight-medium;
-                }
-                &-semi-bold {
-                    font-weight: $font-weight-semi-bold;
-                }
-                &-bold {
-                    font-weight: $font-weight-bold;
-                }
-            }
-        }
-    }
+    @include responsive-variations-title;
     h1,
     h2,
     h3,

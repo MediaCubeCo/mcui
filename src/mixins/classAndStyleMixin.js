@@ -46,7 +46,7 @@ export default {
         },
         getStyles(class_name, props = {}) {
             const styles = {}
-            props.color && (styles[`--${class_name}-color`] = `var(--color-${props.color}, var(--font-weight-black))`)
+            props.color && (styles[`--${class_name}-color`] = `var(--color-${props.color}, var(--color-black))`)
             props.weight &&
                 (styles[`--${class_name}-weight`] = `var(--font-weight-${props.weight}, var(--font-weight-normal))`)
             return styles

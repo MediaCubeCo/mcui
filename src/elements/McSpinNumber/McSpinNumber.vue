@@ -123,27 +123,6 @@ export default {
         font: inherit;
         color: inherit;
     }
-
-    @each $media, $value in $token-media-queries {
-        @media #{$value} {
-            &--variation-#{$media} {
-                @include variations-title;
-            }
-            &--weight-#{$media} {
-                &-normal {
-                    font-weight: $font-weight-normal;
-                }
-                &-medium {
-                    font-weight: $font-weight-medium;
-                }
-                &-semi-bold {
-                    font-weight: $font-weight-semi-bold;
-                }
-                &-bold {
-                    font-weight: $font-weight-bold;
-                }
-            }
-        }
-    }
+    @include responsive-variations-title;
 }
 </style>

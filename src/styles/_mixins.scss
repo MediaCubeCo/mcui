@@ -668,3 +668,20 @@
     font-weight: $font-weight-medium;
   }
 }
+
+@mixin responsive-variations-title() {
+  @each $media, $value in $token-media-queries {
+    @media #{$value} {
+      &--variation-#{$media} {
+        @include variations-title;
+      }
+      &--weight-#{$media} {
+        @each $weight-name, $weight-value in $token-font-weights {
+          &-#{$weight-name} {
+            font-weight: $weight-value;
+          }
+        }
+      }
+    }
+  }
+}
