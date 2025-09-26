@@ -175,75 +175,6 @@ export default {
     --mc-title-weight: initial;
     --mc-title-line-height: initial;
     color: var(--mc-title-color);
-    @mixin variations() {
-        font-family: $font-family-main;
-        &-h1 {
-            font-size: $font-size-700;
-            line-height: $line-height-600;
-            font-weight: $font-weight-semi-bold;
-            #{$block-name}__text {
-                max-width: 920px;
-            }
-        }
-        &-h2 {
-            font-size: $font-size-600;
-            line-height: $line-height-500;
-            font-weight: $font-weight-semi-bold;
-            #{$block-name}__text {
-                max-width: 820px;
-            }
-        }
-        &-h3 {
-            font-size: $font-size-500;
-            line-height: $line-height-400;
-            font-weight: $font-weight-semi-bold;
-            #{$block-name}__text {
-                max-width: 720px;
-            }
-        }
-        &-h4 {
-            font-size: $font-size-400;
-            line-height: $line-height-300;
-            font-weight: $font-weight-bold;
-            #{$block-name}__text {
-                max-width: 700px;
-            }
-        }
-
-        &-subtitle {
-            font-size: $font-size-300;
-            line-height: $line-height-250;
-            #{$block-name}__text {
-                max-width: 640px;
-            }
-        }
-        &-article {
-            font-size: $font-size-200;
-            line-height: $line-height-250;
-            #{$block-name}__text {
-                max-width: 536px;
-            }
-        }
-        &-info {
-            font-size: $font-size-300;
-            line-height: $line-height-300;
-        }
-        &-body {
-            font-size: $font-size-200;
-            line-height: $line-height-200;
-            #{$block-name}__text {
-                max-width: 330px;
-            }
-        }
-        &-overline {
-            font-size: $font-size-100;
-            line-height: $line-height-150;
-            font-weight: $font-weight-medium;
-            #{$block-name}__text {
-                max-width: 330px;
-            }
-        }
-    }
 
     margin-top: 0;
     margin-bottom: 0;
@@ -281,7 +212,7 @@ export default {
     }
 
     &--variation {
-        @include variations;
+        @include variations-title;
     }
 
     &--ellipsis {
@@ -327,27 +258,7 @@ export default {
     &--weight {
         font-weight: var(--mc-title-weight);
     }
-    @each $media, $value in $token-media-queries {
-        @media #{$value} {
-            &--variation-#{$media} {
-                @include variations;
-            }
-            &--weight-#{$media} {
-                &-normal {
-                    font-weight: $font-weight-normal;
-                }
-                &-medium {
-                    font-weight: $font-weight-medium;
-                }
-                &-semi-bold {
-                    font-weight: $font-weight-semi-bold;
-                }
-                &-bold {
-                    font-weight: $font-weight-bold;
-                }
-            }
-        }
-    }
+    @include responsive-variations-title;
     h1,
     h2,
     h3,
