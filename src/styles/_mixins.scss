@@ -622,3 +622,66 @@
     margin-inline-start: $space;
   }
 }
+
+@mixin variations-title() {
+  font-family: $font-family-main;
+  &-h1 {
+    font-size: $font-size-700;
+    line-height: $line-height-600;
+    font-weight: $font-weight-semi-bold;
+  }
+  &-h2 {
+    font-size: $font-size-600;
+    line-height: $line-height-500;
+    font-weight: $font-weight-semi-bold;
+  }
+  &-h3 {
+    font-size: $font-size-500;
+    line-height: $line-height-400;
+    font-weight: $font-weight-semi-bold;
+  }
+  &-h4 {
+    font-size: $font-size-400;
+    line-height: $line-height-300;
+    font-weight: $font-weight-bold;
+  }
+
+  &-subtitle {
+    font-size: $font-size-300;
+    line-height: $line-height-250;
+  }
+  &-article {
+    font-size: $font-size-200;
+    line-height: $line-height-250;
+  }
+  &-info {
+    font-size: $font-size-300;
+    line-height: $line-height-300;
+  }
+  &-body {
+    font-size: $font-size-200;
+    line-height: $line-height-200;
+  }
+  &-overline {
+    font-size: $font-size-100;
+    line-height: $line-height-150;
+    font-weight: $font-weight-medium;
+  }
+}
+
+@mixin responsive-variations-title() {
+  @each $media, $value in $token-media-queries {
+    @media #{$value} {
+      &--variation-#{$media} {
+        @include variations-title;
+      }
+      &--weight-#{$media} {
+        @each $weight-name, $weight-value in $token-font-weights {
+          &-#{$weight-name} {
+            font-weight: $weight-value;
+          }
+        }
+      }
+    }
+  }
+}
