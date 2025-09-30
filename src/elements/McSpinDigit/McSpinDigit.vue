@@ -82,6 +82,12 @@ export default {
         },
         triggerSpin() {
             this.$emit('spin-start', this.start)
+            // делаем проверку, если duration = 0 то скипаем анимацию
+            if (!this.duration) {
+                this.offset = this.end
+                this.$emit('spin-end', this.end)
+                return
+            }
             this.spin_active = true
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
