@@ -387,6 +387,13 @@ export default {
             type: Boolean,
             default: true,
         },
+        /**
+         * Разрешаем вводить '-' для числовых типов num/amount_format
+         */
+        allowNegative: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -689,6 +696,7 @@ export default {
                     const is_space = e.code?.match(/Space/)
 
                     const excluded_symbols = ['.', ',']
+                    this.allowNegative && excluded_symbols.push('-')
                     const is_excluded_symbol = excluded_symbols.includes(e.key)
 
                     if ((isNaN(+e.key) && !e.key?.match(/Arrow|Backspace|\.,/) && !is_excluded_symbol) || is_space) {
