@@ -698,14 +698,10 @@ export default {
                     const excluded_symbols = ['.', ',']
                     this.allowNegative && excluded_symbols.push('-')
                     const is_excluded_symbol = excluded_symbols.includes(e.key)
-                    const is_ctrl = e.metaKey || e.ctrlKey
-                    const is_copy = is_ctrl && e.key === 'c'
-                    const is_paste = is_ctrl && e.key === 'v'
-                    const is_select = is_ctrl && e.key === 'a'
-                    const is_command = is_paste || is_copy || is_select
+                    const is_ctrl_pressed = e.metaKey || e.ctrlKey
                     const is_allowed_symbol = e.key?.match(/Arrow|Backspace|\.,/)
 
-                    if ((isNaN(+e.key) && !is_allowed_symbol && !is_excluded_symbol && !is_command) || is_space) {
+                    if ((isNaN(+e.key) && !is_allowed_symbol && !is_excluded_symbol && !is_ctrl_pressed) || is_space) {
                         e.preventDefault()
                     }
 
