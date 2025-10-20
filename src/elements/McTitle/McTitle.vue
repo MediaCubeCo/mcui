@@ -1,6 +1,12 @@
 <script>
 import _upperFirst from 'lodash/upperFirst'
 import DOMPurify from 'isomorphic-dompurify'
+DOMPurify.addHook('afterSanitizeAttributes', node => {
+    if ('target' in node) {
+        node.setAttribute('target', '_blank')
+        node.setAttribute('rel', 'noopener')
+    }
+})
 
 const values = ['variation', 'weight']
 const sizes = ['xs', 's', 'm', 'l', 'xl', 'xxl']
