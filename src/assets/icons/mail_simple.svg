@@ -1,3 +1,3 @@
-<svg data-token-name="mail-simple" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M5 5.98376L9.20463 7.817C9.45584 7.92653 9.72689 7.98327 10.0009 7.98368C10.275 7.98409 10.5462 7.92818 10.7978 7.81941L15 6.00238M5 1.5H15C17.2091 1.5 19 3.29086 19 5.5V12.5C19 14.7091 17.2091 16.5 15 16.5H5C2.79086 16.5 1 14.7091 1 12.5V5.5C1 3.29086 2.79086 1.5 5 1.5Z" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<svg data-token-name="mail-simple" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7 8.98376L11.2046 10.817C11.4558 10.9265 11.7269 10.9833 12.0009 10.9837C12.275 10.9841 12.5462 10.9282 12.7978 10.8194L17 9.00238M7 4.5H17C19.2091 4.5 21 6.29086 21 8.5V15.5C21 17.7091 19.2091 19.5 17 19.5H7C4.79086 19.5 3 17.7091 3 15.5V8.5C3 6.29086 4.79086 4.5 7 4.5Z" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
