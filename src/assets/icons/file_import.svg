@@ -1,7 +1,3 @@
-<svg data-token-name="file_import"  width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8.66602 14H11.3327C11.8631 14 12.3718 13.7893 12.7469 13.4142C13.122 13.0391 13.3327 12.5304 13.3327 12V5.67287C13.3327 5.14244 13.122 4.63374 12.7469 4.25867L11.074 2.58579C10.6989 2.21072 10.1902 2 9.65981 2H4.66602C4.13558 2 3.62687 2.21071 3.2518 2.58579C2.87673 2.96086 2.66602 3.46957 2.66602 4V8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M13.3327 5.66667H10.9993C10.6457 5.66667 10.3066 5.52619 10.0565 5.27614C9.80649 5.02609 9.66602 4.68696 9.66602 4.33333V2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M3.33398 13.3334L6.00065 10.6667" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M4 10.6667H6" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M6 12.6667V10.6667" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<svg data-token-name="file_import" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 21H17C17.7956 21 18.5587 20.6839 19.1213 20.1213C19.6839 19.5587 20 18.7956 20 18V8.50931C20 7.71366 19.6839 6.95061 19.1213 6.388L16.612 3.87868C16.0494 3.31607 15.2863 3 14.4907 3H7C6.20435 3 5.44129 3.31607 4.87868 3.87868C4.31607 4.44129 4 5.20435 4 6V12M20 8.5H16.5C15.9696 8.5 15.4609 8.28929 15.0858 7.91421C14.7107 7.53914 14.5 7.03043 14.5 6.5V3M5 20L9 16M9 16H6M9 16V19" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

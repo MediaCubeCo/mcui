@@ -1,3 +1,3 @@
-<svg data-token-name="bank_building" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.524 13.3333V24M25.3333 24V13.3333M6.66667 13.3333V24M12.476 24V13.3333M28 13.3333H4V9.32533L16.2027 4L28 9.148V13.3333ZM4 28H28V26.6667L26.6667 24H5.33333L4 26.6667V28Z" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<svg data-token-name="bank_building" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14.643 10V18M19 18V10M5 10V18M9.357 18V10M21 10H3V6.994L12.152 3L21 6.861V10ZM3 21H21V20L20 18H4L3 20V21Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
