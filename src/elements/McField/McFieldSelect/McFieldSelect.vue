@@ -699,6 +699,12 @@ export default {
         },
 
         handleSearchChange(value) {
+            try {
+                this.local_options.push(...this.options)
+                this.actualizeSavedOptions()
+            } catch (e) {
+                console.warn('local_options is not actualized')
+            }
             this.searchValue = value
             /**
              * Событие по вводу данных в инпут
