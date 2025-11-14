@@ -64,14 +64,16 @@
                 </div>
             </div>
         </div>
-        <mc-separator
-            v-if="chatraConfig"
-            color="dark-gray"
-            indent-top="150"
-            indent-bottom="150"
-            :indent-left="compact ? '0' : '100'"
-            :indent-right="compact ? '0' : '100'"
-        />
+      <mc-separator
+          v-if="hasContentAppend"
+          color="dark-gray"
+          indent-top="150"
+          indent-bottom="150"
+          :indent-left="compact ? '0' : '100'"
+          :indent-right="compact ? '0' : '100'"
+      />
+      <div v-if="hasContentAppend" class="mc-side-bar-center__content-append">
+        <slot name="content-append" :compact="compact"/>
         <mc-side-bar-button
             v-if="chatraConfig"
             icon="chat_messages"
@@ -80,6 +82,7 @@
             with-tooltip
             @click="$emit('handlerChatraClick')"
         />
+      </div>
     </div>
 </template>
 
@@ -187,6 +190,9 @@ export default {
                           secondaryColor: 'white',
                       },
                   }
+        },
+        hasContentAppend() {
+          return this.chatraConfig || this.$slots['content-append']
         },
     },
     watch: {
@@ -320,6 +326,7 @@ export default {
             &__head {
                 display: flex;
                 align-items: center;
+                justify-content: flex-start;
                 border-radius: 4px;
 
                 .mc-button {
@@ -377,6 +384,9 @@ export default {
                     max-height: calc((8 * 46px) - 4px);
                 }
             }
+        }
+        &-append {
+          @include child-indent-bottom($space-50);
         }
     }
 }
