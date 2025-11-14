@@ -22,7 +22,9 @@
                         :compact="prettyCompact"
                         @handlerChatraClick="$emit('chatraClick')"
                         @open-side-bar="openSideBar"
-                    />
+                    >
+                        <slot slot="content-append" name="content-append" v-bind="{ compact: prettyCompact }" />
+                    </mc-side-bar-center>
                     <mc-side-bar-bottom
                         :hide-text="hideText"
                         :compact="prettyCompact"
