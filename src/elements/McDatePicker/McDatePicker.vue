@@ -439,6 +439,7 @@ export default {
         this.$el.addEventListener('touchstart', this.handleTouchStart)
         this.$el.addEventListener('touchend', this.handleTouchEnd)
         this.$el.addEventListener('touchmove', this.handleTouchMove)
+        this.emitDefaultDate()
     },
     beforeDestroy() {
         this.$el.removeEventListener('touchstart', this.handleTouchStart)
@@ -446,6 +447,11 @@ export default {
         this.$el.removeEventListener('touchmove', this.handleTouchMove)
     },
     methods: {
+        emitDefaultDate() {
+            if (!this.setDefaultToday) return
+            if (this.value) return
+            this.handleEmitDate(this.prettyValue)
+        },
         async setupDayjsLocale() {
             const locale = this.lang !== 'ar' && Object.keys(dayjsLocales).includes(this.lang) ? this.lang : 'en'
             await dayjsLocales[locale]?.()
