@@ -248,7 +248,13 @@ export default {
             type: String,
             default: null,
         },
-
+        /**
+         * Позиционирование тултипа
+         */
+        tooltipPosition: {
+            type: String,
+            default: 'top',
+        },
         /**
          * Атрибут tabindex для главного элемента
          *
@@ -369,15 +375,15 @@ export default {
         tooltipOptions() {
             return this.tooltip
                 ? {
-                    content: this.tooltip,
-                    placement: 'top',
-                    classes: 'mc-tooltip mc-tooltip--width-m mc-tooltip--size-s',
-                    trigger: 'hover focus',
-                    show: false,
-                    container: 'body',
-                    template: `<div class="tooltip" role="tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner"><div class="tooltip-inner__content"></div></div> </div>`,
-                    innerSelector: '.tooltip-inner__content',
-                }
+                      content: this.tooltip,
+                      placement: this.tooltipPosition || 'top',
+                      classes: 'mc-tooltip mc-tooltip--width-m mc-tooltip--size-s',
+                      trigger: 'hover focus',
+                      show: false,
+                      container: 'body',
+                      template: `<div class="tooltip" role="tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner"><div class="tooltip-inner__content"></div></div> </div>`,
+                      innerSelector: '.tooltip-inner__content',
+                  }
                 : null
         },
     },
@@ -390,7 +396,7 @@ export default {
         animateUp() {
             if (this.animation) {
                 this.customAnimation?.text &&
-                (this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = this.customAnimation?.text)
+                    (this.$refs['mc-button'].querySelector('.mc-button__text').innerHTML = this.customAnimation?.text)
                 this.custom_background = this.customAnimation?.background
             }
         },
