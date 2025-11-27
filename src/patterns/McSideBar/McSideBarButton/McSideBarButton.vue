@@ -29,6 +29,14 @@
                 >
                     {{ withIndicator ? '' : info }}
                 </mc-chip>
+                <mc-svg-icon
+                    v-if="href"
+                    slot="icon-append"
+                    :fill="iconColor"
+                    size="200"
+                    name="link_external_new"
+                    class="mc-side-bar-button__icon-append"
+                />
             </template>
         </mc-button>
     </mc-tooltip>
@@ -175,6 +183,7 @@ export default {
                 exact: this.exact,
                 disabled: this.disabled,
                 'is-active': this.isActive,
+                ...(!!this.href ? {target: '_blank'} : {}),
             }
         },
     },
@@ -200,6 +209,11 @@ export default {
             padding: 0 !important;
             width: $size-150;
             min-height: $size-150;
+        }
+    }
+    &__icon {
+        &-append {
+            @include size($size-250 !important);
         }
     }
     &.mc-button {

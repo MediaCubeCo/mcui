@@ -1,0 +1,6 @@
+<svg data-token-name="marketplace" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.5 11V16" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3 11.1V17C3 18.0609 3.42143 19.0783 4.17157 19.8284C4.92172 20.5786 5.93913 21 7 21H17C18.0609 21 19.0783 20.5786 19.8284 19.8284C20.5786 19.0783 21 18.0609 21 17V11.1C21 10.4251 20.8482 9.75891 20.5559 9.15066C20.2635 8.5424 19.8381 8.00769 19.3111 7.5861L14.8111 3.9861C14.0132 3.34777 13.0218 3 12 3C10.9782 3 9.98677 3.34777 9.18886 3.9861L4.68886 7.5861C4.16188 8.00769 3.73647 8.5424 3.44413 9.15066C3.15179 9.75891 3 10.4251 3 11.1Z" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 16V14" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.5 16V12" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
