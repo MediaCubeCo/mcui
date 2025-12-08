@@ -32,12 +32,10 @@
                             <mc-avatar v-if="option.image" :src="option.image" size="400" />
                             <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
                         </template>
-                        <mc-title slot="top" weight="semi-bold" v-html="option.name" />
+                        <mc-title slot="top" weight="semi-bold" v-html="option.name + 'ee'" />
                         <!-- Слот для замены стандартной стрелки при выведенном превью -->
                         <slot slot="right" name="arrow" />
-                        <mc-title slot="bottom" color="gray">
-                            {{ option.text }}
-                        </mc-title>
+                        <mc-title slot="bottom" color="gray"> {{ option.text }} kk </mc-title>
                     </mc-preview>
                     <div v-else class="mc-field-select__single-label">
                         <div v-if="hasPrepend" class="mc-field-select__prepend">
@@ -48,7 +46,7 @@
                             class="mc-field-select__label-text"
                             :class="hasPrepend ? 'mc-field-select__label-text--indent-left' : ''"
                         >
-                            {{ option ? option.name : placeholder }}
+                            {{ option ? option.name + 'rar' : placeholder }}
                         </div>
                     </div>
                 </template>
@@ -61,7 +59,7 @@
                         :closable="!option.hasOwnProperty('is_closable') || option.is_closable"
                         @click="remove(option)"
                     >
-                        {{ option.name }}
+                        {{ option.name + 'tt' }}
                     </mc-chip>
                 </template>
                 <template
@@ -74,16 +72,20 @@
                         weight="semi-bold"
                         variation="subtitle"
                     >
-                        {{ option.$groupLabel }}
+                        {{ option.$groupLabel }} aa
                     </mc-title>
                     <mc-preview v-else-if="optionWithPreview || optionWithPreviewOnly" class="option__desc" size="l">
                         <template v-if="option?.icon || option?.image" #left>
                             <mc-avatar v-if="option.image" :src="option.image" size="400" />
                             <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
                         </template>
-                        <mc-title slot="top" :weight="optionWithPreviewOnly ? '' : 'semi-bold'" v-html="option.name" />
+                        <mc-title
+                            slot="top"
+                            :weight="optionWithPreviewOnly ? '' : 'semi-bold'"
+                            v-html="option.name + 'yy'"
+                        />
                         <mc-title v-if="!!option.text" slot="bottom" color="dark-gray" :pre-line="option.preLine"
-                            >{{ option.text }}
+                            >{{ option.text + 'lll' }}
                         </mc-title>
                     </mc-preview>
                     <mc-tooltip
@@ -94,7 +96,7 @@
                         placement="top"
                         :content="option.name"
                     >
-                        <span>{{ option.name }}</span>
+                        <span>{{ option.name + '[[[' }}</span>
                     </mc-tooltip>
                 </template>
                 <!-- @slot Слот для текста, если ничего не найдено -->
@@ -383,6 +385,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        /**
+         * Выводить в оцпциях полный текст, без обрезания
+         * */
+        showFullOptionText: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -482,6 +491,7 @@ export default {
                 'mc-field-select--max-height': this.maxHeight,
                 'mc-field-select--empty': !this._value,
                 'mc-field-select--rtl': this.rtl,
+                'mc-field-select--show-full-option-text': this.showFullOptionText,
             }
         },
         isEmptyOptions() {
@@ -831,6 +841,20 @@ export default {
         }
     }
 
+    &--show-full-option-text {
+        .multiselect__option {
+            text-overflow: unset;
+            overflow-x: visible;
+            text-wrap: wrap;
+
+            & > * {
+                text-overflow: unset !important;
+                overflow-x: visible !important;
+                text-wrap: wrap !important;
+            }
+        }
+    }
+
     .multiselect {
         &__placeholder {
             @include ellipsis();
@@ -854,28 +878,34 @@ export default {
                 color: $color-gray;
             }
         }
+
         &__tag {
             padding-left: 2px !important;
+
             .mc-chip__button {
                 background-color: $color-white;
                 border-radius: $radius-circle;
                 opacity: 1;
+
                 .mc-svg-icon {
                     min-width: $space-250;
                     width: $space-250;
                     min-height: $space-250;
                     height: $space-250;
                 }
+
                 &:hover {
                     .mc-svg-icon {
                         fill: var(--color-red);
                     }
                 }
+
                 .mc-svg-icon {
                     fill: var(--color-main);
                 }
             }
         }
+
         &__input {
             padding-inline-start: $space-50;
             margin-bottom: $space-150 - 2px;
@@ -1007,9 +1037,11 @@ export default {
         }
 
         &--above {
-            .multiselect__content-wrapper {
-                bottom: calc(100% + #{$size-100});
-                top: auto;
+            .multiselect {
+                &__content-wrapper {
+                    bottom: calc(100% + #{$size-100});
+                    top: auto;
+                }
             }
         }
 
