@@ -32,7 +32,7 @@
                             <mc-avatar v-if="option.image" :src="option.image" size="400" />
                             <mc-svg-icon v-else :name="option.icon" :color="option.iconColor || 'main'" size="400" />
                         </template>
-                        <mc-title slot="top" weight="semi-bold" v-html="option.name + 'ee'" />
+                        <mc-title slot="top" weight="semi-bold" v-html="option.name" />
                         <!-- Слот для замены стандартной стрелки при выведенном превью -->
                         <slot slot="right" name="arrow" />
                         <mc-title slot="bottom" color="gray"> {{ option.text }} kk </mc-title>
@@ -46,7 +46,7 @@
                             class="mc-field-select__label-text"
                             :class="hasPrepend ? 'mc-field-select__label-text--indent-left' : ''"
                         >
-                            {{ option ? option.name + 'rar' : placeholder }}
+                            {{ option ? option.name : placeholder }}
                         </div>
                     </div>
                 </template>
@@ -59,7 +59,7 @@
                         :closable="!option.hasOwnProperty('is_closable') || option.is_closable"
                         @click="remove(option)"
                     >
-                        {{ option.name + 'tt' }}
+                        {{ option.name }}
                     </mc-chip>
                 </template>
                 <template
@@ -82,10 +82,10 @@
                         <mc-title
                             slot="top"
                             :weight="optionWithPreviewOnly ? '' : 'semi-bold'"
-                            v-html="option.name + 'yy'"
+                            v-html="option.name"
                         />
                         <mc-title v-if="!!option.text" slot="bottom" color="dark-gray" :pre-line="option.preLine"
-                            >{{ option.text + 'lll' }}
+                            >{{ option.text }}
                         </mc-title>
                     </mc-preview>
                     <mc-tooltip
@@ -96,7 +96,7 @@
                         placement="top"
                         :content="option.name"
                     >
-                        <span>{{ option.name + '[[[' }}</span>
+                        <span>{{ option.name }}</span>
                     </mc-tooltip>
                 </template>
                 <!-- @slot Слот для текста, если ничего не найдено -->
