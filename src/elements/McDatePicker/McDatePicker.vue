@@ -403,7 +403,7 @@ export default {
         },
         prettyValue() {
             if (!this.useTimezone) {
-                if (this.isRange && this.value?.filter(Boolean)?.length)
+                if (this.isRange && this.value && this.value?.filter(Boolean)?.length)
                     return this.value.map(item => dayjs.tz(item, 'Europe/London').$d)
                 return this.useFormat || (!this.setDefaultToday && !this.value)
                     ? this.value
