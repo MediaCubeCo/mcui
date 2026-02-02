@@ -35,7 +35,7 @@
                         <mc-title slot="top" weight="semi-bold" v-html="option.name" />
                         <!-- Слот для замены стандартной стрелки при выведенном превью -->
                         <slot slot="right" name="arrow" />
-                        <mc-title slot="bottom" color="gray"> {{ option.text }} kk </mc-title>
+                        <mc-title slot="bottom" color="gray"> {{ option.text }} </mc-title>
                     </mc-preview>
                     <div v-else class="mc-field-select__single-label">
                         <div v-if="hasPrepend" class="mc-field-select__prepend">
@@ -72,7 +72,7 @@
                         weight="semi-bold"
                         variation="subtitle"
                     >
-                        {{ option.$groupLabel }} aa
+                        {{ option.$groupLabel }}
                     </mc-title>
                     <mc-preview v-else-if="optionWithPreview || optionWithPreviewOnly" class="option__desc" size="l">
                         <template v-if="option?.icon || option?.image" #left>
