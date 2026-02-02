@@ -205,7 +205,7 @@ export default {
          */
         hideSelected: {
             type: Boolean,
-            default: true,
+            default: false,
         },
         /**
          *  Допустимо ли
