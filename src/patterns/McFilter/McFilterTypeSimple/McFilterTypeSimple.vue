@@ -5,6 +5,7 @@
         :internal-search="!isAjax"
         :placeholder="computedPlaceholder"
         :loading="loading"
+        hide-selected
         class="mc-filter-type-simple"
         name="simple_select"
         @search-change="handleSearchChange"
