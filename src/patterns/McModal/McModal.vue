@@ -1,10 +1,11 @@
 <template>
     <modal
+        ref="mcModal"
         :class="classes"
         :name="name"
         :style="styles"
         :max-width="maxWidth"
-        :click-to-close="clickToClose"
+        :click-to-close="false"
         class="mc-modal"
         adaptive
         scrollable
@@ -177,7 +178,24 @@ export default {
             }
         },
     },
+    mounted() {
+        document.addEventListener('keydown', this.handleEsc)
+    },
+    beforeDestroy() {
+        document.removeEventListener('keydown', this.handleEsc)
+    },
     methods: {
+        handleOverlayClick(event) {
+            if (!this.clickToClose) return event.stopPropagation()
+            if (event.target.classList.contains('v--modal-background-click')) this.close()
+        },
+        handleEsc(event) {
+            // проверка на ESC
+            if (event.key === 'Escape') {
+                if (!this.clickToClose) return event.preventDefault()
+                this.close()
+            }
+        },
         handleBeforeOpen(event) {
             /**
              * Событие перед открытием
@@ -195,8 +213,14 @@ export default {
                 this.resize_observer?.unobserve(this.$refs.mcModalBody)
                 this.$refs.mcModalBody.removeEventListener('scroll', this.calculateSeparators)
             }
+            if (this.$refs.mcModal) {
+                this.$refs.mcModal.$el.removeEventListener('click', this.handleOverlayClick)
+            }
         },
         handleOpened(event) {
+            if (this.$refs.mcModal) {
+                this.$refs.mcModal.$el.addEventListener('click', this.handleOverlayClick)
+            }
             if (this.separators) {
                 this.getParams()
                 this.$refs.mcModalBody.addEventListener('scroll', this.calculateSeparators, {
