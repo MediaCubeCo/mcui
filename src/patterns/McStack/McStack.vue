@@ -91,6 +91,7 @@ export default {
 
                 await this.$nextTick() // ждём DOM
 
+                if (!this.$refs['mc-stack-body']) continue
                 const total = [...this.$refs['mc-stack-body'].children].reduce((a, c) => (a += c.offsetWidth + 12), 0) // 12 отступ между элементами
                 if (total > this.containerWidth) {
                     this.setFixedChildren(key)
