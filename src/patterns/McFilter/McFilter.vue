@@ -524,6 +524,12 @@ export default {
             const { category, categoryName } = this.getCategoriesWithNewRelation()
             this.setFilterValues(category, categoryName)
         },
+        normalizeToArray(val) {
+            if (!val) return []
+            if (Array.isArray(val)) return val
+            if (val && val.constructor === Object) return Object.values(val)
+            return [val]
+        },
         getCategoriesWithNewRelation() {
             const relationKeys = Object.keys(this.currentCondition)
             const values = _cloneDeep(this.currentValues)
@@ -538,13 +544,16 @@ export default {
                         selectedCategoryName[k] = [0]
                     } else {
                         if (k in selectedCategory) {
-                            selectedCategory[k] = _uniq([...selectedCategory[k], ...this.currentCondition[k]])
+                            selectedCategory[k] = _uniq([
+                                ...this.normalizeToArray(selectedCategory[k]),
+                                ...this.normalizeToArray(this.currentCondition[k]),
+                            ])
                             selectedCategoryName[k] = {
-                                ...selectedCategoryName[k],
-                                ...this.currentConditionName[k],
+                                ...(selectedCategoryName[k] || {}),
+                                ...(this.currentConditionName[k] || {}),
                             }
                         } else {
-                            selectedCategory[k] = this.currentCondition[k]
+                            selectedCategory[k] = this.normalizeToArray(this.currentCondition[k])
                             selectedCategoryName[k] = this.currentConditionName[k]
                         }
                     }
