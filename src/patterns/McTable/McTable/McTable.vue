@@ -50,7 +50,7 @@
                 class="mc-table-wrapper__loading"
             >
                 <mc-svg-icon class="mc-table-wrapper__load-icon" name="loader" />
-                <mc-title color="outline-gray">{{ placeholders.loading }}</mc-title>
+                <mc-title color="gray">{{ placeholders.loading }}</mc-title>
             </div>
         </div>
         <mc-overlay v-if="overlayLoading" />
@@ -672,7 +672,7 @@ export default {
         justify-content: center;
         height: $size-500;
         background-color: $color-white;
-        color: $color-outline-gray;
+        color: $color-gray;
         @include child-indent-right($space-100);
 
         .mc-title {
